@@ -19538,17 +19538,14 @@
 								<td> oncontextmenu
 								</td>
 								<td>
-									<xmp>
-										<Panel id="Scroller" style="flow-children: down; overflow: squish scroll;">
-									</xmp>
+									<xmp><Panel id="Scroller" style="flow-children: down; overflow: squish scroll;"></xmp>
 									<xmp><Label text="假设这里有一堆文本。" /></xmp>
 									<xmp><Label text="多到需要用到滚动条。" /></xmp>
 									<xmp><Label text="..." /></xmp>
 									<xmp><Button id="ScrollToTopButton" oncontextmenu="ScrollToTop()"></xmp>
 									<xmp><Label text="Scroll to Top" /></xmp>
 									<xmp></Button></xmp>
-									<xmp>
-										</Panel>
+									<xmp></Panel>
 									</xmp>
 
 								</td>
@@ -19565,29 +19562,15 @@
 								<td> onfocus
 								</td>
 								<td>
-									<xmp>
-										<Panel id="Controls">
-									</xmp>
-									<xmp>
-										<!-- AddStyle会向Control1添加“Clicked”类。尽管Addstyle是一个板事件，但是它并未选择使用板ID作为第一个变量（记住这是可选的）。-->
-									</xmp>
+									<xmp><Panel id="Controls"></xmp>
+									<xmp><!-- AddStyle会向Control1添加“Clicked”类。尽管Addstyle是一个板事件，但是它并未选择使用板ID作为第一个变量（记住这是可选的）。--></xmp>
 									<xmp><Button id="Control1" onfocus="AddStyle( Clicked )" /></xmp>
-
-									<xmp>
-										<!-- AddStyle将对#Controls板添加“Clicked”类。-->
-									</xmp>
+									<xmp><!-- AddStyle将对#Controls板添加“Clicked”类。--></xmp>
 									<xmp><Button id="Control2" onfocus="AddStyle( Controls, Clicked )" /></xmp>
-
-									<xmp>
-										<!-- AddStyle将对#SomeOtherPanel板添加“Clicked”类，尽管这些板并不属于这个按钮的继承类。注意，只有在同一个XML布局文件内的板ID才能被事件调用。 -->
-									</xmp>
+									<xmp><!-- AddStyle将对#SomeOtherPanel板添加“Clicked”类，尽管这些板并不属于这个按钮的继承类。注意，只有在同一个XML布局文件内的板ID才能被事件调用。 --></xmp>
 									<xmp><Button id="Control3" onfocus="AddStyle( SomeOtherPanel, Clicked )" /></xmp>
-									<xmp>
-										</Panel>
-									</xmp>
-									<xmp>
-										<Panel id="SomeOtherPanel" />
-									</xmp>
+									<xmp></Panel></xmp>
+									<xmp><Panel id="SomeOtherPanel" /></xmp>
 								</td>
 								<td>板获得了键盘聚焦（译者注:按一下tab，程序就会切换所选中的控件，就是键盘聚焦的形式之一。
 								</td>
