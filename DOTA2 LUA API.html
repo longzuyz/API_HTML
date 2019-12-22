@@ -5451,8 +5451,13 @@
 								</td>
 							</tr>
 							<tr>
+								<td>SetFreeCourierModeEnabled</td>
+								<td>void SetFreeCourierModeEnabled(bool Enabled ) </td>
+								<td>If set to true, enable 7.23 free courier mode. </td>
+							</tr>
+							<tr>
 								<td>SetFriendlyBuildingMoveToEnabled</td>
-								<td>void SetFriendlyBuildingMoveToEnabled( bEnabled ) </td>
+								<td>void SetFriendlyBuildingMoveToEnabled(bool Enabled ) </td>
 								<td>Allows clicks on friendly buildings to be handled normally.？？？</td>
 							</tr>
 							<tr>
@@ -6708,7 +6713,14 @@
 								<th> 解释
 								</th>
 							</tr>
-
+							<tr>
+								<td> CheckForCourierSpawning
+								</td>
+								<td> void CheckForCourierSpawning(handle hHero )
+								</td>
+								<td> Attempt to spawn the appropriate couriers for this mode. 
+								</td>
+							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTAPlayer.GetAssignedHero"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTAPlayer.GetAssignedHero">
@@ -20479,6 +20491,11 @@
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_UNLOCKED_BY_EFFECT_INDEX</td>
+								<td>0</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_FREE_DRAW_TARGETING</td>
 								<td>0</td>
 								<td>&nbsp;</td>
 							</tr>
