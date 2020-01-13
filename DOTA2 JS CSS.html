@@ -525,11 +525,12 @@ aaaabbbbccccc
 							<tr>
 								<td> CreatePanel
 								</td>
-								<td> handle $.CreatePanel( string type, handle panel, string panelname)
+								<td> handle $.CreatePanel( string type, handle parent, string panelname)
 								</td>
-								<td> 创建一个板，板的类型分很多Panel，Button，Image，Label，TextEntry，
+								<td> 创建一个板，type分很多，比如Panel，Button，Image，Label，TextEntry，
 									DropDown，ToggleButton，RadioButton，DOTAHeroImage，DOTAAvatarImage，
-									DOTAItemImage，DOTAAbilityImage，DOTAUserName
+									DOTAItemImage，DOTAAbilityImage，DOTAUserName。parent是创建新版的父类，就是在说在哪个板内创建这个新版，要事先取得。
+									panelname自己取名字。
 								</td>
 							</tr>
 							<tr>
@@ -4643,7 +4644,7 @@ aaaabbbbccccc
 							<tr>
 								<td> visible
 								</td>
-								<td> visible( boolean boolean_1 )
+								<td> visible = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -4651,7 +4652,7 @@ aaaabbbbccccc
 							<tr>
 								<td> enabled
 								</td>
-								<td> enabled( boolean boolean_1 )
+								<td> enabled = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -4659,7 +4660,7 @@ aaaabbbbccccc
 							<tr>
 								<td> checked
 								</td>
-								<td> checked( boolean boolean_1 )
+								<td> checked = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -4683,7 +4684,7 @@ aaaabbbbccccc
 							<tr>
 								<td> hittest
 								</td>
-								<td> hittest( boolean boolean_1 )
+								<td> hittest = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -5457,7 +5458,7 @@ aaaabbbbccccc
 							<tr>
 								<td> visible
 								</td>
-								<td> visible( boolean boolean_1 )
+								<td> visible = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -5497,7 +5498,7 @@ aaaabbbbccccc
 							<tr>
 								<td> hittest
 								</td>
-								<td> hittest( boolean boolean_1 )
+								<td> hittest = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -5771,15 +5772,15 @@ aaaabbbbccccc
 								</td>
 								<td> Children()
 								</td>
-								<td>
+								<td>查找元素所有子元素，以数组形式返回。
 								</td>
 							</tr>
 							<tr>
 								<td> FindChildrenWithClassTraverse
 								</td>
-								<td> FindChildrenWithClassTraverse( cstring cstring_1 )
+								<td> FindChildrenWithClassTraverse( cstring classname )
 								</td>
-								<td>
+								<td>用class名查找元素，返回一个数组。
 								</td>
 							</tr>
 							<tr>
@@ -5787,7 +5788,7 @@ aaaabbbbccccc
 								</td>
 								<td> GetParent()
 								</td>
-								<td>
+								<td>获得父元素。
 								</td>
 							</tr>
 							<tr>
@@ -5809,9 +5810,9 @@ aaaabbbbccccc
 							<tr>
 								<td> FindChildTraverse
 								</td>
-								<td> FindChildTraverse( cstring cstring_1 )
+								<td> FindChildTraverse( cstring id )
 								</td>
-								<td>
+								<td>穿透式寻找元素，参数为id名
 								</td>
 							</tr>
 							<tr>
@@ -5993,9 +5994,9 @@ aaaabbbbccccc
 							<tr>
 								<td> BLoadLayout
 								</td>
-								<td> BLoadLayout( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
+								<td> BLoadLayout( cstring fileurl, boolean boolean_2, boolean boolean_3 )
 								</td>
-								<td>
+								<td>用XML魔板插入元素内。xxx.BLoadLayout('aaa.xml',false,false)
 								</td>
 							</tr>
 							<tr>
@@ -6025,9 +6026,9 @@ aaaabbbbccccc
 							<tr>
 								<td> BLoadLayoutSnippet
 								</td>
-								<td> BLoadLayoutSnippet( cstring cstring_1 )
+								<td> BLoadLayoutSnippet( cstring snippetname )
 								</td>
-								<td>
+								<td>使用Snippet模板插入元素内。
 								</td>
 							</tr>
 							<tr>
@@ -6275,7 +6276,7 @@ aaaabbbbccccc
 							<tr>
 								<td> visible
 								</td>
-								<td> visible( boolean boolean_1 )
+								<td> visible = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -6283,7 +6284,7 @@ aaaabbbbccccc
 							<tr>
 								<td> enabled
 								</td>
-								<td> enabled( boolean boolean_1 )
+								<td> enabled = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -6291,7 +6292,7 @@ aaaabbbbccccc
 							<tr>
 								<td> checked
 								</td>
-								<td> checked( boolean boolean_1 )
+								<td> checked = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -6315,7 +6316,7 @@ aaaabbbbccccc
 							<tr>
 								<td> hittest
 								</td>
-								<td> hittest( boolean boolean_1 )
+								<td> hittest = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -7113,7 +7114,7 @@ aaaabbbbccccc
 							<tr>
 								<td> enabled
 								</td>
-								<td> enabled( boolean boolean_1 )
+								<td> enabled1 = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -7121,7 +7122,7 @@ aaaabbbbccccc
 							<tr>
 								<td> checked
 								</td>
-								<td> checked( boolean boolean_1 )
+								<td> checked = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -7145,7 +7146,7 @@ aaaabbbbccccc
 							<tr>
 								<td> hittest
 								</td>
-								<td> hittest( boolean boolean_1 )
+								<td> hittest = bool boolean_1 
 								</td>
 								<td>
 								</td>
@@ -20283,61 +20284,67 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>无需使用，使用它的子项即可。
 								</td>
 							</tr>
 							<tr id='animation-delay'>
 								<td> animation-delay
 								</td>
-								<td>
+								<td>animation-delay：2s;
 
 								</td>
-								<td>
+								<td>动画延迟后播放
 								</td>
 							</tr>
 							<tr id='animation-direction'>
 								<td> animation-direction
 								</td>
-								<td>
+								<td>nimation-direction:alternate;
 
 								</td>
-								<td>
+								<td>动画播放方向。normal是正常方向,alternate是正反轮流播放。
 								</td>
 							</tr>
 							<tr id='animation-duration'>
 								<td> animation-duration
 								</td>
-								<td>
+								<td>animation-duration:1s;
 
 								</td>
-								<td>
+								<td>单次动画持续时间，0就是没动画效果。
 								</td>
 							</tr>
 							<tr id='animation-iteration-count'>
 								<td> animation-iteration-count
 								</td>
-								<td>
-
+								<td>animation-iteration-count:infinite;
+									animation-iteration-count:2;
 								</td>
-								<td>
+								<td>动画重复次数，infinite是无限次。
 								</td>
 							</tr>
 							<tr id='animation-name'>
 								<td> animation-name
 								</td>
-								<td>
+								<td>animation-name:xxx;
 
 								</td>
-								<td>
+								<td>动画名，xxx是名称，需要使用@keyframes xxx{0%{} 100%{}}来定义具体的动作
 								</td>
 							</tr>
 							<tr id='animation-timing-function'>
 								<td> animation-timing-function
 								</td>
-								<td>
+								<td>animation-timing-function:linear;
 
 								</td>
-								<td>
+								<td>linear	动画从头到尾的速度是相同的。
+									ease	默认。动画以低速开始，然后加快，在结束前变慢。
+									ease-in	动画以低速开始。
+									ease-out	动画以低速结束。
+									ease-in-out	动画以低速开始和结束。
+									cubic-bezier(n,n,n,n)	在 cubic-bezier 函数中自己的值，可能的值是从 0 
+									到 1 的数值。
 								</td>
 							</tr>
 							<tr id='background'>
@@ -20347,13 +20354,8 @@ aaaabbbbccccc
 									background-blur: gaussian( 2.5 );<br>
 									background-blur: gaussian( 6, 6, 1 );<br>
 								</td>
-								<td>Sets the amount of blur to apply to the contents behind this panel during
-									composition. Default is no blur, for now Gaussian is the only blur type
-									and takes a horizontal standard deviation, vertical standard deviation,
-									and number of passes. Good std deviation values are around 0-10, if 10 is
-									still not intense enough consider more passes, but more than one pass is
-									bad for perf. As shorthand you can specify with just one value, which will
-									be used for the standard deviation in both directions and 1 pass will be set.
+								<td>背景模糊，只有高斯模糊一种，值为0-10,多个参数不知道什么意思。
+				
 								</td>
 							</tr>
 							<tr id='background-color'>
@@ -20380,9 +20382,7 @@ aaaabbbbccccc
 									background-image: url("file://{images}/default.tga"), url(
 									"file://{movies}/Background1080p.webm" );
 								</td>
-								<td>Comma separated list of images or movies to draw in the background.
-									Can specify "none" to not draw a background layer. Combined with
-									background-position, background-size and background-repeat values.
+								<td>设置背景图片。
 								</td>
 							</tr>
 							<tr id='background-position'>
@@ -20404,19 +20404,11 @@ aaaabbbbccccc
 									top left corner of the panel<br>
 									background-position: left 10px top 40px;<br>
 								</td>
-								<td>Controls the horizontal and vertical placement of the background image,
-									with the format: <left|center|right>
-										<horizontal length>
-											<top|center|bottom>
-												<vertical length><br>
-													If length is a percent, the specified location within the image is
-													positioned over that same specified position in the background. If
-													the length is pixels, the top left corner is placed relative to the
-													provided alignment keywords (left, bottom, etc.). See examples for
-													more details.<br>
-													If 1 value is specified, the other value is assumed to be center.
-													If 2 values are specified, the first value must be for horizontal
-													placement and the second for vertical.<br>
+								<td>控制背景图像的水平和垂直位置，其格式为:
+
+									如果长度是百分比，则图像中的指定位置将定位在背景中相同的指定位置上。如果长度为像素，则左上角相对于提供的对齐关键字(左、下等)放置。参见示例了解更多细节。
+									
+									如果指定了一个值，则假定另一个值为中心。如果指定了两个值，则第一个值必须用于水平放置，第二个值必须用于垂直放置。
 
 								</td>
 							</tr>
@@ -20428,41 +20420,28 @@ aaaabbbbccccc
 									background-repeat: repeat space; // repeats horizontally, spaces vertically <br>
 									background-repeat: no-repeat round; // 1 column of images, scaled to fit evenly<br>
 								</td>
-								<td>Controls if the background should be repeated in the horizontal and vertical
-									directions.<br>
+								<td>控制背景是否应该在水平和垂直方向上重复。<br>
 
-									Possible values per direction:
-									"repeat" - (default) Repeated in the specified direction until it fills the
-									panel<br>
-									"space" - Repeated as many times as required to fill the panel w/o being clipped.
-									Space is added between images to to align first and last image with panel edges.<br>
-									"round" - Repeated as many times as required to fill the panel w/o being clipped.
-									The image is resized to align first and last image with panel edges.<br>
-									"no-repeat" - Not repeated<br>
+									可能值:<br>
+									"repeat" - 按指定方向重复（可以不指定方向，则X、Y轴同时开始重复），直到填充满面板（默认）<br>
+									"space" - 有空间重复一个完整的，就开始重复，没有空间就停止重复。<br>
+									"round" - 空间一旦没填满，则强制缩小进行重复<br>
+									"no-repeat" - 只显示一次，不重复<br>
 
-									Possible single values:<br>
-									"repeat-x" - equals "repeat no-repeat"<br>
-									"repeat-y" - equals "no-repeat repeat"<br>
+									同等效果写法:<br>
+									"repeat-x" 等于 "repeat no-repeat"<br>
+									"repeat-y" 等于 "no-repeat repeat"<br>
 								</td>
 							</tr>
 							<tr id='background-size'>
 								<td> background-size
 								</td>
 								<td>
-									background-size: auto; // same as "auto auto" (default) <br>
-									background-size: 100% 100%; // image fills the panel<br>
-									background-size: 50% 75%; // image fills 50% of the panel's width, and 75% of the
-									panel's height<br>
-									background-size: 300px 200px; // image is drawn 300px wide, 200px tall<br>
+									background-size: auto; // 原始大小(默认) <br>
+									background-size: 100% 100%; // 按版的大小，用百分比设置。<br>
+									background-size: 300px 200px; // <br>
 								</td>
-								<td>Sets the horizontal and vertical dimensions used to draw the background image. Can
-									be set in pixels, percent, "contains" to size down to panel dimensions or "auto"
-									preserves the image aspect ratio. By default, set to "auto" which preveres the
-									image's original size.<br>
-
-									Multiple background layers can be specified in a comma separated list, which are
-									then combined with background-image, background-position, and background-repeat
-									values.
+								<td>控制背景图形的大小。
 								</td>
 							</tr>
 							<tr id='blur'>
@@ -20472,14 +20451,7 @@ aaaabbbbccccc
 									blur: gaussian( 6, 6, 1 );<br>
 
 								</td>
-								<td>Sets the amount of blur to apply to the panel and all it's children
-									during composition. Default is no blur, for now Gaussian is the only
-									blur type and takes a horizontal standard deviation, vertical
-									standard deviation, and number of passes. Good std deviation values
-									are around 0-10, if 10 is still not intense enough consider more
-									passes, but more than one pass is bad for perf. As shorthand you
-									can specify with just one value, which will be used for the
-									standard deviation in both directions and 1 pass will be set.
+								<td>设置模糊，只能设置gaussian（高斯）模糊类型，值为0-10。将应用到所有子元素。
 								</td>
 							</tr>
 							<tr id='border'>
@@ -20488,8 +20460,7 @@ aaaabbbbccccc
 								<td>border: 2px solid #111111FF;
 
 								</td>
-								<td>Shorthand for setting panel border. Specify width, style, and color. Supported
-									styles are: solid, none.
+								<td>设置边框。样式只支持solid 和none。
 								</td>
 							</tr>
 							<tr id='border-bottom'>
@@ -20498,8 +20469,7 @@ aaaabbbbccccc
 								<td>border-bottom: 2px solid #111111FF;
 
 								</td>
-								<td>Shorthand for setting the bottom panel border. Specify width, style, and color.
-									Supported styles are: solid, none.
+								<td>设置底边框。
 								</td>
 							</tr>
 							<tr id='border-left'>
@@ -20508,7 +20478,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置左边框。
 								</td>
 							</tr>
 							<tr id='border-right'>
@@ -20517,7 +20487,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置右边框。
 								</td>
 							</tr>
 							<tr id='border-top'>
@@ -20526,7 +20496,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置顶边框。
 								</td>
 							</tr>
 							<tr id='border-color'>
@@ -20536,9 +20506,7 @@ aaaabbbbccccc
 									border-color: #111111FF;<br>
 									border-color: #FF0000FF #00FF00FF #0000FFFF #00FFFFFF;<br>
 								</td>
-								<td>Specifies border color for panel. If a single color value is set it applies to all
-									sides, if 2 are set the first is top/bottom and the second is left/right, if all
-									four are set then they are top, right, bottom, left in order.
+								<td>设置边框颜色。
 
 								</td>
 							</tr>
@@ -20548,7 +20516,7 @@ aaaabbbbccccc
 								<td>border-bottom-color: #111111FF;
 
 								</td>
-								<td>Specifies border color for the bottom edge of the panel.
+								<td>设置底边框颜色。
 								</td>
 							</tr>
 							<tr id='border-left-color'>
@@ -20557,7 +20525,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置左边框颜色。
 								</td>
 							</tr>
 							<tr id='border-right-color'>
@@ -20566,7 +20534,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置右框颜色。
 								</td>
 							</tr>
 							<tr id='border-top-color'>
@@ -20575,34 +20543,23 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置顶边框颜色。
 								</td>
 							</tr>
 							<tr id='border-radius'>
 								<td> border-radius
 								</td>
 								<td>// 2 px circular corners on all sides<br>
-									border-radius: 2px;<br>
+									border-radius: 20px;<br>
 									// Perfect circular or elliptical panel (circular if box was square)<br>
 									border-radius: 50% / 50%;<br>
 									// 2 px horizontal radii 4px vertical elliptical corners on all sides<br>
-									border-radius: 2px / 4px;<br>
+									border-radius: 20px / 40px;<br>
 									// All corners fully specified <br>
-									border-radius: 2px 3px 4px 2px / 2px 3px 3px 2px;<br>
+									border-radius: 20px 30px 40px 20px / 20px 30px 30px 20px;<br>
 
 								</td>
-								<td>Shorthand to set border radius for all corners
-									at once. Border radius rounds off corners of
-									the panel, adjusting the border to smoothly
-									round and also clipping background image/color
-									and contents to the specified elliptical or
-									circular values. In this shorthand version
-									you may specify a single value for all raddi,
-									or horizontal / vertical separated by the '/'
-									character. For both horizontal and vertical you
-									may specify 1 to 4 values in pixels or %, they
-									will be taken in order as top-left, top-right,
-									bottom-right, bottom-left radii values.
+								<td>设置板的角弧度（变圆角）。
 
 								</td>
 							</tr>
@@ -20613,12 +20570,7 @@ aaaabbbbccccc
 									border-bottom-left-radius: 5%;<br>
 
 								</td>
-								<td>pecifies border-radius for bottom-left corner which rounds
-									off border and clips background/foreground content to rounded
-									edge. Takes 1 or 2 values in px or %, first value is horizontal
-									adii for elliptical corner, second is vertical radii, if only
-									one is specified then horizontal/vertical will both be set and
-									corner will be circular.
+								<td>设置板的左底角弧度。
 								</td>
 							</tr>
 							<tr id='border-bottom-right-radius'>
@@ -20627,7 +20579,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置板的右底角弧度。
 								</td>
 							</tr>
 							<tr id='border-top-left-radius'>
@@ -20636,7 +20588,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置板的左上角弧度。
 								</td>
 							</tr>
 							<tr id='border-top-right-radius'>
@@ -20645,7 +20597,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置板的右上角弧度。
 								</td>
 							</tr>
 							<tr id='border-style'>
@@ -20655,10 +20607,7 @@ aaaabbbbccccc
 									border-style: solid none solid none;<br>
 
 								</td>
-								<td>Specifies border style for panel. If a single style value is set
-									it applies to all sides, if 2 are set the first is top/bottom
-									and the second is left/right, if all four are set then they are
-									top, right, bottom, left in order.
+								<td>设置边框是实线还是没有线，只支持这2种。
 								</td>
 							</tr>
 							<tr id='border-bottom-style'>
@@ -20667,7 +20616,7 @@ aaaabbbbccccc
 								<td>border-bottom-style: solid;
 
 								</td>
-								<td>Specifies border style for the bottom edge of the panel.
+								<td>设置底边框线。
 								</td>
 							</tr>
 							<tr id='border-left-style'>
@@ -20676,7 +20625,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置左边框线。
 								</td>
 							</tr>
 							<tr id='border-right-style'>
@@ -20685,7 +20634,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置右边框线。
 								</td>
 							</tr>
 							<tr id='border-top-style'>
@@ -20694,7 +20643,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置顶边框线。
 								</td>
 							</tr>
 							<tr id='border-width'>
@@ -20704,10 +20653,7 @@ aaaabbbbccccc
 									border-width: 20px 1px 20px 1px;<br>
 
 								</td>
-								<td>Specifies border width for panel. If a single width value is
-									set it applies to all sides, if 2 are set the first is top/bottom
-									and the second is left/right, if all four are set then they are
-									top, right, bottom, left in order.
+								<td>设置边框宽度，如果4个参数，顺序是上，右，下，左。如果2个参数，为顶/底、左/右。
 								</td>
 							</tr>
 							<tr id='border-bottom-width'>
@@ -20716,7 +20662,7 @@ aaaabbbbccccc
 								<td>border-bottom-width: 2px;
 
 								</td>
-								<td>Specifies border width for the bottom edge of the panel.
+								<td>设置底边框宽度。
 								</td>
 							</tr>
 
@@ -20726,7 +20672,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置左边框宽度。
 								</td>
 							</tr>
 
@@ -20736,7 +20682,7 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置右边框宽度。
 								</td>
 							</tr>
 
@@ -20746,29 +20692,20 @@ aaaabbbbccccc
 								<td>
 
 								</td>
-								<td>
+								<td>设置顶边框宽度。
 								</td>
 							</tr>
 
 							<tr id='box-shadow'>
 								<td> box-shadow
 								</td>
-								<td>box-shadow: #ffffff80 4px 4px 8px 0px; // outer<br>
-									box-shadow: fill #ffffff80 4px 4px 8px 0px; // outer, filled<br>
-									box-shadow: inset #333333b0 0px 0px 8px 12px; // inner<br>
+								<td>box-shadow: #ffffff80（颜色） 4px(水平偏移,正数向右) 4px(垂直偏移,正数向下) 8px(正数为模糊宽度，0和负数为透明(超过-250变成显微镜)) 0px; // 外边框<br>
+									box-shadow: fill #ffffff80 4px 4px 8px 0px; // 外边框, 内部全部填充阴影<br>
+									box-shadow: inset #333333b0 0px 0px 8px 12px; // 内边框<br>
 
 								</td>
-								<td>Specifies outer shadows for boxes, or inset shadows/glows.
-									The shadow shape will match the border box for the panel,so
-									use border-radius to affect rounding. Syntax takes optional
-									'inset', optional 'fill' then color, and then horizontal
-									offset pixels, vertical offset pixels, blur radius pixels,
-									and spread distance in pixels. Inset means the shadow is an
-									inner shadow/glow, fill is valid only on outer shadows and
-									means draw the shadow behind the entire box, not clipping
-									it to outside the border area only. A negative blur radius
-									will give a hard-edged look to the shadow, effectively a
-									rounded outline of the same size as the blur.
+								<td>边框阴影，。
+					
 								</td>
 							</tr>
 							<tr id='brightness'>
