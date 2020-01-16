@@ -477,9 +477,9 @@ aaaabbbbccccc
 							<tr>
 								<td> DispatchEventAsync
 								</td>
-								<td> void $.DispatchEventAsync( js_raw_args, js_raw_args_1 )
+								<td> void $.DispatchEventAsync(float delay,string paneleventname, handle panel, unknown value )
 								</td>
-								<td> Dispatch an event to occur later
+								<td> 延迟触发一个板事件。
 								</td>
 							</tr>
 							<tr>
@@ -4686,7 +4686,7 @@ aaaabbbbccccc
 								</td>
 								<td> hittest = bool boolean_1 
 								</td>
-								<td>
+								<td>是否阻挡下层板的板事件。true表示阻挡。
 								</td>
 							</tr>
 							<tr>
@@ -20714,23 +20714,17 @@ aaaabbbbccccc
 								<td>brightness: 1.5;
 
 								</td>
-								<td>Sets the brightness that applies to the panel and all it's children
-									during composition. The value is a multiplier on the HSB brightness
-									value.
+								<td>设置合成期间应用于面板及其所有子代的亮度。 该值是HSB亮度值的乘数。
 								</td>
 							</tr>
 							<tr id='clip'>
 								<td> clip
 								</td>
-								<td>clip: rect( 10%, 90%, 90%, 10% );<br>
-									clip: radial( 50% %50, 0deg, 90deg );<br>
+								<td>clip: rect( 10%, 90%, 90%, 10% );切出一个矩形区域，参数是到边框的距离，分别是上、左、下、右。注意:这个距离都是以左，上边框为基准。单位可以是px。<br>
+									clip: radial( 50% %50, 0deg, 90deg );以一个中心点，按圆的角度切出一块区域,进行的方向是点的垂直线往右开始计算。<br>
 
 								</td>
-								<td>Specifies a clip region within the panel, where contents will be
-									clipped at render time. This clipping has no impact on layout,
-									and is fast and supported for transitions/animations. Radial clip
-									mode takes a center point, start angle and angular width of the
-									revealed sector.
+								<td>在面板中剪切出一个指定区域(切出的区域是保留的，其他区域扔掉)。
 								</td>
 							</tr>
 							<tr id='color'>
@@ -20740,8 +20734,7 @@ aaaabbbbccccc
 									color: gradient( linear, 0% 0%, 0% 100%, from( #cbcbcbff ), to( #a0a0a0a0 ) );<br>
 
 								</td>
-								<td>Sets the foreground fill color/gradient/combination for a panel. This
-									color is the color used to render text within the panel.
+								<td>设置字体的颜色。
 								</td>
 							</tr>
 							<tr id='context-menu-arrow-position'>
@@ -20794,17 +20787,19 @@ aaaabbbbccccc
 								<td>contrast: 1.5;
 
 								</td>
-								<td>Sets the contrast that applies to the panel and all it's children during
-									composition.
+								<td>设置对比度，对子元素起作用。
 								</td>
 							</tr>
 							<tr id='flow-children'>
 								<td> flow-children
 								</td>
-								<td>
-
+								<td>flow-children:right;水平向右<br>
+									flow-children:right-wrap;水平向右，超过父类边界的子元素自动换行<br>
+									flow-children:left;<br>
+									flow-children:down;<br>
+									flow-children:none;(默认)
 								</td>
-								<td>
+								<td>子元素浮动方向。
 								</td>
 							</tr>
 							<tr id='font'>
@@ -21212,9 +21207,7 @@ aaaabbbbccccc
 								<td>saturation: 0.4;
 
 								</td>
-								<td>Sets the amount of saturation to apply to the panel and all it's children
-									during composition. Default of 1.0 means no adjustment, 0.0 means fully
-									desaturated to gray scale, greater than 1.0 means over-saturation.
+								<td>设置在合成期间应用于面板及其所有子级的饱和度量。 默认值1.0表示不进行调整，0.0表示完全饱和至灰度，大于1.0则表示过饱和。
 								</td>
 							</tr>
 							<tr id='sound'>
