@@ -534,6 +534,14 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> CreatePanelWithProperties
+								</td>
+								<td> handle $.CreatePanelWithProperties( object parameter )
+								</td>
+								<td> Create a new panel supplying a JS object as a fourth parameter containing properties to be applied to the panel.
+								</td>
+							</tr>
+							<tr>
 								<td> Localize
 								</td>
 								<td> $.Localize( js_raw_args, js_raw_args_1 )
@@ -761,6 +769,14 @@ aaaabbbbccccc
 								<td> Game.GetKeybindForInventorySlot( integer iSlot )
 								</td>
 								<td> Returns the keybind (as a string) for the requested inventory slot.
+								</td>
+							</tr>
+							<tr>
+								<td> GetKeybindForCommand
+								</td>
+								<td> Game.GetKeybindForCommand( integer nCommand )
+								</td>
+								<td> Returns the keybind (as a string).
 								</td>
 							</tr>
 							<tr>
@@ -3876,6 +3892,7 @@ aaaabbbbccccc
 								<td> Returns the keybind (as a string) for the specified ability.
 								</td>
 							</tr>
+							
 						</table>
 					</div>
 				</div>
@@ -4392,11 +4409,27 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> GetCameraYaw
+								</td>
+								<td> GameUI.GetCameraYaw()
+								</td>
+								<td> Get the camera's yaw.
+								</td>
+							</tr>
+							<tr>
 								<td> SetCameraLookAtPositionHeightOffset
 								</td>
 								<td> GameUI.SetCameraLookAtPositionHeightOffset( float flCameraLookAtHeightOffset )
 								</td>
 								<td> Offset the camera's look at point.
+								</td>
+							</tr>
+							<tr>
+								<td> SetCameraPositionFromLateralLookAtPosition
+								</td>
+								<td> GameUI.SetCameraPositionFromLateralLookAtPosition( float x, float y )
+								</td>
+								<td> Set the camera from a lateral position.从侧面放置相机。？？
 								</td>
 							</tr>
 							<tr>
@@ -8825,6 +8858,14 @@ aaaabbbbccccc
 								<td> dotaunitorder_t.DOTA_UNIT_ORDER_DROP_ITEM_AT_FOUNTAIN
 								</td>
 								<td> 37
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dotaunitorder_t.DOTA_UNIT_ORDER_TAKE_ITEM_FROM_NEUTRAL_ITEM_STASH
+								</td>
+								<td> 38
 								</td>
 								<td>
 								</td>
@@ -16341,9 +16382,25 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> modifierstate.MODIFIER_STATE_LAST
+								<td> modifierstate.MODIFIER_STATE_FEARED
 								</td>
 								<td> 41
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> modifierstate.MODIFIER_STATE_TAUNTED
+								</td>
+								<td> 42
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> modifierstate.MODIFIER_STATE_LAST
+								</td>
+								<td> 43
 								</td>
 								<td>
 								</td>
@@ -17023,7 +17080,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_COMMONITEMS
 								</td>
 								<td> 13
 								</td>
@@ -17031,7 +17088,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS
 								</td>
 								<td> 14
 								</td>
@@ -17039,7 +17096,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME
 								</td>
 								<td> 15
 								</td>
@@ -17047,7 +17104,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK
 								</td>
 								<td> 16
 								</td>
@@ -17055,7 +17112,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS
 								</td>
 								<td> 17
 								</td>
@@ -17063,7 +17120,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_RADIANT_TEAM
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND
 								</td>
 								<td> 18
 								</td>
@@ -17071,7 +17128,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_DIRE_TEAM
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_RADIANT_TEAM
 								</td>
 								<td> 19
 								</td>
@@ -17079,7 +17136,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_SCORE
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_DIRE_TEAM
 								</td>
 								<td> 20
 								</td>
@@ -17087,7 +17144,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_SCORE
 								</td>
 								<td> 21
 								</td>
@@ -17095,7 +17152,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME_CHAT
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME
 								</td>
 								<td> 22
 								</td>
@@ -17103,7 +17160,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_QUICK_STATS
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME_CHAT
 								</td>
 								<td> 23
 								</td>
@@ -17111,7 +17168,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_PREGAME_STRATEGYUI
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_QUICK_STATS
 								</td>
 								<td> 24
 								</td>
@@ -17119,7 +17176,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_KILLCAM
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_PREGAME_STRATEGYUI
 								</td>
 								<td> 25
 								</td>
@@ -17127,7 +17184,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_KILLCAM
 								</td>
 								<td> 26
 								</td>
@@ -17135,7 +17192,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR
 								</td>
 								<td> 27
 								</td>
@@ -17143,9 +17200,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS
 								</td>
 								<td> 28
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT
+								</td>
+								<td> 29
 								</td>
 								<td>
 								</td>
@@ -18213,7 +18278,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY1_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYNEUTRAL
 								</td>
 								<td> 90
 								</td>
@@ -18221,7 +18286,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY2_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY1_QUICKCAST
 								</td>
 								<td> 91
 								</td>
@@ -18229,7 +18294,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY3_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY2_QUICKCAST
 								</td>
 								<td> 92
 								</td>
@@ -18237,7 +18302,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY4_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY3_QUICKCAST
 								</td>
 								<td> 93
 								</td>
@@ -18245,7 +18310,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY5_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY4_QUICKCAST
 								</td>
 								<td> 94
 								</td>
@@ -18253,7 +18318,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY6_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY5_QUICKCAST
 								</td>
 								<td> 95
 								</td>
@@ -18261,7 +18326,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYTP_QUICKCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY6_QUICKCAST
 								</td>
 								<td> 96
 								</td>
@@ -18269,7 +18334,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY1_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYTP_QUICKCAST
 								</td>
 								<td> 97
 								</td>
@@ -18277,7 +18342,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY2_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYNEUTRAL_QUICKCAST
 								</td>
 								<td> 98
 								</td>
@@ -18285,7 +18350,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY3_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY1_AUTOCAST
 								</td>
 								<td> 99
 								</td>
@@ -18293,7 +18358,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY4_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY2_AUTOCAST
 								</td>
 								<td> 100
 								</td>
@@ -18301,7 +18366,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY5_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY3_AUTOCAST
 								</td>
 								<td> 101
 								</td>
@@ -18309,7 +18374,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY6_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY4_AUTOCAST
 								</td>
 								<td> 102
 								</td>
@@ -18317,7 +18382,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYTP_AUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY5_AUTOCAST
 								</td>
 								<td> 103
 								</td>
@@ -18325,7 +18390,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY1_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY6_AUTOCAST
 								</td>
 								<td> 104
 								</td>
@@ -18333,7 +18398,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY2_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYTP_AUTOCAST
 								</td>
 								<td> 105
 								</td>
@@ -18341,7 +18406,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY3_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYNEUTRAL_AUTOCAST
 								</td>
 								<td> 106
 								</td>
@@ -18349,7 +18414,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY4_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY1_QUICKAUTOCAST
 								</td>
 								<td> 107
 								</td>
@@ -18357,7 +18422,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY5_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY2_QUICKAUTOCAST
 								</td>
 								<td> 108
 								</td>
@@ -18365,7 +18430,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY6_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY3_QUICKAUTOCAST
 								</td>
 								<td> 109
 								</td>
@@ -18373,7 +18438,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYTP_QUICKAUTOCAST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY4_QUICKAUTOCAST
 								</td>
 								<td> 110
 								</td>
@@ -18381,7 +18446,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP1
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY5_QUICKAUTOCAST
 								</td>
 								<td> 111
 								</td>
@@ -18389,7 +18454,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP2
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORY6_QUICKAUTOCAST
 								</td>
 								<td> 112
 								</td>
@@ -18397,7 +18462,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP3
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYTP_QUICKAUTOCAST
 								</td>
 								<td> 113
 								</td>
@@ -18405,7 +18470,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP4
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INVENTORYNEUTRAL_QUICKAUTOCAST
 								</td>
 								<td> 114
 								</td>
@@ -18413,7 +18478,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP5
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP1
 								</td>
 								<td> 115
 								</td>
@@ -18421,7 +18486,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP6
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP2
 								</td>
 								<td> 116
 								</td>
@@ -18429,7 +18494,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP7
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP3
 								</td>
 								<td> 117
 								</td>
@@ -18437,7 +18502,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP8
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP4
 								</td>
 								<td> 118
 								</td>
@@ -18445,7 +18510,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP9
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP5
 								</td>
 								<td> 119
 								</td>
@@ -18453,7 +18518,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP10
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP6
 								</td>
 								<td> 120
 								</td>
@@ -18461,7 +18526,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUPCYCLE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP7
 								</td>
 								<td> 121
 								</td>
@@ -18469,7 +18534,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY1
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP8
 								</td>
 								<td> 122
 								</td>
@@ -18477,7 +18542,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY2
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP9
 								</td>
 								<td> 123
 								</td>
@@ -18485,7 +18550,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY3
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUP10
 								</td>
 								<td> 124
 								</td>
@@ -18493,7 +18558,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY4
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUPCYCLE
 								</td>
 								<td> 125
 								</td>
@@ -18501,7 +18566,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY5
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY1
 								</td>
 								<td> 126
 								</td>
@@ -18509,7 +18574,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_TOGGLE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY2
 								</td>
 								<td> 127
 								</td>
@@ -18517,7 +18582,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SCOREBOARD_TOGGLE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY3
 								</td>
 								<td> 128
 								</td>
@@ -18525,7 +18590,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SCREENSHOT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY4
 								</td>
 								<td> 129
 								</td>
@@ -18533,7 +18598,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_ESCAPE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SELECT_ALLY5
 								</td>
 								<td> 130
 								</td>
@@ -18541,7 +18606,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONSOLE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_TOGGLE
 								</td>
 								<td> 131
 								</td>
@@ -18549,7 +18614,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_DEATH_SUMMARY
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SCOREBOARD_TOGGLE
 								</td>
 								<td> 132
 								</td>
@@ -18557,7 +18622,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_LEARN_ABILITIES
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SCREENSHOT
 								</td>
 								<td> 133
 								</td>
@@ -18565,7 +18630,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_LEARN_STATS
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_ESCAPE
 								</td>
 								<td> 134
 								</td>
@@ -18573,7 +18638,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_ACTIVATE_GLYPH
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONSOLE
 								</td>
 								<td> 135
 								</td>
@@ -18581,7 +18646,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_ACTIVATE_RADAR
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_DEATH_SUMMARY
 								</td>
 								<td> 136
 								</td>
@@ -18589,7 +18654,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_PURCHASE_QUICKBUY
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_LEARN_ABILITIES
 								</td>
 								<td> 137
 								</td>
@@ -18597,7 +18662,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_PURCHASE_STICKY
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_LEARN_STATS
 								</td>
 								<td> 138
 								</td>
@@ -18605,7 +18670,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_GRAB_STASH_ITEMS
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_ACTIVATE_GLYPH
 								</td>
 								<td> 139
 								</td>
@@ -18613,7 +18678,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_TOGGLE_AUTOATTACK
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_ACTIVATE_RADAR
 								</td>
 								<td> 140
 								</td>
@@ -18621,7 +18686,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_TAUNT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_PURCHASE_QUICKBUY
 								</td>
 								<td> 141
 								</td>
@@ -18629,7 +18694,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_CONSUMABLES
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_PURCHASE_STICKY
 								</td>
 								<td> 142
 								</td>
@@ -18637,7 +18702,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ATTRIBUTES
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_GRAB_STASH_ITEMS
 								</td>
 								<td> 143
 								</td>
@@ -18645,7 +18710,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARMAMENTS
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_TOGGLE_AUTOATTACK
 								</td>
 								<td> 144
 								</td>
@@ -18653,7 +18718,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARCANE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_TAUNT
 								</td>
 								<td> 145
 								</td>
@@ -18661,7 +18726,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_BASICS
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_CONSUMABLES
 								</td>
 								<td> 146
 								</td>
@@ -18669,7 +18734,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SUPPORT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ATTRIBUTES
 								</td>
 								<td> 147
 								</td>
@@ -18677,7 +18742,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_CASTER
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARMAMENTS
 								</td>
 								<td> 148
 								</td>
@@ -18685,7 +18750,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_WEAPONS
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARCANE
 								</td>
 								<td> 149
 								</td>
@@ -18693,7 +18758,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARMOR
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_BASICS
 								</td>
 								<td> 150
 								</td>
@@ -18701,7 +18766,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARTIFACTS
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SUPPORT
 								</td>
 								<td> 151
 								</td>
@@ -18709,7 +18774,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SIDE_PAGE_1
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_CASTER
 								</td>
 								<td> 152
 								</td>
@@ -18717,7 +18782,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SIDE_PAGE_2
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_WEAPONS
 								</td>
 								<td> 153
 								</td>
@@ -18725,7 +18790,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SECRET
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARMOR
 								</td>
 								<td> 154
 								</td>
@@ -18733,7 +18798,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SEARCHBOX
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_ARTIFACTS
 								</td>
 								<td> 155
 								</td>
@@ -18741,7 +18806,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_1
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SIDE_PAGE_1
 								</td>
 								<td> 156
 								</td>
@@ -18749,7 +18814,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_2
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SIDE_PAGE_2
 								</td>
 								<td> 157
 								</td>
@@ -18757,7 +18822,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_3
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SECRET
 								</td>
 								<td> 158
 								</td>
@@ -18765,7 +18830,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_4
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SEARCHBOX
 								</td>
 								<td> 159
 								</td>
@@ -18773,7 +18838,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_5
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_1
 								</td>
 								<td> 160
 								</td>
@@ -18781,7 +18846,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_6
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_2
 								</td>
 								<td> 161
 								</td>
@@ -18789,7 +18854,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_7
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_3
 								</td>
 								<td> 162
 								</td>
@@ -18797,7 +18862,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_8
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_4
 								</td>
 								<td> 163
 								</td>
@@ -18805,7 +18870,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_9
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_5
 								</td>
 								<td> 164
 								</td>
@@ -18813,7 +18878,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_10
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_6
 								</td>
 								<td> 165
 								</td>
@@ -18821,7 +18886,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_11
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_7
 								</td>
 								<td> 166
 								</td>
@@ -18829,7 +18894,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_12
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_8
 								</td>
 								<td> 167
 								</td>
@@ -18837,7 +18902,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_13
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_9
 								</td>
 								<td> 168
 								</td>
@@ -18845,7 +18910,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_14
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_10
 								</td>
 								<td> 169
 								</td>
@@ -18853,7 +18918,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_UP
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_11
 								</td>
 								<td> 170
 								</td>
@@ -18861,7 +18926,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_DOWN
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_12
 								</td>
 								<td> 171
 								</td>
@@ -18869,7 +18934,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_LEFT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_13
 								</td>
 								<td> 172
 								</td>
@@ -18877,7 +18942,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_RIGHT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SHOP_SLOT_14
 								</td>
 								<td> 173
 								</td>
@@ -18885,7 +18950,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_GRIP
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_UP
 								</td>
 								<td> 174
 								</td>
@@ -18893,7 +18958,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_1
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_DOWN
 								</td>
 								<td> 175
 								</td>
@@ -18901,7 +18966,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_2
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_LEFT
 								</td>
 								<td> 176
 								</td>
@@ -18909,7 +18974,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_3
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_RIGHT
 								</td>
 								<td> 177
 								</td>
@@ -18917,7 +18982,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_4
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_GRIP
 								</td>
 								<td> 178
 								</td>
@@ -18925,7 +18990,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_5
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_1
 								</td>
 								<td> 179
 								</td>
@@ -18933,7 +18998,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_6
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_2
 								</td>
 								<td> 180
 								</td>
@@ -18941,7 +19006,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_7
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_3
 								</td>
 								<td> 181
 								</td>
@@ -18949,7 +19014,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_8
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_4
 								</td>
 								<td> 182
 								</td>
@@ -18957,7 +19022,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_9
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_5
 								</td>
 								<td> 183
 								</td>
@@ -18965,7 +19030,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_10
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_6
 								</td>
 								<td> 184
 								</td>
@@ -18973,7 +19038,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_UNIT_SELECT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_7
 								</td>
 								<td> 185
 								</td>
@@ -18981,7 +19046,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_HERO_SELECT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_8
 								</td>
 								<td> 186
 								</td>
@@ -18989,7 +19054,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_PAUSE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_9
 								</td>
 								<td> 187
 								</td>
@@ -18997,7 +19062,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CHAT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CAMERA_SAVED_POSITION_10
 								</td>
 								<td> 188
 								</td>
@@ -19005,7 +19070,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_SCOREBOARD
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_UNIT_SELECT
 								</td>
 								<td> 189
 								</td>
@@ -19013,7 +19078,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_INCREASE_REPLAY_SPEED
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_HERO_SELECT
 								</td>
 								<td> 190
 								</td>
@@ -19021,7 +19086,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DECREASE_REPLAY_SPEED
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_PAUSE
 								</td>
 								<td> 191
 								</td>
@@ -19029,7 +19094,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_HARVEST
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_CHAT
 								</td>
 								<td> 192
 								</td>
@@ -19037,7 +19102,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_ITEM
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_SCOREBOARD
 								</td>
 								<td> 193
 								</td>
@@ -19045,7 +19110,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_GOLD
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_INCREASE_REPLAY_SPEED
 								</td>
 								<td> 194
 								</td>
@@ -19053,7 +19118,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_XP
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DECREASE_REPLAY_SPEED
 								</td>
 								<td> 195
 								</td>
@@ -19061,7 +19126,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_FANTASY
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_HARVEST
 								</td>
 								<td> 196
 								</td>
@@ -19069,7 +19134,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_WINCHANCE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_ITEM
 								</td>
 								<td> 197
 								</td>
@@ -19077,7 +19142,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOW_TOGGLEBOTH
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_GOLD
 								</td>
 								<td> 198
 								</td>
@@ -19085,7 +19150,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOW_TOGGLERADIENT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_XP
 								</td>
 								<td> 199
 								</td>
@@ -19093,7 +19158,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOW_TOGGLEDIRE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_FANTASY
 								</td>
 								<td> 200
 								</td>
@@ -19101,7 +19166,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_OPEN_BROADCASTER_MENU
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_STATS_WINCHANCE
 								</td>
 								<td> 201
 								</td>
@@ -19109,7 +19174,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_KDA
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOW_TOGGLEBOTH
 								</td>
 								<td> 202
 								</td>
@@ -19117,7 +19182,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_LASTHITS_DENIES
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOW_TOGGLERADIENT
 								</td>
 								<td> 203
 								</td>
@@ -19125,7 +19190,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_LEVEL
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOW_TOGGLEDIRE
 								</td>
 								<td> 204
 								</td>
@@ -19133,7 +19198,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_XP_PER_MIN
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_OPEN_BROADCASTER_MENU
 								</td>
 								<td> 205
 								</td>
@@ -19141,7 +19206,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_GOLD
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_KDA
 								</td>
 								<td> 206
 								</td>
@@ -19149,7 +19214,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_TOTALGOLD
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_LASTHITS_DENIES
 								</td>
 								<td> 207
 								</td>
@@ -19157,7 +19222,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_GOLD_PER_MIN
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_LEVEL
 								</td>
 								<td> 208
 								</td>
@@ -19165,7 +19230,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_BUYBACK
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_XP_PER_MIN
 								</td>
 								<td> 209
 								</td>
@@ -19173,7 +19238,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_NETWORTH
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_GOLD
 								</td>
 								<td> 210
 								</td>
@@ -19181,7 +19246,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_FANTASY
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_TOTALGOLD
 								</td>
 								<td> 211
 								</td>
@@ -19189,7 +19254,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_SORT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_GOLD_PER_MIN
 								</td>
 								<td> 212
 								</td>
@@ -19197,7 +19262,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_CLOSE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_BUYBACK
 								</td>
 								<td> 213
 								</td>
@@ -19205,7 +19270,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_1
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_NETWORTH
 								</td>
 								<td> 214
 								</td>
@@ -19213,7 +19278,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_2
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_FANTASY
 								</td>
 								<td> 215
 								</td>
@@ -19221,7 +19286,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_3
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_SORT
 								</td>
 								<td> 216
 								</td>
@@ -19229,7 +19294,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_4
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_DROPDOWN_CLOSE
 								</td>
 								<td> 217
 								</td>
@@ -19237,7 +19302,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_5
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_1
 								</td>
 								<td> 218
 								</td>
@@ -19245,7 +19310,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_6
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_2
 								</td>
 								<td> 219
 								</td>
@@ -19253,7 +19318,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_7
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_3
 								</td>
 								<td> 220
 								</td>
@@ -19261,7 +19326,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_8
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_4
 								</td>
 								<td> 221
 								</td>
@@ -19269,7 +19334,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_9
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_5
 								</td>
 								<td> 222
 								</td>
@@ -19277,7 +19342,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_10
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_6
 								</td>
 								<td> 223
 								</td>
@@ -19285,7 +19350,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_COACH_VIEWTOGGLE
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_7
 								</td>
 								<td> 224
 								</td>
@@ -19293,7 +19358,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INSPECTHEROINWORLD
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_8
 								</td>
 								<td> 225
 								</td>
@@ -19301,7 +19366,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CAMERA_ZOOM_IN
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_9
 								</td>
 								<td> 226
 								</td>
@@ -19309,7 +19374,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CAMERA_ZOOM_OUT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_FOCUS_PLAYER_10
 								</td>
 								<td> 227
 								</td>
@@ -19317,7 +19382,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUPCYCLEPREV
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_SPEC_COACH_VIEWTOGGLE
 								</td>
 								<td> 228
 								</td>
@@ -19325,7 +19390,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_DOTA_ALT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_INSPECTHEROINWORLD
 								</td>
 								<td> 229
 								</td>
@@ -19333,9 +19398,41 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_COUNT
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CAMERA_ZOOM_IN
 								</td>
 								<td> 230
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CAMERA_ZOOM_OUT
+								</td>
+								<td> 231
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_CONTROL_GROUPCYCLEPREV
+								</td>
+								<td> 232
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_DOTA_ALT
+								</td>
+								<td> 233
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTAKeybindCommand_t.DOTA_KEYBIND_COUNT
+								</td>
+								<td> 234
 								</td>
 								<td>
 								</td>
@@ -19414,9 +19511,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_SHOP_TYPE.DOTA_SHOP_NONE
+								<td> DOTA_SHOP_TYPE.DOTA_SHOP_NEUTRALS
 								</td>
 								<td> 7
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_SHOP_TYPE.DOTA_SHOP_NONE
+								</td>
+								<td> 8
 								</td>
 								<td>
 								</td>
