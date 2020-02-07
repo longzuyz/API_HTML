@@ -552,9 +552,9 @@ aaaabbbbccccc
 							<tr>
 								<td> Schedule
 								</td>
-								<td> void $.Schedule( float delay, handle func )
+								<td> int $.Schedule( float delay, handle func )
 								</td>
-								<td> 在一个delay后执行函数，注意参数func只需要填写函数名，后面不加()，也不加""号。
+								<td> 在一个delay后执行函数，注意参数func只需要填写函数名，后面不加()，也不加""号。返回一个数字代表这个计时器，可以用来取消
 								</td>
 							</tr>
 							<tr>
@@ -562,7 +562,7 @@ aaaabbbbccccc
 								</td>
 								<td> void $.CancelScheduled( js_raw_args)
 								</td>
-								<td> Cancelse a scheduled function
+								<td> 取消一个计时器，参数是$.Schedule返回的数。
 								</td>
 							</tr>
 							<tr>
@@ -1031,10 +1031,9 @@ aaaabbbbccccc
 							<tr>
 								<td> EmitSound
 								</td>
-								<td> Game.EmitSound( cstring pSoundEventName )
+								<td> int Game.EmitSound( cstring pSoundEventName )
 								</td>
-								<td> Emit a sound for the local player. Returns an integer handle that can be passed to
-									StopSound. (Returns 0 on failure.)
+								<td> 播放一个语音，返回一个数，代表播放的事件，可以用来停止 (Returns 0 on failure.)
 								</td>
 							</tr>
 							<tr>
@@ -1042,8 +1041,7 @@ aaaabbbbccccc
 								</td>
 								<td> Game.StopSound( integer nHandle )
 								</td>
-								<td> Stop a current playing sound on the local player. Takes handle from a call to
-									EmitSound.
+								<td> 停止一个语音播放事件，参数是EmitSound返回的数。
 								</td>
 							</tr>
 							<tr>
@@ -4910,7 +4908,7 @@ aaaabbbbccccc
 								</td>
 								<td> ClearPanelEvent( cstring cstring_1 )
 								</td>
-								<td>
+								<td>清除板事件
 								</td>
 							</tr>
 							<tr>
@@ -4932,17 +4930,17 @@ aaaabbbbccccc
 							<tr>
 								<td> GetChildCount
 								</td>
-								<td> GetChildCount()
+								<td> int GetChildCount()
 								</td>
-								<td>
+								<td>获取子元素数量。
 								</td>
 							</tr>
 							<tr>
 								<td> GetChild
 								</td>
-								<td> GetChild( integer integer_1 )
+								<td> handle GetChild( integer integer_1 )
 								</td>
-								<td>
+								<td>获得第n个子元素
 								</td>
 							</tr>
 							<tr>
@@ -4964,9 +4962,9 @@ aaaabbbbccccc
 							<tr>
 								<td> FindChildrenWithClassTraverse
 								</td>
-								<td> FindChildrenWithClassTraverse( cstring cstring_1 )
+								<td> array FindChildrenWithClassTraverse( cstring cstring_1 )
 								</td>
-								<td>
+								<td>以数组形式返回 用CSS类名搜索的所有子类。
 								</td>
 							</tr>
 							<tr>
@@ -4996,9 +4994,9 @@ aaaabbbbccccc
 							<tr>
 								<td> FindChildTraverse
 								</td>
-								<td> FindChildTraverse( cstring cstring_1 )
+								<td> handle FindChildTraverse( cstring cstring_1 )
 								</td>
-								<td>
+								<td>穿透式寻找元素，参数为id名
 								</td>
 							</tr>
 							<tr>
@@ -5215,7 +5213,7 @@ aaaabbbbccccc
 							<tr>
 								<td> BLoadLayoutSnippet
 								</td>
-								<td> BLoadLayoutSnippet( cstring cstring_1 )
+								<td> bool BLoadLayoutSnippet( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
@@ -5295,10 +5293,9 @@ aaaabbbbccccc
 							<tr>
 								<td> ScrollParentToMakePanelFit
 								</td>
-								<td> ScrollParentToMakePanelFit(unknown_variant_type unknown_variant_type_1, boolean
-									boolean_2 )
+								<td> ScrollParentToMakePanelFit(int , boolean boolean )
 								</td>
-								<td>
+								<td>添加板的时候，使父板往下滚动，显示刚添加的版，int为滚动的距离，1代表一个添加的板位。
 								</td>
 							</tr>
 							<tr>
@@ -5410,7 +5407,7 @@ aaaabbbbccccc
 								</td>
 								<td> SetPanelEvent( string EventAttributes, handle func )
 								</td>
-								<td>EventAttributes见事件列表
+								<td>设置板事件，EventAttributes见事件列表
 								</td>
 							</tr>
 							<tr>
@@ -5770,7 +5767,7 @@ aaaabbbbccccc
 							<tr>
 								<td> Children
 								</td>
-								<td> Children()
+								<td> array Children()
 								</td>
 								<td>查找元素所有子元素，以数组形式返回。
 								</td>
@@ -5778,7 +5775,7 @@ aaaabbbbccccc
 							<tr>
 								<td> FindChildrenWithClassTraverse
 								</td>
-								<td> FindChildrenWithClassTraverse( cstring classname )
+								<td> array FindChildrenWithClassTraverse( cstring classname )
 								</td>
 								<td>用class名查找元素，返回一个数组。
 								</td>
@@ -5836,15 +5833,15 @@ aaaabbbbccccc
 								</td>
 								<td> RemoveAndDeleteChildren()
 								</td>
-								<td>
+								<td>删除全部子元素
 								</td>
 							</tr>
 							<tr>
 								<td> MoveChildBefore
 								</td>
-								<td> MoveChildBefore( unknown_variant_type unknown_variant_type_1, unknown_variant_type unknown_variant_type_2 )
+								<td> MoveChildBefore( handle panel, handle panel )
 								</td>
-								<td>
+								<td>移动父类中一个子元素到另一个子元素之前。第一个参数是要移动的板，第二个是目标位置的板
 								</td>
 							</tr>
 							<tr>
@@ -5852,7 +5849,7 @@ aaaabbbbccccc
 								</td>
 								<td> MoveChildAfter( unknown_variant_type unknown_variant_type_1, unknown_variant_type unknown_variant_type_2 )
 								</td>
-								<td>
+								<td>移动父类中一个子元素到另一个子元素之后。第一个参数是要移动的板，第二个是目标位置的板
 								</td>
 							</tr>
 							<tr>
@@ -5884,7 +5881,7 @@ aaaabbbbccccc
 								</td>
 								<td> DeleteAsync( float float_1 )
 								</td>
-								<td>
+								<td>延迟时间后删除板
 								</td>
 							</tr>
 							<tr>
@@ -5916,7 +5913,7 @@ aaaabbbbccccc
 								</td>
 								<td> SetFocus()
 								</td>
-								<td>
+								<td>设置聚焦到该板
 								</td>
 							</tr>
 							<tr>
@@ -5940,7 +5937,7 @@ aaaabbbbccccc
 								</td>
 								<td> SetAcceptsFocus( boolean boolean_1 )
 								</td>
-								<td>
+								<td>设置是否接受聚焦
 								</td>
 							</tr>
 							<tr>
@@ -5948,7 +5945,7 @@ aaaabbbbccccc
 								</td>
 								<td> SetDisableFocusOnMouseDown( boolean boolean_1 )
 								</td>
-								<td>
+								<td>设置当鼠标点下去时是否不能聚集
 								</td>
 							</tr>
 							<tr>
@@ -5996,7 +5993,7 @@ aaaabbbbccccc
 								</td>
 								<td> BLoadLayout( cstring fileurl, boolean boolean_2, boolean boolean_3 )
 								</td>
-								<td>用XML魔板插入元素内。xxx.BLoadLayout('aaa.xml',false,false)
+								<td>用XML魔板插入元素内。xxx.BLoadLayout('aaa.xml',false,false)，第一个Bool控制是否覆盖原来这个位置的板，第二控制aaa.xml文件中是否可以使用住文件中的变量。
 								</td>
 							</tr>
 							<tr>
@@ -6052,7 +6049,7 @@ aaaabbbbccccc
 								</td>
 								<td> SetDialogVariable( cstring cstring_1, cstring cstring_2 )
 								</td>
-								<td>
+								<td>设置变量
 								</td>
 							</tr>
 							<tr>
@@ -19450,7 +19447,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTAGame_TeamPlayerListChanged
 								</td>
-								<td>
+								<td>$.RegisterForUnhandledEvent( "DOTAGame_TeamPlayerListChanged", OnTeamPlayerListChanged );
 								</td>
 								<td> 队伍人员变动,$.RegisterForUnhandledEvent使用
 								</td>
@@ -19466,7 +19463,8 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTAGame_PlayerSelectedCustomTeam
 								</td>
-								<td> player_id ( short ): Player id of the player who selected a team<br>
+								<td> $.RegisterForUnhandledEvent( "DOTAGame_PlayerSelectedCustomTeam", OnPlayerSelectedTeam );<br>
+									player_id ( short ): Player id of the player who selected a team<br>
 									team_id( short ): Id of the team the player selected<br>
 									success( bool ): Was the player successfully assigned to the selected team<br>
 								</td>
@@ -19486,7 +19484,7 @@ aaaabbbbccccc
 							<tr>
 								<td> dota_player_hero_selection_dirty
 								</td>
-								<td>
+								<td>GameEvents.Subscribe( "dota_player_hero_selection_dirty", OnUpdateHeroSelection );
 								</td>
 								<td>玩家在英雄选择界面点击英雄图标
 								</td>
@@ -19494,7 +19492,7 @@ aaaabbbbccccc
 							<tr>
 								<td> dota_player_update_hero_selection
 								</td>
-								<td>
+								<td>GameEvents.Subscribe( "dota_player_update_hero_selection", OnUpdateHeroSelection );
 								</td>
 								<td>玩家选择了英雄
 								</td>
@@ -20440,6 +20438,7 @@ aaaabbbbccccc
 									background-size: auto; // 原始大小(默认) <br>
 									background-size: 100% 100%; // 按版的大小，用百分比设置。<br>
 									background-size: 300px 200px; // <br>
+									background-size:contain;//把图像图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域。
 								</td>
 								<td>控制背景图形的大小。
 								</td>

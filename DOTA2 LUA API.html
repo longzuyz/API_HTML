@@ -597,6 +597,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> CreateRune
+								</td>
+								<td> handle CreateRune( Vector_1, int_2 )
+								</td>
+								<td> 在一个地点创造一个指定符，int2位符的常量值。
+								</td>
+							</tr>
+							<tr>
 								<td> CreateSceneEntity
 								</td>
 								<td> handle CreateSceneEntity( string_1 )
@@ -873,6 +881,11 @@
 								<td>点积;点乘;</td>
 							</tr>
 							<tr>
+								<td>DropNeutralItemAtPositionForHero</td>
+								<td>void DropNeutralItemAtPositionForHero( string itemname, Vector Vector, handle HeroEntity, int teamNumber)</td>
+								<td>在指定地点为英雄所在的队伍丢一个中立的物品.</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.EmitAnnouncerSound"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.EmitAnnouncerSound">
 										EmitAnnouncerSound</a>
@@ -1018,6 +1031,14 @@
 								<td> void FindClearSpaceForUnit(handle a, Vector b, bool c)
 								</td>
 								<td> 在未被占用的地方创建单位
+								</td>
+							</tr>
+							<tr>
+								<td> FindSpawnEntityForTeam
+								</td>
+								<td> handle FindSpawnEntityForTeam( int teamNumber)
+								</td>
+								<td> 寻找指定队伍的出生点。
 								</td>
 							</tr>
 							<tr>
@@ -1366,6 +1387,14 @@
 								<td> float GetWorldMinY()
 								</td>
 								<td> 获取地图Y坐标最小值
+								</td>
+							</tr>
+							<tr>
+								<td> GetXPNeededToReachNextLevel
+								</td>
+								<td> int GetXPNeededToReachNextLevel( int level )
+								</td>
+								<td> 取得升级需要多少经验？？？是总共还是当前还缺多少？
 								</td>
 							</tr>
 							<tr>
@@ -6795,6 +6824,11 @@
 								<td>SetSelectedHero</td>
 								<td>void SetSelectedHero( string pszHeroName ) </td>
 								<td>Sets this player's hero selection. 为玩家根据提供的英雄名字选择英雄。</td>
+							</tr>
+							<tr>
+								<td>SpawnCourierAtPosition</td>
+								<td>handle SpawnCourierAtPosition( vLocation Vector) </td>
+								<td>为玩家创建在指定地点创建一个信使</td>
 							</tr>
 						</table>
 					</div>
@@ -19087,83 +19121,88 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_HERO_SELECTION_TEAMS</td>
+								<td>DOTA_HUD_VISIBILITY_SHOP_COMMONITEMS</td>
 								<td>13</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_HERO_SELECTION_GAME_NAME</td>
+								<td>DOTA_HUD_VISIBILITY_HERO_SELECTION_TEAMS</td>
 								<td>14</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_HERO_SELECTION_CLOCK</td>
+								<td>DOTA_HUD_VISIBILITY_HERO_SELECTION_GAME_NAME</td>
 								<td>15</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_MENU_BUTTONS</td>
+								<td>DOTA_HUD_VISIBILITY_HERO_SELECTION_CLOCK</td>
 								<td>16</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_BAR_BACKGROUND </td>
+								<td>DOTA_HUD_VISIBILITY_TOP_MENU_BUTTONS</td>
 								<td>17</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_BAR_RADIANT_TEAM</td>
+								<td>DOTA_HUD_VISIBILITY_TOP_BAR_BACKGROUND </td>
 								<td>18</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_BAR_DIRE_TEAM </td>
+								<td>DOTA_HUD_VISIBILITY_TOP_BAR_RADIANT_TEAM</td>
 								<td>19</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_BAR_SCORE</td>
+								<td>DOTA_HUD_VISIBILITY_TOP_BAR_DIRE_TEAM </td>
 								<td>20</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_ENDGAME</td>
+								<td>DOTA_HUD_VISIBILITY_TOP_BAR_SCORE</td>
 								<td>21</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_ENDGAME_CHAT</td>
+								<td>DOTA_HUD_VISIBILITY_ENDGAME</td>
 								<td>22</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_QUICK_STATS</td>
+								<td>DOTA_HUD_VISIBILITY_ENDGAME_CHAT</td>
 								<td>23</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_PREGAME_STRATEGYUI </td>
+								<td>DOTA_HUD_VISIBILITY_QUICK_STATS</td>
 								<td>24</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_KILLCAM</td>
+								<td>DOTA_HUD_VISIBILITY_PREGAME_STRATEGYUI </td>
 								<td>25</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_BAR</td>
+								<td>DOTA_HUD_VISIBILITY_KILLCAM</td>
 								<td>26</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_CUSTOMUI_BEHIND_HUD_ELEMENTS </td>
+								<td>DOTA_HUD_VISIBILITY_TOP_BAR</td>
 								<td>27</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_COUNT</td>
+								<td>DOTA_HUD_CUSTOMUI_BEHIND_HUD_ELEMENTS </td>
 								<td>28</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_HUD_VISIBILITY_COUNT</td>
+								<td>29</td>
 								<td></td>
 							</tr>
 						</table>
@@ -21516,8 +21555,13 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_SHOP_NONE</td>
+								<td>DOTA_SHOP_NEUTRALS</td>
 								<td>7</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_SHOP_NONE</td>
+								<td>8</td>
 								<td></td>
 							</tr>
 						</table>
@@ -21997,83 +22041,88 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS</td>
+								<td>DOTA_DEFAULT_UI_SHOP_COMMONITEMS</td>
 								<td>13</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME</td>
+								<td>DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS</td>
 								<td>14</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK</td>
+								<td>DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME</td>
 								<td>15</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_MENU_BUTTONS</td>
+								<td>DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK</td>
 								<td>16</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND</td>
+								<td>DOTA_DEFAULT_UI_TOP_MENU_BUTTONS</td>
 								<td>17</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_BAR_RADIANT_TEAM </td>
+								<td>DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND</td>
 								<td>18</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_BAR_DIRE_TEAM</td>
+								<td>DOTA_DEFAULT_UI_TOP_BAR_RADIANT_TEAM </td>
 								<td>19</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_BAR_SCORE</td>
+								<td>DOTA_DEFAULT_UI_TOP_BAR_DIRE_TEAM</td>
 								<td>20</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_ENDGAME</td>
+								<td>DOTA_DEFAULT_UI_TOP_BAR_SCORE</td>
 								<td>21</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_ENDGAME_CHAT </td>
+								<td>DOTA_DEFAULT_UI_ENDGAME</td>
 								<td>22</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_QUICK_STATS</td>
+								<td>DOTA_DEFAULT_UI_ENDGAME_CHAT </td>
 								<td>23</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_PREGAME_STRATEGYUI </td>
+								<td>DOTA_DEFAULT_UI_QUICK_STATS</td>
 								<td>24</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_KILLCAM</td>
+								<td>DOTA_DEFAULT_UI_PREGAME_STRATEGYUI </td>
 								<td>25</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_BAR</td>
+								<td>DOTA_DEFAULT_UI_KILLCAM</td>
 								<td>26</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS</td>
+								<td>DOTA_DEFAULT_UI_TOP_BAR</td>
 								<td>27</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_ELEMENT_COUNT</td>
+								<td>DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS</td>
 								<td>28</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_DEFAULT_UI_ELEMENT_COUNT</td>
+								<td>29</td>
 								<td></td>
 							</tr>
 						</table>
@@ -26969,11 +27018,20 @@
 								<td>40</td>
 								<td></td>
 							</tr>
-
+							<tr>
+								<td>MODIFIER_STATE_FEARED </td>
+								<td>41</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>MODIFIER_STATE_TAUNTED </td>
+								<td>42</td>
+								<td></td>
+							</tr>
 							<tr>
 								<td> MODIFIER_STATE_LAST
 								</td>
-								<td> 41
+								<td> 43
 								</td>
 								<td>
 								</td>
