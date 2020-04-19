@@ -8379,6 +8379,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetNeutralSpawnerName
+								</td>
+								<td> string GetNeutralSpawnerName()
+								</td>
+								<td> Get the name of this camp's neutral spawner.取得中立生物刷新点名称？？？
+								</td>
+							</tr>
+							<tr>
 								<td><a href="file:///C|/Users/Administrator/Desktop/1">GetNeverMoveToClearSpace</a></td>
 								<td>bool GetNeverMoveToClearSpace(  )</td>
 								<td>If set to true, we will never attempt to move this unit to clear space, even when it
@@ -8847,11 +8855,9 @@
 								</td>
 							</tr>
 							<tr>
-								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsDeniable"
-										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.IsDeniable">
-										IsDeniable</a>
+								<td> Script_IsDeniable
 								</td>
-								<td> bool IsDeniable()
+								<td> bool Script_IsDeniable()
 								</td>
 								<td> 是否可以被反补
 								</td>
@@ -10044,6 +10050,15 @@
 								<td> No Description Set
 								</td>
 							</tr>
+							<tr>
+								<td> SpeakConcept
+								</td>
+								<td> void SpeakConcept(handle CriteriaTable)
+								</td>
+								<td> Speak a response system concept with the TLK_DOTA_CUSTOM concept.
+								</td>
+							</tr>
+
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SpendMana"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.SpendMana">
@@ -14164,7 +14179,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IsHeroSelected">
 										IsHeroSelected</a>
 								</td>
-								<td> bool IsHeroSelected(string Heroname)
+								<td> bool IsHeroSelected(string Heroname,bool IgnoreUnrevealedPick)
 								</td>
 								<td>英雄是否被选择</td>
 							</tr>
@@ -14460,7 +14475,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.WhoSelectedHero">
 										WhoSelectedHero</a>
 								</td>
-								<td> int WhoSelectedHero(string Heroname)
+								<td> int WhoSelectedHero(string Heroname,bool IgnoreUnrevealedPick)
 								</td>
 								<td>谁选择了这个英雄</td>
 							</tr>
@@ -22256,7 +22271,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_ModifyGold_RoshanKill
+								<td> DOTA_ModifyGold_NeutralKill
 								</td>
 								<td> 14
 								</td>
@@ -22264,7 +22279,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_ModifyGold_CourierKill
+								<td> DOTA_ModifyGold_RoshanKill
 								</td>
 								<td> 15
 								</td>
@@ -22272,9 +22287,41 @@
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_ModifyGold_SharedGold
+								<td> DOTA_ModifyGold_CourierKill
 								</td>
 								<td> 16
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_ModifyGold_BountyRune
+								</td>
+								<td> 17
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_ModifyGold_SharedGold
+								</td>
+								<td> 18
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_ModifyGold_AbilityGold
+								</td>
+								<td> 19
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_ModifyGold_WardKill
+								</td>
+								<td> 20
 								</td>
 								<td>
 								</td>
