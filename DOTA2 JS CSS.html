@@ -467,6 +467,22 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> AssertHelper
+								</td>
+								<td> void $.AssertHelper( js_raw_args js_raw_args_1 )
+								</td>
+								<td> Trigger an assert
+								</td>
+							</tr>
+							<tr>
+								<td> Warning
+								</td>
+								<td> void $.Warning( js_raw_args js_raw_args_1 )
+								</td>
+								<td> Log a warning message to specified channel
+								</td>
+							</tr>
+							<tr>
 								<td> DispatchEvent
 								</td>
 								<td> void $.DispatchEvent(string paneleventname, handle panel, unknown value)
@@ -603,6 +619,14 @@ aaaabbbbccccc
 								<td> bool $.DbgIsReloadingScript( js_raw_args, js_raw_args_1 )
 								</td>
 								<td> Call during JS startup code to check if script is being reloaded
+								</td>
+							</tr>
+							<tr>
+								<td> LogChannel
+								</td>
+								<td> void $.LogChannel( js_raw_args, js_raw_args_1 )
+								</td>
+								<td> Create a logging channel
 								</td>
 							</tr>
 						</table>
@@ -10449,7 +10473,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_RoshanKill
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_NeutralKill
 								</td>
 								<td> 14
 								</td>
@@ -10457,7 +10481,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_CourierKill
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_RoshanKill
 								</td>
 								<td> 15
 								</td>
@@ -10465,9 +10489,41 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_SharedGold
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_CourierKill
 								</td>
 								<td> 16
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_BountyRune
+								</td>
+								<td> 17
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_SharedGold
+								</td>
+								<td> 18
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_AbilityGold
+								</td>
+								<td> 19
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_WardKill
+								</td>
+								<td> 20
 								</td>
 								<td>
 								</td>
