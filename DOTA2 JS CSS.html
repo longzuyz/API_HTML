@@ -292,15 +292,32 @@ aaaabbbbccccc
 							<li><a href="#CDOTA_PanoramaScript_GameUI">CDOTA_PanoramaScript_GameUI</a></li>
 							<li><a href="#CDOTA_PanoramaScript_Particles">CDOTA_PanoramaScript_Particles</a></li>
 							<li><a href="#CDOTA_PanoramaScript_EventData">CDOTA_PanoramaScript_EventData</a></li>
-							<li><a href="#CDOTA_PanoramaScript_LocalInventory">CDOTA_PanoramaScript_LocalInventory</a>
-							</li>
+							<li><a href="#CDOTA_PanoramaScript_LocalInventory">CDOTA_PanoramaScript_LocalInventory</a></li>
 							<li><a href="#DOTAHeroModelOverlay">DOTAHeroModelOverlay</a></li>
 							<li><a href="#DOTAHeroModelOverlay">Panel</a></li>
 							<li><a href="#DOTAHeroModelOverlay">CustomUIElement</a></li>
 							<li><a href="#DOTAHeroModelOverlay">Button</a></li>
 							<li><a href="#Label">Label</a></li>
+							<li><a href="#TextButton">TextButton</a></li>
+							<li><a href="#RadioButton">RadioButton</a></li>
+							<li><a href="#ToggleButton">ToggleButton</a></li>
+							<li><a href="#DropDown">DropDown下来菜单</a></li>
+							<li><a href="#ProgressBar">ProgressBar进度条</a></li>
+							<li><a href="#TextEntry">TextEntry</a></li>
+							<li><a href="#SlottedSlider">SlottedSlider、Slider</a></li>
+							<li><a href="#NumberEntry">NumberEntry</a></li>
+							<li><a href="#Image">Image</a></li>
+							<li><a href="#arousel">arousel选择木马</a></li>
+							<li><a href="#Movie">Movie</a></li>
 							<li><a href="#DOTAAvatarImage">DOTAAvatarImage</a></li>
+							<li><a href="#DOTAAbilityImage">DOTAAbilityImage</a></li>
+							<li><a href="#DOTAItemImage">DOTAItemImage</a></li>
+							<li><a href="#DOTAHeroImage">DOTAHeroImage</a></li>
+							<li><a href="#DOTAUserName">DOTAUserName</a></li>
+							<li><a href="#DOTAScenePanel">DOTAScenePanel</a></li>
+							<li><a href="#DOTAAbilityPanel">DOTAAbilityPanel</a></li>
 							<li><a href="#DOTAHudPreGame">DOTAHudPreGame</a></li>
+
 						</ol>
 					</nav>
 				</details>
@@ -5505,7 +5522,7 @@ aaaabbbbccccc
 				<div id='Label' class='classcontent'>
 					<div id='classname'>
 						<p><span>Label</span></p>
-						<p>全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -5516,758 +5533,6 @@ aaaabbbbccccc
 								</th>
 								<th> Description
 								</th>
-							</tr>
-							<tr>
-								<td> visible
-								</td>
-								<td> visible = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> enabled
-								</td>
-								<td> enabled( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> checked
-								</td>
-								<td> checked( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> defaultfocus
-								</td>
-								<td> defaultfocus( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> inputnamespace
-								</td>
-								<td> inputnamespace( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> hittest
-								</td>
-								<td> hittest = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> hittestchildren
-								</td>
-								<td> hittestchildren( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> tabindex
-								</td>
-								<td> tabindex( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> selectionpos_x
-								</td>
-								<td> selectionpos_x( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> selectionpos_y
-								</td>
-								<td> selectionpos_y( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> id
-								</td>
-								<td> id()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> layoutfile
-								</td>
-								<td> layoutfile()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> contentwidth
-								</td>
-								<td> contentwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> contentheight
-								</td>
-								<td> contentheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> desiredlayoutwidth
-								</td>
-								<td> desiredlayoutwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> desiredlayoutheight
-								</td>
-								<td> desiredlayoutheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actuallayoutwidth
-								</td>
-								<td> actuallayoutwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actuallayoutheight
-								</td>
-								<td> actuallayoutheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualxoffset
-								</td>
-								<td> actualxoffset()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualyoffset
-								</td>
-								<td> actualyoffset()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> scrolloffset_y
-								</td>
-								<td> scrolloffset_y()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> scrolloffset_x
-								</td>
-								<td> scrolloffset_x()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualuiscale_y
-								</td>
-								<td> actualuiscale_y()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualuiscale_x
-								</td>
-								<td> actualuiscale_x()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> style
-								</td>
-								<td> style()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> AddClass
-								</td>
-								<td> AddClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RemoveClass
-								</td>
-								<td> RemoveClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasClass
-								</td>
-								<td> BHasClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAscendantHasClass
-								</td>
-								<td> BAscendantHasClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetHasClass
-								</td>
-								<td> SetHasClass( cstring cstring_1, boolean boolean_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ToggleClass
-								</td>
-								<td> ToggleClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SwitchClass
-								</td>
-								<td> SwitchClass( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> TriggerClass
-								</td>
-								<td> TriggerClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ClearPanelEvent
-								</td>
-								<td> ClearPanelEvent( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDraggable
-								</td>
-								<td> SetDraggable( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> IsDraggable
-								</td>
-								<td> IsDraggable()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetChildCount
-								</td>
-								<td> GetChildCount()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetChild
-								</td>
-								<td> GetChild( integer integer_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetChildIndex
-								</td>
-								<td> GetChildIndex( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> Children
-								</td>
-								<td> array Children()
-								</td>
-								<td>查找元素所有子元素，以数组形式返回。
-								</td>
-							</tr>
-							<tr>
-								<td> FindChildrenWithClassTraverse
-								</td>
-								<td> array FindChildrenWithClassTraverse( cstring classname )
-								</td>
-								<td>用class名查找元素，返回一个数组。
-								</td>
-							</tr>
-							<tr>
-								<td> GetParent
-								</td>
-								<td> GetParent()
-								</td>
-								<td>获得父元素。
-								</td>
-							</tr>
-							<tr>
-								<td> SetParent
-								</td>
-								<td> SetParent( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindChild
-								</td>
-								<td> FindChild( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindChildTraverse
-								</td>
-								<td> FindChildTraverse( cstring id )
-								</td>
-								<td>穿透式寻找元素，参数为id名
-								</td>
-							</tr>
-							<tr>
-								<td> FindChildInLayoutFile
-								</td>
-								<td> FindChildInLayoutFile( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindPanelInLayoutFile
-								</td>
-								<td> FindPanelInLayoutFile( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RemoveAndDeleteChildren
-								</td>
-								<td> RemoveAndDeleteChildren()
-								</td>
-								<td>删除全部子元素
-								</td>
-							</tr>
-							<tr>
-								<td> MoveChildBefore
-								</td>
-								<td> MoveChildBefore( handle panel, handle panel )
-								</td>
-								<td>移动父类中一个子元素到另一个子元素之前。第一个参数是要移动的板，第二个是目标位置的板
-								</td>
-							</tr>
-							<tr>
-								<td> MoveChildAfter
-								</td>
-								<td> MoveChildAfter( unknown_variant_type unknown_variant_type_1, unknown_variant_type unknown_variant_type_2 )
-								</td>
-								<td>移动父类中一个子元素到另一个子元素之后。第一个参数是要移动的板，第二个是目标位置的板
-								</td>
-							</tr>
-							<tr>
-								<td> GetPositionWithinWindow
-								</td>
-								<td> GetPositionWithinWindow()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ApplyStyles
-								</td>
-								<td> ApplyStyles( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ClearPropertyFromCode
-								</td>
-								<td> ClearPropertyFromCode( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DeleteAsync
-								</td>
-								<td> DeleteAsync( float float_1 )
-								</td>
-								<td>延迟时间后删除板
-								</td>
-							</tr>
-							<tr>
-								<td> BIsTransparent
-								</td>
-								<td> BIsTransparent()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAcceptsInput
-								</td>
-								<td> BAcceptsInput()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAcceptsFocus
-								</td>
-								<td> BAcceptsFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetFocus
-								</td>
-								<td> SetFocus()
-								</td>
-								<td>设置聚焦到该板
-								</td>
-							</tr>
-							<tr>
-								<td> UpdateFocusInContext
-								</td>
-								<td> UpdateFocusInContext()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasHoverStyle
-								</td>
-								<td> BHasHoverStyle()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAcceptsFocus
-								</td>
-								<td> SetAcceptsFocus( boolean boolean_1 )
-								</td>
-								<td>设置是否接受聚焦
-								</td>
-							</tr>
-							<tr>
-								<td> SetDisableFocusOnMouseDown
-								</td>
-								<td> SetDisableFocusOnMouseDown( boolean boolean_1 )
-								</td>
-								<td>设置当鼠标点下去时是否不能聚集
-								</td>
-							</tr>
-							<tr>
-								<td> BHasKeyFocus
-								</td>
-								<td> BHasKeyFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetScrollParentToFitWhenFocused
-								</td>
-								<td> SetScrollParentToFitWhenFocused( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BScrollParentToFitWhenFocused
-								</td>
-								<td> BScrollParentToFitWhenFocused()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> IsSelected
-								</td>
-								<td> IsSelected()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasDescendantKeyFocus
-								</td>
-								<td> BHasDescendantKeyFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BLoadLayout
-								</td>
-								<td> BLoadLayout( cstring fileurl, boolean boolean_2, boolean boolean_3 )
-								</td>
-								<td>用XML魔板插入元素内。xxx.BLoadLayout('aaa.xml',false,false)，第一个Bool控制是否覆盖原来这个位置的板，第二控制aaa.xml文件中是否可以使用住文件中的变量。
-								</td>
-							</tr>
-							<tr>
-								<td> BLoadLayoutFromString
-								</td>
-								<td> BLoadLayoutFromString( js_raw_args js_raw_args_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> LoadLayoutFromStringAsync
-								</td>
-								<td> LoadLayoutFromStringAsync( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> LoadLayoutAsync
-								</td>
-								<td> LoadLayoutAsync( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BLoadLayoutSnippet
-								</td>
-								<td> BLoadLayoutSnippet( cstring snippetname )
-								</td>
-								<td>使用Snippet模板插入元素内。
-								</td>
-							</tr>
-							<tr>
-								<td> BCreateChildren
-								</td>
-								<td> BCreateChildren( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetTopOfInputContext
-								</td>
-								<td> SetTopOfInputContext( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDialogVariable
-								</td>
-								<td> SetDialogVariable( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>设置变量
-								</td>
-							</tr>
-							<tr>
-								<td> SetDialogVariableInt
-								</td>
-								<td> SetDialogVariableInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDialogVariableTime
-								</td>
-								<td> SetDialogVariableTime( cstring cstring_1, int64 int64_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToTop
-								</td>
-								<td> ScrollToTop()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToBottom
-								</td>
-								<td> ScrollToBottom()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToLeftEdge
-								</td>
-								<td> ScrollToLeftEdge()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToRightEdge
-								</td>
-								<td> ScrollToRightEdge()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollParentToMakePanelFit
-								</td>
-								<td> ScrollParentToMakePanelFit( unknown_variant_type unknown_variant_type_1, boolean boolean_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BCanSeeInParentScroll
-								</td>
-								<td> BCanSeeInParentScroll()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetAttributeInt
-								</td>
-								<td> GetAttributeInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetAttributeString
-								</td>
-								<td> GetAttributeString( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetAttributeUInt32
-								</td>
-								<td> GetAttributeUInt32( cstring cstring_1, unsigned unsigned_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAttributeInt
-								</td>
-								<td> SetAttributeInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAttributeString
-								</td>
-								<td> SetAttributeString( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAttributeUInt32
-								</td>
-								<td> SetAttributeUInt32( cstring cstring_1, unsigned unsigned_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetInputNamespace
-								</td>
-								<td> SetInputNamespace( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RegisterForReadyEvents
-								</td>
-								<td> RegisterForReadyEvents( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BReadyForDisplay
-								</td>
-								<td> BReadyForDisplay()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetReadyForDisplay
-								</td>
-								<td> SetReadyForDisplay( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetPositionInPixels
-								</td>
-								<td> SetPositionInPixels( float float_1, float float_2, float float_3 )
-								</td>
-								<td>
-								</td>
 							</tr>
 							<tr>
 								<td> text
@@ -6285,45 +5550,13 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
-							<tr>
-								<td> SetPanelEvent
-								</td>
-								<td> SetPanelEvent(string EventAttributes, handle func )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RunScriptInPanelContext
-								</td>
-								<td> RunScriptInPanelContext( js_raw_args js_raw_args_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> rememberchildfocus
-								</td>
-								<td> rememberchildfocus( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> paneltype
-								</td>
-								<td> paneltype()
-								</td>
-								<td>
-								</td>
-							</tr>
 						</table>
 					</div>
 				</div>
-				<div id='DOTAAvatarImage' class='classcontent'>
+				<div id='TextButton' class='classcontent'>
 					<div id='classname'>
-						<p><span>DOTAAvatarImage</span></p>
-						<p>全局变量：无。具体对象使用</p>
+						<p><span>TextButton</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6336,760 +5569,610 @@ aaaabbbbccccc
 								</th>
 							</tr>
 							<tr>
-								<td> visible
+								<td> text
 								</td>
-								<td> visible = bool boolean_1 
+								<td> text( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='RadioButton' class='classcontent'>
+					<div id='classname'>
+						<p><span>RadioButton</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> enabled
-								</td>
-								<td> enabled = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> checked
-								</td>
-								<td> checked = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> defaultfocus
-								</td>
-								<td> defaultfocus( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> inputnamespace
-								</td>
-								<td> inputnamespace( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> hittest
-								</td>
-								<td> hittest = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> hittestchildren
-								</td>
-								<td> hittestchildren( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> tabindex
-								</td>
-								<td> tabindex( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> selectionpos_x
-								</td>
-								<td> selectionpos_x( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> selectionpos_y
-								</td>
-								<td> selectionpos_y( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> id
-								</td>
-								<td> id()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> layoutfile
-								</td>
-								<td> layoutfile()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> contentwidth
-								</td>
-								<td> contentwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> contentheight
-								</td>
-								<td> contentheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> desiredlayoutwidth
-								</td>
-								<td> desiredlayoutwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> desiredlayoutheight
-								</td>
-								<td> desiredlayoutheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actuallayoutwidth
-								</td>
-								<td> actuallayoutwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actuallayoutheight
-								</td>
-								<td> actuallayoutheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualxoffset
-								</td>
-								<td> actualxoffset()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualyoffset
-								</td>
-								<td> actualyoffset()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> scrolloffset_y
-								</td>
-								<td> scrolloffset_y()
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> scrolloffset_x
+								<td> GetSelectedButton
 								</td>
-								<td> scrolloffset_x()
+								<td> GetSelectedButton( )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='ToggleButton' class='classcontent'>
+					<div id='classname'>
+						<p><span>ToggleButton</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> actualuiscale_y
-								</td>
-								<td> actualuiscale_y()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualuiscale_x
-								</td>
-								<td> actualuiscale_x()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> style
-								</td>
-								<td> style()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> AddClass
-								</td>
-								<td> AddClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RemoveClass
-								</td>
-								<td> RemoveClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasClass
-								</td>
-								<td> BHasClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAscendantHasClass
-								</td>
-								<td> BAscendantHasClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetHasClass
-								</td>
-								<td> SetHasClass( cstring cstring_1, boolean boolean_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ToggleClass
-								</td>
-								<td> ToggleClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SwitchClass
-								</td>
-								<td> SwitchClass( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> TriggerClass
-								</td>
-								<td> TriggerClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ClearPanelEvent
-								</td>
-								<td> ClearPanelEvent( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDraggable
-								</td>
-								<td> SetDraggable( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> IsDraggable
-								</td>
-								<td> IsDraggable()
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> GetChildCount
+								<td> SetSelected
 								</td>
-								<td> GetChildCount()
+								<td> SetSelected( boolean boolean_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> GetChild
+								<td> text
 								</td>
-								<td> GetChild( integer integer_1 )
+								<td> text( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DropDown' class='classcontent'>
+					<div id='classname'>
+						<p><span>DropDown</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> GetChildIndex
-								</td>
-								<td> GetChildIndex( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> Children
+								<td> AddOption
 								</td>
-								<td> Children()
+								<td> AddOption( unknown_variant_type unknown_variant_type_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> FindChildrenWithClassTraverse
+								<td> HasOption
 								</td>
-								<td> FindChildrenWithClassTraverse( cstring cstring_1 )
+								<td> HasOption( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> GetParent
+								<td> RemoveOption
 								</td>
-								<td> GetParent()
+								<td> RemoveOption( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetParent
+								<td> RemoveAllOptions
 								</td>
-								<td> SetParent( unknown_variant_type unknown_variant_type_1 )
+								<td> RemoveAllOptions()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> FindChild
+								<td> GetSelected
 								</td>
-								<td> FindChild( cstring cstring_1 )
+								<td> SetSelected( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> FindChildTraverse
+								<td> SetSelected	
 								</td>
-								<td> FindChildTraverse( cstring cstring_1 )
+								<td> SetSelected( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> FindChildInLayoutFile
+								<td> FindDropDownMenuChild
 								</td>
-								<td> FindChildInLayoutFile( cstring cstring_1 )
+								<td> FindDropDownMenuChild( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> FindPanelInLayoutFile
+								<td> AccessDropDownMenu
 								</td>
-								<td> FindPanelInLayoutFile( cstring cstring_1 )
+								<td> AccessDropDownMenu()
 								</td>
-								<td>
+								<td>使用下拉菜单
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='ProgressBar' class='classcontent'>
+					<div id='classname'>
+						<p><span>ProgressBar</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> RemoveAndDeleteChildren
-								</td>
-								<td> RemoveAndDeleteChildren()
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> MoveChildBefore
+								<td> value
 								</td>
-								<td> MoveChildBefore( unknown_variant_type unknown_variant_type_1, unknown_variant_type
-									unknown_variant_type_2 )
+								<td> value(float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> MoveChildAfter
+								<td> min
 								</td>
-								<td> MoveChildAfter( unknown_variant_type unknown_variant_type_1, unknown_variant_type
-									unknown_variant_type_2 )
+								<td> min(float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> GetPositionWithinWindow
+								<td> max
 								</td>
-								<td> GetPositionWithinWindow()
+								<td> max(float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='TextEntry' class='classcontent'>
+					<div id='classname'>
+						<p><span>TextEntry</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> ApplyStyles
-								</td>
-								<td> ApplyStyles( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> ClearPropertyFromCode
+								<td> text
 								</td>
-								<td> ClearPropertyFromCode( unknown_variant_type unknown_variant_type_1 )
+								<td> text( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> DeleteAsync
+								<td> SetMaxChars
 								</td>
-								<td> DeleteAsync( float float_1 )
+								<td> SetMaxChars( unsigned unsigned_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BIsTransparent
+								<td> GetMaxCharCount
 								</td>
-								<td> BIsTransparent()
+								<td> GetMaxCharCount( )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BAcceptsInput
+								<td> GetCursorOffset
 								</td>
-								<td> BAcceptsInput()
+								<td> GetCursorOffset( )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BAcceptsFocus
+								<td> SetCursorOffset
 								</td>
-								<td> BAcceptsFocus()
+								<td> SetCursorOffset( integer integer_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetFocus
+								<td> ClearSelection
 								</td>
-								<td> SetFocus()
+								<td> ClearSelection()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> UpdateFocusInContext
+								<td> SelectAll
 								</td>
-								<td> UpdateFocusInContext()
+								<td> SelectAll()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BHasHoverStyle
+								<td> RaiseChangeEvents
 								</td>
-								<td> BHasHoverStyle()
+								<td> RaiseChangeEvents( boolean boolean_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='SlottedSlider' class='classcontent'>
+					<div id='classname'>
+						<p><span>SlottedSlider、Slider</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> SetAcceptsFocus
-								</td>
-								<td> SetAcceptsFocus( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> SetDisableFocusOnMouseDown
+								<td> value
 								</td>
-								<td> SetDisableFocusOnMouseDown( boolean boolean_1 )
+								<td> value( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BHasKeyFocus
+								<td> min
 								</td>
-								<td> BHasKeyFocus()
+								<td> min( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetScrollParentToFitWhenFocused
+								<td> max
 								</td>
-								<td> SetScrollParentToFitWhenFocused( boolean boolean_1 )
+								<td> max( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BScrollParentToFitWhenFocused
+								<td> increment
 								</td>
-								<td> BScrollParentToFitWhenFocused()
+								<td> increment( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> IsSelected
+								<td> default
 								</td>
-								<td> IsSelected()
+								<td> default( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BHasDescendantKeyFocus
+								<td> mousedown
 								</td>
-								<td> BHasDescendantKeyFocus()
+								<td> mousedown()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BLoadLayout
+								<td> SetDirection
 								</td>
-								<td> BLoadLayout( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
+								<td> SetDirection( unknown_variant_type unknown_variant_type_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BLoadLayoutFromString
+								<td> SetShowDefaultValue
 								</td>
-								<td> BLoadLayoutFromString( js_raw_args js_raw_args_1 )
+								<td> SetShowDefaultValue( boolean boolean_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> LoadLayoutFromStringAsync
+								<td> SetRequiresSelection
 								</td>
-								<td> LoadLayoutFromStringAsync( cstring cstring_1, boolean boolean_2, boolean boolean_3
-									)
+								<td> SetRequiresSelection( boolean boolean_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> LoadLayoutAsync
+								<td> SetValueNoEvents
 								</td>
-								<td> LoadLayoutAsync( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
+								<td> SetValueNoEvents( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='NumberEntry' class='classcontent'>
+					<div id='classname'>
+						<p><span>NumberEntry</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> BLoadLayoutSnippet
-								</td>
-								<td> BLoadLayoutSnippet( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> BCreateChildren
+								<td> value
 								</td>
-								<td> BCreateChildren( cstring cstring_1 )
+								<td> value( integer integer_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetTopOfInputContext
+								<td> min
 								</td>
-								<td> SetTopOfInputContext( boolean boolean_1 )
+								<td> min( integer integer_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetDialogVariable
+								<td> max
 								</td>
-								<td> SetDialogVariable( cstring cstring_1, cstring cstring_2 )
+								<td> max( integer integer_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetDialogVariableInt
+								<td> increment
 								</td>
-								<td> SetDialogVariableInt( cstring cstring_1, integer integer_2 )
+								<td> increment( integer integer_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='Image' class='classcontent'>
+					<div id='classname'>
+						<p><span>Image</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> SetDialogVariableTime
-								</td>
-								<td> SetDialogVariableTime( cstring cstring_1, int64 int64_2 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> ScrollToTop
+								<td> SetImage
 								</td>
-								<td> ScrollToTop()
+								<td> SetImage( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> ScrollToBottom
+								<td> SetScaling
 								</td>
-								<td> ScrollToBottom()
+								<td> SetScaling( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='Carousel' class='classcontent'>
+					<div id='classname'>
+						<p><span>Carousel转盘</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> ScrollToLeftEdge
-								</td>
-								<td> ScrollToLeftEdge()
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> ScrollToRightEdge
+								<td> SetSelectedChild
 								</td>
-								<td> ScrollToRightEdge()
+								<td> SetSelectedChild( unknown_variant_type unknown_variant_type_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> ScrollParentToMakePanelFit
+								<td> GetFocusChild
 								</td>
-								<td> ScrollParentToMakePanelFit( unknown_variant_type unknown_variant_type_1, boolean
-									boolean_2 )
+								<td> GetFocusChild()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BCanSeeInParentScroll
+								<td> GetFocusIndex
 								</td>
-								<td> BCanSeeInParentScroll()
+								<td> GetFocusIndex()
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='Movie' class='classcontent'>
+					<div id='classname'>
+						<p><span>Movie</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> GetAttributeInt
-								</td>
-								<td> GetAttributeInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> GetAttributeString
+								<td> SetMovie
 								</td>
-								<td> GetAttributeString( cstring cstring_1, cstring cstring_2 )
+								<td> SetMovie( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> GetAttributeUInt32
+								<td> SetControls
 								</td>
-								<td> GetAttributeUInt32( cstring cstring_1, unsigned unsigned_2 )
+								<td> SetControls( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetAttributeInt
+								<td> SetTitle
 								</td>
-								<td> SetAttributeInt( cstring cstring_1, integer integer_2 )
+								<td> SetTitle( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetAttributeString
+								<td> Play
 								</td>
-								<td> SetAttributeString( cstring cstring_1, cstring cstring_2 )
+								<td> Play()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetAttributeUInt32
+								<td> Pause
 								</td>
-								<td> SetAttributeUInt32( cstring cstring_1, unsigned unsigned_2 )
+								<td> Pause()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetInputNamespace
+								<td> Stop
 								</td>
-								<td> SetInputNamespace( cstring cstring_1 )
+								<td> Stop()
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> RegisterForReadyEvents
+								<td> SetRepeat
 								</td>
-								<td> RegisterForReadyEvents( boolean boolean_1 )
+								<td> SetRepeat( boolean boolean_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> BReadyForDisplay
+								<td> SetPlaybackVolume
 								</td>
-								<td> BReadyForDisplay()
+								<td> SetPlaybackVolume( float float_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> SetReadyForDisplay
+								<td> BAdjustingVolume
 								</td>
-								<td> SetReadyForDisplay( boolean boolean_1 )
+								<td> BAdjustingVolume()
 								</td>
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAAvatarImage' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAAvatarImage</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> SetPositionInPixels
-								</td>
-								<td> SetPositionInPixels( float float_1, float float_2, float float_3 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
 								<td> steamid
@@ -7115,34 +6198,310 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAAbilityImage' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAAbilityImage</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> SetPanelEvent
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> SetImage
 								</td>
-								<td> SetPanelEvent(string EventAttributes, handle func )
+								<td> SetImage( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> RunScriptInPanelContext
+								<td> SetScaling
 								</td>
-								<td> RunScriptInPanelContext( js_raw_args js_raw_args_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> rememberchildfocus
-								</td>
-								<td> rememberchildfocus( boolean boolean_1 )
+								<td> SetScaling( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> paneltype
+								<td> abilityid
 								</td>
-								<td> paneltype()
+								<td> abilityid( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> abilityname
+								</td>
+								<td> abilityname( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> abilitylevel
+								</td>
+								<td> abilitylevel( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> contextEntityIndex
+								</td>
+								<td> contextEntityIndex( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAItemImage' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAItemImage</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> SetImage
+								</td>
+								<td> SetImage( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetScaling
+								</td>
+								<td> SetScaling( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> itemname
+								</td>
+								<td> itemname( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> contextEntityIndex
+								</td>
+								<td> contextEntityIndex( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAHeroImage' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAHeroImage</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> SetImage
+								</td>
+								<td> SetImage( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetScaling
+								</td>
+								<td> SetScaling( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> heroid
+								</td>
+								<td> heroid( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> heroname
+								</td>
+								<td> heroname( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> persona
+								</td>
+								<td> persona( unknown_variant_type unknown_variant_type_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> heroimagestyle
+								</td>
+								<td> heroimagestyle( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAUserName' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAUserName</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> steamid
+								</td>
+								<td> steamid( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> accountid
+								</td>
+								<td> accountid( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAScenePanel' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAScenePanel</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> FireEntityInput
+								</td>
+								<td> FireEntityInput( cstring cstring_1, cstring cstring_2, cstring cstring_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> PlayEntitySoundEvent
+								</td>
+								<td> PlayEntitySoundEvent( cstring cstring_1, cstring cstring_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetUnit
+								</td>
+								<td> SetUnit( cstring cstring_1, cstring cstring_2, boolean boolean_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> GetPanoramaSurfacePanel
+								</td>
+								<td> GetPanoramaSurfacePanel()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetRotateParams
+								</td>
+								<td> SetRotateParams( float float_1, float float_2, float float_3, float float_4 )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAAbilityPanel' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAAbilityPanel</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> overrideentityindex
+								</td>
+								<td> overrideentityindex( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> overridedisplaykeybind
+								</td>
+								<td> overridedisplaykeybind( integer integer_1 )
 								</td>
 								<td>
 								</td>
@@ -7166,793 +6525,9 @@ aaaabbbbccccc
 								</th>
 							</tr>
 							<tr>
-								<td> visible
-								</td>
-								<td> visible( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> enabled
-								</td>
-								<td> enabled1 = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> checked
-								</td>
-								<td> checked = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> defaultfocus
-								</td>
-								<td> defaultfocus( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> inputnamespace
-								</td>
-								<td> inputnamespace( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> hittest
-								</td>
-								<td> hittest = bool boolean_1 
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> hittestchildren
-								</td>
-								<td> hittestchildren( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> tabindex
-								</td>
-								<td> tabindex( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> selectionpos_x
-								</td>
-								<td> selectionpos_x( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> selectionpos_y
-								</td>
-								<td> selectionpos_y( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> id
-								</td>
-								<td> id()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> layoutfile
-								</td>
-								<td> layoutfile()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> contentwidth
-								</td>
-								<td> contentwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> contentheight
-								</td>
-								<td> contentheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> desiredlayoutwidth
-								</td>
-								<td> desiredlayoutwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> desiredlayoutheight
-								</td>
-								<td> desiredlayoutheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actuallayoutwidth
-								</td>
-								<td> actuallayoutwidth()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actuallayoutheight
-								</td>
-								<td> actuallayoutheight()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualxoffset
-								</td>
-								<td> actualxoffset()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualyoffset
-								</td>
-								<td> actualyoffset()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> scrolloffset_y
-								</td>
-								<td> scrolloffset_y()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> scrolloffset_x
-								</td>
-								<td> scrolloffset_x()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualuiscale_y
-								</td>
-								<td> actualuiscale_y()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> actualuiscale_x
-								</td>
-								<td> actualuiscale_x()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> style
-								</td>
-								<td> style()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> AddClass
-								</td>
-								<td> AddClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RemoveClass
-								</td>
-								<td> RemoveClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasClass
-								</td>
-								<td> BHasClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAscendantHasClass
-								</td>
-								<td> BAscendantHasClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetHasClass
-								</td>
-								<td> SetHasClass( cstring cstring_1, boolean boolean_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ToggleClass
-								</td>
-								<td> ToggleClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SwitchClass
-								</td>
-								<td> SwitchClass( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> TriggerClass
-								</td>
-								<td> TriggerClass( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ClearPanelEvent
-								</td>
-								<td> ClearPanelEvent( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDraggable
-								</td>
-								<td> SetDraggable( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> IsDraggable
-								</td>
-								<td> IsDraggable()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetChildCount
-								</td>
-								<td> GetChildCount()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetChild
-								</td>
-								<td> GetChild( integer integer_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetChildIndex
-								</td>
-								<td> GetChildIndex( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> Children
-								</td>
-								<td> Children()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindChildrenWithClassTraverse
-								</td>
-								<td> FindChildrenWithClassTraverse( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetParent
-								</td>
-								<td> GetParent()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetParent
-								</td>
-								<td> SetParent( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindChild
-								</td>
-								<td> FindChild( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindChildTraverse
-								</td>
-								<td> FindChildTraverse( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindChildInLayoutFile
-								</td>
-								<td> FindChildInLayoutFile( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> FindPanelInLayoutFile
-								</td>
-								<td> FindPanelInLayoutFile( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RemoveAndDeleteChildren
-								</td>
-								<td> RemoveAndDeleteChildren()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> MoveChildBefore
-								</td>
-								<td> MoveChildBefore( unknown_variant_type unknown_variant_type_1, unknown_variant_type unknown_variant_type_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> MoveChildAfter
-								</td>
-								<td> MoveChildAfter( unknown_variant_type unknown_variant_type_1, unknown_variant_type unknown_variant_type_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetPositionWithinWindow
-								</td>
-								<td> GetPositionWithinWindow()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ApplyStyles
-								</td>
-								<td> ApplyStyles( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ClearPropertyFromCode
-								</td>
-								<td> ClearPropertyFromCode( unknown_variant_type unknown_variant_type_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DeleteAsync
-								</td>
-								<td> DeleteAsync( float float_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BIsTransparent
-								</td>
-								<td> BIsTransparent()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAcceptsInput
-								</td>
-								<td> BAcceptsInput()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BAcceptsFocus
-								</td>
-								<td> BAcceptsFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetFocus
-								</td>
-								<td> SetFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> UpdateFocusInContext
-								</td>
-								<td> UpdateFocusInContext()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasHoverStyle
-								</td>
-								<td> BHasHoverStyle()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAcceptsFocus
-								</td>
-								<td> SetAcceptsFocus( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDisableFocusOnMouseDown
-								</td>
-								<td> SetDisableFocusOnMouseDown( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasKeyFocus
-								</td>
-								<td> BHasKeyFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetScrollParentToFitWhenFocused
-								</td>
-								<td> SetScrollParentToFitWhenFocused( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BScrollParentToFitWhenFocused
-								</td>
-								<td> BScrollParentToFitWhenFocused()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> IsSelected
-								</td>
-								<td> IsSelected()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BHasDescendantKeyFocus
-								</td>
-								<td> BHasDescendantKeyFocus()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BLoadLayout
-								</td>
-								<td> BLoadLayout( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BLoadLayoutFromString
-								</td>
-								<td> BLoadLayoutFromString( js_raw_args js_raw_args_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> LoadLayoutFromStringAsync
-								</td>
-								<td> LoadLayoutFromStringAsync( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> LoadLayoutAsync
-								</td>
-								<td> LoadLayoutAsync( cstring cstring_1, boolean boolean_2, boolean boolean_3 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BLoadLayoutSnippet
-								</td>
-								<td> BLoadLayoutSnippet( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BCreateChildren
-								</td>
-								<td> BCreateChildren( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetTopOfInputContext
-								</td>
-								<td> SetTopOfInputContext( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDialogVariable
-								</td>
-								<td> SetDialogVariable( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDialogVariableInt
-								</td>
-								<td> SetDialogVariableInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetDialogVariableTime
-								</td>
-								<td> SetDialogVariableTime( cstring cstring_1, int64 int64_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToTop
-								</td>
-								<td> ScrollToTop()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToBottom
-								</td>
-								<td> ScrollToBottom()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToLeftEdge
-								</td>
-								<td> ScrollToLeftEdge()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollToRightEdge
-								</td>
-								<td> ScrollToRightEdge()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ScrollParentToMakePanelFit
-								</td>
-								<td> ScrollParentToMakePanelFit( unknown_variant_type unknown_variant_type_1, boolean boolean_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BCanSeeInParentScroll
-								</td>
-								<td> BCanSeeInParentScroll()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetAttributeInt
-								</td>
-								<td> GetAttributeInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetAttributeString
-								</td>
-								<td> GetAttributeString( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> GetAttributeUInt32
-								</td>
-								<td> GetAttributeUInt32( cstring cstring_1, unsigned unsigned_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAttributeInt
-								</td>
-								<td> SetAttributeInt( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAttributeString
-								</td>
-								<td> SetAttributeString( cstring cstring_1, cstring cstring_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetAttributeUInt32
-								</td>
-								<td> SetAttributeUInt32( cstring cstring_1, unsigned unsigned_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetInputNamespace
-								</td>
-								<td> SetInputNamespace( cstring cstring_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RegisterForReadyEvents
-								</td>
-								<td> RegisterForReadyEvents( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> BReadyForDisplay
-								</td>
-								<td> BReadyForDisplay()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetReadyForDisplay
-								</td>
-								<td> SetReadyForDisplay( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetPositionInPixels
-								</td>
-								<td> SetPositionInPixels( float float_1, float float_2, float float_3 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
 								<td> MapLoadingOutroFinished
 								</td>
 								<td> MapLoadingOutroFinished()
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SetPanelEvent
-								</td>
-								<td> SetPanelEvent(string EventAttributes, handle func )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> RunScriptInPanelContext
-								</td>
-								<td> RunScriptInPanelContext( js_raw_args js_raw_args_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> rememberchildfocus
-								</td>
-								<td> rememberchildfocus( boolean boolean_1 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> paneltype
-								</td>
-								<td> paneltype()
 								</td>
 								<td>
 								</td>
@@ -16153,7 +14728,7 @@ aaaabbbbccccc
 								</td>
 								<td> 225
 								</td>
-								<td>
+								<td>BotAttackScoreBonus
 								</td>
 							</tr>
 							<tr>
