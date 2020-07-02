@@ -383,7 +383,7 @@
 		</div>
 		<div id='content'>
 			<div id='note'>
-				最后修改时间:2019年11月28日<br>
+				最后修改时间:2020年07月02日<br>
 				注:1、注释中有3个？的为不确定解释。
 			</div>
 
@@ -2085,7 +2085,7 @@
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.ShowMessage"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.ShowMessage"> ShowMessage</a>
 								</td>
-								<td> oid ShowMessage(string a)
+								<td> void ShowMessage(string a)
 								</td>
 								<td> 在所有客户端显示hud信息
 								</td>
@@ -11068,7 +11068,7 @@
 								</td>
 								<td> int HasRoomForItem(string ItemName, bool IncludeStashCombines, bool AllowSelling)
 								</td>
-								<td>该物品是否能放进储藏处？？？</td>
+								<td>是否有空间购买物品（高级物品需要几个物品合成，需要多个格子）</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC_Hero.HeroLevelUp"
@@ -21556,9 +21556,19 @@
 								<td></td>
 							</tr>
 							<tr>
+								<td>DOTA_HEROPICK_STATE_CM_BAN13</td>
+								<td>19</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_HEROPICK_STATE_CM_BAN14</td>
+								<td>20</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT1
 								</td>
-								<td> 19
+								<td> 21
 								</td>
 								<td>
 								</td>
@@ -21566,28 +21576,28 @@
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT2
 								</td>
-								<td> 20</td>
+								<td> 22</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT3
 								</td>
-								<td> 21</td>
+								<td> 23</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT4
 								</td>
-								<td> 22</td>
+								<td> 24</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT5
 								</td>
-								<td> 23
+								<td> 25
 								</td>
 								<td>
 								</td>
@@ -21595,83 +21605,68 @@
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT6
 								</td>
-								<td> 24</td>
+								<td> 26</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT7
 								</td>
-								<td> 25</td>
+								<td> 27</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT8
 								</td>
-								<td> 26</td>
+								<td> 28</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT9
 								</td>
-								<td> 27</td>
+								<td> 29</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_SELECT10
 								</td>
-								<td> 28</td>
+								<td> 30</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CM_PICK
 								</td>
-								<td> 29</td>
+								<td> 31</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_AR_SELECT
 								</td>
-								<td> 30</td>
+								<td> 32</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_MO_SELECT
 								</td>
-								<td> 31</td>
+								<td> 33</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_FH_SELECT
 								</td>
-								<td> 32</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_INTRO
-								</td>
-								<td> 33
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_CAPTAINPICK
-								</td>
 								<td> 34</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_BAN1
+								<td> DOTA_HEROPICK_STATE_CD_INTRO
 								</td>
 								<td> 35
 								</td>
@@ -21679,37 +21674,52 @@
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_BAN2
+								<td> DOTA_HEROPICK_STATE_CD_CAPTAINPICK
 								</td>
 								<td> 36</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_BAN3
+								<td> DOTA_HEROPICK_STATE_CD_BAN1
 								</td>
-								<td> 37</td>
+								<td> 37
+								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_BAN4
+								<td> DOTA_HEROPICK_STATE_CD_BAN2
 								</td>
 								<td> 38</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_CD_BAN5
+								<td> DOTA_HEROPICK_STATE_CD_BAN3
 								</td>
 								<td> 39</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
+								<td> DOTA_HEROPICK_STATE_CD_BAN4
+								</td>
+								<td> 40</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HEROPICK_STATE_CD_BAN5
+								</td>
+								<td> 41</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_BAN6
 								</td>
-								<td> 40
+								<td> 42
 								</td>
 								<td>
 								</td>
@@ -21717,42 +21727,42 @@
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT1
 								</td>
-								<td> 41</td>
+								<td> 43</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT2
 								</td>
-								<td> 42</td>
+								<td> 44</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT3
 								</td>
-								<td> 43</td>
+								<td> 45</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT4
 								</td>
-								<td> 44</td>
+								<td> 46</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT5
 								</td>
-								<td> 45</td>
+								<td> 47</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT6
 								</td>
-								<td> 46
+								<td> 48
 								</td>
 								<td>
 								</td>
@@ -21760,7 +21770,7 @@
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT7
 								</td>
-								<td> 47
+								<td> 49
 								</td>
 								<td>
 								</td>
@@ -21768,42 +21778,42 @@
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT8
 								</td>
-								<td> 48</td>
+								<td> 50</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT9
 								</td>
-								<td> 49</td>
+								<td> 51</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_SELECT10
 								</td>
-								<td> 50</td>
+								<td> 52</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_CD_PICK
 								</td>
-								<td> 51</td>
+								<td> 53</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_BD_SELECT
 								</td>
-								<td> 52</td>
+								<td> 54</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HERO_PICK_STATE_ABILITY_DRAFT_SELECT
 								</td>
-								<td> 53
+								<td> 55
 								</td>
 								<td>
 								</td>
@@ -21811,7 +21821,7 @@
 							<tr>
 								<td> DOTA_HERO_PICK_STATE_ARDM_SELECT
 								</td>
-								<td> 54
+								<td> 56
 								</td>
 								<td>
 								</td>
@@ -21819,31 +21829,31 @@
 							<tr>
 								<td> DOTA_HEROPICK_STATE_ALL_DRAFT_SELECT
 								</td>
-								<td> 55</td>
+								<td> 57</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> DOTA_HERO_PICK_STATE_CUSTOMGAME_SELECT
 								</td>
-								<td> 56</td>
+								<td> 58</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_HEROPICK_STATE_SELECT_PENALTY</td>
-								<td>57</td>
+								<td>59</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_HEROPICK_STATE_CUSTOM_PICK_RULES</td>
-								<td>58</td>
+								<td>60</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> DOTA_HEROPICK_STATE_COUNT
 								</td>
-								<td> 59</td>
+								<td> 61</td>
 								<td>
 								</td>
 							</tr>
@@ -25817,223 +25827,235 @@
 								<td> GetModifierLifestealRegenAmplify_Percentage </td>
 								<td></td>
 							</tr>
-
+							<tr>
+								<td> MODIFIER_PROPERTY_SPELL_LIFESTEAL_AMPLIFY_PERCENTAGE </td>
+								<td> 46</td>
+								<td> GetModifierSpellLifestealRegenAmplify_Percentage </td>
+								<td></td>
+							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MP_REGEN_AMPLIFY_PERCENTAGE</td>
-								<td> 46
+								<td> 47
 								</td>
 								<td>GetModifierMPRegenAmplify_Percentage</td>
 								<td></td>
 							</tr>
 							<tr>
+								<td>MODIFIER_PROPERTY_MANA_DRAIN_AMPLIFY_PERCENTAGE</td>
+								<td> 48
+								</td>
+								<td>GetModifierManaDrainAmplify_Percentage</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td>MODIFIER_PROPERTY_MP_RESTORE_AMPLIFY_PERCENTAGE</td>
-								<td> 47</td>
+								<td> 49</td>
 								<td>GetModifierMPRestoreAmplify_Percentage</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE </td>
-								<td> 48</td>
+								<td> 50</td>
 								<td> GetModifierBaseDamageOutgoing_Percentage </td>
 								<td> Increases the base damage of that the parent deals by a percentage returned to it.
 									Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE_UNIQUE </td>
-								<td> 49</td>
+								<td> 51</td>
 								<td> GetModifierBaseDamageOutgoing_PercentageUnique </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE </td>
-								<td> 50</td>
+								<td> 52</td>
 								<td> GetModifierIncomingDamage_Percentage </td>
 								<td> Increases the damage of all sources that the parent takes by a percentage returned
 									to it. Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE </td>
-								<td> 51</td>
+								<td> 53</td>
 								<td> GetModifierIncomingPhysicalDamage_Percentage </td>
 								<td> Increases the damage of physical sources that the parent takes by a percentage
 									returned to it. Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT </td>
-								<td> 52</td>
+								<td> 54</td>
 								<td> GetModifierIncomingPhysicalDamageConstant </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT </td>
-								<td> 53 </td>
+								<td> 55</td>
 								<td> GetModifierIncomingSpellDamageConstant </td>
 								<td> Increases the damage of magical sources that the parent takes by a percentage
 									returned to it. Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EVASION_CONSTANT </td>
-								<td> 54</td>
+								<td> 56</td>
 								<td> GetModifierEvasion_Constant </td>
 								<td> Increases the evasion of the parent by a constant returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_NEGATIVE_EVASION_CONSTANT </td>
-								<td> 55</td>
+								<td> 57</td>
 								<td> GetModifierNegativeEvasion_Constant </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE</td>
-								<td>56</td>
+								<td>58</td>
 								<td>GetModifierStatusResistance</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING</td>
-								<td>57</td>
+								<td>59</td>
 								<td>GetModifierStatusResistanceStacking</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE_CASTER</td>
-								<td>58</td>
+								<td>60</td>
 								<td>GetModifierStatusResistanceCaster</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_AVOID_DAMAGE </td>
-								<td> 59 </td>
+								<td> 61 </td>
 								<td> GetModifierAvoidDamage </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_AVOID_SPELL </td>
-								<td> 60</td>
+								<td> 62</td>
 								<td> GetModifierAvoidSpell </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MISS_PERCENTAGE </td>
-								<td> 61</td>
+								<td> 63</td>
 								<td> GetModifierMiss_Percentage </td>
 								<td> Increases the chance of the parent to miss by a percentage returned to it. Can
 									return negative values. </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_BASE_PERCENTAGE</td>
-								<td> 62</td>
+								<td> 64</td>
 								<td>GetModifierPhysicalArmorBase_Percentage</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_TOTAL_PERCENTAGE</td>
-								<td> 63</td>
+								<td> 65</td>
 								<td>GetModifierPhysicalArmorTotal_Percentage</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS </td>
-								<td> 64 </td>
+								<td> 66 </td>
 								<td> GetModifierPhysicalArmorBonus </td>
 								<td> Increases the armor of the parent by a constant returned to it. Can return negative
 									values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE </td>
-								<td> 65</td>
+								<td> 67</td>
 								<td> GetModifierPhysicalArmorBonusUnique </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE </td>
-								<td> 66</td>
+								<td> 68</td>
 								<td> GetModifierPhysicalArmorBonusUniqueActive </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR </td>
-								<td> 67</td>
+								<td> 69</td>
 								<td> GetModifierIgnorePhysicalArmor </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BASE_REDUCTION </td>
-								<td> 68</td>
+								<td> 70</td>
 								<td> GetModifierMagicalResistanceBaseReduction </td>
 								<td></td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION </td>
-								<td> 69</td>
+								<td> 71</td>
 								<td> GetModifierMagicalResistanceDirectModification </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS </td>
-								<td> 70</td>
+								<td> 72</td>
 								<td> GetModifierMagicalResistanceBonus </td>
 								<td> Increases the magical resistance of the parent by a constant returned to it. Can
 									return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS_ILLUSIONS </td>
-								<td> 71</td>
+								<td> 73</td>
 								<td> GetModifierMagicalResistanceBonusIllusions </td>
 								<td> </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE </td>
-								<td> 72</td>
+								<td> 74</td>
 								<td> GetModifierMagicalResistanceDecrepifyUnique </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASE_MANA_REGEN </td>
-								<td> 73</td>
+								<td> 75</td>
 								<td> GetModifierBaseRegen </td>
 								<td> Increases the base mana regeneration of the parent by a constant returned to it.
 									Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT </td>
-								<td> 74</td>
+								<td> 76</td>
 								<td> GetModifierConstantManaRegen </td>
 								<td> Increases the mana regeneration of the parent by a constant returned to it. Can
 									return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE </td>
-								<td> 75</td>
+								<td> 77</td>
 								<td> GetModifierConstantManaRegenUnique </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE </td>
-								<td> 76</td>
+								<td> 78</td>
 								<td> GetModifierTotalPercentageManaRegen </td>
 								<td> Increases the total mana regeneration of the parent by a percentage returned to it.
 									Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT </td>
-								<td> 77 </td>
+								<td> 79 </td>
 								<td> GetModifierConstantHealthRegen </td>
 								<td> Increases the health regeneration of the parent by a constant returned to it. Can
 									return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE </td>
-								<td>78</td>
+								<td>80</td>
 								<td> GetModifierHealthRegenPercentage </td>
 								<td> Increases the evasion of the parent by a percentage returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE_UNIQUE</td>
-								<td> 79
+								<td>81
 								</td>
 								<td>GetModifierHealthRegenPercentageUnique</td>
 								<td>血量恢复唯一百分比
@@ -26041,7 +26063,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_BONUS </td>
-								<td> 80</td>
+								<td> 82</td>
 								<td> GetModifierHealthBonus </td>
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Health is scaled to the same percentage as before the increase.
@@ -26049,48 +26071,48 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_BONUS </td>
-								<td>81</td>
+								<td>83</td>
 								<td> GetModifierManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
 									negative values. Mana is scaled to the same percentage as before the increase. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS </td>
-								<td> 82 </td>
+								<td> 84 </td>
 								<td> GetModifierExtraStrengthBonus </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS </td>
-								<td>83</td>
+								<td>85</td>
 								<td> GetModifierExtraHealthBonus </td>
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Ignores current health. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_BONUS </td>
-								<td> 84 </td>
+								<td> 86 </td>
 								<td> GetModifierExtraManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
 									negative values. Ignores current mana. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE </td>
-								<td>85</td>
+								<td>87</td>
 								<td> GetModifierExtraHealthPercentage </td>
 								<td> Increases the maximum health of the parent by a percentage returned to it. Can
 									return negative values. Ignores current health. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE </td>
-								<td>86</td>
+								<td>88</td>
 								<td> GetModifierExtraManaPercentage </td>
 								<td> </td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS </td>
-								<td> 87</td>
+								<td> 89</td>
 								<td> GetModifierBonusStats_Strength </td>
 								<td> Increases the strength stat of the parent by a constant returned to it. Can return
 									negative values. </td>
@@ -26098,429 +26120,429 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS </td>
-								<td> 88</td>
+								<td> 90</td>
 								<td> GetModifierBonusStats_Agility </td>
 								<td> Increases the agility stat of the parent by a constant returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS </td>
-								<td> 89</td>
+								<td> 91</td>
 								<td> GetModifierBonusStats_Intellect </td>
 								<td> Increases the intelligence stat of the parent by a constant returned to it. Can
 									return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE</td>
-								<td> 90</td>
+								<td> 92</td>
 								<td> GetModifierBonusStats_Strength_Percentage </td>
 								<td> </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS_PERCENTAGE</td>
-								<td> 91</td>
+								<td> 93</td>
 								<td> GetModifierBonusStats_Agility_Percentage </td>
 								<td> </td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS_PERCENTAGE</td>
-								<td> 92</td>
+								<td> 94</td>
 								<td> GetModifierBonusStats_Intellect_Percentage </td>
 								<td> </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_CAST_RANGE_BONUS </td>
-								<td> 93</td>
+								<td> 95</td>
 								<td> GetModifierCastRangeBonus </td>
 								<td> Increases the cast range of the parent by a constant returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET</td>
-								<td> 94</td>
+								<td> 96</td>
 								<td>GetModifierCastRangeBonusTarget</td>
 								<td>施法距离加成目标</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING</td>
-								<td> 95</td>
+								<td> 97</td>
 								<td>GetModifierCastRangeBonusStacking</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE</td>
-								<td> 96</td>
+								<td> 98</td>
 								<td>GetModifierAttackRangeOverride</td>
 								<td>攻击距离基础覆盖</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS </td>
-								<td> 97</td>
+								<td> 99</td>
 								<td> GetModifierAttackRangeBonus </td>
 								<td> Increases the attack range of the parent by a constant returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE </td>
-								<td> 98</td>
+								<td> 100</td>
 								<td> GetModifierAttackRangeBonusUnique </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE</td>
-								<td> 99</td>
+								<td> 101</td>
 								<td>GetModifierAttackRangeBonusPercentage</td>
 								<td>攻击距离加成百分比</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAX_ATTACK_RANGE </td>
-								<td> 100 </td>
+								<td> 102 </td>
 								<td> GetModifierMaxAttackRange </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS </td>
-								<td> 101</td>
+								<td> 103</td>
 								<td> GetModifierProjectileSpeedBonus </td>
 								<td> Increases the projectile speed of attacks sourced by the parent by a constant
 									returned to it. Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE </td>
-								<td> 102</td>
+								<td> 104</td>
 								<td> GetModifierProjectileSpeedBonusPercentage </td>
 								<td> </td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_PROJECTILE_NAME</td>
-								<td> 103</td>
+								<td> 105</td>
 								<td>GetModifierProjectileName</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REINCARNATION </td>
-								<td>104</td>
+								<td>106</td>
 								<td> ReincarnateTime </td>
 								<td></td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME </td>
-								<td> 105</td>
+								<td> 107</td>
 								<td> GetModifierConstantRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE </td>
-								<td> 106</td>
+								<td> 108</td>
 								<td> GetModifierPercentageRespawnTime </td>
 								<td> Increases the respawn time of the parent by a percentage returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_STACKING </td>
-								<td> 107</td>
+								<td> 109</td>
 								<td> GetModifierStackingRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
 									negative values. Stacks with other modifiers. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE </td>
-								<td> 108</td>
+								<td> 110</td>
 								<td> GetModifierPercentageCooldown </td>
 								<td> Increases the cooldown of the parent by a percentage returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_ONGOING</td>
-								<td> 109</td>
+								<td> 111</td>
 								<td>GetModifierPercentageCooldownOngoing</td>
 								<td></td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_CASTTIME_PERCENTAGE </td>
-								<td> 110</td>
+								<td> 112</td>
 								<td> GetModifierPercentageCasttime </td>
 								<td> Increases the cast time of the parent's abilities by a percentage returned to it.
 									Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANACOST_PERCENTAGE </td>
-								<td>111</td>
+								<td>113</td>
 								<td> GetModifierPercentageManacost </td>
 								<td> Increases the mana cost of the parent's abilities by a percentage returned to it.
 									Can return negative values. </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING</td>
-								<td>112</td>
+								<td>114</td>
 								<td>GetModifierPercentageManacostStacking</td>
 								<td></td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_DEATHGOLDCOST </td>
-								<td> 113</td>
+								<td> 115</td>
 								<td> GetModifierConstantDeathGoldCost </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXP_RATE_BOOST </td>
-								<td> 114</td>
+								<td> 116</td>
 								<td> GetModifierPercentageExpRateBoost </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE </td>
-								<td> 115</td>
+								<td> 117</td>
 								<td> GetModifierPreAttack_CriticalStrike </td>
 								<td> Procs a critical strike dealing the extra damage returned to it. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE </td>
-								<td> 116</td>
+								<td> 118</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK </td>
-								<td> 117</td>
+								<td> 119</td>
 								<td> GetModifierMagical_ConstantBlock </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK </td>
-								<td> 118</td>
+								<td> 120</td>
 								<td> GetModifierPhysical_ConstantBlock </td>
 								<td> Blocks damage the parent takes by a constant returned to it. Can return negative
 									values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL </td>
-								<td> 119</td>
+								<td> 121</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR </td>
-								<td> 120</td>
+								<td> 122</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK </td>
-								<td> 121</td>
+								<td> 123</td>
 								<td> GetModifierTotal_ConstantBlock </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION </td>
-								<td> 122</td>
+								<td> 124</td>
 								<td> GetOverrideAnimation </td>
 								<td> Forces the parent to play a specific animation. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT </td>
-								<td> 123</td>
+								<td> 125</td>
 								<td> GetOverrideAnimationWeight </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE </td>
-								<td> 124</td>
+								<td> 126</td>
 								<td> GetOverrideAnimationRate </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSORB_SPELL </td>
-								<td> 125</td>
+								<td> 127</td>
 								<td> GetAbsorbSpell </td>
 								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REFLECT_SPELL </td>
-								<td> 126</td>
+								<td> 128</td>
 								<td> GetReflectSpell </td>
 								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_AUTOATTACK </td>
-								<td> 127</td>
+								<td> 129</td>
 								<td> GetDisableAutoAttack </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_DAY_VISION </td>
-								<td> 128</td>
+								<td> 130</td>
 								<td> GetBonusDayVision </td>
 								<td> Increases the vision of the parent during the day by a constant returned to it. Can
 									return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION </td>
-								<td> 129</td>
+								<td> 131</td>
 								<td> GetBonusNightVision </td>
 								<td> Increases the vision of the parent during the night by a constant returned to it.
 									Can return negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE </td>
-								<td> 130</td>
+								<td> 132</td>
 								<td> GetBonusNightVisionUnique </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE </td>
-								<td> 131</td>
+								<td> 133</td>
 								<td> GetBonusVisionPercentage </td>
 								<td> Increases the vision of the parent by a percentage returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_DAY_VISION </td>
-								<td> 132</td>
+								<td> 134</td>
 								<td> GetFixedDayVision </td>
 								<td> Sets the vision of the parent during the day to a fixed value returned to it.
 									Cannot be changed by any means. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_NIGHT_VISION </td>
-								<td> 133</td>
+								<td> 135</td>
 								<td> GetFixedNightVision </td>
 								<td> Sets the vision of the parent during the night to a fixed value returned to it.
 									Cannot be changed by any means. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MIN_HEALTH </td>
-								<td> 134</td>
+								<td> 136</td>
 								<td> GetMinHealth </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL </td>
-								<td> 135</td>
+								<td> 137</td>
 								<td> GetAbsoluteNoDamagePhysical </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL </td>
-								<td> 136</td>
+								<td> 138</td>
 								<td> GetAbsoluteNoDamageMagical </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE </td>
-								<td> 137</td>
+								<td> 139</td>
 								<td> GetAbsoluteNoDamagePure </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_ILLUSION </td>
-								<td> 138</td>
+								<td> 140</td>
 								<td> GetIsIllusion </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ILLUSION_LABEL </td>
-								<td> 139</td>
+								<td> 141</td>
 								<td> GetModifierIllusionLabel </td>
 								<td></td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_STRONG_ILLUSION </td>
-								<td> 140</td>
+								<td> 142</td>
 								<td> GetModifierStrongIllusion </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION </td>
-								<td> 141</td>
+								<td> 143</td>
 								<td> GetModifierSuperIllusion </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION_WITH_ULTIMATE </td>
-								<td> 142</td>
+								<td> 144</td>
 								<td> GetModifierSuperIllusionWithUltimate </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE </td>
-								<td> 143</td>
+								<td> 145</td>
 								<td> GetModifierTurnRate_Percentage </td>
 								<td> Increases the turn rate of the parent by a percentage returned to it. Can return
 									negative values. </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TURN_RATE_OVERRIDE</td>
-								<td> 144</td>
+								<td> 146</td>
 								<td>GetModifierTurnRate_Override</td>
 								<td>转身速率覆盖
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_HEALING </td>
-								<td> 145</td>
+								<td> 147</td>
 								<td> GetDisableHealing </td>
 								<td> Negates healing applied to the parent. </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK </td>
-								<td> 146</td>
+								<td> 148</td>
 								<td> GetAlwaysAllowAttack </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ETHEREAL_ATTACK </td>
-								<td> 147</td>
+								<td> 149</td>
 								<td> GetAllowEtherealAttack </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL </td>
-								<td> 148 </td>
+								<td> 150 </td>
 								<td> GetOverrideAttackMagical </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH </td>
-								<td> 149</td>
+								<td> 151</td>
 								<td> GetModifierUnitStatsNeedsRefresh </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_CREEP_MULTIPLIER </td>
-								<td> 150</td>
+								<td> 152</td>
 								<td> GetModifierBountyCreepMultiplier </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_OTHER_MULTIPLIER </td>
-								<td> 151</td>
+								<td> 153</td>
 								<td> GetModifierBountyOtherMultiplier </td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_UNIT_DISALLOW_UPGRADING</td>
-								<td> 152</td>
+								<td> 154</td>
 								<td>GetModifierUnitDisllowUpgrading(可能是GetModifierUnitDisallowUpgrading)</td>
 								<td>不允许升级</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DODGE_PROJECTILE </td>
-								<td> 153</td>
+								<td> 155</td>
 								<td>GetModifierDodgeProjectile</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TRIGGER_COSMETIC_AND_END_ATTACK</td>
-								<td> 154
+								<td> 156
 								</td>
 								<td>GetTriggerCosmeticAndEndAttack</td>
 								<td>
@@ -26530,7 +26552,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SPELL_TARGET_READY
 								</td>
-								<td> 155
+								<td> 157
 								</td>
 								<td> OnSpellTargetReady
 								</td>
@@ -26540,7 +26562,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_RECORD
 								</td>
-								<td> 156
+								<td> 158
 								</td>
 								<td> OnAttackRecord
 								</td>
@@ -26550,7 +26572,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_START
 								</td>
-								<td> 157
+								<td> 159
 								</td>
 								<td> OnAttackStart
 								</td>
@@ -26560,7 +26582,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK
 								</td>
-								<td> 158</td>
+								<td> 160</td>
 								<td> OnAttack
 								</td>
 								<td> Event that fires when an attack was completed, regardless of the result of it.
@@ -26569,7 +26591,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_LANDED
 								</td>
-								<td> 159</td>
+								<td> 161</td>
 								<td> OnAttackLanded
 								</td>
 								<td> Event that fires when an attack landed on its target successfully.
@@ -26578,7 +26600,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_FAIL
 								</td>
-								<td> 160</td>
+								<td> 162</td>
 								<td> OnAttackFail
 								</td>
 								<td> Event that fires when an attack failed to land on its target.
@@ -26587,7 +26609,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_ALLIED
 								</td>
-								<td> 161
+								<td> 163
 								</td>
 								<td> OnAttackAllied
 								</td>
@@ -26597,7 +26619,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PROJECTILE_DODGE
 								</td>
-								<td> 162</td>
+								<td> 164</td>
 								<td> OnProjectileDodge
 								</td>
 								<td> Event that fires when dodging a projectile. (Disjointing it)
@@ -26606,7 +26628,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ORDER
 								</td>
-								<td> 163</td>
+								<td> 165</td>
 								<td> OnOrder
 								</td>
 								<td> Event that fires when an order is given to the parent.
@@ -26615,7 +26637,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_UNIT_MOVED
 								</td>
-								<td> 164</td>
+								<td> 166</td>
 								<td> OnUnitMoved
 								</td>
 								<td> Event that fires when a unit moved.
@@ -26624,7 +26646,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_START
 								</td>
-								<td> 165</td>
+								<td> 167</td>
 								<td> OnAbilityStart
 								</td>
 								<td> Event that fires when starting to use an ability.
@@ -26633,7 +26655,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_EXECUTED
 								</td>
-								<td> 166
+								<td> 168
 								</td>
 								<td> OnAbilityExecuted
 								</td>
@@ -26643,7 +26665,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 								</td>
-								<td> 167</td>
+								<td> 169</td>
 								<td> OnAbilityFullyCast
 								</td>
 								<td> Event that fires when the ability has completely activated.
@@ -26652,7 +26674,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_BREAK_INVISIBILITY
 								</td>
-								<td> 168</td>
+								<td> 170</td>
 								<td> OnBreakInvisibility
 								</td>
 								<td> Event that fires when breaking invisibility.
@@ -26661,7 +26683,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_END_CHANNEL
 								</td>
-								<td> 169
+								<td> 171
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
@@ -26671,7 +26693,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PROCESS_UPGRADE
 								</td>
-								<td> 170</td>
+								<td> 172</td>
 								<td>
 								</td>
 								<td>Unused
@@ -26680,7 +26702,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_REFRESH
 								</td>
-								<td> 171</td>
+								<td> 173</td>
 								<td>
 								</td>
 								<td>Unused
@@ -26689,7 +26711,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TAKEDAMAGE
 								</td>
-								<td> 172
+								<td> 174
 								</td>
 								<td> OnTakeDamage
 								</td>
@@ -26699,7 +26721,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DEATH_PREVENTED
 								</td>
-								<td> 173
+								<td> 175
 								</td>
 								<td> OnDamagePrevented
 								</td>
@@ -26709,7 +26731,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_STATE_CHANGED
 								</td>
-								<td> 174
+								<td> 176
 								</td>
 								<td> OnStateChanged
 								</td>
@@ -26719,7 +26741,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ORB_EFFECT
 								</td>
-								<td> 175</td>
+								<td> 177</td>
 								<td>Unused
 								</td>
 								<td>
@@ -26727,20 +26749,20 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_PROCESS_CLEAVE</td>
-								<td>176</td>
+								<td>178</td>
 								<td>OnProcessCleave</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_DAMAGE_CALCULATED</td>
-								<td>177</td>
+								<td>179</td>
 								<td>OnDamageCalculated</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACKED
 								</td>
-								<td> 178
+								<td> 180
 								</td>
 								<td> OnAttacked
 								</td>
@@ -26750,7 +26772,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DEATH
 								</td>
-								<td> 179</td>
+								<td> 181</td>
 								<td> OnDeath
 								</td>
 								<td> Event that fires when dying.
@@ -26759,7 +26781,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_RESPAWN
 								</td>
-								<td> 180
+								<td> 182
 								</td>
 								<td> OnRespawn
 								</td>
@@ -26769,7 +26791,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SPENT_MANA
 								</td>
-								<td> 181
+								<td> 183
 								</td>
 								<td> OnSpentMana
 								</td>
@@ -26779,7 +26801,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TELEPORTING
 								</td>
-								<td> 182
+								<td> 184
 								</td>
 								<td> OnTeleporting
 								</td>
@@ -26789,7 +26811,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TELEPORTED
 								</td>
-								<td> 183</td>
+								<td> 185</td>
 								<td> OnTeleported
 								</td>
 								<td> Event that fires when completing a teleport.
@@ -26798,7 +26820,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SET_LOCATION
 								</td>
-								<td> 184
+								<td> 186
 								</td>
 								<td> OnSetLocation
 								</td>
@@ -26808,7 +26830,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HEALTH_GAINED
 								</td>
-								<td> 185</td>
+								<td> 187</td>
 								<td> OnHealthGained
 								</td>
 								<td>
@@ -26817,7 +26839,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MANA_GAINED
 								</td>
-								<td> 186</td>
+								<td> 188</td>
 								<td> OnManaGained
 								</td>
 								<td>
@@ -26826,7 +26848,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
 								</td>
-								<td> 187
+								<td> 189
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
@@ -26836,7 +26858,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HERO_KILLED
 								</td>
-								<td> 188</td>
+								<td> 190</td>
 								<td> OnHeroKilled
 								</td>
 								<td> Event that fires when a hero is killed.
@@ -26845,7 +26867,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HEAL_RECEIVED
 								</td>
-								<td> 189</td>
+								<td> 191</td>
 								<td> OnHealReceived
 								</td>
 								<td> Event that fires when being healed.
@@ -26854,7 +26876,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_BUILDING_KILLED
 								</td>
-								<td> 190</td>
+								<td> 192</td>
 								<td> OnBuildingKilled
 								</td>
 								<td> Event that fires when a building is destroyed.
@@ -26863,7 +26885,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MODEL_CHANGED
 								</td>
-								<td> 191
+								<td> 193
 								</td>
 								<td> OnModelChanged
 								</td>
@@ -26873,7 +26895,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MODIFIER_ADDED
 								</td>
-								<td> 192
+								<td> 194
 								</td>
 								<td> OnModifierAdded
 								</td>
@@ -26883,7 +26905,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TOOLTIP
 								</td>
-								<td> 193</td>
+								<td> 195</td>
 								<td> OnTooltip
 								</td>
 								<td>
@@ -26892,7 +26914,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_MODEL_CHANGE
 								</td>
-								<td> 194</td>
+								<td> 196</td>
 								<td> GetModifierModelChange
 								</td>
 								<td> Changes the parent's model.
@@ -26901,7 +26923,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_MODEL_SCALE
 								</td>
-								<td> 195</td>
+								<td> 197</td>
 								<td> GetModifierModelScale
 								</td>
 								<td> Changes the parent's model scale.
@@ -26910,7 +26932,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_SCEPTER
 								</td>
-								<td> 196
+								<td> 198
 								</td>
 								<td> GetModifierScepter
 								</td>
@@ -26919,7 +26941,7 @@
 							</tr>
 							<td> MODIFIER_PROPERTY_RADAR_COOLDOWN_REDUCTION
 							</td>
-							<td> 197
+							<td> 199
 							</td>
 							<td> GetModifierRadarCooldownReduction
 							</td>
@@ -26930,7 +26952,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 								</td>
-								<td> 198</td>
+								<td> 200</td>
 								<td> GetActivityTranslationModifiers
 								</td>
 								<td>
@@ -26939,7 +26961,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
 								</td>
-								<td> 199
+								<td> 201
 								</td>
 								<td> GetAttackSound
 								</td>
@@ -26949,7 +26971,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_LIFETIME_FRACTION
 								</td>
-								<td> 200</td>
+								<td> 202</td>
 								<td> GetUnitLifetimeFraction
 								</td>
 								<td>
@@ -26958,7 +26980,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
 								</td>
-								<td> 201</td>
+								<td> 203</td>
 								<td> GetModifierProvidesFOWVision
 								</td>
 								<td> Return 1 if parent's model would show to his enemies.
@@ -26967,7 +26989,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELLS_REQUIRE_HP
 								</td>
-								<td> 202
+								<td> 204
 								</td>
 								<td> GetModifierSpellsRequireHP
 								</td>
@@ -26977,7 +26999,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
 								</td>
-								<td> 203</td>
+								<td> 205</td>
 								<td> GetForceDrawOnMinimap
 								</td>
 								<td>
@@ -26986,7 +27008,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_TURNING
 								</td>
-								<td> 204</td>
+								<td> 206</td>
 								<td> GetModifierDisableTurning
 								</td>
 								<td>
@@ -26995,7 +27017,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 								</td>
-								<td> 205</td>
+								<td> 207</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
 								<td>
@@ -27004,7 +27026,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_CHANGE_ABILITY_VALUE
 								</td>
-								<td> 206</td>
+								<td> 208</td>
 								<td> GetModifierChangeAbilityValue
 								</td>
 								<td>
@@ -27013,7 +27035,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL
 								</td>
-								<td> 207</td>
+								<td> 209</td>
 								<td> 
 								</td>
 								<td>GetModifierOverrideAbilitySpecial
@@ -27022,7 +27044,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL_VALUE
 								</td>
-								<td> 208</td>
+								<td> 210</td>
 								<td> 
 								</td>
 								<td>GetModifierOverrideAbilitySpecialValue
@@ -27031,7 +27053,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_ABILITY_LAYOUT
 								</td>
-								<td> 209
+								<td> 211
 								</td>
 								<td> GetModifierAbilityLayout
 								</td>
@@ -27041,7 +27063,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DOMINATED
 								</td>
-								<td> 210</td>
+								<td> 212</td>
 								<td> OnDominated
 								</td>
 								<td> An event that fires when a unit is being dominated.
@@ -27050,7 +27072,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TEMPEST_DOUBLE
 								</td>
-								<td> 211
+								<td> 213
 								</td>
 								<td> GetModifierTempestDouble
 								</td>
@@ -27060,7 +27082,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_PRESERVE_PARTICLES_ON_MODEL_CHANGE
 								</td>
-								<td> 212
+								<td> 214
 								</td>
 								<td> PreserveParticlesOnModelChanged
 								</td>
@@ -27070,7 +27092,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_FINISHED
 								</td>
-								<td> 213</td>
+								<td> 215</td>
 								<td> OnAttackFinished
 								</td>
 								<td>
@@ -27079,7 +27101,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_COOLDOWN
 								</td>
-								<td> 214</td>
+								<td> 216</td>
 								<td> GetModifierIgnoreCooldown
 								</td>
 								<td>
@@ -27088,7 +27110,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_CAN_ATTACK_TREES
 								</td>
-								<td> 215
+								<td> 217
 								</td>
 								<td> GetModifierCanAttackTrees
 								</td>
@@ -27098,7 +27120,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_VISUAL_Z_DELTA
 								</td>
-								<td> 216
+								<td> 218
 								</td>
 								<td> GetVisualZDelta
 								</td>
@@ -27108,7 +27130,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_ILLUSION
 								</td>
-								<td> 217</td>
+								<td> 219</td>
 								<td>
 								</td>
 								<td>
@@ -27116,7 +27138,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DONT_GIVE_VISION_OF_ATTACKER</td>
-								<td> 218</td>
+								<td> 220</td>
 								<td>GetModifierNoVisionOfAttacker
 								</td>
 								<td>
@@ -27124,7 +27146,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TOOLTIP2</td>
-								<td> 219</td>
+								<td> 221</td>
 								<td>OnTooltip2
 								</td>
 								<td>
@@ -27132,7 +27154,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY</td>
-								<td> 220</td>
+								<td> 222</td>
 								<td>OnAttackRecordDestroy
 								</td>
 								<td>
@@ -27140,7 +27162,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_PROJECTILE_OBSTRUCTION_HIT </td>
-								<td> 221
+								<td> 223
 								</td>
 								<td>OnProjectileObstructionHit
 								</td>
@@ -27149,7 +27171,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SUPPRESS_TELEPORT</td>
-								<td> 222</td>
+								<td> 224</td>
 								<td>GetSuppressTeleport
 								</td>
 								<td>
@@ -27157,7 +27179,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_ATTACK_CANCELLED</td>
-								<td> 223</td>
+								<td> 225</td>
 								<td>OnAttackCancelled
 								</td>
 								<td>
@@ -27165,7 +27187,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SUPPRESS_CLEAVE </td>
-								<td> 224
+								<td> 226
 								</td>
 								<td>GetSuppressCleave
 								</td>
@@ -27174,7 +27196,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_BOT_ATTACK_SCORE_BONUS</td>
-								<td> 225
+								<td> 227
 								</td>
 								<td>BotAttackScoreBonus
 								</td>
@@ -27184,7 +27206,7 @@
 							<tr>
 								<td> MODIFIER_FUNCTION_LAST
 								</td>
-								<td> 226
+								<td> 228
 								</td>
 								<td>
 								</td>
