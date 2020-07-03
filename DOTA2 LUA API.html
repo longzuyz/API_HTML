@@ -361,6 +361,8 @@
 							<li><a href="#modifierstate">modifierstate</a></li>
 							<li><a href="#quest_text_replace_values_t">quest_text_replace_values_t</a></li>
 							<li><a href="#subquest_text_replace_values_t">subquest_text_replace_values_t</a></li>
+							<li><a href="#DOTA_CONNECTION_STATE">DOTA_CONNECTION_STATE</a></li>
+							<li><a href="#Find Types">Find Types</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -450,7 +452,8 @@
 								</td>
 								<td> float ApplyDamage(handle DamageTable)
 								</td>
-								<td> 对单位造成伤害，Table输入：victim, attacker, damage, damage_type, damage_flags, ability
+								<td> 对单位造成伤害，参数DamageTable为一个Table：{victim = {受害者实体}, attacker = {攻击者实体}, damage = 伤害值, damage_type = 伤害类型（常量DAMAGE_TYPES）, damage_flags = 伤害状态（常量DOTADamageFlag_t）, ability = {技能}}
+								 注意这个Table里是要写全键值对，不能只填数据。
 								</td>
 							</tr>
 							<tr>
@@ -1078,8 +1081,8 @@
 									radius, int teamFilter, int typeFilter, int flagFilter, int order, bool
 									canGrowCache)
 								</td>
-								<td> 在给定范围内用给定flags搜索单位( iTeamNumber, vPosition, hCacheUnit, flRadius, iTeamFilter,
-									iTypeFilter, iFlagFilter, iOrder, bCanGrowCache )
+								<td> 在给定范围内用给定flags搜索单位(TeamNumber自己队伍ID, Position中心点, hCacheUnit未知, radius搜素范围（float or 常量FIND_UNITS_EVERYWHERE）
+									, teamFilter目标队伍（常量DOTA_UNIT_TARGET_TEAM）,typeFilter目标类型（常量DOTA_UNIT_TARGET_TYPE）,flagFilter目标状态（常量DOTA_UNIT_TARGET_FLAGS）, iOrder查找方式（使用常量Find Types中0-2）, bCanGrowCache是否允许增涨缓存 )
 								</td>
 							</tr>
 							<tr>
@@ -3648,7 +3651,7 @@
 								</td>
 								<td> &lt;unknown&gt; CanAbilityBeUpgraded()
 								</td>
-								<td>技能能否升级
+								<td>技能能否升级，返回值为常量AbilityLearnResult_t中的一种
 								</td>
 							</tr>
 							<tr>
@@ -3806,7 +3809,7 @@
 								</td>
 								<td> int GetAbilityType()
 								</td>
-								<td> 获取技能类型，通过在 npc_ability_custom.txt 设置"AbilityType"值.
+								<td> 获取技能类型，返回值为常量ABILITY_TYPES中的一种。通过在 npc_ability_custom.txt 设置"AbilityType"值.
 								</td>
 							</tr>
 							<tr>
@@ -5385,7 +5388,7 @@
 							<tr>
 								<td>SetCustomAttributeDerivedStatValue</td>
 								<td>void SetCustomAttributeDerivedStatValue(int nStatType, int flNewValue ) </td>
-								<td>Modify derived stat value constants.设置属性转换多少值？1力量=100血？ </td>
+								<td>Modify derived stat value constants.自定义属性转换多少值。比如1力量=100血。 nStatType为常量AttributeDerivedStats中的值</td>
 							</tr>
 							<tr>
 								<td>SetCustomBackpackCooldownPercent </td>
@@ -7517,7 +7520,7 @@
 								<td> void AddSpeechBubble(int iBubble, string pszSpeech, float flDuration, unsigned
 									unOffsetX, unsigned unOffsetY)
 								</td>
-								<td> 为单位添加一个会话气泡（可同时存在1-4个）。
+								<td> 为单位添加一个会话气泡（可同时存在1-4个）。参数iBubble为常量DOTASpeechType_t里的
 								</td>
 							</tr>
 							<tr>
@@ -9764,7 +9767,7 @@
 								</td>
 								<td> void SetAttackCapability(int AttackCapabilities )
 								</td>
-								<td> 设置攻击力。</td>
+								<td> 设置攻击能力（近战或者远程等，使用DOTAUnitAttackCapability_t里的常量作为参数）</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SetAttacking"
@@ -10031,7 +10034,7 @@
 								</td>
 								<td> void SetMoveCapability(int MoveCapabilities)
 								</td>
-								<td> 设置移动力。</td>
+								<td> 设置移动能力（地面或者飞行，使用DOTAUnitMoveCapability_t常量作为参数）。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SetMustReachEachGoalEntity"
@@ -10939,7 +10942,7 @@
 								</td>
 								<td> int GetPrimaryAttribute()
 								</td>
-								<td> 返回英雄主要属性，0 = 力量, 1 = 敏捷, 2 = 智力.
+								<td> 返回英雄主要属性，数值为常量Attributes里的值
 								</td>
 							</tr>
 							<tr>
@@ -11029,7 +11032,7 @@
 								</td>
 								<td> handle GetTogglableWearable(int nSlotType)
 								</td>
-								<td> 返回物品栏中可佩带（可切换）的物品。
+								<td> 获取对应位置的饰品实体？？？参数nSlotType是常量DOTASlotType_t里的
 								</td>
 							</tr>
 							<tr>
@@ -11836,7 +11839,7 @@
 								</td>
 								<td> int GetShareability()
 								</td>
-								<td>是否共享</td>
+								<td>是否共享，返回常量EShareAbility</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Item.IsAlertableItem"
@@ -20635,14 +20638,14 @@
 								<td>DOTA_UNIT_CAP_MELEE_ATTACK</td>
 								<td> 1
 								</td>
-								<td>
+								<td>近战攻击
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_UNIT_CAP_RANGED_ATTACK</td>
 								<td> 2
 								</td>
-								<td>
+								<td>远程攻击
 								</td>
 							</tr>
 							<tr>
@@ -27766,12 +27769,126 @@
 
 					</div>
 				</div>
-				<div id=''>
+				<div id='DOTA_CONNECTION_STATE'>
 					<div id='constantname'>
-						<p><span></span></p>
+						<p><span>DOTA_CONNECTION_STATE（用GetConnectionState获得）</span></p>
 					</div>
 					<div id='constantcontent'>
-
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_UNKNOWN
+								</td>
+								<td> 0
+								</td>
+								<td>未连接
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_NOT_YET_CONNECTED
+								</td>
+								<td> 1
+								</td>
+								<td>未连接完成，连接中
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_CONNECTED
+								</td>
+								<td> 2
+								</td>
+								<td>已连接
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_DISCONNECTED
+								</td>
+								<td> 3
+								</td>
+								<td>断开连接
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_ABANDONED
+								</td>
+								<td> 4
+								</td>
+								<td>放弃游戏，彻底断开
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_LOADING
+								</td>
+								<td> 5
+								</td>
+								<td>载入中
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_CONNECTION_STATE_FAILED
+								</td>
+								<td> 6
+								</td>
+								<td>连接失败
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='Find Types'>
+					<div id='constantname'>
+						<p><span>Find Types</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> FIND_UNITS_EVERYWHERE
+								</td>
+								<td> -1
+								</td>
+								<td>Find units in the whole map.
+								</td>
+							</tr>
+							<tr>
+								<td> FIND_ANY_ORDER
+								</td>
+								<td> 0
+								</td>
+								<td>Random the order units are found.
+								</td>
+							</tr>
+							<tr>
+								<td> FIND_CLOSEST
+								</td>
+								<td> 1
+								</td>
+								<td>Find units from the closest to the source to the farthest.
+								</td>
+							</tr>
+							<tr>
+								<td> FIND_FARTHEST
+								</td>
+								<td> 2
+								</td>
+								<td>Find units from the farthest to the source to the farthest.
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
