@@ -850,12 +850,12 @@
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.DoCleaveAttack"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.DoCleaveAttack">
-										DoCleaveAttack</a> （改变参数）
+										DoCleaveAttack</a> 
 								</td>
-								<td> int DoCleaveAttack(handle Attacker, handle Target, handle Ability, float Damage,
-									float start_radius, float end_radius, float distance, string effectName)
+								<td> int DoCleaveAttack(handle Attacker, handle Target, handle Ability, float Damage, float distance,
+									float start_radius, float end_radius, string effectName)
 								</td>
-								<td> 劈斩攻击？？？</td>
+								<td> 分裂攻击，effectName是"particles/..."</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.DoEntFire"
@@ -9580,18 +9580,17 @@
 								</td>
 								<td> bool ProvidesVision()
 								</td>
-								<td> No Description Set
+								<td> 是否提供视野
 								</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.Purge"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.Purge"> Purge</a>
 								</td>
-								<td> void Purge(bool bRemovePositiveBuffs, bool bRemoveDebuffs, bool bFrameOnly, bool
+								<td> void Purge(bool bRemovePositiveBuffs, bool bRemoveDebuffs, bool BuffsCreatedThisFrameOnly, bool
 									bRemoveStuns, bool bRemoveExceptions)
 								</td>
-								<td> (bool RemovePositiveBuffs, bool RemoveDebuffs, bool BuffsCreatedThisFrameOnly, bool
-									RemoveStuns, bool RemoveExceptions 根据增益、减益等一系列条件，清除单位的BUFF。
+								<td> 根据增益、减益等一系列条件，清除单位的BUFF。
 								</td>
 							</tr>
 							<tr>
@@ -9702,7 +9701,7 @@
 							<tr>
 								<td>Script_GetAttackRange</td>
 								<td>float Script_GetAttackRange(  ) </td>
-								<td>Gets this unit's attack range after all modifiers. </td>
+								<td>获得该单位经过所有modifiers修改后的攻击距离。 </td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.TakeItem"
@@ -9710,7 +9709,7 @@
 								</td>
 								<td> void TakeItem(handle hItem)
 								</td>
-								<td> 移除装备栏中的物品。
+								<td> Removed the passed item from this unit's inventory.将传递的物品从该单位的装备栏中移除。
 								</td>
 							</tr>
 							<tr>
@@ -9738,7 +9737,7 @@
 								</td>
 								<td> void SetAcquisitionRange(int Range)
 								</td>
-								<td>设置获取距离。</td>
+								<td>设置获取物品距离。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SetAdditionalBattleMusicWeight"
@@ -22338,7 +22337,7 @@
 				</div>
 				<div id='DOTA_UNIT_TARGET_TYPE'>
 					<div id='constantname'>
-						<p><span>DOTA_UNIT_TARGET_TYPE</span></p>
+						<p><span>DOTA_UNIT_TARGET_TYPE(可以多选，用+号连接)</span></p>
 					</div>
 					<div id='constantcontent'>
 						<table>
