@@ -672,6 +672,13 @@
 									。</td>
 							</tr>
 							<tr>
+								<td> CreateUniformRandomStream
+								</td>
+								<td> handle CreateUniformRandomStream( int_1 )
+								</td>
+								<td> Creates a separate random number stream.</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.CreateUnitByName"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.CreateUnitByName">
 										CreateUnitByName </a>
@@ -1046,7 +1053,7 @@
 								</td>
 								<td> void ExecuteOrderFromTable(handle a)
 								</td>
-								<td> 从一个Script表发布命令
+								<td> 从一个Script表发布命令，参数为{UnitIndex=CasterEntityIndex, OrderType=常量DOTA_UNIT_ORDERS, Position(可选)=Vector, AbilityIndex(可选)=AbilityIndex, TargetIndex(可选)=TargetEntityIndex, Queue(可选)=bool}
 								</td>
 							</tr>
 							<tr>
@@ -5009,7 +5016,7 @@
 					<div id='classname'>
 						<p><span>CDOTABaseGameMode</span></p>
 						<p>extends:<a href='#CBaseEntity'>CBaseEntity</a></p>
-						<p>全局变量：未知</p>
+						<p>全局变量：GameRules:GetGameModeEntity()</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -12905,7 +12912,7 @@
 							</tr>
 							<tr>
 								<td>CanParentBeAutoAttacked</td>
-								<td> function CanParentBeAutoAttacked(  )</td>
+								<td> bool CanParentBeAutoAttacked(  )</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
