@@ -287,6 +287,7 @@
 							<li><a href="#CEnvProjectedTexture">CEnvProjectedTexture</a></li>
 							<li><a href="#CFoWBlockerRegion">CFoWBlockerRegion</a></li>
 							<li><a href="#CInfoData">CInfoData</a></li>
+							<li><a href="#CInfoPlayerStartDota">CInfoPlayerStartDota</a></li>
 							<li><a href="#CInfoWorldLayer">CInfoWorldLayer</a></li>
 							<li><a href="#CLogicRelay">CLogicRelay</a></li>
 							<li><a href="#CMarkupVolumeTagged">CMarkupVolumeTagged</a></li>
@@ -415,10 +416,10 @@
 										title="Dota 2 Workshop Tools/Scripting/API/Global.AddFOWViewer">
 										AddFOWViewer</a>
 								</td>
-								<td> void AddFOWViewer(int TeamID, Vector Location, float Radius, float Duration, bool
+								<td> int AddFOWViewer(int TeamID, Vector Location, float Radius, float Duration, bool
 									ObstructedVision)
 								</td>
-								<td> 为指定队伍增加临时视野。
+								<td> 为指定队伍增加临时视野，returns a ViewerID 。
 								</td>
 							</tr>
 							<tr>
@@ -1833,6 +1834,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> RemoveFOWViewer
+								</td>
+								<td> void RemoveFOWViewer( int TeamID, int nViewerID)
+								</td>
+								<td> 删除视野Remove temporary vision for a given team
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.RemoveSpawnGroupFilterProxy"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.RemoveSpawnGroupFilterProxy">
 										RemoveSpawnGroupFilterProxy</a>
@@ -2004,7 +2013,7 @@
 								</td>
 								<td> ( DOTAPlayer sendToPlayer, int iMessageType, Entity targetEntity, int iValue,
 									DOTAPlayer sourcePlayer ) - sendToPlayer和sourcePlayer 允许为nil。 -
-									iMessageType是OVERHEAD_ALERT_分类中的一个。
+									iMessageType是OVERHEAD_ALERT_分类中的一个，在JS里找。
 								</td>
 							</tr>
 							<tr>
@@ -5457,6 +5466,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> SetAllowNeutralItemDrops
+								</td>
+								<td> void SetAllowNeutralItemDrops( bEnabled )
+								</td>
+								<td> 设置中立物品是否掉落If set to true, neutral items will be dropped on killing neutral monsters.  Otherwise nothing will be dropped.
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseGameMode.SetAlwaysShowPlayerNames"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseGameMode.SetAlwaysShowPlayerNames">
 										SetAlwaysShowPlayerNames</a>
@@ -7799,6 +7816,14 @@
 								<td> float BoundingRadius2D()
 								</td>
 								<td> No Description Set
+								</td>
+							</tr>
+							<tr>
+								<td> CalculateGenericBonuses
+								</td>
+								<td> void CalculateGenericBonuses()
+								</td>
+								<td> 计算通用奖金??
 								</td>
 							</tr>
 							<tr>
@@ -18017,6 +18042,35 @@
 								</td>
 								<td> 查询该键值矢量（vector）数据
 								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='CInfoPlayerStartDota' class='classcontent'>
+					<div id='classname'>
+						<p><span>CInfoPlayerStartDota</span></p>
+						<p>extends:<a href='#CBaseEntity'>CBaseEntity</a></p>
+						<p>全局变量：未知</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> 函数
+								</th>
+								<th> 函数原型
+								</th>
+								<th> 解释
+								</th>
+							</tr>
+							<tr>
+								<td>IsEnabled</td>
+								<td>bool IsEnabled(  ) </td>
+								<td>对象是否已经激活Returns whether the object is currently active</td>
+							</tr>
+							<tr>
+								<td>SetEnabled</td>
+								<td>void SetEnabled( bEnabled ) </td>
+								<td>是否激活阻塞Enable or disable the obstruction</td>
 							</tr>
 						</table>
 					</div>
