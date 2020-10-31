@@ -275,6 +275,8 @@
 							<li><a href="#CDOTA_ShopTrigger">CDOTA_ShopTrigger</a></li>
 							<li><a href="#CDOTA_SimpleObstruction">CDOTA_SimpleObstruction</a></li>
 							<li><a href="#CDOTA_Unit_CustomGameAnnouncer">CDOTA_Unit_CustomGameAnnouncer</a></li>
+							<li><a href="#CDOTA_Unit_Diretide_Portal">CDOTA_Unit_Diretide_Portal</a></li>
+							
 							<li><a href="#CDOTA_Unit_Courier">CDOTA_Unit_Courier</a></li>
 							<li><a href="#CDOTA_Unit_Nian">CDOTA_Unit_Nian</a></li>
 							<li><a href="#CDOTAGameManager">CDOTAGameManager</a></li>
@@ -366,6 +368,10 @@
 							<li><a href="#subquest_text_replace_values_t">subquest_text_replace_values_t</a></li>
 							<li><a href="#DOTA_CONNECTION_STATE">DOTA_CONNECTION_STATE</a></li>
 							<li><a href="#Find Types">Find Types</a></li>
+							<li><a href="#BoundsHullName">BoundsHullName</a></li>
+							<li><a href="#CombatClassAttack">CombatClassAttack</a></li>
+							<li><a href="#CombatClassDefend">CombatClassDefend</a></li>
+							<li><a href="#UnitRelationshipClass">UnitRelationshipClass</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -687,7 +693,8 @@
 								<td> handle CreateUnitByName(string UnitName, Vector Location, bool FindClearSpace,
 									handle NPCOwner, handle UnitOwner, int TeamNumber)
 								</td>
-								<td> 用DOTA单位的dota_npc_units.txt中的名字创建它，但是还不能控制，要配合SetControllableByPlayer使用</td>
+								<td> 用DOTA单位的名字创建它，但是还不能控制，要配合SetControllableByPlayer使用。同时生成大量单位时,会卡一下,但是是同时出现的,效率比较高。
+									生成英雄单位会比普通单位消耗大很多,下同</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.CreateUnitByNameAsync"
@@ -697,16 +704,27 @@
 								<td> int CreateUnitByNameAsync(string UnitName, Vector Location, bool FindClearSpace,
 									handle NPCOwner, handle UnitOwner, int TeamNumber,handle Callback )
 								</td>
-								<td> 用DOTA单位的dota_npc_units.txt中的名字异步创建它</td>
+								<td> 异步创建单位,原理很复杂。由于是异步,所以不会立即Create单位,而是先在内存中创建这个单位,然后执行下面的主程序,主程序执行完，
+									再来执行Callback这个函数，通常是匿名函数function(unit) end,这unit是刚才在内存创建的那个单位的实体,由系统自动传入。
+									然后就可以在匿名函数中设置这个单位的各种属性和状态,执行完这个函数才在游戏中生成这个单位。瞬间生成大量单位对电脑比较友好,
+									因为生成每个单位后会有延时再生成一下个,但是同时生成大量(超过3个)英雄单位还是会卡。
+								</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.CreateUnitFromTable"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.CreateUnitFromTable">
 										CreateUnitFromTable</a>
 								</td>
-								<td> hscript CreateUnitFromTable(table unitProperties)
+								<td> hscript CreateUnitFromTable(table unitProperties,Vector vector)
 								</td>
-								<td> Creates a new data-driven entity with the given table
+								<td> 根据一个table创建单位,table是设置这个属性的。table例子:local table1={MapUnitName="dota_units.txt或者npc_units_custom.txt里的单位名称",
+									teamnumber=DOTA_TEAM_GOODGUYS,angles="0 10 0"(朝向,GetAngles),origin="20,200,128"(没啥用,外面还要填),modelscale = 1,
+									StatusHealth=1000(基础血量上增加的血量),StatusMana=1000(基础上加),NeverMoveToClearSpace=false,ArmorPhysical=100(基础护甲上再+100,实际+101),
+									MagicalResistance=20(基础上加),StatusHealthRegen=20(基础上加),StatusManaRegen=20(基础上加),AttackDamageMin=100(但实际在20的基础上开始加,下同),
+									AttackDamageMax=200,AttributeBaseStrength=32(覆盖原基础力量,智力敏捷都可以),AttributeStrengthGain = 20(直接覆盖,面板不显示改动),
+									AttackRate=5(面板不显示),BaseAttackSpeed=300(面板不显示改动),AttackRange=1000,ProjectileSpeed =1000(普工弹道速度),
+									AttributePrimary=DOTA_ATTRIBUTE_MAX(哪个最大，哪个是主属性),MovementSpeed=500(不显示改动,不能突破移速限制),VisionDaytimeRange=100(白天视野范围),
+									VisionNighttimeRange=100,level=10(只是等级增加,技能点只有1点,属性仍然是1级的属性,经验也从1级开始获取,但是可以学习终极技能和天赋),}
 								</td>
 							</tr>
 							<tr>
@@ -1366,6 +1384,15 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetPotentialNeutralItemDrop
+								</td>
+								<td> string GetPotentialNeutralItemDrop( int ItemLevel , int TeamNumber ) 
+								</td>
+								<td> Given the item tier and the team, roll for the name of a valid neutral item drop, considering previous drops and consumables. 
+									获取潜在要掉落的中立物品，ItemLevel代表是几级中立物品
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.GetSystemDate"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.GetSystemDate">
 										GetSystemDate</a>
@@ -1512,6 +1539,11 @@
 								<td>IsLocationVisible</td>
 								<td> bool IsLocationVisible(int TeamNumber, Vector Location) </td>
 								<td>Ask fog of war if a location is visible to a certain team .询问战争迷雾，是否某个位置对某个团队可见</td>
+							</tr>
+							<tr>
+								<td>IsMangoTree</td>
+								<td> bool IsMangoTree( handle_1 ) </td>
+								<td>Is this entity a mango tree?是芒果树吗</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.IsMarkedForDeletion"
@@ -2574,25 +2606,6 @@
 								<td> Returns the duration in seconds of the active sequence.返回活动序列的持续时间（以秒为单位）。
 								</td>
 							</tr>
-
-							<tr>
-								<td> GetAttachmentAngles
-								</td>
-								<td> Vector GetAttachmentAngles(int iAttachment)
-								</td>
-								<td> Get the attachment id's angles as a p,y,r vector. 以p，y，r向量获取附件ID的角度。
-								</td>
-							</tr>
-							<tr>
-								<td>GetAttachmentForward</td>
-								<td>Vector GetAttachmentForward(int iAttachment) </td>
-								<td>Get the attachment id's forward vector.获取附件ID的前向矢量。</td>
-							</tr>
-							<tr>
-								<td>GetAttachmentOrigin</td>
-								<td>Vector GetAttachmentOrigin(int iAttachment ) </td>
-								<td>Get the attachment id's origin vector.获取附件ID的原点向量。</td>
-							</tr>
 							<tr>
 								<td>GetCycle</td>
 								<td>float GetCycle()</td>
@@ -2602,11 +2615,6 @@
 								<td>GetGraphParameter</td>
 								<td>table GetGraphParameter(string pszParam) </td>
 								<td>Get the value of the given animGraph parameter.获取图形参数。</td>
-							</tr>
-							<tr>
-								<td>GetModelScale</td>
-								<td>float GetModelScale() </td>
-								<td>Get scale of entity's model.获取模型尺寸</td>
 							</tr>
 							<tr>
 								<td>GetSequence</td>
@@ -2622,11 +2630,6 @@
 								<td>ResetSequence</td>
 								<td>void ResetSequence(string pSequenceName) </td>
 								<td>Sets the active sequence by name, resetting the current cycle.</td>
-							</tr>
-							<tr>
-								<td>ScriptLookupAttachment</td>
-								<td>int ScriptLookupAttachment(string pAttachmentName) </td>
-								<td>Get the named attachment id.</td>
 							</tr>
 							<tr>
 								<td>SequenceDuration</td>
@@ -2672,11 +2675,6 @@
 								<td>SetGraphParameterVector</td>
 								<td>void SetGraphParameterVector(string szName, Vector vValue)</td>
 								<td>Pass the vector value to the specified param in the graph</td>
-							</tr>
-							<tr>
-								<td>SetModelScale</td>
-								<td>void SetModelScale(float flScale) </td>
-								<td>Set scale of entity's model.</td>
 							</tr>
 							<tr>
 								<td>SetPoseParameter</td>
@@ -3336,7 +3334,7 @@
 								<td> void SetContextThink(string name, handle func, float delay)
 								</td>
 								<td> 在这个实体上设置一个计时器，可以用来设置多少秒执行一次或者多少秒后执行这个函数。函数func中返回数字来设置执行间隔，最小0.03（0-0.03的值都将默认为0.03）。return
-									除了大于等于0的数和true以外的值以及无返回值，都将不会再执行下次THINK了。如果要执行一个类的函数，可以使用Dynamic_Wrap(handle
+									除了大于等于0的数和true以外的值以及无返回值，都将不会再执行下次THINK了，比如nil只执行一次。如果要执行一个类的函数，可以使用Dynamic_Wrap(handle
 									class,string funcname)class可使用self做参数或者直接使用classname.funcname（注意没有（））。
 								</td>
 							</tr>
@@ -3488,7 +3486,7 @@
 								</td>
 								<td> void SetTeam(int team)
 								</td>
-								<td> No Description Set
+								<td> 设置改变队伍,玩家实体和英雄实体都要设置。但是如果英雄身上有某些Modifier,比如全能大招,就会导致游戏崩溃。
 								</td>
 							</tr>
 
@@ -3564,6 +3562,21 @@
 								</th>
 							</tr>
 							<tr>
+								<td>GetAttachmentAngles</td>
+								<td>Vector GetAttachmentAngles( int Attachment) </td>
+								<td>Get the attachment id's angles as a p,y,r vector. </td>
+							</tr>
+							<tr>
+								<td>GetAttachmentForward</td>
+								<td>Vector GetAttachmentForward( int Attachment) </td>
+								<td>Get the attachment id's forward vector.</td>
+							</tr>
+							<tr>
+								<td>GetAttachmentOrigin</td>
+								<td>unsigned GetAttachmentOrigin(int Attachment ) </td>
+								<td>Get the attachment id's origin vector.</td>
+							</tr>
+							<tr>
 								<td>GetMaterialGroupHash</td>
 								<td>unsigned GetMaterialGroupHash( ) </td>
 								<td>Get the material group hash of this entity.获得实体材料组的HASH值。</td>
@@ -3574,6 +3587,11 @@
 								<td>Get the mesh group mask of this entity.</td>
 							</tr>
 							<tr>
+								<td>GetModelScale</td>
+								<td>float GetModelScale(  )</td>
+								<td>Get scale of entity's model.</td>
+							</tr>
+							<tr>
 								<td>GetRenderAlpha</td>
 								<td>int GetRenderAlpha(  ) </td>
 								<td>Get the alpha modulation of this entity. 获得实体alpha渲染值。</td>
@@ -3582,6 +3600,11 @@
 								<td>GetRenderColor</td>
 								<td>Vector GetRenderColor(  ) </td>
 								<td>Get the render color of the entity.获得实体渲染颜色。</td>
+							</tr>
+							<tr>
+								<td>ScriptLookupAttachment</td>
+								<td>int ScriptLookupAttachment(string AttachmentName )</td>
+								<td>Get the named attachment id.</td>
 							</tr>
 							<tr>
 								<td>SetBodygroup</td>
@@ -3627,6 +3650,11 @@
 								</td>
 								<td> 设置模型
 								</td>
+							</tr>
+							<tr>
+								<td>SetModelScale</td>
+								<td>void SetModelScale(float Scale  )</td>
+								<td>Set scale of entity's model. </td>
 							</tr>
 							<tr>
 								<td>SetRenderAlpha</td>
@@ -3698,7 +3726,7 @@
 								</td>
 								<td> int RegisterListener(string EventName, handle CallbackFunction)
 								</td>
-								<td> 监听指定自定义事件，注册一个回调函数，在指定事件触发时被调用。返回一个监听者ID用来在以后取消监听。
+								<td> 监听JS发来的事件，注册一个回调函数，在指定事件触发时被调用。返回一个监听者ID用来在以后取消监听。对应JS函数为SendCustomGameEventToServer
 								</td>
 							</tr>
 							<tr>
@@ -3708,7 +3736,7 @@
 								</td>
 								<td> void Send_ServerToAllClients(string EventName, handle table EventData)
 								</td>
-								<td> 向所有客户端发送数据信息。
+								<td> 向所有客户端发送数据信息。JS接受信息监听函数为GameEvents.Subscribe
 								</td>
 							</tr>
 							<tr>
@@ -3718,7 +3746,7 @@
 								</td>
 								<td> void Send_ServerToPlayer(handle Player, string EventName, handle EventData)
 								</td>
-								<td> 向一个玩家发送数据信息。
+								<td> 向一个玩家发送数据信息。JS接受信息监听函数为GameEvents.Subscribe
 								</td>
 							</tr>
 							<tr>
@@ -3728,7 +3756,7 @@
 								</td>
 								<td> void Send_ServerToTeam(int TeamNumber, string EventName, handle EventData)
 								</td>
-								<td> 向队伍发送数据信息
+								<td> 向队伍发送数据信息，JS接受信息监听函数为GameEvents.Subscribe
 								</td>
 							</tr>
 							<tr>
@@ -4029,6 +4057,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetBehaviorInt
+								</td>
+								<td> int GetBehaviorInt()
+								</td>
+								<td> Get ability behavior flags as an int for compatability.
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.GetCaster"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.GetCaster">
 										GetCaster</a>
@@ -4139,6 +4175,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetCurrentAbilityCharges
+								</td>
+								<td> int GetCurrentAbilityCharges()
+								</td>
+								<td> 获取该技能的当前的充能值。
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.GetCursorPosition"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.GetCursorPosition">
 										GetCursorPosition</a>
@@ -4166,6 +4210,22 @@
 								<td> bool GetCursorTargetingNothing()
 								</td>
 								<td> 判断施法时，鼠标是否指向了什么实体目标（包括自己）以及坐标。（不需要点击目标或者坐标就能施放的技能为true，双击给自己施法的技能也为false）
+								</td>
+							</tr>
+							<tr>
+								<td> GetDamageMax
+								</td>
+								<td> int GetDamageMax()
+								</td>
+								<td> Get the maximum attack damage of this unit. 
+								</td>
+							</tr>
+							<tr>
+								<td> GetDamageMin
+								</td>
+								<td> int GetDamageMin()
+								</td>
+								<td> Get the minimum attack damage of this unit.
 								</td>
 							</tr>
 							<tr>
@@ -4656,6 +4716,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> OnChargeCountChanged
+								</td>
+								<td> void OnChargeCountChangedk()
+								</td>
+								<td> Runs when item's charge count changes.
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.OnHeroCalculateStatBonus"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.OnHeroCalculateStatBonus">
 										OnHeroCalculateStatBonus</a>
@@ -4795,6 +4863,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> RefreshIntrinsicModifier
+								</td>
+								<td> <unknown> RefreshIntrinsicModifier()
+								</td>
+								<td> 重置该技能产生的Modifier。
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.RefundManaCost"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.RefundManaCost">
 										RefundManaCost</a>
@@ -4843,6 +4919,14 @@
 								<td> void SetChanneling(bool bChanneling)
 								</td>
 								<td> 设置是否在持续施法
+								</td>
+							</tr>
+							<tr>
+								<td> SetCurrentAbilityCharges
+								</td>
+								<td> void SetCurrentAbilityCharges(int Charges  )
+								</td>
+								<td> 设置技能充能值
 								</td>
 							</tr>
 							<tr>
@@ -5271,6 +5355,16 @@
 								</td>
 							</tr>
 							<tr>
+								<td>GetCustomRadiantScore</td>
+								<td>int GetCustomRadiantScore(  ) </td>
+								<td> Get the topbar score display value for radiant. </td>
+							</tr>
+							<tr>
+								<td>GetCustomDireScore</td>
+								<td>int GetCustomDireScore(  ) </td>
+								<td> Get the topbar score display value for dire. </td>
+							</tr>
+							<tr>
 								<td>GetCustomScanCooldown</td>
 								<td>float GetCustomScanCooldown(  ) </td>
 								<td>Get the current custom scan cooldown. 扫描CD。</td>
@@ -5650,6 +5744,16 @@
 								</td>
 							</tr>
 							<tr>
+								<td>SetCustomRadiantScore</td>
+								<td>void SetCustomRadiantScore(int Score ) </td>
+								<td>Sets the topbar score display value for radiant.</td>
+							</tr>
+							<tr>
+								<td>SetCustomDireScore</td>
+								<td>void SetCustomDireScore(int Score ) </td>
+								<td>Sets the topbar score display value for dire.</td>
+							</tr>
+							<tr>
 								<td>SetCustomScanCooldown</td>
 								<td>void SetCustomScanCooldown(float flCooldown ) </td>
 								<td>设置扫描冷却时间。</td>
@@ -5713,7 +5817,7 @@
 								</td>
 								<td> void SetExecuteOrderFilter(handle hFunction, handle hContext)
 								</td>
-								<td> 设置一个过滤器，用来控制单位捡起物品时的行为 (改变数据表并返回True来使用新值, 返回False来取消事件)
+								<td> 设置一个过滤器，用来控制单位捡起物品时的行为 (改变数据表并返回True来使用新值, 返回False来取消事件)，事件查看DOTA_UNIT_ORDERS
 								</td>
 							</tr>
 							<tr>
@@ -5849,7 +5953,7 @@
 							<tr>
 								<td>SetRandomHeroBonusItemGrantDisabled</td>
 								<td>void SetRandomHeroBonusItemGrantDisabled( bDisabled ) </td>
-								<td>Disables bonus items for randoming a hero.是否启用装备奖励给一个随机的英雄？？？</td>
+								<td>Disables bonus items for randoming a hero.是否启用随机英雄后给与物品奖励</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseGameMode.SetLoseGoldOnDeath"
@@ -7248,9 +7352,9 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA Ability Lua.GetBehavior">
 										GetBehavior</a>
 								</td>
-								<td> int GetBehavior()
+								<td> uint64 GetBehavior()
 								</td>
-								<td> 返回技能的施法动作类型
+								<td> Return cast behavior type of this ability. 返回技能的施法动作类型
 								</td>
 							</tr>
 							<tr>
@@ -7723,7 +7827,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.AddItem"> AddItem</a>
 								</td>
 								<td> handle AddItem(handle a)</td>
-								<td> 增加物品到该单位的库存 。
+								<td> Add an item to this unit's inventory.给单位增加一个物品。
 								</td>
 							</tr>
 							<tr>
@@ -7733,7 +7837,7 @@
 								</td>
 								<td> handle AddItemByName(string pszItemName)
 								</td>
-								<td> 向玩家的库存添加一个物品。
+								<td> Add an item to this unit's inventory.用物品名称给单位增加一个物品。
 								</td>
 							</tr>
 							<tr>
@@ -7954,7 +8058,7 @@
 							<tr>
 								<td>FaceTowards </td>
 								<td>void FaceTowards(Vector vTarget )</td>
-								<td>his unit will be set to face the target point.</td>
+								<td>this unit will be set to face the target point.</td>
 							</tr>
 							<tr>
 								<td>FadeGesture</td>
@@ -8058,7 +8162,7 @@
 								</td>
 								<td> float GetAcquisitionRange()
 								</td>
-								<td> 获取单位的获取距离。
+								<td> 获取单位追击攻击距离，脱离范围则不追击了？？？
 								</td>
 							</tr>
 							<tr>
@@ -8434,6 +8538,13 @@
 								<td> int GetGoldBounty()
 								</td>
 								<td> 获取该单位的击杀金钱奖赏。
+								</td>
+							</tr>
+							<tr>	GetHeroID
+								</td>
+								<td> int GetHeroID()
+								</td>
+								<td> 获取英雄ID（英雄实体索引？）。
 								</td>
 							</tr>
 							<tr>
@@ -9206,7 +9317,7 @@
 								</td>
 								<td> bool IsCreature()
 								</td>
-								<td> 此单位是否为怪物类型单位?
+								<td> 此单位是否为普通生物单位
 								</td>
 							</tr>
 							<tr>
@@ -9247,7 +9358,7 @@
 							<tr>
 								<td><a href="file:///C|/Users/Administrator/Desktop/1">IsFort</a></td>
 								<td>bool IsFort(  ) </td>
-								<td>是否是远古</td>
+								<td>是否是堡垒</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsFrozen"
@@ -9409,9 +9520,9 @@
 								</td>
 							</tr>
 							<tr>
-								<td><a href="file:///C|/Users/Administrator/Desktop/1">IsOther</a></td>
+								<td><a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsOther">IsOther</a></td>
 								<td>bool IsOther(  ) </td>
-								<td>Is this unit a ward-type unit? 该单位是守护类型单位吗？？？</td>
+								<td>Is this unit a ward-type unit? 该单位是眼类型单位吗？？？</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsOutOfGame"
@@ -9864,6 +9975,20 @@
 								</td>
 							</tr>
 							<tr>
+								<td>QueueTeamConcept</td>
+								<td> void QueueTeamConcept(float Delay, handle CriteriaTable, func CompletionCallbackFn, handle Context（self）, table CallbackInfo )
+								</td>
+								<td> Queue a response system concept with the TLK_DOTA_CUSTOM concept, after a delay, for the same team this speaker is on. 语音播放排序相关
+								</td>
+							</tr>
+							<tr>
+								<td>QueueTeamConceptNoSpectators</td>
+								<td> void QueueTeamConceptNoSpectators(float Delay, handle CriteriaTable, func CompletionCallbackFn, handle Context（self）, table CallbackInfo )
+								</td>
+								<td> Queue a response system concept with the TLK_DOTA_CUSTOM concept, after a delay, for the same team this speaker is on. Is not played for spectators. 语音播放排序相关
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.ReduceMana"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.ReduceMana">
 										ReduceMana</a>
@@ -9892,6 +10017,11 @@
 								<td>RemoveAbilityFromIndexByName</td>
 								<td>void RemoveAbilityFromIndexByName(string AbilityName ) </td>
 								<td></td>
+							</tr>
+							<tr>
+								<td>RemoveAllModifiers</td>
+								<td>void RemoveAllModifiers(int targets, bool Now, bool Permanent, bool Death ) </td>
+								<td> int targets [0=all, 1=enemy, 2=ally], bool bNow, bool bPermanent永久, bool bDeath </td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.RemoveGesture"
@@ -10008,11 +10138,11 @@
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SetAcquisitionRange"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.SetAcquisitionRange">
-										SetAcquisitionRange</a> （改变了参数类型）
+										SetAcquisitionRange</a> 
 								</td>
-								<td> void SetAcquisitionRange(int Range)
+								<td> void SetAcquisitionRange(float Range)
 								</td>
-								<td>设置获取物品距离。</td>
+								<td>设置追击攻击的最远距离，脱离的这个范围就不追了</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SetAdditionalBattleMusicWeight"
@@ -10130,7 +10260,7 @@
 								</td>
 								<td> void SetBaseMoveSpeed(int MoveSpeed )
 								</td>
-								<td> 设置基础移动速度。
+								<td> 设置基础移动速度。对出生就分配的玩家英雄设置,面板和实际都生效。对非玩家英雄,不改面板数值,但是生效。要改非玩家单位的面板要用MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
 								</td>
 							</tr>
 							<tr>
@@ -10140,7 +10270,7 @@
 								</td>
 								<td> void SetCanSellItems(bool bCanSell)
 								</td>
-								<td> 设置这个单位是否能出售物品。
+								<td> 设置这个单位是否能出售物品,只有主英雄才能设置有效,副英雄怎么都卖不了。
 								</td>
 							</tr>
 							<tr>
@@ -10400,9 +10530,14 @@
 								<td> 是否偷去A杖效果。</td>
 							</tr>
 							<tr>
-								<td><a href="file:///C|/Users/Administrator/Desktop/1">SetUnitCanRespawn</a></td>
+								<td>SetUnitCanRespawn</td>
 								<td>void SetUnitCanRespawn(bool bCanRespawn ) </td>
 								<td>设置该单位是否能重生。</td>
+							</tr>
+							<tr>
+								<td>WasKilledPassively</td>
+								<td>bool WasKilledPassively( ) </td>
+								<td>？？？</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.SetUnitName"
@@ -11276,6 +11411,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetReplicatingOtherHero
+								</td>
+								<td> handle GetReplicatingOtherHero()
+								</td>
+								<td> ？？？？
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC_Hero.GetRespawnsDisabled"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC Hero.GetRespawnsDisabled">
 										GetRespawnsDisabled</a>
@@ -11546,6 +11689,14 @@
 								<td> int ModifyGold(int goldAmmt, bool reliable, int reason)
 								</td>
 								<td> 给予英雄金钱。参数: int 金钱数, bool 是否为可靠金钱, int 原因
+								</td>
+							</tr>
+							<tr>
+								<td> ModifyGoldFiltered
+								</td>
+								<td> int ModifyGoldFiltered( int GoldChange, bool Reliabe, int Reason )
+								</td>
+								<td> Gives this hero some gold, using the gold filter if extra filtering is on. 如果设置了金钱过滤器，但又要单独给英雄金钱，使用这个API
 								</td>
 							</tr>
 							<tr>
@@ -11848,6 +11999,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> DestroyOnExpire
+								</td>
+								<td> bool DestroyOnExpire()
+								</td>
+								<td> 是否到期就移除
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Buff.ForceRefresh"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA Buff.ForceRefresh">
 										ForceRefresh</a>
@@ -11980,7 +12139,7 @@
 								</td>
 								<td> int GetStackCount()
 								</td>
-								<td> 获取这个Mordifier的叠加层数。
+								<td> 获取这个Mordifier的叠加层数,也可以被用来在Mordifier内部接收SetStackCount(params)传来的参数params。
 								</td>
 							</tr>
 							<tr>
@@ -12035,7 +12194,7 @@
 								</td>
 								<td> void SetStackCount(int iCount)
 								</td>
-								<td> 设置叠加层数。
+								<td> 设置叠加层数,也可以被用来在Mordifier程序内部传参给GetStackCount()接收。
 								</td>
 							</tr>
 							<tr>
@@ -12189,7 +12348,7 @@
 								</td>
 								<td> bool IsCombinable()
 								</td>
-								<td> 判断物品是否可以合成。
+								<td> 判断物品是否可以合成其他物品以及是否是由其他物品合成的。
 								</td>
 							</tr>
 							<tr>
@@ -12199,7 +12358,7 @@
 								</td>
 								<td> bool IsDisassemblable()
 								</td>
-								<td> 判断物品是否可以被拆分。
+								<td> 判断物品是否是有多个物品合成的。
 								</td>
 							</tr>
 							<tr>
@@ -12384,6 +12543,11 @@
 								<td>SetItemState</td>
 								<td>void SetItemState(int iState )</td>
 								<td>Sets whether item is unequipped or ready. 设置物品不装备或者准备就绪。</td>
+							</tr>
+							<tr>
+								<td>SetOnlyPlayerHeroPickup</td>
+								<td>void SetOnlyPlayerHeroPickup( bool OnlyPlayerHero )</td>
+								<td>是否只能英雄拾取</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Item.SetPurchaser"
@@ -13513,7 +13677,13 @@
 								</td>
 								<td>增加玩家拾取不朽之守护（复活盾）的次数？？？</td>
 							</tr>
-
+							<tr>
+								<td> AddCandyEvent
+								</td>
+								<td> void AddCandyEvent( int PlayerID, int Reason )
+								</td>
+								<td></td>
+							</tr>
 							<tr>
 								<td><a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_PlayerResource.AddClaimedFarm"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.AddClaimedFarm">AddClaimedFarm</a>
@@ -15480,7 +15650,7 @@
 								</td>
 								<td> handle GetDOTACommandClient()
 								</td>
-								<td> 返回输入该控制台智力的DOTA玩家
+								<td> 返回输入该控制台指令的DOTA玩家
 								</td>
 							</tr>
 
@@ -15758,7 +15928,7 @@
 
 							<tr>
 								<td>GetFaction</td>
-								<td>int GetFaction(  )</td>
+								<td>int GetFaction（可能失效）</td>
 								<td>Get the combat character faction.</td>
 							</tr>
 							<tr>
@@ -15772,7 +15942,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>ShootPosition</td>（改变参数）
+								<td>ShootPosition（可能失效）</td>
 								<td>Vector ShootPosition(int nHand，int nMuzzle ) </td>
 								<td>Returns the shoot position eyes (or hand in VR). </td>
 							</tr>
@@ -17187,6 +17357,66 @@
 								</td>
 							</tr>
 
+						</table>
+					</div>
+				</div>
+				<div id='CDOTA_Unit_Diretide_Portal' class='classcontent'>
+					<div id='classname'>
+						<p><span>CDOTA_Unit_Diretide_Portal</span></p>
+						<p>extends:<a href='#CBaseEntity'>CBaseEntity</a></p>
+						<p>全局变量：未知</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> 函数名
+								</th>
+								<th> 函数原型
+								</th>
+								<th> 解释
+								</th>
+							</tr>
+
+							<tr>
+								<td> GetPartnerPortal
+								</td>
+								<td> handle GetPartnerPortal(  )
+								</td>
+								<td> 
+								</td>
+							</tr>
+							<tr>
+								<td> ResetPortal
+								</td>
+								<td> void ResetPortal(  )
+								</td>
+								<td> 
+								</td>
+							</tr>
+							<tr>
+								<td> SetInvasionRuneType
+								</td>
+								<td> void SetInvasionRuneType( int nRuneType  )
+								</td>
+								<td> 
+								</td>
+							</tr>
+							<tr>
+								<td> SetPartnerPortal
+								</td>
+								<td> void SetPartnerPortal( handle hPortal  )
+								</td>
+								<td> 
+								</td>
+							</tr>
+							<tr>
+								<td> SetPortalActive
+								</td>
+								<td> void SetPortalActive( bool bActive )
+								</td>
+								<td> 
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -19185,6 +19415,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> IsValidProjectile
+								</td>
+								<td> bool ProjectileManager:IsValidProjectile( int_1 )
+								</td>
+								<td> Is this a valid projectile?
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/ProjectileManager.ProjectileDodge"
 										title="Dota 2 Workshop Tools/Scripting/API/ProjectileManager.ProjectileDodge">
 										ProjectileDodge</a>
@@ -19609,45 +19847,46 @@
 								<td>DOTA_DAMAGE_FLAG_NONE</td>
 								<td> 0
 								</td>
-								<td>
+								<td>无
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR</td>
 								<td> 1
 								</td>
-								<td>
+								<td>无视魔抗
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR</td>
 								<td> 2
 								</td>
-								<td>
+								<td>无视护甲
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY </td>
 								<td> 4</td>
-								<td>
+								<td>无视无敌
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_BYPASSES_BLOCK</td>
 								<td>8</td>
-								<td>
+								<td>无视格挡
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_REFLECTION</td>
 								<td>16</td>
-								<td>
+								<td>反弹伤害标记
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_HPLOSS</td>
 								<td>32</td>
-								<td></td>
+								<td>生命移除	
+								</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_NO_DIRECTOR_EVENT</td>
@@ -19657,7 +19896,7 @@
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_NON_LETHAL</td>
 								<td>128</td>
-								<td>
+								<td>不致死
 								</td>
 							</tr>
 							<tr>
@@ -19668,32 +19907,32 @@
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS</td>
 								<td>512</td>
-								<td></td>
+								<td>没有伤害增强</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION</td>
 								<td>1024</td>
-								<td></td>
+								<td>没有技能增强</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN</td>
 								<td>2056</td>
-								<td></td>
+								<td>当伤害来源不可见时，不显示伤害</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL</td>
 								<td>4096</td>
-								<td></td>
+								<td>没有技能吸血</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_PROPERTY_FIRE </td>
 								<td>8192</td>
-								<td></td>
+								<td>火焰属性标记</td>
 							</tr>
 							<tr>
 								<td>DOTA_DAMAGE_FLAG_IGNORES_BASE_PHYSICAL_ARMOR </td>
 								<td>16384</td>
-								<td></td>
+								<td>无视基础护甲</td>
 							</tr>
 						</table>
 
@@ -20492,348 +20731,380 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BODY_HEAD</td>
+								<td>DOTA_LOADOUT_TYPE_COSTUME</td>
 								<td>15</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MOUNT</td>
+								<td>DOTA_LOADOUT_TYPE_BODY_HEAD</td>
 								<td>16</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SUMMON</td>
+								<td>DOTA_LOADOUT_TYPE_MOUNT</td>
 								<td>17</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SHAPESHIFT </td>
+								<td>DOTA_LOADOUT_TYPE_SUMMON</td>
 								<td>18</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TAUNT</td>
+								<td>DOTA_LOADOUT_TYPE_SHAPESHIFT </td>
 								<td>19</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS</td>
+								<td>DOTA_LOADOUT_TYPE_TAUNT</td>
 								<td>20</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY_ATTACK</td>
+								<td>DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS</td>
 								<td>21</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_ATTACK</td>
 								<td>22</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY2</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY1</td>
 								<td>23</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY3</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY2</td>
 								<td>24</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY4</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY3</td>
 								<td>25</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE </td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY4</td>
 								<td>26</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_VOICE</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE </td>
 								<td>27</td>
 								<td></td>
 							</tr>
 							<tr>
+								<td>DOTA_LOADOUT_TYPE_VOICE</td>
+								<td>28</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td>DOTA_LOADOUT_TYPE_WEAPON_PERSONA_1</td>
-								<td>28</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_PERSONA_1_START</td>
-								<td>28</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1</td>
 								<td>29</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_PERSONA_1_START</td>
+								<td>29</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1</td>
 								<td>30</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1 </td>
 								<td>31</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_HEAD_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1</td>
 								<td>32</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_HEAD_PERSONA_1</td>
 								<td>33</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ARMS_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1</td>
 								<td>34</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ARMS_PERSONA_1</td>
 								<td>35</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BELT_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1</td>
 								<td>36</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_NECK_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_BELT_PERSONA_1</td>
 								<td>37</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BACK_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_NECK_PERSONA_1</td>
 								<td>38</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_LEGS_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_BACK_PERSONA_1</td>
 								<td>39</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_LEGS_PERSONA_1</td>
 								<td>40</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TAIL_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1 </td>
 								<td>41</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MISC_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_TAIL_PERSONA_1 </td>
 								<td>42</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_MISC_PERSONA_1</td>
 								<td>43</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1 </td>
 								<td>44</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1 </td>
 								<td>45</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1</td>
 								<td>46</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1 </td>
 								<td>47</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1</td>
 								<td>48</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1</td>
 								<td>49</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1</td>
 								<td>50</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1</td>
 								<td>51</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1</td>
 								<td>52</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1</td>
 								<td>53</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1</td>
 								<td>54</td>
 								<td></td>
 							</tr>
 							<tr>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1</td>
+								<td>55</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td>DOTA_LOADOUT_PERSONA_1_END</td>
-								<td>55</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_VOICE_PERSONA_1</td>
-								<td>55</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_PERSONA_SELECTOR</td>
 								<td>56</td>
 								<td></td>
 							</tr>
 							<tr>
+								<td>DOTA_LOADOUT_TYPE_VOICE_PERSONA_1</td>
+								<td>56</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_PERSONA_SELECTOR</td>
+								<td>57</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td>DOTA_LOADOUT_TYPE_COURIER</td>
-								<td>57</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_PLAYER_LOADOUT_START</td>
-								<td>57</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_ANNOUNCER</td>
 								<td>58</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MEGA_KILLS </td>
+								<td>DOTA_PLAYER_LOADOUT_START</td>
+								<td>58</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_ANNOUNCER</td>
 								<td>59</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MUSIC </td>
+								<td>DOTA_LOADOUT_TYPE_MEGA_KILLS </td>
 								<td>60</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WARD</td>
+								<td>DOTA_LOADOUT_TYPE_MUSIC </td>
 								<td>61</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_HUD_SKIN</td>
+								<td>DOTA_LOADOUT_TYPE_WARD</td>
 								<td>62</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_LOADING_SCREEN </td>
+								<td>DOTA_LOADOUT_TYPE_HUD_SKIN</td>
 								<td>63</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WEATHER</td>
+								<td>DOTA_LOADOUT_TYPE_LOADING_SCREEN </td>
 								<td>64</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_HEROIC_STATUE</td>
+								<td>DOTA_LOADOUT_TYPE_WEATHER</td>
 								<td>65</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MULTIKILL_BANNER </td>
+								<td>DOTA_LOADOUT_TYPE_HEROIC_STATUE</td>
 								<td>66</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_CURSOR_PACK</td>
+								<td>DOTA_LOADOUT_TYPE_MULTIKILL_BANNER </td>
 								<td>67</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TELEPORT_EFFECT</td>
+								<td>DOTA_LOADOUT_TYPE_CURSOR_PACK</td>
 								<td>68</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BLINK_EFFECT</td>
+								<td>DOTA_LOADOUT_TYPE_TELEPORT_EFFECT</td>
 								<td>69</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_EMBLEM</td>
+								<td>DOTA_LOADOUT_TYPE_BLINK_EFFECT</td>
 								<td>70</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TERRAIN</td>
+								<td>DOTA_LOADOUT_TYPE_EMBLEM</td>
 								<td>71</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_RADIANT_CREEPS</td>
+								<td>DOTA_LOADOUT_TYPE_TERRAIN</td>
 								<td>72</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_DIRE_CREEPS </td>
+								<td>DOTA_LOADOUT_TYPE_RADIANT_CREEPS</td>
 								<td>73</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_RADIANT_TOWER</td>
+								<td>DOTA_LOADOUT_TYPE_DIRE_CREEPS </td>
 								<td>74</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_DIRE_TOWER</td>
+								<td>DOTA_LOADOUT_TYPE_RADIANT_TOWER</td>
 								<td>75</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_PLAYER_LOADOUT_END</td>
+								<td>DOTA_LOADOUT_TYPE_DIRE_TOWER</td>
 								<td>76</td>
 								<td></td>
 							</tr>
+
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_VERSUS_SCREEN</td>
-								<td>76</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_STREAK_EFFECT</td>
 								<td>77</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_NONE</td>
+								<td>DOTA_LOADOUT_TYPE_STREAK_EFFECT</td>
 								<td>78</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_COUNT</td>
+								<td>DOTA_LOADOUT_TYPE_KILL_EFFECT</td>
 								<td>79</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_DEATH_EFFECT</td>
+								<td>80</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_HEAD_EFFECT</td>
+								<td>81</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_MAP_EFFECT</td>
+								<td>82</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_PLAYER_LOADOUT_END</td>
+								<td>83</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_COURIER_EFFECT</td>
+								<td>83</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_NONE</td>
+								<td>84</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_COUNT</td>
+								<td>85</td>
 								<td></td>
 							</tr>
 						</table>
@@ -20912,8 +21183,13 @@
 								</td>
 							</tr>
 							<tr>
-								<td>DOTA_SPEECH_RECIPIENT_TYPE_MAX </td>
+								<td>DOTA_SPEECH_USER_TEAM_NOSPECTATOR </td>
 								<td>9</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_SPEECH_RECIPIENT_TYPE_MAX </td>
+								<td>10</td>
 								<td></td>
 							</tr>
 						</table>
@@ -21488,27 +21764,32 @@
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST </td>
 								<td>0</td>
-								<td>&nbsp;</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES </td>
 								<td>0</td>
-								<td>&nbsp;</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE</td>
 								<td>0</td>
-								<td>&nbsp;</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_UNLOCKED_BY_EFFECT_INDEX</td>
 								<td>0</td>
-								<td>&nbsp;</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_FREE_DRAW_TARGETING</td>
 								<td>0</td>
-								<td>&nbsp;</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE</td>
+								<td>0</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td> DOTA_ABILITY_BEHAVIOR_HIDDEN
@@ -26166,7 +26447,7 @@
 								<td> 26
 								</td>
 								<td>GetModifierIgnoreMovespeedLimit</td>
-								<td>&nbsp;</td>
+								<td>返回1才能生效,解除移速限制</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_LIMIT </td>
@@ -28380,6 +28661,293 @@
 								<td> 2
 								</td>
 								<td>Find units from the farthest to the source to the farthest.
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='BoundsHullName'>
+					<div id='constantname'>
+						<p><span>BoundsHullName（边界外壳名,在KV里设置用,LUA里都为nil）</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Size Reference
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_BARRACKS
+								</td>
+								<td> 144x144
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_BUILDING
+								</td>
+								<td> 81.281357x81.281357
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_FILLER
+								</td>
+								<td> 96x96
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_HERO
+								</td>
+								<td> 24x24
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_HUGE
+								</td>
+								<td> 80x80
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_REGULAR
+								</td>
+								<td> 16x16
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_SIEGE
+								</td>
+								<td> 16x16
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_SMALL
+								</td>
+								<td> 8x8
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HULL_SIZE_TOWER
+								</td>
+								<td> 144x144
+								</td>
+								<td>
+								</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+				<div id='CombatClassAttack'>
+					<div id='constantname'>
+						<p><span>CombatClassAttack（攻击战斗类型,在KV里设置用,LUA里都为nil）</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_ATTACK_BASIC
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_ATTACK_HERO
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_ATTACK_LIGHT
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_ATTACK_PIERCE
+								</td>
+								<td> 
+								</td>
+								<td>穿刺攻击
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_ATTACK_SIEGE
+								</td>
+								<td> 
+								</td>
+								<td>围城攻击
+								</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+				<div id='CombatClassDefend'>
+					<div id='constantname'>
+						<p><span>CombatClassDefend（防守战斗类型,在KV里设置用,LUA里都为nil）</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_DEFEND_BASIC
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_DEFEND_HERO
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_DEFEND_SOFT
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_DEFEND_STRONG
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_DEFEND_STRUCTURE
+								</td>
+								<td> 
+								</td>
+								<td>建筑物防御
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_COMBAT_CLASS_DEFEND_WEAK
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+				<div id='UnitRelationshipClass'>
+					<div id='constantname'>
+						<p><span>UnitRelationshipClass（单位关系类,在KV里设置用,LUA里都为nil）</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BARRACKS
+								</td>
+								<td> 
+								</td>
+								<td>营地
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO
+								</td>
+								<td> 
+								</td>
+								<td>建筑物防御
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_SIEGE
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD
+								</td>
+								<td> 
+								</td>
+								<td>
 								</td>
 							</tr>
 						</table>
