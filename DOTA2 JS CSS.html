@@ -297,6 +297,10 @@ aaaabbbbccccc
 							<li><a href="#DOTAHeroModelOverlay">Panel</a></li>
 							<li><a href="#DOTAHeroModelOverlay">CustomUIElement</a></li>
 							<li><a href="#DOTAHeroModelOverlay">Button</a></li>
+							<li><a href="#DOTAHeroModelOverlay">DOTADashboardBackgroundManager</a></li>
+							<li><a href="#DOTAHeroModelOverlay">TabButton</a></li>
+							<li><a href="#DOTAHeroModelOverlay">DOTADashboard</a></li>
+							<li><a href="#DOTAHeroModelOverlay">PageManager</a></li>
 							<li><a href="#Label">Label</a></li>
 							<li><a href="#TextButton">TextButton</a></li>
 							<li><a href="#RadioButton">RadioButton</a></li>
@@ -583,6 +587,14 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> LocalizePlural
+								</td>
+								<td> $.LocalizePlural( js_raw_args, js_raw_args_1 )
+								</td>
+								<td> Localize a plural(复数) string
+								</td>
+							</tr>
+							<tr>
 								<td> Language
 								</td>
 								<td> string $.Language( )
@@ -840,6 +852,38 @@ aaaabbbbccccc
 								<td> GetNianFightTimeLeft
 								</td>
 								<td> Game.GetNianFightTimeLeft()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> Diretide2020ShouldShowGameInfo
+								</td>
+								<td> Game.Diretide2020ShouldShowGameInfo()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> Diretide2020SetShowGameInfo
+								</td>
+								<td> Game.Diretide2020SetShowGameInfo(boolean bShowGameInfo)
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> Diretide2020GetGameplayTipNumber
+								</td>
+								<td> Game.Diretide2020GetGameplayTipNumber()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> Diretide2020SetGameplayTipNumber
+								</td>
+								<td> Game.Diretide2020SetGameplayTipNumber(integer nGameplayTipNumber)
 								</td>
 								<td>
 								</td>
@@ -1215,7 +1259,10 @@ aaaabbbbccccc
 								</td>
 								<td>GameEvents.Subscribe( cstring pEventName, js_value funcVal )
 								</td>
-								<td> 监听JS事件
+								<td> 监听JS事件和LUA传来的消息，监听JS事件时EventName是引擎定义好的名称。当监听LUA信息时，EventName是玩家自己在LUA里定义的，对应的LUAL里的函数
+									CustomGameEventManager:Send_ServerToAllClients( "my_event_name", event_data )
+									CustomGameEventManager:Send_ServerToTeam( team_number, "my_event_name", event_data )
+									CustomGameEventManager:Send_ServerToPlayer( player_entity, "my_event_name", event_data )
 								</td>
 							</tr>
 							<tr>
@@ -1297,9 +1344,13 @@ aaaabbbbccccc
 							<tr>
 								<td> SubscribeNetTableListener
 								</td>
-								<td> CustomNetTables.SubscribeNetTableListener( js_raw_args args )
+								<td> CustomNetTables.SubscribeNetTableListener( string NetTableName, function CallBack )
 								</td>
-								<td> Register a callback when a particular custom net table changes
+								<td> 监听LUA端发送的NetTable,一有新的NetTable被LUA端SET,就执行函数callback，这个函数的参数格式为
+									function CallBack( table_name, key, data )
+									{
+										$.Msg( "Table ", table_name, " changed: '", key, "' = ", data );
+									}是函数自动传值进来，不用设置。返回一个监听索引值，用来UnsubscribeNetTableListener
 								</td>
 							</tr>
 							<tr>
@@ -3256,7 +3307,7 @@ aaaabbbbccccc
 							<tr>
 								<td> GetAbility
 								</td>
-								<td> Entities.GetAbility( integer nEntityIndex, integer nSlotIndex )
+								<td> Entities.GetAbility( handle player, int abilityindex )
 								</td>
 								<td>
 								</td>
@@ -3952,7 +4003,7 @@ aaaabbbbccccc
 							<tr>
 								<td> GetKeybind
 								</td>
-								<td> Abilities.GetKeybind( integer nAbilityEntIndex )
+								<td> Abilities.GetKeybind( handle ability,handle player)
 								</td>
 								<td> Returns the keybind (as a string) for the specified ability.
 								</td>
@@ -4724,6 +4775,14 @@ aaaabbbbccccc
 								<td> Get a periodic resource value max
 								</td>
 							</tr>
+							<tr>
+								<td> IsFirstRunThisEvent
+								</td>
+								<td> EventData.IsFirstRunThisEvent( )
+								</td>
+								<td> Is this the first time we've launched this season?
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -5400,6 +5459,22 @@ aaaabbbbccccc
 								<td> SetDialogVariableTime
 								</td>
 								<td> SetDialogVariableTime( cstring cstring_1, int64 int64_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetDialogVariableLocString
+								</td>
+								<td> SetDialogVariableLocString( cstring cstring_1, cstring cstring_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetDialogVariablePluralLocStringInt
+								</td>
+								<td> SetDialogVariablePluralLocStringInt( cstring cstring_1, cstring cstring_2, int64 int64_3 )
 								</td>
 								<td>
 								</td>
@@ -6536,6 +6611,102 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
+							<tr>
+								<td> SpawnHeroInScenePanelByPlayerSlot
+								</td>
+								<td> SpawnHeroInScenePanelByPlayerSlot(cstring cstring_1, integer integer_2, cstring cstring_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SpawnHeroInScenePanelByHeroId
+								</td>
+								<td> SpawnHeroInScenePanelByHeroId( integer integer_1, cstring cstring_2, integer integer_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetScenePanelToPlayerHero
+								</td>
+								<td> SetScenePanelToPlayerHero( cstring cstring_1, integer integer_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetScenePanelToLocalHero
+								</td>
+								<td> SetScenePanelToLocalHero( integer integer_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetPostProcessFade
+								</td>
+								<td> SetPostProcessFade( float float_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetRotateParams
+								</td>
+								<td> SetRotateParams( float float_1, float float_2, float float_3, float float_4 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetCustomPostProcessMaterial
+								</td>
+								<td> SetCustomPostProcessMaterial( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
+								</td>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> LerpToCameraEntity
+								</td>
+								<td> LerpToCameraEntity(cstring cstring_1, float float_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
+								</td>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
+								</td>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
+								</td>
+								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -6573,6 +6744,7 @@ aaaabbbbccccc
 						</table>
 					</div>
 				</div>
+				
 				<div id='DOTAHudPreGame' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAHudPreGame</span></p>
@@ -9798,6 +9970,14 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
+							<tr>
+								<td> DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE
+								</td>
+								<td> 137438953472
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -12440,7 +12620,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BODY_HEAD
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COSTUME
 								</td>
 								<td> 15
 								</td>
@@ -12448,7 +12628,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MOUNT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BODY_HEAD
 								</td>
 								<td> 16
 								</td>
@@ -12456,7 +12636,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SUMMON
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MOUNT
 								</td>
 								<td> 17
 								</td>
@@ -12464,7 +12644,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHAPESHIFT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SUMMON
 								</td>
 								<td> 18
 								</td>
@@ -12472,7 +12652,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAUNT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHAPESHIFT
 								</td>
 								<td> 19
 								</td>
@@ -12480,7 +12660,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAUNT
 								</td>
 								<td> 20
 								</td>
@@ -12488,7 +12668,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ATTACK
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS
 								</td>
 								<td> 21
 								</td>
@@ -12496,7 +12676,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ATTACK
 								</td>
 								<td> 22
 								</td>
@@ -12504,7 +12684,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY2
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY1
 								</td>
 								<td> 23
 								</td>
@@ -12512,7 +12692,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY3
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY2
 								</td>
 								<td> 24
 								</td>
@@ -12520,7 +12700,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY4
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY3
 								</td>
 								<td> 25
 								</td>
@@ -12528,7 +12708,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY4
 								</td>
 								<td> 26
 								</td>
@@ -12536,7 +12716,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE
 								</td>
 								<td> 27
 								</td>
@@ -12544,23 +12724,15 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE
+								</td>
+								<td> 28
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON_PERSONA_1
-								</td>
-								<td> 28
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_START
-								</td>
-								<td> 28
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1
 								</td>
 								<td> 29
 								</td>
@@ -12568,7 +12740,15 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_START
+								</td>
+								<td> 29
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1
 								</td>
 								<td> 30
 								</td>
@@ -12576,7 +12756,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1
 								</td>
 								<td> 31
 								</td>
@@ -12584,7 +12764,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1
 								</td>
 								<td> 32
 								</td>
@@ -12592,7 +12772,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_PERSONA_1
 								</td>
 								<td> 33
 								</td>
@@ -12600,7 +12780,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMS_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1
 								</td>
 								<td> 34
 								</td>
@@ -12608,7 +12788,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMS_PERSONA_1
 								</td>
 								<td> 35
 								</td>
@@ -12616,7 +12796,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BELT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1
 								</td>
 								<td> 36
 								</td>
@@ -12624,7 +12804,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NECK_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BELT_PERSONA_1
 								</td>
 								<td> 37
 								</td>
@@ -12632,7 +12812,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BACK_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NECK_PERSONA_1
 								</td>
 								<td> 38
 								</td>
@@ -12640,7 +12820,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LEGS_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BACK_PERSONA_1
 								</td>
 								<td> 39
 								</td>
@@ -12648,7 +12828,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LEGS_PERSONA_1
 								</td>
 								<td> 40
 								</td>
@@ -12656,7 +12836,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAIL_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1
 								</td>
 								<td> 41
 								</td>
@@ -12664,7 +12844,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MISC_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAIL_PERSONA_1
 								</td>
 								<td> 42
 								</td>
@@ -12672,7 +12852,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MISC_PERSONA_1
 								</td>
 								<td> 43
 								</td>
@@ -12680,7 +12860,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1
 								</td>
 								<td> 44
 								</td>
@@ -12688,7 +12868,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1
 								</td>
 								<td> 45
 								</td>
@@ -12696,7 +12876,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1
 								</td>
 								<td> 46
 								</td>
@@ -12704,7 +12884,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1
 								</td>
 								<td> 47
 								</td>
@@ -12712,7 +12892,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1
 								</td>
 								<td> 48
 								</td>
@@ -12720,7 +12900,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1
 								</td>
 								<td> 49
 								</td>
@@ -12728,7 +12908,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1
 								</td>
 								<td> 50
 								</td>
@@ -12736,7 +12916,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1
 								</td>
 								<td> 51
 								</td>
@@ -12744,7 +12924,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1
 								</td>
 								<td> 52
 								</td>
@@ -12752,7 +12932,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1
 								</td>
 								<td> 53
 								</td>
@@ -12760,7 +12940,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1
 								</td>
 								<td> 54
 								</td>
@@ -12768,9 +12948,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1
 								</td>
 								<td> 55
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE_PERSONA_1
+								</td>
+								<td> 56
 								</td>
 								<td>
 								</td>
@@ -12779,7 +12967,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_END
 								</td>
-								<td> 55
+								<td> 56
 								</td>
 								<td>
 								</td>
@@ -12787,7 +12975,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_PERSONA_SELECTOR
 								</td>
-								<td> 56
+								<td> 57
 								</td>
 								<td>
 								</td>
@@ -12795,7 +12983,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COURIER
 								</td>
-								<td> 57
+								<td> 58
 								</td>
 								<td>
 								</td>
@@ -12803,7 +12991,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_PLAYER_LOADOUT_START
 								</td>
-								<td> 57
+								<td> 58
 								</td>
 								<td>
 								</td>
@@ -12811,7 +12999,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ANNOUNCER
 								</td>
-								<td> 58
+								<td> 59
 								</td>
 								<td>
 								</td>
@@ -12819,7 +13007,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MEGA_KILLS
 								</td>
-								<td> 59
+								<td> 60
 								</td>
 								<td>
 								</td>
@@ -12827,7 +13015,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MUSIC
 								</td>
-								<td> 60
+								<td> 61
 								</td>
 								<td>
 								</td>
@@ -12835,7 +13023,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WARD
 								</td>
-								<td> 61
+								<td> 62
 								</td>
 								<td>
 								</td>
@@ -12843,7 +13031,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HUD_SKIN
 								</td>
-								<td> 62
+								<td> 63
 								</td>
 								<td>
 								</td>
@@ -12851,7 +13039,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LOADING_SCREEN
 								</td>
-								<td> 63
+								<td> 64
 								</td>
 								<td>
 								</td>
@@ -12859,7 +13047,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEATHER
 								</td>
-								<td> 64
+								<td> 65
 								</td>
 								<td>
 								</td>
@@ -12867,7 +13055,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEROIC_STATUE
 								</td>
-								<td> 65
+								<td> 66
 								</td>
 								<td>
 								</td>
@@ -12875,7 +13063,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MULTIKILL_BANNER
 								</td>
-								<td> 66
+								<td> 67
 								</td>
 								<td>
 								</td>
@@ -12883,7 +13071,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_CURSOR_PACK
 								</td>
-								<td> 67
+								<td> 68
 								</td>
 								<td>
 								</td>
@@ -12891,7 +13079,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TELEPORT_EFFECT
 								</td>
-								<td> 68
+								<td> 69
 								</td>
 								<td>
 								</td>
@@ -12899,7 +13087,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BLINK_EFFECT
 								</td>
-								<td> 69
+								<td> 70
 								</td>
 								<td>
 								</td>
@@ -12907,7 +13095,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_EMBLEM
 								</td>
-								<td> 70
+								<td> 71
 								</td>
 								<td>
 								</td>
@@ -12915,7 +13103,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TERRAIN
 								</td>
-								<td> 71
+								<td> 72
 								</td>
 								<td>
 								</td>
@@ -12923,7 +13111,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_CREEPS
 								</td>
-								<td> 72
+								<td> 73
 								</td>
 								<td>
 								</td>
@@ -12931,7 +13119,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_CREEPS
 								</td>
-								<td> 73
+								<td> 74
 								</td>
 								<td>
 								</td>
@@ -12939,7 +13127,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_TOWER
 								</td>
-								<td> 74
+								<td> 75
 								</td>
 								<td>
 								</td>
@@ -12947,7 +13135,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_TOWER
 								</td>
-								<td> 75
+								<td> 76
 								</td>
 								<td>
 								</td>
@@ -12955,7 +13143,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VERSUS_SCREEN
 								</td>
-								<td> 76
+								<td> 77
 								</td>
 								<td>
 								</td>
@@ -12963,7 +13151,47 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_STREAK_EFFECT
 								</td>
-								<td> 77
+								<td> 78
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_KILL_EFFECT
+								</td>
+								<td> 79
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DEATH_EFFECT
+								</td>
+								<td> 80
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_EFFECT
+								</td>
+								<td> 81
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MAP_EFFECT
+								</td>
+								<td> 82
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COURIER_EFFECT
+								</td>
+								<td> 83
 								</td>
 								<td>
 								</td>
@@ -12971,7 +13199,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_PLAYER_LOADOUT_END
 								</td>
-								<td> 77
+								<td> 83
 								</td>
 								<td>
 								</td>
@@ -12979,7 +13207,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NONE
 								</td>
-								<td> 78
+								<td> 84
 								</td>
 								<td>
 								</td>
@@ -12987,7 +13215,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COUNT
 								</td>
-								<td> 79
+								<td> 85
 								</td>
 								<td>
 								</td>
@@ -15683,9 +15911,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASpeechType_t.DOTA_SPEECH_RECIPIENT_TYPE_MAX
+								<td> DOTASpeechType_t.DOTA_SPEECH_USER_TEAM_NOSPECTATOR
 								</td>
 								<td> 9
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASpeechType_t.DOTA_SPEECH_RECIPIENT_TYPE_MAX
+								</td>
+								<td> 10
 								</td>
 								<td>
 								</td>
@@ -15765,7 +16001,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_GAME_INFO
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_PREGAME_STRATEGY
 								</td>
 								<td> 2
 								</td>
@@ -15773,7 +16009,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_GAME_SETUP
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_GAME_INFO
 								</td>
 								<td> 3
 								</td>
@@ -15781,7 +16017,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_FLYOUT_SCOREBOARD
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_GAME_SETUP
 								</td>
 								<td> 4
 								</td>
@@ -15789,7 +16025,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_HUD_TOP_BAR
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_FLYOUT_SCOREBOARD
 								</td>
 								<td> 5
 								</td>
@@ -15797,7 +16033,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_END_SCREEN
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_HUD_TOP_BAR
 								</td>
 								<td> 6
 								</td>
@@ -15805,9 +16041,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_COUNT
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_END_SCREEN
 								</td>
 								<td> 7
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DotaCustomUIType_t.DOTA_CUSTOM_UI_TYPE_COUNT
+								</td>
+								<td> 8
 								</td>
 								<td>
 								</td>
@@ -19522,6 +19766,16 @@ aaaabbbbccccc
 								<td>设置顶边框颜色。
 								</td>
 							</tr>
+							<tr id='border-brush'>
+								<td> border-brush
+								</td>
+								<td>border-brush: gradient( linear, 0% 0%, 0% 100%, from( #fbfbfbff ), to( #c0c0c0c0 ) );<br>
+									border-brush: gradient( linear, 0% 0%, 0% 100%, from( #fbfbfbff ), color-stop( 0.3, #ebebebff ), to( #c0c0c0c0 ) );<br>
+									border-brush: gradient( radial, 50% 50%, 0% 0%, 80% 80%, from( #00ff00ff ), to( #0000ffff ) );<br>
+								</td>
+								<td>Sets a more-complex brush for the entire border paint area (ignores normal border color).
+								</td>
+							</tr>
 							<tr id='border-radius'>
 								<td> border-radius
 								</td>
@@ -19894,6 +20148,17 @@ aaaabbbbccccc
 
 								</td>
 							</tr>
+							<tr id='layout-position'>
+								<td> layout-position
+								</td>
+								<td>layout-position: fixed;
+
+								</td>
+								<td>Sets how the panel is positioned relative to its parent. "static" means position in the default way. 
+									"fixed" means position in the default way, but ignoring the parent's scroll offset.
+
+								</td>
+							</tr>
 							<tr id='letter-spacing'>
 								<td> letter-spacing
 								</td>
@@ -20072,6 +20337,7 @@ aaaabbbbccccc
 									"clip" - Children maintain their desired size but their contents are clipped<br>
 									"scroll" - Children maintain their desired size and a scrollbar is added to this
 									panel<br>
+									"noclip" - Children maintain their desired size and content is allowed to overflow this panel
 								</td>
 							</tr>
 							<tr id='padding'>
@@ -20242,13 +20508,12 @@ aaaabbbbccccc
 								<td>text-overflow: ellipsis;<br>
 									text-overflow: clip;<br>
 									text-overflow: shrink;<br>
-
+									text-overflow: noclip;
 								</td>
-								<td>Controls truncation of text that doesn't fit in a panel. "clip" means to simply
-									truncate (on char boundaries), "ellipsis" means to end with '...', and "shrink"
-									means to a<br>
-
-									We default to ellipsis, which is contrary to the normal CSS spec.<br>
+								<td>Controls truncation of text that doesn't fit in a panel.  "clip" means to simply 
+									truncate (on char boundaries), "ellipsis" means to end with '...', and "shrink" means 
+									lower the font size to fit.  "noclip" allows the text to overflow based on the "overflow" 
+									style.We default to ellipsis, which is contrary to the normal CSS spec.<br>
 								</td>
 							</tr>
 							<tr id='text-shadow'>
