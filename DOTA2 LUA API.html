@@ -378,15 +378,14 @@
 
 				<details>
 					<summary>
-						Lua Listen Events 监听事件
+						<a href="#ListenEvents">Lua Listen Events 监听事件</a>
 					</summary>
 					<nav>
 						<ol>
 							<li><a href="#核心队伍事件">核心队伍事件</a></li>
 							<li><a href="#玩家事件">玩家事件</a></li>
 							<li><a href="#游戏事件">游戏事件</a></li>
-							<li><a href="#经济事件">经济事件</a></li>
-							<li><a href="#Mod事件">Mod事件</a></li>
+							<li><a href="#特别事件">特别事件</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -28957,7 +28956,7 @@
 
 			<div id='event'>
 				<div id='contentname'>
-					Lua Listen Events 监听事件
+					<div id='ListenEvents'> Lua Listen Events 监听事件</div>
 				</div>
 				<div id='核心队伍事件'>
 					<div id='constantname'>
@@ -28974,30 +28973,48 @@
 								</th>
 							</tr>
 							<tr>
-								<td> team_info
+								<td> dota_team_neutral_stash_items_changed
 								</td>
-								<td> teamid ( number ): 队伍id<br>
-									teamname ( string ): 队伍名称 (例如 Team Blue)
+								<td> "teamnumber"	"short" <br>
+	
 								</td>
-								<td>队伍信息
-								</td>
-							</tr>
-							<tr>
-								<td> team_score
-								</td>
-								<td> teamid ( number ): 队伍id<br>
-									score ( short ): 总计队伍得分
-								</td>
-								<td>队伍得分改变
+								<td>队伍中立物品储藏格改变
 								</td>
 							</tr>
 							<tr>
-								<td> teamplay_broadcast_audio
+								<td> dota_team_neutral_stash_items_acknowledged_changed
 								</td>
-								<td> teamid ( number ): 队伍id<br>
-									sound ( string ): 要发射的声音名称
+								<td> "teamnumber"	"short"<br>
+					
 								</td>
-								<td>对队伍成员发出声音信号
+								<td>队伍储藏格已经发现的中立物品改变
+								</td>
+							</tr>
+							<tr>
+								<td> team_details_updated
+								</td>
+								<td> "teamID"	"long"<br>
+								</td>
+								<td>队伍细节改变
+								</td>
+							</tr>
+							<tr>
+								<td> team_showcase_ui_update
+								</td>
+								<td>"show"					"bool"<br>
+									"account_id"			"uint64"<br>
+									"hero_entindex"			"short"<br>
+									"display_ui_on_left"	"bool"
+								</td>
+								<td>队伍展示UI更新
+								</td>
+							</tr>
+							<tr>
+								<td> dota_team_player_list_changed
+								</td>
+								<td> 
+								</td>
+								<td>队伍英雄列表改变
 								</td>
 							</tr>
 
@@ -29019,112 +29036,463 @@
 								</th>
 							</tr>
 							<tr>
-								<td> player_team
+								<td> dota_player_pick_hero
 								</td>
 								<td>
-									isbot (number):不是机器人则为0，是为1<br>
-									silent (number):不输出加入队伍信息则为0，是为1<br>
-									autoteam (number):自动分配队伍则为0，不是为1<br>
-									team (number):新队伍ID<br>
-									oldteam (number):旧队伍ID<br>
-									userid (number):服务器上的用户id<br>
-									name (string):更换队伍的玩家名字<br>
-									disconnect (number):掉线玩家数<br>
-									splitscreenplayer (number)：基本全是-1<br>
+									"player"	"short"	<br>
+									"heroindex"	"short"<br>
+									"hero"		"string"<br>
 								</td>
-								<td>玩家改变队伍
+								<td>玩家选择英雄This actually happens on spawn
 								</td>
 							</tr>
 							<tr>
-								<td>player_class
+								<td> hero_selected
 								</td>
-								<td>userid ( number ): 服务器上的用户id<br>
-									class ( string ): 新的玩家职业 / 模型<br>
+								<td>
+									"player_id"		"short"	<br>
+									"team_number"	"short"<br>
+									"hero_unit"		"string"
 								</td>
-								<td>玩家改变职业(英雄)
+								<td>英雄选择This happens during pregame
+								</td>
+							</tr>
+							<tr>
+								<td>player_connect
+								</td>
+								<td>"name"		"string"	// player name		<br>
+									"index"		"byte"		// player slot (entity index-1)<br>
+									"userid"	"short"		// user ID on server (unique on server)<br>
+									"networkid" "string" // player network (i.e steam) id<br>
+									"address"	"string"	// ip:port
+								</td>
+								<td>玩家连接a new client connected
 								</td>
 							</tr>
 
 							<tr>
-								<td> player_chat
+								<td> dota_player_deny
 								</td>
-								<td> playerid(number):玩家ID<br>
-									teamonly (number): 队伍聊天则为1，全部为0<br>
-									userid( number ): 服务器上的id<br>
-									text( string ): 聊天文本<br>
-									splitscreenplayer (number): 基本全是-1
+								<td> "killer_userid"	"short"	<br>
+									"victim_userid"	"short"<br>
 								</td>
-								<td>公频玩家聊天
+								<td>玩家反补
 								</td>
 							</tr>
 							<tr>
-								<td> player_spawn
+								<td> dota_player_update_hero_selection
 								</td>
-								<td> entindex( number ):玩家实体索引<br>
-									userid ( number ): 服务器上的用户id<br>
-									splitscreenplayer (number): 基本全是-1 <br>
+								<td> "tabcycle"		"bool"
 								</td>
-								<td>连上服务器后，开始载入前，游戏自动为玩家分配实体
+								<td>玩家更新英雄的选择
 								</td>
 							</tr>
 							<tr>
-								<td> player_use
+								<td> dota_player_update_selected_unit
 								</td>
-								<td> userid ( number ): 服务器用户ID<br>
-									entity ( number ): 玩家使用的实体
+								<td> 
 								</td>
-								<td>玩家使用实体情况
-								</td>
-							</tr>
-							<tr>
-								<td> player_changename
-								</td>
-								<td> userid ( number ): 服务器用户ID<br>
-									oldname ( string ): 玩家旧(当前)名称<br>
-									newname ( string ): 玩家新名称<br>
-								</td>
-								<td>玩家改变名称
+								<td>玩家更新选择的单位(JS可用)
 								</td>
 							</tr>
 							<tr>
-								<td> player_hintmessage
+								<td> dota_player_update_query_unit
 								</td>
-								<td> hintmessage ( string ): 提示本地化字符串
+								<td> 
 								</td>
-								<td>玩家提示信息
+								<td>玩家更新选择的单位((JS可用)
 								</td>
 							</tr>
 							<tr>
-								<td> player_connect_full
+								<td> dota_player_update_killcam_unit
 								</td>
 								<td>
-									PlayerID (number): 玩家ID <br>
-									index (number): 当前游戏排序号，重连会改变 <br>
-									userid (number): 服务器用户ID <br>
-									splitscreenplayer (number):<br>
+									
 								</td>
-								<td>玩家完成载入，在进入GAME_SETUP阶段之前发生。
+								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> player_disconnect
+								<td> dota_player_take_tower_damage
 								</td>
-								<td> userid ( number ): 服务器用户ID<br>
+								<td> "PlayerID"		"short"<br>
+									"damage"		"short"
 
 								</td>
-								<td>玩家掉线
+								<td>玩家受到塔攻击
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_shop_changed
+								</td>
+								<td> "prevshopmask"	"byte"<br>
+									"shopmask"	"byte"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_show_killcam
+								</td>
+								<td>"nodes"		"byte"<br>
+									"player"	"short"	
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_show_minikillcam
+								</td>
+								<td> "nodes"		"byte"<br>
+									"player"	"short"	
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> player_info_updated
+								</td>
+								<td> 
+								</td>
+								<td>玩家信息更新(JS中可用)
+								</td>
+							</tr>
+							<tr>
+								<td> player_info_individual_updated
+								</td>
+								<td> "account_id"	"long"
+								</td>
+								<td>玩家信息更新(JS中可用)
+								</td>
+							</tr>
+							<tr>
+								<td> player_completed_game
+								</td>
+								<td> "PlayerID"		"short"<br>
+									"Winner"		"byte"
+								</td>
+								<td>玩家完成比赛
 								</td>
 							</tr>
 							<tr>
 								<td> player_reconnected
 								</td>
-								<td> event(local): 包含相关信息的数据
+								<td> "PlayerID"		"short"
 								</td>
-								<td>玩家重新连入游戏
+								<td>玩家重新连接
 								</td>
 							</tr>
-
-
+							<tr>
+								<td> dota_player_gained_level
+								</td>
+								<td> "player"		"short"<br>
+									"player_id"		"short"<br>
+									"level"			"short"<br>
+									"hero_entindex"	"short"<br>
+									"PlayerID"		"short" 
+								</td>
+								<td>玩家获得等级？升级？
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_learned_ability
+								</td>
+								<td> "PlayerID"		"short"<br>
+									"player"		"short"<br>
+									"abilityname"	"string"
+								</td>
+								<td>玩家学习技能
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_used_ability
+								</td>
+								<td> "PlayerID"			"short"<br>
+									"abilityname"		"string"<br>
+									"caster_entindex"	"int"
+								</td>
+								<td>玩家使用技能
+								</td>
+							</tr>
+							<tr>
+								<td> dota_non_player_used_ability
+								</td>
+								<td> "abilityname"	"string"<br>
+									"caster_entindex"	"int"
+								</td>
+								<td>非玩家单位使用技能
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_begin_cast
+								</td>
+								<td> "PlayerID"			"short"<br>
+									"abilityname"		"string"<br>
+									"caster_entindex"	"int"
+								</td>
+								<td>玩家开始施法
+								</td>
+							</tr>
+							<tr>
+								<td> dota_non_player_begin_cast
+								</td>
+								<td> "abilityname"		"string"<br>
+									"caster_entindex"	"int"
+								</td>
+								<td>非玩家开始施法
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_killed
+								</td>
+								<td> 
+									"PlayerID"		"short"<br>
+									"HeroKill"		"bool"<br>
+									"TowerKill"		"bool"
+								</td>
+								<td>玩家被杀
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_kill
+								</td>
+								<td> 
+									"victim_userid"		"short"<br>
+									"killer1_userid"	"short"	<br>
+									"killer2_userid"	"short"	<br>
+									"killer3_userid"	"short"	<br>
+									"killer4_userid"	"short"	<br>
+									"killer5_userid"	"short"	<br>
+									"bounty"			"short"<br>
+									"neutral"			"short"<br>
+									"greevil"			"short"
+								</td>
+								<td>玩家击杀信息
+								</td>
+							</tr>
+							<tr>
+								<td> player_fullyjoined
+								</td>
+								<td> 
+									"userid"	"short"		// user ID on server<br>
+									"name"		"string"	// player name
+								</td>
+								<td>玩家完全连入服务器
+								</td>
+							</tr>
+							<tr>
+								<td> player_report_counts_updated
+								</td>
+								<td> 
+									"positive_remaining"	"byte"<br>
+									"negative_remaining"	"byte"<br>
+									"positive_total"		"short"<br>
+									"negative_total"		"short"
+								</td>
+								<td>玩家报告更新
+								</td>
+							</tr>
+							<tr>
+								<td> dota_inventory_player_got_item
+								</td>
+								<td> 
+									"itemname"	"string"
+								</td>
+								<td>玩家获得物品
+								</td>
+							</tr>
+							<tr>
+								<td> player_is_experienced
+								</td>
+								<td> 
+									
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> player_is_notexperienced
+								</td>
+								<td> 
+									
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_spawned
+								</td>
+								<td> 
+									"PlayerID"		"byte"
+								</td>
+								<td>玩家出生
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_team_changed
+								</td>
+								<td> 
+								</td>
+								<td>玩家队伍更换(JS)
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_details_changed
+								</td>
+								<td> 
+									
+								</td>
+								<td>玩家细节改变
+								</td>
+							</tr>
+							<tr>
+								<td> player_profile_stats_updated
+								</td>
+								<td> 
+									"account_id"	"uint64"
+								</td>
+								<td>玩家个人资料更新
+								</td>
+							</tr>
+							<tr>
+								<td> custom_game_player_count_updated
+								</td>
+								<td> 
+									"custom_game_id"	"uint64"
+								</td>
+								<td>自定义游戏玩家数量更新
+								</td>
+							</tr>
+							<tr>
+								<td> custom_game_friends_played_updated
+								</td>
+								<td> 
+									"custom_game_id"	"uint64"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> custom_games_friends_play_updated
+								</td>
+								<td> 
+									
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_update_assigned_hero
+								</td>
+								<td> 
+									"playerid"		"short"
+								</td>
+								<td>玩家更新分配的英雄
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_hero_selection_dirty
+								</td>
+								<td> 
+									
+								</td>
+								<td>英雄选择界面，点击要选择的英雄(JS中用)
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_selected_custom_team
+								</td>
+								<td> "player_id"				"short"		// Player id of the player who select a team<br>
+									"team_id"				"short"		// Id of the team the player selected<br>
+									"success"				"bool"		// Was the player successfully assigned to the selected team<br>
+									
+								</td>
+								<td>玩家选择自定义队伍
+								</td>
+							</tr>
+							<tr>
+								<td> dota_player_reconnected
+								</td>
+								<td> 
+									"player_id"				"int"
+								</td>
+								<td>玩家重新连接
+								</td>
+							</tr>
+							<tr>
+								<td> client_disconnect
+								</td>
+								<td> 
+									"local"	"1"<br>
+									"reason_code" "int"<br>
+									"reason_desc" "string"
+								</td>
+								<td>客户端断开连接
+								</td>
+							</tr>
+							<tr>
+								<td>player_disconnect
+								</td>
+								<td> "PlayerID" "int"
+									
+								</td>
+								<td>玩家断开连接
+								</td>
+							</tr>
+							<tr>
+								<td> player_connect_full
+								</td>
+								<td> "PlayerID": "int"<br>
+									"index": "int"<br>
+									"userid" : "int"<br>
+									
+								</td>
+								<td>玩家连接游戏完成
+								</td>
+							</tr>
+							<tr>
+								<td> player_chat
+								</td>
+								<td> 
+									"playerid":"int"<br>
+									"teamonly" : "int"<br>
+									"userid": "int"<br>
+									"text": "string"
+								</td>
+								<td>玩家聊天
+								</td>
+							</tr>
+							<tr>
+								<td> player_spawn(可能失效)
+								</td>
+								<td> 
+									entindex( number ):玩家实体索引<br>
+									userid ( number ): 服务器上的用户id
+								</td>
+								<td>连上服务器后，开始载入前，游戏自动为玩家分配实体
+								</td>
+							</tr>
+							<tr>
+								<td> player_use(可能失效)
+								</td>
+								<td> 
+									userid ( number ): 服务器用户ID<br>
+									entity ( number ): 玩家使用的实体			
+								</td>
+								<td>玩家使用实体情况
+								</td>
+							</tr>
+							<tr>
+								<td> player_changename(可能失效)
+								</td>
+								<td> 
+									userid ( number ): 服务器用户ID<br>
+									oldname ( string ): 玩家旧(当前)名称<br>
+									newname ( string ): 玩家新名称		
+								</td>
+								<td>玩家改变名字
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -29143,7 +29511,7 @@
 								</th>
 							</tr>
 							<tr>
-								<td> game_message
+								<td> game_message(可能失效)
 								</td>
 								<td> target ( number ): 0 = console, 1 = HUD<br>
 									text ( string ): 信息文本
@@ -29152,7 +29520,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> break_breakable
+								<td> break_breakable(可能失效)
 								</td>
 								<td> entindex ( number ): 实体索引<br>
 									userid ( number ): 用户id<br>
@@ -29161,49 +29529,10 @@
 								<td>破坏可破坏物
 								</td>
 							</tr>
+
+						
 							<tr>
-								<td> npc_spawned
-								</td>
-								<td> entindex ( number ): 实体索引
-								</td>
-								<td>NPC产生
-								</td>
-							</tr>
-							<tr>
-								<td> npc_replaced
-								</td>
-								<td>
-									old_entindex ( number )：旧实体索引<br>
-									new_entindex ( number ): 新实体索引<br>
-								</td>
-								<td>NPC替换
-								</td>
-							</tr>
-							<tr>
-								<td> entity_killed
-								</td>
-								<td> entindex_killed( number ): 被杀实体索引<br>
-									entindex_attacker ( number ): 攻击者实体索引<br>
-									damagebits ( number ): 不是伤害值<br>
-									splitscreenplayer (number):<br>
-								</td>
-								<td>实体被杀
-								</td>
-							</tr>
-							<tr>
-								<td> entity_hurt
-								</td>
-								<td> entindex_killed( number ): 受伤者实体索引<br>
-									entindex_attacker ( number ): 攻击者实体索引<br>
-									damagebits ( number ): <br>
-									damage (number):伤害值<br>
-									splitscreenplayer (number):<br>
-								</td>
-								<td>实体受伤
-								</td>
-							</tr>
-							<tr>
-								<td> player_stats_updated（不知道什么状态）
+								<td> player_stats_updated(可能失效)
 								</td>
 								<td> forceupload ( bool ): 强制上传
 								</td>
@@ -29211,7 +29540,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> ragdoll_dissolved
+								<td> ragdoll_dissolved(可能失效)
 								</td>
 								<td> entindex ( number ): 实体id
 								</td>
@@ -29219,7 +29548,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> gameinstructor_draw
+								<td> gameinstructor_draw(可能失效)
 								</td>
 								<td>
 								</td>
@@ -29227,7 +29556,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> gameinstructor_nodraw
+								<td> gameinstructor_nodraw(可能失效)
 								</td>
 								<td>
 								</td>
@@ -29236,7 +29565,7 @@
 							</tr>
 
 							<tr>
-								<td> instructor_server_hint_create
+								<td> instructor_server_hint_create(可能失效)
 								</td>
 								<td> hint_name ( string ): 提示名称，用于随后引用(例如用指令清除提示，而不是等待其过期消失)<br>
 									hint_replace_key ( string ): 输入名称，同类信息将取代彼此<br>
@@ -29261,7 +29590,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> instructor_server_hint_stop
+								<td> instructor_server_hint_stop(可能失效)
 								</td>
 								<td> hint_name ( string ): 提示停止，将会停止全部此名称的提示
 								</td>
@@ -29273,121 +29602,25 @@
 								</td>
 								<td>
 								</td>
-								<td>游戏规则改变状态
-								</td>
-							</tr>
-
-						</table>
-					</div>
-				</div>
-				<div id='经济事件'>
-					<div id='constantname'>
-						<p><span>经济事件</span></p>
-					</div>
-					<div id='eventcontent'>
-						<table>
-							<tr>
-								<th> 事件名称
-								</th>
-								<th> 传递的参数
-								</th>
-								<th> Description
-								</th>
-							</tr>
-							<tr>
-								<td> inventory_updated
-								</td>
-								<td>itemdef ( number )
-								</td>
-								<td>
+								<td>游戏阶段改变
 								</td>
 							</tr>
 							<tr>
-								<td>cart_updated
+								<td> dota_game_state_change(没试过)
 								</td>
-								<td>
-
+								<td>"old_state"	"short"<br>
+									"new_state"	"short"
 								</td>
-								<td>
-								</td>
-							</tr>
-
-							<tr>
-								<td> store_pricesheet_updated
-								</td>
-								<td>
-
-								</td>
-								<td>
+								<td>游戏阶段改变
 								</td>
 							</tr>
-
-							<tr>
-								<td> gc_connected
-								</td>
-								<td>
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> item_schema_initialized
-								</td>
-								<td>
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> drop_rate_modified
-								</td>
-								<td>
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> event_ticket_modified
-								</td>
-								<td>
-
-								</td>
-								<td>
-								</td>
-							</tr>
-
-						</table>
-					</div>
-				</div>
-				<div id='Mod事件'>
-					<div id='constantname'>
-						<p><span>Mod事件</span></p>
-					</div>
-					<div id='eventcontent'>
-						<table>
-							<tr>
-								<th> 事件名称
-								</th>
-								<th> 传递的参数
-								</th>
-								<th> Description
-								</th>
-							</tr>
-							<tr>
-								<td> modifier_event
-								</td>
-								<td>eventname ( string )<br>
-									caster ( number )<br>
-									ability ( number )<br>
-								</td>
-								<td>
-								</td>
-							</tr>
-
 							<tr>
 								<td> dota_barracks_kill
 								</td>
-								<td> barracks_id ( number )
+								<td>"barracks_id"		"short"<br>
+									"killer_playerid"	"short"<br>
+									"killer_team"		"short"<br>
+									"bounty_amount"		"short"
 								</td>
 								<td>兵营被摧毁
 								</td>
@@ -29395,518 +29628,159 @@
 							<tr>
 								<td> dota_tower_kill
 								</td>
-								<td> killer_userid ( number )<br>
-									teamnumber ( number )<br>
-									gold ( number )<br>
+								<td>"killer_userid"	"short"	<br>
+									"teamnumber"	"short"	<br>
+									"gold"			"short"
 								</td>
-								<td>防御塔被摧毁
+								<td>塔被摧毁
+								</td>
+							</tr>
+							<tr>
+								<td> dota_effigy_kill
+								</td>
+								<td>"owner_userid"	"short"
+								</td>
+								<td>肖像建筑被摧毁
 								</td>
 							</tr>
 							<tr>
 								<td> dota_roshan_kill
 								</td>
-								<td> teamnumber ( number )<br>
-									gold ( number )<br>
+								<td>"teamnumber"	"short"<br>
+									"gold"			"short"
 								</td>
-								<td>肉山被杀
+								<td>肉山被击杀
 								</td>
 							</tr>
 							<tr>
 								<td> dota_courier_lost
 								</td>
-								<td>
-									teamnumber ( number )
+								<td>"killerid"		"short"<br>
+									"teamnumber"	"short"<br>
+									"bounty_gold"	"short"
 								</td>
-								<td>信使丢失，不是信使被杀，不知道是什么
+								<td>信使被杀
 								</td>
 							</tr>
 							<tr>
 								<td> dota_courier_respawned
 								</td>
-								<td> teamnumber ( number )
+								<td>"teamnumber"	"short"
 								</td>
-								<td>信使重生
+								<td>信使复活
 								</td>
 							</tr>
 							<tr>
 								<td> dota_glyph_used
 								</td>
-								<td> teamnumber ( number )
+								<td>"teamnumber"	"short"
 								</td>
-								<td>防御塔符文被使用
+								<td>塔防使用
 								</td>
 							</tr>
 							<tr>
 								<td> dota_super_creeps
 								</td>
-								<td> teamnumber ( number )
+								<td>"teamnumber"	"short"
 								</td>
 								<td>超级兵
 								</td>
 							</tr>
 							<tr>
+								<td> dota_item_purchase
+								</td>
+								<td>"userid"		"short"<br>
+									"item_ability_id"		"int"
+								</td>
+								<td>购买物品(JS)
+								</td>
+							</tr>
+							<tr>
 								<td> dota_item_purchased
 								</td>
-								<td> itemcost(number):物品价格<br>
-									itemname (string):物品名称，不会显示高级物品名称，只显示最基础的物品<br>
-									PlayerID (number):玩家ID<br>
-									splitscreenplayer (number):基本为-1<br>
+								<td>"PlayerID"		"short"<br>
+									"itemname"		"string"<br>
+									"itemcost"		"short"
 								</td>
-								<td>物品被购买，但是会显示合成这个物品的基础物品的itemname，itemcost
+								<td>购买物品
+								</td>
+							</tr>
+							<tr>
+								<td> dota_item_gifted
+								</td>
+								<td>"userid"		"short"<br>
+									"item_ability_id"		"int"<br>
+									"sourceid"		"short"
+								</td>
+								<td>给其他单位物品
+								</td>
+							</tr>
+							<tr>
+								<td> dota_item_placed_in_neutral_stash
+								</td>
+								<td>"userid"		"short"<br>
+									"item_ability_id"	"int"
+								</td>
+								<td>中立装备栏装备物品
+								</td>
+							</tr>
+							<tr>
+								<td> dota_rune_pickup
+								</td>
+								<td>"userid"		"short"<br>
+									"type"			"short"<br>
+									"rune"			"short"<br>
+									"bounty_amount"	"short"
+								</td>
+								<td>拾取神符
+								</td>
+							</tr>
+							<tr>
+								<td> dota_rune_spotted
+								</td>
+								<td>
+									"userid"		"short"<br>
+									"rune"			"short"<br>
+									"map_location"	"string"<br>
+									"rune_team"		"short"
+								</td>
+								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> dota_item_combined
 								</td>
-								<td> itemcost (number):合成的物品的价格<br>
-									itemname (string):物品名称<br>
-									PlayerID (number):合成者ID<br>
-									splitscreenplayer (number):一般为-1<br>
+								<td>"PlayerID"		"short"<br>
+									"itemname"		"string"<br>
+									"itemcost"		"short"
 								</td>
-								<td>合成物品
-								</td>
-							</tr>
-							<tr>
-								<td> dota_item_gifted（可能失效）
-								</td>
-								<td>
-									userid ( number )<br>
-									itemid ( number )<br>
-									sourceid ( number )<br>
-								</td>
-								<td>物品给给与
-								</td>
-							</tr>
-
-							<tr>
-								<td> dota_item_spotted
-								</td>
-								<td> userid ( number )<br>
-									itemid ( number )<br>
-								</td>
-								<td> 不知道什么用
+								<td>装备合成
 								</td>
 							</tr>
 							<tr>
-								<td> dota_action_item
+								<td> dota_item_spawned
 								</td>
-								<td> reason ( number )<br>
-									itemdef ( number )<br>
-									message ( number )<br>
+								<td> "item_ent_index"	"int"<br>
+									"player_id"			"int"
 								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-
-							<tr>
-								<td> dota_pause_event
-								</td>
-								<td> userid ( number )<br>
-									value ( number )<br>
-									message ( number )<br>
-								</td>
-								<td>不知道什么用
+								<td>装备实体生成
 								</td>
 							</tr>
 							<tr>
-								<td> dota_chat_kill_streak
+								<td> dota_item_auto_purchase
 								</td>
-								<td> gold ( number )<br>
-									killer_id ( number )<br>
-									killer_streak ( number )<br>
-									killer_multikill ( number )<br>
-									victim_id ( number )<br>
-									victim_streak ( number )<br>
+								<td>"item_id"		"short"
 								</td>
-								<td>不知道什么用
+								<td>装备自动购买
 								</td>
 							</tr>
 							<tr>
-								<td> dota_chat_first_blood
+								<td> dota_item_used
 								</td>
-								<td> gold ( number )<br>
-									killer_id ( number )<br>
-									victim_id ( number )<br>
+								<td>"PlayerID"		"short"<br>
+									"itemname"		"string"
 								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_update_hero_selection
-								</td>
-								<td> tabcycle ( bool )
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_update_selected_unit
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_update_query_unit
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_update_killcam_unit
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_take_tower_damage
-								</td>
-								<td> damage (number):伤害值<br>
-									PlayerID (number):玩家ID<br>
-									splitscreenplayer (number):<br>
-								</td>
-								<td>受到塔伤害
-								</td>
-							</tr>
-
-							<tr>
-								<td> dota_action_success
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_starting_position_changed
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_money_changed
-								</td>
-								<td>
-								</td>
-								<td>经过测试金钱不会改变，不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_inventory_changed
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用，不是装备栏和储物栏物品改变
-								</td>
-							</tr>
-							<tr>
-								<td> dota_item_picked_up
-								</td>
-								<td> itemname ( string ):物品名称<br>
-									PlayerID ( number ):拾取玩家的ID<br>
-									ItemEntityIndex( number ):物品实体索引<br>
-									HeroEntityIndex( number ):英雄实体索引<br>
-									splitscreenplayer (number):基本为-1<br>
-
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_inventory_item_changed
-								</td>
-								<td> entityIndex ( number)
-								</td>
-								<td>不知道什么用，不是装备栏和储物栏物品改变
-								</td>
-							</tr>
-							<tr>
-								<td> dota_ability_changed
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_inventory_changed
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用，不是装备栏和储物栏改变
-								</td>
-							</tr>
-							<tr>
-								<td> dota_inventory_item_added
-								</td>
-								<td> itemname ( string )
-								</td>
-								<td>不知道什么用，不是装备栏和储物栏改变
-								</td>
-							</tr>
-							<tr>
-								<td> dota_inventory_changed_query_unit
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-
-							<tr>
-								<td> dota_set_quick_buy
-								</td>
-								<td> item ( string )<br>
-									recipe ( byte )<br>
-									toggle ( bool )<br>
-								</td>
-								<td>不知道什么用，不是拖物品到快速购买栏，或者坏了
-								</td>
-							</tr>
-							<tr>
-								<td> dota_quick_buy_changed
-								</td>
-								<td> item ( string )<br>
-									recipe ( byte )<br>
-								</td>
-								<td>不知道什么用，不是快速购买栏改变，或者坏了
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_shop_changed
-								</td>
-								<td> prevshopmask ( byte )<br>
-									shopmask ( byte )<br>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_show_killcam
-								</td>
-								<td> nodes ( byte )<br>
-									player ( short )<br>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_show_minikillcam
-								</td>
-								<td> nodes ( byte )<br>
-									player ( short )<br>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> gc_user_session_created
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> team_data_updated
-								</td>
-								<td>
-
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> guild_data_updated
-								</td>
-								<td>
-
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> guild_open_parties_updated
-								</td>
-								<td>
-
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> fantasy_updated
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> player_info_updated
-								</td>
-								<td>
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-
-							<tr>
-								<td>tree_cut
-								</td>
-								<td> tree_x ( float ))<br>
-									tree_y ( float ))<br>
-								</td>
-								<td>不知道什么用，好像失效
-								</td>
-							</tr>
-							<tr>
-								<td> last_hit
-								</td>
-								<td> PlayerID (number ):玩家ID<br>
-									EntKilled ( number ):实体索引<br>
-									FirstBlood ( number ):是否第一血，0为不是，是为1<br>
-									HeroKill ( number ):是否击杀的是英雄，不是为0<br>
-									TowerKill ( number ):是否击杀的塔，不是为0<br>
-									splitscreenplayer (number):一般为-1
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> nommed_tree
-								</td>
-								<td> PlayerID ( number )
-								</td>
-								<td>不知道什么用
-								</td>
-							</tr>
-							<tr>
-								<td> dota_rune_activated_server
-								</td>
-								<td>PlayerID ( number ):玩家ID<br>
-									rune ( number ):神符常量数值<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>神符被激活
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_gained_level
-								</td>
-								<td>player ( number ):不是玩家ID，应该是玩家排序索引，从1开始<br>
-									level ( number ):升级后的等级<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家升级时
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_selected_custom_team
-								</td>
-								<td> success (number):是否成功，成功为1，不成功为0<br>
-									player_id (number):玩家ID<br>
-									team_id (number)：加入队伍的ID<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家选择队伍
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_pick_hero
-								</td>
-								<td> player(number):不是玩家ID，应该是玩家排序索引，从1开始<br>
-									heroindex (number):英雄实体索引<br>
-									hero (string):英雄名称<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家选择英雄
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_learned_ability
-								</td>
-								<td> player (number):不是玩家ID，应该相当于USERID，从1开始<br>
-									abilityname (string):技能名称<br>
-									PlayerID (number):玩家ID<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家学习技能
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_used_ability
-								</td>
-								<td> caster_entindex (number):施法者实体索引<br>
-									abilityname (string):技能名称<br>
-									PlayerID (number):玩家ID<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家使用技能。被动触发没反应，水人的转属性没反应，不知道还有没有其他没反应的技能
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_begin_cast
-								</td>
-								<td> abilityname (string):技能名称<br>
-									PlayerID (number):玩家ID<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家使用技能
-								</td>
-							</tr>
-							<tr>
-								<td> dota_non_player_used_ability
-								</td>
-								<td> abilityname (string):技能名称<br>
-									caster_entindex (number):施法者实体索引<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>非玩家使用技能
-								</td>
-							</tr>
-							<tr>
-								<td> dota_ability_channel_finished
-								</td>
-								<td> abilityname ( string )<br>
-									interrupted ( bool )<br>
-								</td>
-								<td>技能施法完成，好像失效
-								</td>
-							</tr>
-							<tr>
-								<td> dota_holdout_revive_complete
-								</td>
-								<td> caster( short )<br>
-									target( short )<br>
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> dota_player_killed
-								</td>
-								<td> PlayerID ( number ):<br>
-									HeroKill ( number ):英雄击杀为1，其他为0<br>
-									TowerKill ( number )塔击杀为1，其他为0<br>
-									splitscreenplayer (number):基本为-1<br>
-								</td>
-								<td>玩家被杀
-								</td>
-							</tr>
-							<tr>
-								<td> dota_item_drag_begin
-								</td>
-								<td>
-								</td>
-								<td>物品拖动开始，好像失效了
+								<td>使用物品(JS)
 								</td>
 							</tr>
 							<tr>
@@ -29914,52 +29788,568 @@
 								</td>
 								<td>
 								</td>
-								<td>物品拖动结束，好像失效了
+								<td>物品拖动结束,JS
+								</td>
+							</tr>							<tr>
+								<td> dota_item_drag_begin
+								</td>
+								<td>
+								</td>
+								<td>物品拖动开始,JS
 								</td>
 							</tr>
 							<tr>
-								<td> dota_item_used
+								<td> dota_item_picked_up
 								</td>
-								<td>PlayerID ( short )<br>
-									itemname ( string )<br>
+								<td>"itemname"	"string"<br>
+									"PlayerID"	"short"<br>
+									"ItemEntityIndex"  "short"<br>
+									"HeroEntityIndex" "short"
 								</td>
-								<td>物品使用，好像失效了
+								<td>拾取物品
 								</td>
 							</tr>
 							<tr>
-								<td> dota_item_auto_purchase
+								<td> dota_item_suggestions_changed
 								</td>
-								<td> item_id ( short )
+								<td>
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
+								<td> dota_item_spotted
+								</td>
+								<td>"userid"			"short"<br>
+									"item_ability_id"	"int"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ward_killed
+								</td>
+								<td>"userid"		"short"<br>
+									"type"			"short"<br>
+									"bounty_amount"	"short"
+								</td>
+								<td>眼被摧毁
+								</td>
+							</tr>
+							<tr>
+								<td> dota_no_battle_points
+								</td>
+								<td>"userid"		"short"<br>
+									"reason"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_informational
+								</td>
+								<td>	"userid"		"short"<br>
+										"type"		"short"
+								</td>
+								<td>塔被摧毁
+								</td>
+							</tr>							
+							<tr>
+								<td> dota_action_item
+								</td>
+								<td>"reason"		"short"<br>
+									"itemdef"		"short"<br>
+									"message"		"short"
+								</td>
+								<td>PIN要使用物品？
+								</td>
+							</tr>
+							<tr>
+								<td> dota_action_success
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_ban_notification
+								</td>
+								<td>"userid"        "short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_event
+								</td>
+								<td>"userid"		"short"<br>
+									"gold"			"short"<br>
+									"message"		"short"
+								</td>
+								<td>系统通知事件
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_timed_reward
+								</td>
+								<td>"userid"		"short"<br>
+									"itmedef"		"short"<br>
+									"message"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_pause_event
+								</td>
+								<td>"userid"		"short"<br>
+									"value"			"short"<br>
+									"message"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_kill_streak
+								</td>
+								<td>"gold"				"short"<br>
+									"killer_id"			"short"<br>
+									"killer_streak"		"short"<br>
+									"killer_multikill"	"short"<br>
+									"victim_id"			"short"<br>
+									"victim_streak"		"short"
+								</td>
+								<td>连杀奖励通知
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_first_blood
+								</td>
+								<td>"gold"				"short"<br>
+									"killer_id"			"short"<br>
+									"victim_id"			"short"
+								</td>
+								<td>第一滴血通知
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_assassin_announce
+								</td>
+								<td>"assassin_id"		"short"<br>
+									"target_id"			"short"<br>
+									"message"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_assassin_denied
+								</td>
+								<td>"assassin_id"		"short"<br>
+									"target_id"			"short"<br>
+									"message"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_chat_assassin_success
+								</td>
+								<td>"assassin_id"		"short"<br>
+									"target_id"			"short"<br>
+									"message"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_hud_error_message
+								</td>
+								<td>	"reason"	"byte"<br>
+									"message"	"string"
+								</td>
+								<td>显示错误信息事件
+								</td>
+							</tr>
+							<tr>
+								<td> dota_starting_position_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_money_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_enemy_money_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_portrait_unit_stats_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_portrait_unit_modifiers_changed
+								</td>
+								<td>"modifier_affects_abilities"	"bool"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_force_portrait_update
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_inventory_changed
+								</td>
+								<td>
+								</td>
+								<td>物品栏改变(JS)
+								</td>
+							</tr>							
+							<tr>
+								<td> dota_estimated_match_duration_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_hero_ability_points_changed
+								</td>
+								<td>
+								</td>
+								<td>英雄技能点改变(应该是JS用)
+								</td>
+							</tr>
+							<tr>
+								<td> dota_inventory_item_changed
+								</td>
+								<td>"entityIndex"	"short"
+								</td>
+								<td>装备栏物品改变(JS)
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ability_changed
+								</td>
+								<td>entityIndex"	"short"
+								</td>
+								<td>技能改变
+								</td>
+							</tr>
+							<tr>
+								<td> dota_spectator_talent_changed
+								</td>
+								<td>"abilityname"	"string"<br>
+									"playerid"		"short"
+								</td>
+								<td>观看模式 天赋改变
+								</td>
+							</tr>
+							<tr>
+								<td> dota_portrait_ability_layout_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_inventory_item_added
+								</td>
+								<td>"itemname"	"string"
+								</td>
+								<td>装备栏物品增加(可能是JS)
+								</td>
+							</tr>
+							<tr>
+								<td> dota_inventory_changed_query_unit
+								</td>
+								<td>
+								</td>
+								<td>改变选择的物品(JS)
+								</td>
+							</tr>
+							<tr>
+								<td> dota_set_quick_buy
+								</td>
+								<td>"item"		"string"<br>
+									"recipe"	"byte"<br>
+									"toggle"	"bool"
+								</td>
+								<td>设置快捷购买
+								</td>
+							</tr>
+							<tr>
+								<td> dota_quick_buy_changed
+								</td>
+								<td>"item"		"string"<br>
+									"recipe"	"byte"
+								</td>
+								<td>快捷购买改变
+								</td>
+							</tr>
+							<tr>
+								<td> dota_hero_entered_shop
+								</td>
+								<td>"shop_type"		"short""<br>
+									"shop_entindex"	"int""<br>
+									"hero_entindex"	"int"
+								</td>
+								<td>英雄进入商店
+								</td>
+							</tr>
+							<tr>
+								<td> gc_user_session_created
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> team_data_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> guild_data_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> guild_open_parties_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> fantasy_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> fantasy_league_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> fantasy_score_info_changed
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> league_admin_info_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> league_series_info_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> persona_updated
+								</td>
+								<td>"SteamID"	"uint64"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> party_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> lobby_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dashboard_caches_cleared
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> last_hit
+								</td>
+								<td>"PlayerID"		"short"<br>
+									"EntKilled"		"short"<br>
+									"FirstBlood"	"bool"<br>
+									"HeroKill"		"bool"<br>
+									"TowerKill"		"bool"
+								</td>
+								<td>补刀,最后一击
+								</td>
+							</tr>
+							<tr>
+								<td> nommed_tree
+								</td>
+								<td>"PlayerID"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_rune_activated_server
+								</td>
+								<td>"PlayerID"		"short"<br>
+									"rune"			"short"
+								</td>
+								<td>激活神符
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ability_channel_finished
+								</td>
+								<td>"abilityname"	"string"<br>
+									"interrupted"	"bool"
+								</td>
+								<td>技能持续施法完成
+								</td>
+							</tr>
+							<tr>
+								<td> dota_holdout_revive_complete
+								</td>
+								<td>"caster" 			"short"<br>
+									"target" 			"short"<br>
+									"channel_time"		"float"
+								</td>
+								<td>
+								</td>
+							</tr>							
+							<tr>
+								<td> dota_holdout_revive_eliminated
+								</td>
+								<td>"caster" 			"short"<br>
+									"target" 			"short"<br>
+									"channel_time"		"float"	
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> bindpanel_open
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> bindpanel_close
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> keybind_changed
+								</td>
+								<td>
+								</td>
+								<td>快捷键改变
+								</td>
+							</tr>
+							<tr>
+								<td> dota_shop_item_drag_begin
+								</td>
+								<td>
+								</td>
+								<td>商店物品拖动开始
+								</td>
+							</tr>
+							<tr>
+								<td> dota_shop_item_drag_end
+								</td>
+								<td>
+								</td>
+								<td>商店物品拖动结束
+								</td>
+							</tr>
+							<tr>
 								<td> dota_unit_event
 								</td>
-								<td> eventtype (number):事件类型数值，EDOTAHeroChaseEventType<br>
-									victim (number):被攻击实体索引，可能是英雄也可能是塔等<br>
-									priority (number):优先级<br>
-									attacker (number):攻击者实体索引<br>
-									splitscreenplayer (number)<br>
+								<td>"victim"		"short"<br>
+									"attacker"		"short"<br>
+									"basepriority"	"short"<br>
+									"priority"		"short"<br>
+									"eventtype"		"short"		// EDOTAHeroChaseEventType
 								</td>
-								<td>单位事件，单位状态改变会产生(小兵不产生)
+								<td>快捷键改变
 								</td>
 							</tr>
 							<tr>
 								<td> dota_quest_started
 								</td>
-								<td> questIndex ( long ): entity index
+								<td>"questIndex"	"long"			// entity index
 								</td>
-								<td>任务开始
+								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> dota_quest_completed
 								</td>
-								<td> questIndex ( long ): entity index
+								<td>"questIndex"	"long"			// entity index
 								</td>
-								<td>任务结束
+								<td>
 								</td>
 							</tr>
 							<tr>
@@ -29979,46 +30369,158 @@
 								</td>
 							</tr>
 							<tr>
-								<td> player_fullyjoined
-								</td>
-								<td>userid ( short ): user ID on server<br>
-									name ( string ): player name<br>
-								</td>
-								<td>玩家全部进入，好像失效
-								</td>
-							</tr>
-							<tr>
 								<td> dota_spectate_hero
 								</td>
-								<td> entindex ( byte )
+								<td>"entindex"	"byte"
 								</td>
 								<td>
 								</td>
-							</tr>
+							</tr>							
 							<tr>
 								<td> dota_match_done
 								</td>
-								<td>
-									winningteam (number):获胜队伍ID<br>
-									splitscreenplayer (number)<br>
+								<td>"winningteam"	"byte"// The ID of the winning team
 								</td>
-								<td>游戏结束时
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_match_done_client
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> rich_presence_updated
+								</td>
+								<td>
+								</td>
+								<td>
 								</td>
 							</tr>
 							<tr>
 								<td> dota_hero_random
 								</td>
-								<td> userid ( number )<br>
-									heroid ( number )<br>
+								<td>"userid"		"short"<br>
+									"heroid"		"short"
 								</td>
-								<td>随机英雄
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_river_painted
+								</td>
+								<td>"userid"		"short"<br>
+									"riverid"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_scan_used
+								</td>
+								<td>"teamnumber"	"short"
+								</td>
+								<td>
+								</td>使用扫描
+							</tr>
+							<tr>
+								<td> dota_scan_found_enemy
+								</td>
+								<td>"teamnumber"	"short"
+								</td>
+								<td>扫描发现敌人
+								</td>
+							</tr>
+							<tr>
+								<td> dota_rd_chat_turn
+								</td>
+								<td>"userid"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ad_nominated_ban
+								</td>
+								<td>"userid"		"short"
+								</td>
+								<td>扫描发现敌人
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ad_ban
+								</td>
+								<td>"heroid"		"short"
+								</td>
+								<td>扫描发现敌人
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ad_ban_count
+								</td>
+								<td>"count"			"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ad_hero_collision
+								</td>
+								<td>"heroid"	"short"<br>
+									"playerid1"	"short"<br>
+									"playerid2"	"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_favorite_heroes_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> profile_opened
+								</td>
+								<td>
+								</td>
+								<td>打开个人资料
+								</td>
+							</tr>
+							<tr>
+								<td> profile_closed
+								</td>
+								<td>
+								</td>
+								<td>关闭个人资料
 								</td>
 							</tr>
 							<tr>
 								<td> item_preview_closed
 								</td>
 								<td>
-
+								</td>
+								<td>物品预览关闭
+								</td>
+							</tr>
+							<tr>
+								<td> dashboard_switched_section
+								</td>
+								<td>"section"		"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_tournament_item_event
+								</td>
+								<td>"winner_count"			"short"<br>
+									"event_type"			"short"
 								</td>
 								<td>
 								</td>
@@ -30026,23 +30528,455 @@
 							<tr>
 								<td> dota_hero_swap
 								</td>
-								<td>playerid1 ( number )<br>
-									playerid2 ( number )<br>
+								<td>"playerid1"		"byte""<br>
+									"playerid2"		"byte"
 								</td>
 								<td>交换英雄
 								</td>
 							</tr>
 							<tr>
+								<td> dota_reset_suggested_items
+								</td>
+								<td>
+								</td>
+								<td>reset the purchased / checked off state of suggested items in the store
+								</td>
+							</tr>
+							<tr>
 								<td> dota_hud_skin_changed
 								</td>
-								<td> skin ( string )<br>
-									style ( byte )<br>
+								<td>"skin"	"string"<br>
+									"style"	"byte"
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> dota_inventory_player_got_item
+								<td> map_location_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> richpresence_custom_updated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> game_end_visible
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> highlight_hud_element
+								</td>
+								<td>"elementname"	"string"<br>
+									"duration"		"float"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> hide_highlight_hud_element
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> intro_video_finished
+								</td>
+								<td>
+								</td>
+								<td>前导影片完成
+								</td>
+							</tr>
+							<tr>
+								<td> dota_courier_transfer_item
+								</td>
+								<td>"hero_entindex"		"int"<br>
+									"courier_entindex"	"int"<br>
+									"item_entindex"		"int"
+								</td>
+								<td>信使运送物品
+								</td>
+							</tr>
+							<tr>
+								<td> full_ui_unlocked
+								</td>
+								<td>
+								</td>
+								<td>全UI解锁
+								</td>
+							</tr>
+							<tr>
+								<td> hero_selector_preview_set
+								</td>
+								<td>"setindex" "short"
+								</td>
+								<td>英雄选择预览装置
+								</td>
+							</tr>
+							<tr>
+								<td> hero_picker_shown
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> hero_picker_hidden
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_local_quickbuy_changed
+								</td>
+								<td>
+								</td>
+								<td>本地快捷购买改变
+								</td>
+							</tr>
+							<tr>
+								<td> show_center_message
+								</td>
+								<td>"message"				"string"<br>
+									"duration"				"float"<br>
+									"clear_message_queue"	"bool"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> hud_flip_changed
+								</td>
+								<td>"flipped"	"bool"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> defeated
+								</td>
+								<td>entindex"	"short"
+								</td>
+								<td>被打败？被杀？
+								</td>
+							</tr>
+							<tr>
+								<td> reset_defeated
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> custom_game_difficulty
+								</td>
+								<td>"difficulty"	"byte"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> tree_cut
+								</td>
+								<td>"tree_x"		"float"<br>
+									"tree_y"		"float"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_rubick_ability_steal
+								</td>
+								<td>"abilityIndex"	"short"<br>
+									"abilityLevel"	"byte"
+								</td>
+								<td>拉比克偷技能
+								</td>
+							</tr>
+							<tr>
+								<td> dota_match_signout
+								</td>
+								<td>
+								</td>
+								<td>退出游戏
+								</td>
+							</tr>
+							<tr>
+								<td> dota_illusions_created
+								</td>
+								<td>"original_entindex"		"short"
+								</td>
+								<td>产生幻象
+								</td>
+							</tr>
+							<tr>
+								<td> dota_hero_undoselection
+								</td>
+								<td>"playerid1"		"byte"
+								</td>
+								<td>取消选择英雄
+								</td>
+							</tr>
+							<tr>
+								<td> dota_npc_goal_reached
+								</td>
+								<td>"npc_entindex"			"short"		// Entity index of the npc which was following a path and has reached a goal entity<br>
+									"goal_entindex"			"short"		// Entity index of the path goal entity which has been reached<br>
+									"next_goal_entindex"	"short"		// Entity index of the next goal entity on the path (if any) which the npc will now be pathing towards
+								</td>
+								<td>NPC到达目标
+								</td>
+							</tr>
+							<tr>
+								<td> dota_bounty
+								</td>
+								<td>"userid"		"short"<br>
+									"target"		"short"<br>
+									"bounty_event"	"short"
+								</td>
+								<td>奖励
+								</td>
+							</tr>
+							<tr>
+								<td> dota_ad_randomed
+								</td>
+								<td>"userid"			"short"<br>
+									"item_ability_id"	"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> colorblind_mode_changed
+								</td>
+								<td>
+								</td>
+								<td>色盲模式改变
+								</td>
+							</tr>
+							<tr>
+								<td> client_reload_game_keyvalues
+								</td>
+								<td>
+								</td>
+								<td>客户端重新载入KV
+								</td>
+							</tr>
+							<tr>
+								<td> dota_hero_inventory_item_change
+								</td>
+								<td>"player_id"		"int"<br>
+									"hero_entindex"	"int"<br>
+									"item_entindex"	"int"<br>
+									"removed"		"bool"
+								</td>
+								<td>装备栏改变(LUA)
+								</td>
+							</tr>
+							<tr>
+								<td> game_rules_shutdown
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> aegis_event
+								</td>
+								<td>"player_id"			"short"<br>
+									"chat_message_type"	"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_buyback
+								</td>
+								<td>"entindex"			"int"<br>
+									"player_id"			"int"
+								</td>
+								<td>，买活
+								</td>
+							</tr>
+							<tr>
+								<td> bought_back
+								</td>
+								<td>"player_id"			"short"
+								</td>
+								<td>？？？
+								</td>
+							</tr>
+							<tr>
+								<td> dota_shrine_kill
+								</td>
+								<td>"killer_userid"	"short"	<br>
+									"teamnumber"	"short"<br>
+									"gold"			"short"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> dota_combat_event_message
+								</td>
+								<td>"message"				"string"<br>
+									"teamnumber"			"short"<br>
+									"player_id"				"int"<br>
+									"player_id2"			"int"<br>
+									"value"					"float"<br>
+									"int_value"				"int"<br>
+									"ability_name"			"string"<br>
+									"locstring_value"		"string"<br>
+									"string_replace_token"	"string"
+								</td>
+								<td>战斗信息
+								</td>
+							</tr>
+							<tr>
+								<td> dota_on_hero_finish_spawn
+								</td>
+								<td>"heroindex"		"int"<br>
+									"hero"			"string"
+								</td>
+								<td>当英雄完成生成
+								</td>
+							</tr>
+							<tr>
+								<td> dota_creature_gained_level
+								</td>
+								<td>"entindex"		"short"<br>
+									"level"			"short"
+								</td>
+								<td>生物单位升级
+								</td>
+							</tr>							
+							<tr>
+								<td> dota_hero_teleport_to_unit
+								</td>
+								<td>"hero_entindex"		"int"	<br>
+									"unit_entindex"		"int"
+								</td>
+								<td>英雄TP到单位
+								</td>
+							</tr>
+							<tr>
+								<td> dota_neutral_creep_camp_cleared
+								</td>
+								<td>"camp_name"			"string"	<br>
+									"camp_type"			"int"	<br>
+									"killer_player_id"	"int"
+								</td>
+								<td>清除了中立生物营地？
+								</td>
+							</tr>
+							<tr>
+								<td> npc_spawned
+								</td>
+								<td>"entindex"	"long"
+								</td>
+								<td>npc生成
+								</td>
+							</tr>							
+							<tr>
+								<td> npc_replaced
+								</td>
+								<td>"old_entindex"	"long"	<br>
+									"new_entindex"	"long"
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> entity_killed(可能会失效)
+								</td>
+								<td> entindex_killed( number ): 被杀实体索引<br>
+									entindex_attacker ( number ): 攻击者实体索引<br>
+									damagebits ( number ): 不是伤害值<br>
+									splitscreenplayer (number):
+								</td>
+								<td>实体被杀
+								</td>
+							</tr>
+							<tr>
+								<td> entity_hurt
+								</td>
+								<td> "entindex_killed" 	"long"<br>
+									"entindex_attacker"	"long"<br>
+									"entindex_inflictor"	"long"<br>
+									"damagebits"		"long"<br>
+									"damage"			"float"<br>
+								</td>
+								<td>实体受伤
+								</td>
+							</tr>
+							<tr>
+								<td> modifier_event
+								</td>
+								<td>"eventname"	"string"<br>
+									"caster"	"short"	<br>
+									"ability"	"short"
+								</td>
+								<td>modifier事件
+								</td>
+							</tr>
+							<tr>
+								<td> dota_team_kill_credit(可能失效)
+								</td>
+								<td> victim_userid (number):受害者玩家ID，非玩家为-1，这里等于PlayerID	<br>
+									splitscreenplayer(number):	<br>
+									herokills (number):本次死亡英雄被杀总次数	<br>
+									killer_userid (number):击杀者服务器ID，非玩家为-1	<br>
+									teamnumber (number):击杀者所属队伍ID	<br>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> inventory_updated(可能失效)
+								</td>
+								<td>itemdef ( number )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='特别事件'>
+					<div id='constantname'>
+						<p><span>特别事件</span></p>
+					</div>
+					<div id='eventcontent'>
+						<table>
+							<tr>
+								<th> 事件名称
+								</th>
+								<th> 传递的参数
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							
+							<tr>
+								<td>cart_updated(可能失效)
 								</td>
 								<td>
 
@@ -30050,37 +30984,51 @@
 								<td>
 								</td>
 							</tr>
+
 							<tr>
-								<td> show_center_message
+								<td> store_pricesheet_updated(可能失效)
 								</td>
-								<td>message ( string )<br>
-									duration ( float )<br>
-									clear_message_queue ( bool )<br>
+								<td>
+
+								</td>
+								<td>
+								</td>
+							</tr>
+
+							<tr>
+								<td> gc_connected(可能失效)
+								</td>
+								<td>
 								</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> dota_illusions_created
+								<td> item_schema_initialized(可能失效)
 								</td>
-								<td> original_entindex (number):幻象源实体索引<br>
-									splitscreenplayer (number):一般为-1<br>
+								<td>
 								</td>
-								<td>产生幻象
+								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> dota_team_kill_credit
+								<td> drop_rate_modified(可能失效)
 								</td>
-								<td> victim_userid (number):受害者玩家ID，非玩家为-1，这里等于PlayerID
-									splitscreenplayer(number):
-									herokills (number):本次死亡英雄被杀总次数
-									killer_userid (number):击杀者服务器ID，非玩家为-1
-									teamnumber (number):击杀者所属队伍ID
+								<td>
 								</td>
-								<td>产生幻象
+								<td>
 								</td>
 							</tr>
+							<tr>
+								<td> event_ticket_modified(可能失效)
+								</td>
+								<td>
+
+								</td>
+								<td>
+								</td>
+							</tr>
+
 						</table>
 					</div>
 				</div>
