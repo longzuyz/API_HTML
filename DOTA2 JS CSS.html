@@ -301,6 +301,7 @@ aaaabbbbccccc
 							<li><a href="#DOTAHeroModelOverlay">TabButton</a></li>
 							<li><a href="#DOTAHeroModelOverlay">DOTADashboard</a></li>
 							<li><a href="#DOTAHeroModelOverlay">PageManager</a></li>
+							<li><a href="#DOTAHeroModelOverlay">DOTAHomePage</a></li>
 							<li><a href="#Label">Label</a></li>
 							<li><a href="#TextButton">TextButton</a></li>
 							<li><a href="#RadioButton">RadioButton</a></li>
@@ -311,7 +312,7 @@ aaaabbbbccccc
 							<li><a href="#SlottedSlider">SlottedSlider、Slider</a></li>
 							<li><a href="#NumberEntry">NumberEntry</a></li>
 							<li><a href="#Image">Image</a></li>
-							<li><a href="#arousel">arousel选择木马</a></li>
+							<li><a href="#Carousel">Carousel旋转木马</a></li>
 							<li><a href="#Movie">Movie</a></li>
 							<li><a href="#DOTAAvatarImage">DOTAAvatarImage</a></li>
 							<li><a href="#DOTAAbilityImage">DOTAAbilityImage</a></li>
@@ -615,7 +616,7 @@ aaaabbbbccccc
 								</td>
 								<td> void $.CancelScheduled( js_raw_args)
 								</td>
-								<td> 取消一个计时器，参数是$.Schedule返回的数。
+								<td> 取消一个计时器，参数是$.Schedule返回的值。
 								</td>
 							</tr>
 							<tr>
@@ -18974,9 +18975,19 @@ aaaabbbbccccc
 								<td>向板添加一个css类。</td>
 							</tr>
 							<tr>
+								<td>AAddStyleAfterDelay(string class,float delay)</td>
+								<td>Yes</td>
+								<td>延迟向板添加一个css类。</td>
+							</tr>
+							<tr>
 								<td>AddStyleToEachChild(string class)</td>
 								<td>Yes</td>
 								<td>向板的所有继承添加一个CSS类。</td>
+							</tr>
+							<tr>
+								<td>AddTimedStyle(string class,float durating,float delay)</td>
+								<td>Yes</td>
+								<td>Add a class for a specified duration, with optional pre-delay; clears existing timers when called with same class.。</td>
 							</tr>
 							<tr>
 								<td>AsyncEvent(float delay, panelevent eventToFire)</td>
@@ -19027,6 +19038,11 @@ aaaabbbbccccc
 								<td>DOTAHideTextTooltip()</td>
 								<td>Yes</td>
 								<td>隐藏文本框。</td>
+							</tr>
+							<tr>
+								<td>DOTAHideTI10EventGameTooltip()</td>
+								<td>Yes</td>
+								<td>Hide the ti10 event game tooltip。</td>
 							</tr>
 							<tr>
 								<td>DOTAHideTitleImageTextTooltip()</td>
@@ -19114,6 +19130,12 @@ aaaabbbbccccc
 								<td>DOTAShowTextTooltipStyled(string text, string style)</td>
 								<td>Yes</td>
 								<td>显示包含指定信息的提示栏。同时应用名为“style”的CSS类来使用定制样式。
+								</td>
+							</tr>
+							<tr>
+								<td>DOTAShowTI10EventGameTooltip(struct TI10EventGameTooltipInfo_t const * __ptr64 X)</td>
+								<td>Yes</td>
+								<td>Show a ti10 event game tooltip
 								</td>
 							</tr>
 							<tr>
@@ -19227,6 +19249,11 @@ aaaabbbbccccc
 								<td>RemoveStyle(string class)</td>
 								<td>Yes</td>
 								<td>从板中移除一个 CSS类。</td>
+							</tr>
+							<tr>
+								<td>RemoveStyleAfterDelay(string class, float pre-delay)</td>
+								<td>Yes</td>
+								<td>Remove a CSS class from a panel after a specified delay</td>
 							</tr>
 							<tr>
 								<td>RemoveStyleFromEachChild(string class)</td>
