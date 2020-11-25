@@ -26581,7 +26581,7 @@
 								<td> 9
 								</td>
 								<td>GetModifierOverrideAttackDamage</td>
-								<td> Generates a level of opacity on the parent.
+								<td> 
 								</td>
 							</tr>
 							<tr>
@@ -26713,7 +26713,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_ATTACK_RATE </td>
 								<td> 29</td>
-								<td> GetModifierAttackSpeedBaseOverride </td>
+								<td> GetModifierFixedAttackRate </td>
 								<td></td>
 							</tr>
 							<tr>
@@ -28210,6 +28210,8 @@
 								<td>GetModifierAttackSpeedReductionPercentage
 								</td>
 								<td>
+									被施加减速BUFF后,相对于减速技能参数的减速的比列。比如减速技能要减速受害者的50%,
+									受害者本身有该Modifier属性return 50,那么实际受害者就会收到25%的减速,return 0,就相当于无视减速。
 								</td>
 							</tr>
 							<tr>
@@ -28218,7 +28220,8 @@
 								</td>
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
-								<td>
+								<td>被施加减速BUFF后,相对于减速技能参数的减速的比列。比如减速技能要减速受害者的50%,
+									受害者本身有该Modifier属性return 50,那么实际受害者就会收到25%的减速,return 0,就相当于无视减速。
 								</td>
 							</tr>
 							<tr>
@@ -31739,7 +31742,7 @@
 								</td>
 								<td> 473
 								</td>
-								<td>巫毒面
+								<td>巫毒面具
 								</td>
 							</tr>			
 							<tr>
@@ -38815,6 +38818,7 @@
 									modifier_phased<br>
 									modifier_dominated<br>
 									modifier_truesight<br>
+									modifier_truesight_all<br>
 									modifier_stunned<br>
 									modifier_bashed<br>
 									modifier_taunt<br>
@@ -39002,7 +39006,25 @@
 									modifier_greevil_miniboss_orangelight_strike_array<br>
 									modifier_greevil_miniboss_purple_venomous_gale<br>
 									modifier_greevil_miniboss_sight<br>
-									modifier_passive_gold<br>
+									modifier_passive_gold(可能失效)<br>
+									modifier_health_lua<br>
+									modifier_mana_lua<br>
+									modifier_stunned_lua<br>
+									modifier_rooted_lua<br>
+									modifier_provide_vision_lua<br>
+									modifier_hidden_lua<br>
+									modifier_teleport_channel_lua<br>
+									modifier_rot_lua<br>
+									modifier_vision_dummy<br>
+									modifier_item_blink_lua<br>
+									modifier_rupture_damage<br>
+									modifier_aoe_rupture_lua<br>
+									modifier_shukuchi_lua<br>
+									modifier_remote_mine<br>
+									modifier_refraction_lua<br>
+									modifier_propulsion_mine<br>
+									modifier_shoot_arrow_lua<br>
+									modifier_arrow_lua<br>
 
 								</td>
 							</tr>
