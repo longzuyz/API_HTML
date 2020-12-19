@@ -297,10 +297,10 @@ aaaabbbbccccc
 							<li><a href="#DOTAHeroModelOverlay">Panel</a></li>
 							<li><a href="#DOTAHeroModelOverlay">CustomUIElement</a></li>
 							<li><a href="#DOTAHeroModelOverlay">Button</a></li>
-							<li><a href="#DOTAHeroModelOverlay">DOTADashboardBackgroundManager</a></li>
 							<li><a href="#DOTAHeroModelOverlay">TabButton</a></li>
 							<li><a href="#DOTAHeroModelOverlay">DOTADashboard</a></li>
 							<li><a href="#DOTAHeroModelOverlay">PageManager</a></li>
+							<li><a href="#DOTAHeroModelOverlay">DOTAFrontpageDefaultButton</a></li>
 							<li><a href="#DOTAHeroModelOverlay">DOTAHomePage</a></li>
 							<li><a href="#Label">Label</a></li>
 							<li><a href="#TextButton">TextButton</a></li>
@@ -4816,7 +4816,7 @@ aaaabbbbccccc
 
 				<div id='DOTAHeroModelOverlay' class='classcontent'>
 					<div id='classname'>
-						<p><span>DOTAHeroModelOverlay、Panel、CustomUIElement、Button</span></p>
+						<p><span>DOTAHeroModelOverlay、Panel、CustomUIElement、Button、TabButton、DOTADashboard、PageManager、DOTAFrontpageDefaultButton、DOTAHomePage</span></p>
 						<p>全局变量：无。具体对象使用</p>
 					</div>
 					<div id='apicontent'>
@@ -5201,6 +5201,14 @@ aaaabbbbccccc
 								<td> FindPanelInLayoutFile
 								</td>
 								<td> FindPanelInLayoutFile( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FindAncestor
+								</td>
+								<td> FindAncestor( cstring cstring_1 )
 								</td>
 								<td>
 								</td>
@@ -12588,8 +12596,9 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
+
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LEGS
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_GLOVES
 								</td>
 								<td> 11
 								</td>
@@ -12597,7 +12606,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_GLOVES
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LEGS
 								</td>
 								<td> 12
 								</td>
@@ -13568,9 +13577,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> modifierfunction.MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+								<td> modifierfunction.MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_CREEP
 								</td>
 								<td> 41
+								</td>
+								<td> GetModifierSpellAmplify_PercentageCreep
+								</td>
+							</tr>
+							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+								</td>
+								<td> 42
 								</td>
 								<td> GetModifierSpellAmplify_Percentage
 								</td>
@@ -13578,7 +13595,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE
 								</td>
-								<td> 42
+								<td> 43
 								</td>
 								<td> GetModifierSpellAmplify_PercentageUnique
 								</td>
@@ -13586,7 +13603,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_SOURCE
 								</td>
-								<td> 43
+								<td> 44
 								</td>
 								<td> GetModifierHealAmplify_PercentageSource
 								</td>
@@ -13594,7 +13611,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET
 								</td>
-								<td> 44
+								<td> 45
 								</td>
 								<td> GetModifierHealAmplify_PercentageTarget
 								</td>
@@ -13602,7 +13619,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
 								</td>
-								<td> 45
+								<td> 46
 								</td>
 								<td> GetModifierHPRegenAmplify_Percentage
 								</td>
@@ -13610,7 +13627,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_LIFESTEAL_AMPLIFY_PERCENTAGE
 								</td>
-								<td> 46
+								<td> 47
 								</td>
 								<td> GetModifierLifestealRegenAmplify_Percentage
 								</td>
@@ -13618,7 +13635,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SPELL_LIFESTEAL_AMPLIFY_PERCENTAGE
 								</td>
-								<td> 47
+								<td> 48
 								</td>
 								<td> GetModifierSpellLifestealRegenAmplify_Percentage
 								</td>
@@ -13626,7 +13643,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MP_REGEN_AMPLIFY_PERCENTAGE
 								</td>
-								<td> 48
+								<td> 49
 								</td>
 								<td> GetModifierMPRegenAmplify_Percentage
 								</td>
@@ -13634,7 +13651,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANA_DRAIN_AMPLIFY_PERCENTAGE
 								</td>
-								<td> 49
+								<td> 50
 								</td>
 								<td> GetModifierManaDrainAmplify_Percentage
 								</td>
@@ -13642,7 +13659,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MP_RESTORE_AMPLIFY_PERCENTAGE
 								</td>
-								<td> 50
+								<td> 51
 								</td>
 								<td> GetModifierMPRestoreAmplify_Percentage
 								</td>
@@ -13650,7 +13667,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
 								</td>
-								<td> 51
+								<td> 52
 								</td>
 								<td> GetModifierBaseDamageOutgoing_Percentage
 								</td>
@@ -13658,7 +13675,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE_UNIQUE
 								</td>
-								<td> 52
+								<td> 53
 								</td>
 								<td> GetModifierBaseDamageOutgoing_PercentageUnique
 								</td>
@@ -13666,7 +13683,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 								</td>
-								<td> 53
+								<td> 54
 								</td>
 								<td> GetModifierIncomingDamage_Percentage
 								</td>
@@ -13674,7 +13691,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE
 								</td>
-								<td> 54
+								<td> 55
 								</td>
 								<td> GetModifierIncomingPhysicalDamage_Percentage
 								</td>
@@ -13682,7 +13699,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT
 								</td>
-								<td> 55
+								<td> 56
 								</td>
 								<td> GetModifierIncomingPhysicalDamageConstant
 								</td>
@@ -13690,7 +13707,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT
 								</td>
-								<td> 56
+								<td> 57
 								</td>
 								<td> GetModifierIncomingSpellDamageConstant
 								</td>
@@ -13698,7 +13715,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EVASION_CONSTANT
 								</td>
-								<td> 57
+								<td> 58
 								</td>
 								<td> GetModifierEvasion_Constant
 								</td>
@@ -13706,7 +13723,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_NEGATIVE_EVASION_CONSTANT
 								</td>
-								<td> 58
+								<td> 59
 								</td>
 								<td> GetModifierNegativeEvasion_Constant
 								</td>
@@ -13714,7 +13731,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATUS_RESISTANCE
 								</td>
-								<td> 59
+								<td> 60
 								</td>
 								<td> GetModifierStatusResistance
 								</td>
@@ -13722,7 +13739,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 								</td>
-								<td> 60
+								<td> 61
 								</td>
 								<td> GetModifierStatusResistanceStacking
 								</td>
@@ -13730,7 +13747,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATUS_RESISTANCE_CASTER
 								</td>
-								<td> 61
+								<td> 62
 								</td>
 								<td> GetModifierStatusResistanceCaster
 								</td>
@@ -13738,7 +13755,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_AVOID_DAMAGE
 								</td>
-								<td> 62
+								<td> 63
 								</td>
 								<td> GetModifierAvoidDamage
 								</td>
@@ -13746,7 +13763,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_AVOID_SPELL
 								</td>
-								<td> 63
+								<td> 64
 								</td>
 								<td> GetModifierAvoidSpell
 								</td>
@@ -13754,7 +13771,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MISS_PERCENTAGE
 								</td>
-								<td> 64
+								<td> 65
 								</td>
 								<td> GetModifierMiss_Percentage
 								</td>
@@ -13762,7 +13779,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_ARMOR_BASE_PERCENTAGE
 								</td>
-								<td> 65
+								<td> 66
 								</td>
 								<td> GetModifierPhysicalArmorBase_Percentage
 								</td>
@@ -13770,7 +13787,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_ARMOR_TOTAL_PERCENTAGE
 								</td>
-								<td> 66
+								<td> 67
 								</td>
 								<td> GetModifierPhysicalArmorTotal_Percentage
 								</td>
@@ -13778,7 +13795,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 								</td>
-								<td> 67
+								<td> 68
 								</td>
 								<td> GetModifierPhysicalArmorBonus
 								</td>
@@ -13786,7 +13803,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE
 								</td>
-								<td> 68
+								<td> 69
 								</td>
 								<td> GetModifierPhysicalArmorBonusUnique
 								</td>
@@ -13794,7 +13811,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE
 								</td>
-								<td> 69
+								<td> 70
 								</td>
 								<td> GetModifierPhysicalArmorBonusUniqueActive
 								</td>
@@ -13802,7 +13819,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR
 								</td>
-								<td> 70
+								<td> 71
 								</td>
 								<td> GetModifierIgnorePhysicalArmor
 								</td>
@@ -13810,7 +13827,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BASE_REDUCTION
 								</td>
-								<td> 71
+								<td> 72
 								</td>
 								<td> GetModifierMagicalResistanceBaseReduction
 								</td>
@@ -13818,7 +13835,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION
 								</td>
-								<td> 72
+								<td> 73
 								</td>
 								<td> GetModifierMagicalResistanceDirectModification
 								</td>
@@ -13826,7 +13843,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 								</td>
-								<td> 73
+								<td> 74
 								</td>
 								<td> GetModifierMagicalResistanceBonus
 								</td>
@@ -13834,7 +13851,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS_ILLUSIONS
 								</td>
-								<td> 74
+								<td> 75
 								</td>
 								<td> GetModifierMagicalResistanceBonusIllusions
 								</td>
@@ -13842,7 +13859,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE
 								</td>
-								<td> 75
+								<td> 76
 								</td>
 								<td> GetModifierMagicalResistanceDecrepifyUnique
 								</td>
@@ -13850,7 +13867,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BASE_MANA_REGEN
 								</td>
-								<td> 76
+								<td> 77
 								</td>
 								<td> GetModifierBaseRegen
 								</td>
@@ -13858,7 +13875,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
 								</td>
-								<td> 77
+								<td> 78
 								</td>
 								<td> GetModifierConstantManaRegen
 								</td>
@@ -13866,7 +13883,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE
 								</td>
-								<td> 78
+								<td> 79
 								</td>
 								<td> GetModifierConstantManaRegenUnique
 								</td>
@@ -13874,7 +13891,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE
 								</td>
-								<td> 79
+								<td> 80
 								</td>
 								<td> GetModifierTotalPercentageManaRegen
 								</td>
@@ -13882,7 +13899,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
 								</td>
-								<td> 80
+								<td> 81
 								</td>
 								<td> GetModifierConstantHealthRegen
 								</td>
@@ -13890,7 +13907,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
 								</td>
-								<td> 81
+								<td> 82
 								</td>
 								<td> GetModifierHealthRegenPercentage
 								</td>
@@ -13898,7 +13915,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE_UNIQUE
 								</td>
-								<td>82
+								<td>83
 								</td>
 								<td> GetModifierHealthRegenPercentageUnique
 								</td>
@@ -13906,7 +13923,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_HEALTH_BONUS
 								</td>
-								<td> 83
+								<td> 84
 								</td>
 								<td> GetModifierHealthBonus
 								</td>
@@ -13914,7 +13931,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANA_BONUS
 								</td>
-								<td> 84
+								<td> 85
 								</td>
 								<td> GetModifierManaBonus
 								</td>
@@ -13922,7 +13939,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS
 								</td>
-								<td> 85
+								<td> 86
 								</td>
 								<td> GetModifierExtraStrengthBonus
 								</td>
@@ -13930,7 +13947,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS
 								</td>
-								<td> 86
+								<td> 87
 								</td>
 								<td> GetModifierExtraHealthBonus
 								</td>
@@ -13938,7 +13955,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_MANA_BONUS
 								</td>
-								<td> 87
+								<td> 88
 								</td>
 								<td> GetModifierExtraManaBonus
 								</td>
@@ -13946,7 +13963,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE
 								</td>
-								<td> 88
+								<td> 89
 								</td>
 								<td> GetModifierExtraHealthPercentage
 								</td>
@@ -13954,7 +13971,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE
 								</td>
-								<td> 89
+								<td> 90
 								</td>
 								<td> GetModifierExtraManaPercentage
 								</td>
@@ -13962,7 +13979,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
 								</td>
-								<td> 90
+								<td> 91
 								</td>
 								<td> GetModifierBonusStats_Strength
 								</td>
@@ -13970,7 +13987,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_AGILITY_BONUS
 								</td>
-								<td> 91
+								<td> 92
 								</td>
 								<td> GetModifierBonusStats_Agility
 								</td>
@@ -13979,7 +13996,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
 								</td>
-								<td> 92
+								<td> 93
 								</td>
 								<td> GetModifierBonusStats_Intellect
 								</td>
@@ -13987,7 +14004,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE
 								</td>
-								<td> 93
+								<td> 94
 								</td>
 								<td> GetModifierBonusStats_Strength_Percentage
 								</td>
@@ -13995,7 +14012,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_AGILITY_BONUS_PERCENTAGE
 								</td>
-								<td> 94
+								<td> 95
 								</td>
 								<td> GetModifierBonusStats_Agility_Percentage
 								</td>
@@ -14003,7 +14020,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_INTELLECT_BONUS_PERCENTAGE
 								</td>
-								<td> 95
+								<td> 96
 								</td>
 								<td> GetModifierBonusStats_Intellect_Percentage
 								</td>
@@ -14011,7 +14028,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS
 								</td>
-								<td> 96
+								<td> 97
 								</td>
 								<td> GetModifierCastRangeBonus
 								</td>
@@ -14019,7 +14036,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET
 								</td>
-								<td> 97
+								<td> 98
 								</td>
 								<td> GetModifierCastRangeBonusTarget
 								</td>
@@ -14027,7 +14044,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING
 								</td>
-								<td> 98
+								<td> 99
 								</td>
 								<td> GetModifierCastRangeBonusStacking
 								</td>
@@ -14035,7 +14052,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE
 								</td>
-								<td> 99
+								<td> 100
 								</td>
 								<td> GetModifierAttackRangeOverride
 								</td>
@@ -14043,7 +14060,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 								</td>
-								<td> 100
+								<td> 101
 								</td>
 								<td> GetModifierAttackRangeBonus
 								</td>
@@ -14051,7 +14068,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE
 								</td>
-								<td> 101
+								<td> 102
 								</td>
 								<td> GetModifierAttackRangeBonusUnique
 								</td>
@@ -14059,7 +14076,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE
 								</td>
-								<td> 102
+								<td> 103
 								</td>
 								<td> GetModifierAttackRangeBonusPercentage
 								</td>
@@ -14067,7 +14084,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAX_ATTACK_RANGE
 								</td>
-								<td> 103
+								<td> 104
 								</td>
 								<td> GetModifierMaxAttackRange
 								</td>
@@ -14075,7 +14092,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS
 								</td>
-								<td> 104
+								<td> 105
 								</td>
 								<td> GetModifierProjectileSpeedBonus
 								</td>
@@ -14083,7 +14100,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE
 								</td>
-								<td> 105
+								<td> 106
 								</td>
 								<td> GetModifierProjectileSpeedBonusPercentage
 								</td>
@@ -14091,7 +14108,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROJECTILE_NAME
 								</td>
-								<td> 106
+								<td> 107
 								</td>
 								<td> GetModifierProjectileName
 								</td>
@@ -14099,7 +14116,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_REINCARNATION
 								</td>
-								<td> 107
+								<td> 108
 								</td>
 								<td> ReincarnateTime
 								</td>
@@ -14107,7 +14124,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RESPAWNTIME
 								</td>
-								<td> 108
+								<td> 109
 								</td>
 								<td> GetModifierConstantRespawnTime
 								</td>
@@ -14115,7 +14132,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE
 								</td>
-								<td> 109
+								<td> 110
 								</td>
 								<td> GetModifierPercentageRespawnTime
 								</td>
@@ -14123,7 +14140,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RESPAWNTIME_STACKING
 								</td>
-								<td> 110
+								<td> 111
 								</td>
 								<td> GetModifierStackingRespawnTime
 								</td>
@@ -14131,7 +14148,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 								</td>
-								<td> 111
+								<td> 112
 								</td>
 								<td> GetModifierPercentageCooldown
 								</td>
@@ -14139,7 +14156,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_ONGOING
 								</td>
-								<td> 112
+								<td> 113
 								</td>
 								<td> GetModifierPercentageCooldownOngoing
 								</td>
@@ -14147,15 +14164,23 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CASTTIME_PERCENTAGE
 								</td>
-								<td> 113
+								<td> 114
 								</td>
 								<td> GetModifierPercentageCasttime
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_ANIM_TIME_PERCENTAGE
+								</td>
+								<td> 115
+								</td>
+								<td> GetModifierPercentageAttackAnimTime
+								</td>
+							</tr>
+							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANACOST_PERCENTAGE
 								</td>
-								<td> 114
+								<td> 116
 								</td>
 								<td> GetModifierPercentageManacost
 								</td>
@@ -14163,7 +14188,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING
 								</td>
-								<td> 115
+								<td> 117
 								</td>
 								<td> GetModifierPercentageManacostStacking
 								</td>
@@ -14171,7 +14196,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DEATHGOLDCOST
 								</td>
-								<td> 116
+								<td> 118
 								</td>
 								<td> GetModifierConstantDeathGoldCost
 								</td>
@@ -14179,7 +14204,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXP_RATE_BOOST
 								</td>
-								<td> 117
+								<td> 119
 								</td>
 								<td> GetModifierPercentageExpRateBoost
 								</td>
@@ -14187,7 +14212,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
 								</td>
-								<td> 118
+								<td> 120
 								</td>
 								<td> GetModifierPreAttack_CriticalStrike
 								</td>
@@ -14195,7 +14220,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE
 								</td>
-								<td> 119
+								<td> 121
 								</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike
 								</td>
@@ -14203,7 +14228,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK
 								</td>
-								<td> 120
+								<td> 122
 								</td>
 								<td> GetModifierMagical_ConstantBlock
 								</td>
@@ -14211,7 +14236,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 								</td>
-								<td> 121
+								<td> 123
 								</td>
 								<td> GetModifierPhysical_ConstantBlock
 								</td>
@@ -14219,7 +14244,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL
 								</td>
-								<td> 122
+								<td> 124
 								</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial
 								</td>
@@ -14227,7 +14252,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR
 								</td>
-								<td> 123
+								<td> 125
 								</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor
 								</td>
@@ -14235,7 +14260,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
 								</td>
-								<td> 124
+								<td> 126
 								</td>
 								<td> GetModifierTotal_ConstantBlock
 								</td>
@@ -14243,7 +14268,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 								</td>
-								<td> 125
+								<td> 127
 								</td>
 								<td> GetOverrideAnimation
 								</td>
@@ -14251,7 +14276,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT
 								</td>
-								<td> 126
+								<td> 128
 								</td>
 								<td> GetOverrideAnimationWeight
 								</td>
@@ -14259,7 +14284,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE
 								</td>
-								<td> 127
+								<td> 129
 								</td>
 								<td> GetOverrideAnimationRate
 								</td>
@@ -14267,7 +14292,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSORB_SPELL
 								</td>
-								<td> 128
+								<td> 130
 								</td>
 								<td> GetAbsorbSpell
 								</td>
@@ -14275,7 +14300,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_REFLECT_SPELL
 								</td>
-								<td> 129
+								<td> 131
 								</td>
 								<td> GetReflectSpell
 								</td>
@@ -14283,7 +14308,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DISABLE_AUTOATTACK
 								</td>
-								<td> 130
+								<td> 132
 								</td>
 								<td> GetDisableAutoAttack
 								</td>
@@ -14291,7 +14316,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_DAY_VISION
 								</td>
-								<td> 131
+								<td> 133
 								</td>
 								<td> GetBonusDayVision
 								</td>
@@ -14299,7 +14324,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_NIGHT_VISION
 								</td>
-								<td> 132
+								<td> 134
 								</td>
 								<td> GetBonusNightVision
 								</td>
@@ -14307,7 +14332,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE
 								</td>
-								<td> 133
+								<td> 135
 								</td>
 								<td> GetBonusNightVisionUnique
 								</td>
@@ -14315,7 +14340,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE
 								</td>
-								<td> 134
+								<td> 136
 								</td>
 								<td> GetBonusVisionPercentage
 								</td>
@@ -14323,7 +14348,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_FIXED_DAY_VISION
 								</td>
-								<td> 135
+								<td> 137
 								</td>
 								<td> GetFixedDayVision
 								</td>
@@ -14331,7 +14356,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_FIXED_NIGHT_VISION
 								</td>
-								<td> 136
+								<td> 138
 								</td>
 								<td> GetFixedNightVision
 								</td>
@@ -14339,7 +14364,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MIN_HEALTH
 								</td>
-								<td> 137
+								<td> 139
 								</td>
 								<td> GetMinHealth
 								</td>
@@ -14347,7 +14372,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL
 								</td>
-								<td> 138
+								<td> 140
 								</td>
 								<td> GetAbsoluteNoDamagePhysical
 								</td>
@@ -14355,7 +14380,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL
 								</td>
-								<td> 139
+								<td> 141
 								</td>
 								<td> GetAbsoluteNoDamageMagical
 								</td>
@@ -14363,7 +14388,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE
 								</td>
-								<td> 140
+								<td> 142
 								</td>
 								<td> GetAbsoluteNoDamagePure
 								</td>
@@ -14371,7 +14396,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IS_ILLUSION
 								</td>
-								<td> 141
+								<td> 143
 								</td>
 								<td> GetIsIllusion
 								</td>
@@ -14379,7 +14404,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ILLUSION_LABEL
 								</td>
-								<td> 142
+								<td> 144
 								</td>
 								<td> GetModifierIllusionLabel
 								</td>
@@ -14387,7 +14412,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STRONG_ILLUSION
 								</td>
-								<td> 143
+								<td> 145
 								</td>
 								<td> GetModifierStrongIllusion
 								</td>
@@ -14395,7 +14420,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPER_ILLUSION
 								</td>
-								<td> 144
+								<td> 146
 								</td>
 								<td> GetModifierSuperIllusion
 								</td>
@@ -14403,15 +14428,24 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPER_ILLUSION_WITH_ULTIMATE
 								</td>
-								<td> 145
+								<td> 147
 								</td>
 								<td> GetModifierSuperIllusionWithUltimate
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_XP_DURING_DEATH
+								</td>
+								<td> 148
+								</td>
+								<td> GetModifierXPDuringDeath
+								</td>
+							</tr>
+							
+							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
 								</td>
-								<td> 146
+								<td> 149
 								</td>
 								<td> GetModifierTurnRate_Percentage
 								</td>
@@ -14419,7 +14453,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TURN_RATE_OVERRIDE
 								</td>
-								<td> 147
+								<td> 150
 								</td>
 								<td> GetModifierTurnRate_Override
 								</td>
@@ -14427,7 +14461,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DISABLE_HEALING
 								</td>
-								<td> 148
+								<td> 151
 								</td>
 								<td> GetDisableHealing
 								</td>
@@ -14435,7 +14469,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK
 								</td>
-								<td> 149
+								<td> 152
 								</td>
 								<td> GetAlwaysAllowAttack
 								</td>
@@ -14443,7 +14477,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ALWAYS_ETHEREAL_ATTACK
 								</td>
-								<td> 150
+								<td> 153
 								</td>
 								<td> GetAllowEtherealAttack
 								</td>
@@ -14451,7 +14485,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL
 								</td>
-								<td> 151
+								<td> 154
 								</td>
 								<td> GetOverrideAttackMagical
 								</td>
@@ -14459,7 +14493,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH
 								</td>
-								<td> 152
+								<td> 155
 								</td>
 								<td> GetModifierUnitStatsNeedsRefresh
 								</td>
@@ -14467,7 +14501,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BOUNTY_CREEP_MULTIPLIER
 								</td>
-								<td> 153
+								<td> 156
 								</td>
 								<td> Unused
 								</td>
@@ -14475,7 +14509,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BOUNTY_OTHER_MULTIPLIER
 								</td>
-								<td> 154
+								<td> 157
 								</td>
 								<td> Unused
 								</td>
@@ -14483,7 +14517,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_UNIT_DISALLOW_UPGRADING
 								</td>
-								<td> 155
+								<td> 158
 								</td>
 								<td> GetModifierUnitDisllowUpgrading
 								</td>
@@ -14491,7 +14525,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DODGE_PROJECTILE
 								</td>
-								<td> 156
+								<td> 159
 								</td>
 								<td> GetModifierDodgeProjectile
 								</td>
@@ -14499,15 +14533,31 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TRIGGER_COSMETIC_AND_END_ATTACK
 								</td>
-								<td> 157
+								<td> 160
 								</td>
 								<td> GetTriggerCosmeticAndEndAttack
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_MAX_DEBUFF_DURATION
+								</td>
+								<td> 161
+								</td>
+								<td> GetModifierMaxDebuffDuration
+								</td>
+							</tr>
+							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_PRIMARY_STAT_DAMAGE_MULTIPLIER
+								</td>
+								<td> 162
+								</td>
+								<td> GetPrimaryStatDamageMultiplier
+								</td>
+							</tr>
+							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_SPELL_TARGET_READY
 								</td>
-								<td> 158
+								<td> 163
 								</td>
 								<td> OnSpellTargetReady
 								</td>
@@ -14515,7 +14565,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_RECORD
 								</td>
-								<td> 159
+								<td> 164
 								</td>
 								<td> OnAttackRecord
 								</td>
@@ -14523,7 +14573,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_START
 								</td>
-								<td> 160
+								<td> 165
 								</td>
 								<td> OnAttackStart
 								</td>
@@ -14531,7 +14581,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK
 								</td>
-								<td> 161
+								<td> 166
 								</td>
 								<td> OnAttack
 								</td>
@@ -14539,7 +14589,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_LANDED
 								</td>
-								<td> 162
+								<td> 167
 								</td>
 								<td> OnAttackLanded
 								</td>
@@ -14547,7 +14597,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_FAIL
 								</td>
-								<td> 163
+								<td> 168
 								</td>
 								<td> OnAttackFail
 								</td>
@@ -14555,7 +14605,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_ALLIED
 								</td>
-								<td> 164
+								<td> 169
 								</td>
 								<td> OnAttackAllied
 								</td>
@@ -14563,7 +14613,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROJECTILE_DODGE
 								</td>
-								<td> 165
+								<td> 170
 								</td>
 								<td> OnProjectileDodge
 								</td>
@@ -14571,7 +14621,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ORDER
 								</td>
-								<td> 166
+								<td> 171
 								</td>
 								<td> OnOrder
 								</td>
@@ -14579,7 +14629,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_UNIT_MOVED
 								</td>
-								<td> 167
+								<td> 172
 								</td>
 								<td> OnUnitMoved
 								</td>
@@ -14587,7 +14637,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_START
 								</td>
-								<td> 168
+								<td> 173
 								</td>
 								<td> OnAbilityStart
 								</td>
@@ -14595,7 +14645,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_EXECUTED
 								</td>
-								<td> 169
+								<td> 174
 								</td>
 								<td> OnAbilityExecuted
 								</td>
@@ -14603,7 +14653,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 								</td>
-								<td> 170
+								<td> 175
 								</td>
 								<td> OnAbilityFullyCast
 								</td>
@@ -14611,7 +14661,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_BREAK_INVISIBILITY
 								</td>
-								<td> 171
+								<td> 176
 								</td>
 								<td> OnBreakInvisibility
 								</td>
@@ -14619,7 +14669,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_END_CHANNEL
 								</td>
-								<td> 172
+								<td> 177
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
@@ -14627,7 +14677,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROCESS_UPGRADE
 								</td>
-								<td> 173
+								<td> 178
 								</td>
 								<td> Unused
 								</td>
@@ -14635,7 +14685,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_REFRESH
 								</td>
-								<td> 174
+								<td> 179
 								</td>
 								<td> Unused
 								</td>
@@ -14643,7 +14693,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TAKEDAMAGE
 								</td>
-								<td> 175
+								<td> 180
 								</td>
 								<td> OnTakeDamage
 								</td>
@@ -14651,7 +14701,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DEATH_PREVENTED
 								</td>
-								<td> 176
+								<td> 181
 								</td>
 								<td> OnDamagePrevented
 								</td>
@@ -14659,7 +14709,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_STATE_CHANGED
 								</td>
-								<td> 177
+								<td> 182
 								</td>
 								<td> OnStateChanged
 								</td>
@@ -14667,7 +14717,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ORB_EFFECT
 								</td>
-								<td> 178
+								<td> 183
 								</td>
 								<td> Unused
 								</td>
@@ -14675,7 +14725,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROCESS_CLEAVE
 								</td>
-								<td> 179
+								<td> 184
 								</td>
 								<td> OnProcessCleave
 								</td>
@@ -14683,7 +14733,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DAMAGE_CALCULATED
 								</td>
-								<td> 180
+								<td> 185
 								</td>
 								<td> OnDamageCalculated
 								</td>
@@ -14691,7 +14741,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACKED
 								</td>
-								<td> 181
+								<td> 186
 								</td>
 								<td> OnAttacked
 								</td>
@@ -14699,7 +14749,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DEATH
 								</td>
-								<td> 182
+								<td> 187
 								</td>
 								<td> OnDeath
 								</td>
@@ -14707,7 +14757,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_RESPAWN
 								</td>
-								<td> 183
+								<td> 188
 								</td>
 								<td> OnRespawn
 								</td>
@@ -14715,7 +14765,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_SPENT_MANA
 								</td>
-								<td> 184
+								<td> 189
 								</td>
 								<td> OnSpentMana
 								</td>
@@ -14723,7 +14773,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TELEPORTING
 								</td>
-								<td> 185
+								<td> 190
 								</td>
 								<td> OnTeleporting
 								</td>
@@ -14731,7 +14781,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TELEPORTED
 								</td>
-								<td> 186
+								<td> 191
 								</td>
 								<td> OnTeleported
 								</td>
@@ -14739,7 +14789,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_SET_LOCATION
 								</td>
-								<td> 187
+								<td> 192
 								</td>
 								<td> OnSetLocation
 								</td>
@@ -14747,7 +14797,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_HEALTH_GAINED
 								</td>
-								<td> 188
+								<td> 193
 								</td>
 								<td> OnHealthGained
 								</td>
@@ -14755,7 +14805,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_MANA_GAINED
 								</td>
-								<td> 189
+								<td> 194
 								</td>
 								<td> OnManaGained
 								</td>
@@ -14763,7 +14813,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
 								</td>
-								<td> 190
+								<td> 195
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
@@ -14771,7 +14821,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_HERO_KILLED
 								</td>
-								<td> 191
+								<td> 196
 								</td>
 								<td> OnHeroKilled
 								</td>
@@ -14779,7 +14829,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_HEAL_RECEIVED
 								</td>
-								<td> 192
+								<td> 197
 								</td>
 								<td> OnHealReceived
 								</td>
@@ -14787,7 +14837,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_BUILDING_KILLED
 								</td>
-								<td> 193
+								<td> 198
 								</td>
 								<td> OnBuildingKilled
 								</td>
@@ -14795,7 +14845,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_MODEL_CHANGED
 								</td>
-								<td> 194
+								<td> 199
 								</td>
 								<td> OnModelChanged
 								</td>
@@ -14803,7 +14853,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_MODIFIER_ADDED
 								</td>
-								<td> 195
+								<td> 200
 								</td>
 								<td> OnModifierAdded
 								</td>
@@ -14811,7 +14861,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOOLTIP
 								</td>
-								<td> 196
+								<td> 201
 								</td>
 								<td> OnTooltip
 								</td>
@@ -14819,7 +14869,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MODEL_CHANGE
 								</td>
-								<td> 197
+								<td> 202
 								</td>
 								<td> GetModifierModelChange
 								</td>
@@ -14827,7 +14877,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MODEL_SCALE
 								</td>
-								<td> 198
+								<td> 203
 								</td>
 								<td> GetModifierModelScale
 								</td>
@@ -14835,15 +14885,23 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IS_SCEPTER
 								</td>
-								<td> 199
+								<td> 204
 								</td>
 								<td> GetModifierScepter
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_IS_SHARD
+								</td>
+								<td> 205
+								</td>
+								<td> GetModifierShard
+								</td>
+							</tr>
+							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RADAR_COOLDOWN_REDUCTION
 								</td>
-								<td> 200
+								<td> 206
 								</td>
 								<td> GetModifierRadarCooldownReduction
 								</td>
@@ -14851,7 +14909,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 								</td>
-								<td> 201
+								<td> 207
 								</td>
 								<td> GetActivityTranslationModifiers
 								</td>
@@ -14859,7 +14917,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
 								</td>
-								<td> 202
+								<td> 208
 								</td>
 								<td> GetAttackSound
 								</td>
@@ -14867,7 +14925,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_LIFETIME_FRACTION
 								</td>
-								<td> 203
+								<td> 209
 								</td>
 								<td> GetUnitLifetimeFraction
 								</td>
@@ -14875,7 +14933,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
 								</td>
-								<td> 204
+								<td> 210
 								</td>
 								<td> GetModifierProvidesFOWVision
 								</td>
@@ -14883,7 +14941,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SPELLS_REQUIRE_HP
 								</td>
-								<td> 205
+								<td> 211
 								</td>
 								<td> GetModifierSpellsRequireHP
 								</td>
@@ -14891,7 +14949,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
 								</td>
-								<td> 206
+								<td> 212
 								</td>
 								<td> GetForceDrawOnMinimap
 								</td>
@@ -14899,7 +14957,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DISABLE_TURNING
 								</td>
-								<td> 207
+								<td> 213
 								</td>
 								<td> GetModifierDisableTurning
 								</td>
@@ -14907,7 +14965,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 								</td>
-								<td> 208
+								<td> 214
 								</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
@@ -14915,7 +14973,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CHANGE_ABILITY_VALUE
 								</td>
-								<td> 209
+								<td> 215
 								</td>
 								<td> GetModifierChangeAbilityValue
 								</td>
@@ -14923,7 +14981,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL
 								</td>
-								<td> 210
+								<td> 216
 								</td>
 								<td> GetModifierOverrideAbilitySpecial
 								</td>
@@ -14931,7 +14989,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL_VALUE
 								</td>
-								<td> 211
+								<td> 217
 								</td>
 								<td> GetModifierOverrideAbilitySpecialValue
 								</td>
@@ -14939,7 +14997,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABILITY_LAYOUT
 								</td>
-								<td> 212
+								<td> 218
 								</td>
 								<td> GetModifierAbilityLayout
 								</td>
@@ -14947,7 +15005,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DOMINATED
 								</td>
-								<td> 213
+								<td> 219
 								</td>
 								<td> OnDominated
 								</td>
@@ -14955,7 +15013,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TEMPEST_DOUBLE
 								</td>
-								<td> 214
+								<td> 220
 								</td>
 								<td> GetModifierTempestDouble
 								</td>
@@ -14963,7 +15021,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PRESERVE_PARTICLES_ON_MODEL_CHANGE
 								</td>
-								<td> 215
+								<td> 221
 								</td>
 								<td> PreserveParticlesOnModelChanged
 								</td>
@@ -14971,7 +15029,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_FINISHED
 								</td>
-								<td> 216
+								<td> 222
 								</td>
 								<td> OnAttackFinished
 								</td>
@@ -14979,7 +15037,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IGNORE_COOLDOWN
 								</td>
-								<td> 217
+								<td> 223
 								</td>
 								<td> GetModifierIgnoreCooldown
 								</td>
@@ -14987,7 +15045,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAN_ATTACK_TREES
 								</td>
-								<td> 218
+								<td> 224
 								</td>
 								<td> GetModifierCanAttackTrees
 								</td>
@@ -14995,7 +15053,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_VISUAL_Z_DELTA
 								</td>
-								<td> 219
+								<td> 225
 								</td>
 								<td> GetVisualZDelta
 								</td>
@@ -15003,7 +15061,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_INCOMING_DAMAGE_ILLUSION
 								</td>
-								<td> 220
+								<td> 226
 								</td>
 								<td>
 								</td>
@@ -15011,7 +15069,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DONT_GIVE_VISION_OF_ATTACKER
 								</td>
-								<td> 221
+								<td> 227
 								</td>
 								<td> GetModifierNoVisionOfAttacker
 								</td>
@@ -15019,7 +15077,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOOLTIP2
 								</td>
-								<td> 222
+								<td> 228
 								</td>
 								<td> OnTooltip2
 								</td>
@@ -15027,7 +15085,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY
 								</td>
-								<td> 223
+								<td> 229
 								</td>
 								<td> OnAttackRecordDestroy
 								</td>
@@ -15035,7 +15093,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROJECTILE_OBSTRUCTION_HIT
 								</td>
-								<td> 224
+								<td> 230
 								</td>
 								<td> OnProjectileObstructionHit
 								</td>
@@ -15043,7 +15101,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPPRESS_TELEPORT
 								</td>
-								<td> 225
+								<td> 231
 								</td>
 								<td> GetSuppressTeleport
 								</td>
@@ -15051,7 +15109,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_CANCELLED
 								</td>
-								<td> 226
+								<td> 232
 								</td>
 								<td> OnAttackCancelled
 								</td>
@@ -15059,7 +15117,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPPRESS_CLEAVE
 								</td>
-								<td> 227
+								<td> 233
 								</td>
 								<td> GetSuppressCleave
 								</td>
@@ -15067,7 +15125,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BOT_ATTACK_SCORE_BONUS
 								</td>
-								<td> 228
+								<td> 234
 								</td>
 								<td>BotAttackScoreBonus
 								</td>
@@ -15075,7 +15133,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACKSPEED_REDUCTION_PERCENTAGE
 								</td>
-								<td> 229
+								<td> 235
 								</td>
 								<td>GetModifierAttackSpeedReductionPercentage
 								</td>
@@ -15083,7 +15141,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MOVESPEED_REDUCTION_PERCENTAGE
 								</td>
-								<td> 230
+								<td> 236
 								</td>
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
@@ -15091,7 +15149,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_WHILE_MOVING_TARGET
 								</td>
-								<td> 231
+								<td> 237
 								</td>
 								<td>
 								</td>
@@ -15099,7 +15157,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_FUNCTION_LAST
 								</td>
-								<td> 232
+								<td> 238
 								</td>
 								<td>
 								</td>
@@ -15418,7 +15476,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> modifierstate.MODIFIER_STATE_ALLOW_PATHING_TROUGH_TREES
+								<td> modifierstate.MODIFIER_STATE_ALLOW_PATHING_THROUGH_TREES
 								</td>
 								<td> 36
 								</td>
@@ -15482,9 +15540,41 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> modifierstate.MODIFIER_STATE_LAST
+								<td> modifierstate.MODIFIER_STATE_FORCED_FLYING_VISION
 								</td>
 								<td> 44
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> modifierstate.MODIFIER_STATE_ATTACK_ALLIES
+								</td>
+								<td> 45
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> modifierstate.MODIFIER_STATE_ALLOW_PATHING_THROUGH_CLIFFS
+								</td>
+								<td> 46
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> modifierstate.MODIFIER_STATE_ALLOW_PATHING_THROUGH_FISSURE
+								</td>
+								<td> 47
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> modifierstate.MODIFIER_STATE_LAST
+								</td>
+								<td> 48
 								</td>
 								<td>
 								</td>
@@ -20054,6 +20144,7 @@ aaaabbbbccccc
 									flow-children:right-wrap;水平向右，超过父类边界的子元素自动换行<br>
 									flow-children:left;<br>
 									flow-children:down;<br>
+									flow-children:up;<br
 									flow-children:none;(默认)
 								</td>
 								<td>子元素浮动方向。
