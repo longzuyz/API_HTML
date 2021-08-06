@@ -458,7 +458,7 @@
 										AddFOWViewer</a>
 								</td>
 								<td> int AddFOWViewer(int TeamID, Vector Location, float Radius, float Duration, bool
-									ObstructedVision)
+									ObstructedVision是否有视野阻挡)
 								</td>
 								<td> 为指定队伍增加临时视野，returns a ViewerID 。
 								</td>
@@ -1663,7 +1663,9 @@
 									motion_controller_type)
 								</td>
 								<td> 将一个Lua定义的Modifier和与其相关的类联系起来。如果这个Modifier的定义在Vscript根目录下，那么第二个argument (file_path)
-									可能会被忽略。
+									可能会被忽略，第三个参数为常量LuaModifierType，没有动作控制一般为LUA_MODIFIER_MOTION_NONE。如果第一个参数modifier_name与储存该modifier文件的文件名同名，
+									则该modifier_name已经被创建成 {}(一个空表)，所以不为nil，所以modifier文件内不能用
+									if modifier_name == nil then modifier_name =class({}) end，而是要直接写modifier_name =class({})。
 								</td>
 							</tr>
 							<tr>
@@ -1837,7 +1839,7 @@
 								</td>
 								<td> void PrecacheUnitByNameSync(string a, handle b)
 								</td>
-								<td> 用DOTA单位的dota_npc_units.txt名称预缓存它
+								<td> 用DOTA单位的dota_npc_units.txt名称预缓存它  官方文件中有第三个参数PrecacheUnitByNameSync( Unit, context, -1 )
 								</td>
 							</tr>
 							<tr>
@@ -3449,7 +3451,7 @@
 								</td>
 								<td> void SetHealth(int hp)
 								</td>
-								<td> No Description Set
+								<td> 设置血量，尽量不要用这个,容易BUG,请用ModifyHealth
 								</td>
 							</tr>
 
@@ -4377,7 +4379,7 @@
 								</td>
 								<td> table GetLevelSpecialValueFor(string szName, int nLevel)
 								</td>
-								<td> Get the value of an "AbilitySpecial" block for a certain level.
+								<td> Get the value of an "AbilitySpecial" block for a certain level.参数nLevel从0开始，不是1开始，ability:GetLevel() - 1
 								</td>
 							</tr>
 							<tr>
@@ -4685,6 +4687,14 @@
 								<td> bool IsStealable()
 								</td>
 								<td> 技能是否能被拉比克偷.
+								</td>
+							</tr>
+							<tr>
+								<td>IsNetherWardStealable
+								</td>
+								<td> bool IsNetherWardStealable()
+								</td>
+								<td> 不知道什么意思
 								</td>
 							</tr>
 							<tr>
@@ -6037,7 +6047,7 @@
 								<td>SetHealingFilter</td>
 								<td>void SetHealingFilter(handle hFunction,handle hContext )</td>
 								<td>Set a filter function to control the behavior when a unit heals. (Modify the table
-									and Return true to use new values, return false to cancel the event) </td>
+									and Return true to use new values, return false to cancel the event)。加血和自身回血都能监听到,加血有entindex_healer_const,回血没有。</td>
 							</tr>
 							<tr>
 								<td>SetHudCombatEventsDisabled</td>
@@ -6098,7 +6108,7 @@
 								</td>
 								<td> void SetMaximumAttackSpeed(int nMaxSpeed)
 								</td>
-								<td> 设置单位的最大攻击速度
+								<td> 设置单位的最大攻击速度,最大3400
 								</td>
 							</tr>
 							<tr>
@@ -6570,7 +6580,7 @@
 								<td> float GetDOTATime(bool bool_1, bool bool_2)(b IncludePregameTime b
 									IncludeNegativeTime)
 								</td>
-								<td> 返回Dota游戏内的时间。（是否包含赛前时间或负时间）。都设置成false,则是从IN_PROGRESS开始的时间
+								<td> 返回Dota游戏内的时间。（是否包含赛前时间或负时间）。都设置成false,则是从IN_PROGRESS开始的 游戏时间 。
 								</td>
 							</tr>
 							<tr>
@@ -6730,7 +6740,8 @@
 								</td>
 								<td> float GetTimeOfDay()
 								</td>
-								<td> 获取一天中的时间（游戏时间）
+								<td> 获取一天中的时间（游戏中）,以小数形式返回（0-1）。完整的1个白天，1个黑夜都是5分钟，
+									但是1天的开始是夜晚的一半开始，就是在夜间过了2分30秒(1半)，还剩2分30秒进入白天时开始算一天的开始。
 								</td>
 							</tr>
 							<tr>
@@ -7913,6 +7924,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td>IsNetherWardStealable
+								</td>
+								<td> bool IsNetherWardStealable()
+								</td>
+								<td> 不知道什么意思
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Ability_Lua.OnAbilityPhaseInterrupted"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA Ability Lua.OnAbilityPhaseInterrupted">
 										OnAbilityPhaseInterrupted</a>
@@ -8226,7 +8245,7 @@
 								<td> handle AddNewModifier(handle caster, handle optionalSourceAbility, string
 									modifierName, handle modifierData)
 								</td>
-								<td> 为该单位增加修改器。
+								<td> 为该单位增加修改器。某些Modifier,比如增加移速等,必须要填caster(可以填自己)，不然面板移速不会改变(用了SetHasCustomTransmitterData都不会变)
 								</td>
 							</tr>
 							<tr>
@@ -8481,7 +8500,7 @@
 							<tr>
 								<td>FindItemInInventory</td>
 								<td>handle FindItemInInventory(string pszItemName )</td>
-								<td>Get handle to first item in inventory, else nil.在物品栏寻找物品。</td>
+								<td>Get handle to first item in inventory, else nil.在物品栏寻找物品。是否拥有某个物品。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.FindModifierByName"
@@ -8510,7 +8529,7 @@
 								</td>
 								<td> void ForceKill(bool Reincarnate)
 								</td>
-								<td> 强制击杀该单位，设置是否重生。
+								<td> 强制击杀该单位，设置是否原地复活(好像true和false都一样,不会原地复活,都在出生点复活)。
 								</td>
 							</tr>
 							<tr>
@@ -10108,7 +10127,7 @@
 								</td>
 								<td> bool IsUnselectable()
 								</td>
-								<td> No Description Set
+								<td> 是否不能被选中
 								</td>
 							</tr>
 							<tr>
@@ -12595,7 +12614,7 @@
 							<tr>
 								<td>SendBuffRefreshToClients</td>
 								<td>void SendBuffRefreshToClients(  )</td>
-								<td>发送Buff刷新到客户端？？？</td>
+								<td>刷新Buff状态到客户端。当使用self:SetHasCustomTransmitterData( true )时，一般需要在OnRefresh中使用self:SendBuffRefreshToClients()</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Buff.SetDuration"
@@ -13557,13 +13576,31 @@
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
+								<td>CheckMotionControllers</td>
+								<td> bool CheckMotionControllers(  )</td>
+								<td>检查动作控制器？？？？什么情况返回TRUE呢</td>
+							</tr>
+							<tr>
+								<td>CheckState</td>
+								<td> table CheckState(  )</td>
+								<td>Modifier的状态控制器，local state = {<br>
+									[MODIFIER_STATE_INVISIBLE] = true,<br>
+									[MODIFIER_STATE_NO_HEALTH_BAR] = true,<br>
+									[MODIFIER_STATE_INVULNERABLE] = self:XXX() == true(可以灵活设置),<br>
+									} <br> return state<br>
+									各种状态在常量中modifierstate中查找，不是每个MODIFIER都需要设置这个,
+								</td>
+							</tr>
+							
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Modifier_Lua.DestroyOnExpire"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA Modifier Lua.DestroyOnExpire">
 										DestroyOnExpire</a>
 								</td>
 								<td> bool DestroyOnExpire()
 								</td>
-								<td> Buff是否会在Mordifier到期时被移除
+								<td> Buff是否会在Mordifier到期时被移除，，比如伐木机活力护甲底层MODIFIER就不是马上移除。
+									不马上移除，但是又不再显示了，就需要在IsHidden中使用self:GetStackCount()==0
 								</td>
 							</tr>
 							<tr>
@@ -13672,6 +13709,12 @@
 								</td>
 							</tr>
 							<tr>
+								<td>GetMotionControllerPriority</td>
+								<td>int GetMotionControllerPriority(  )</td>
+								<td>返回运动控制器的优先级,返回值在常量DOTA_MOTION_CONTROLLER_PRIORITY中找
+								</td>
+							</tr>
+							<tr>
 								<td>GetPriority</td>
 								<td>int GetPriority(  )</td>
 								<td>Return the priority order this modifier will be applied over others. 返回此修改器优先顺序。
@@ -13744,8 +13787,13 @@
 								</td>
 								<td> bool IsHidden()
 								</td>
-								<td> 返回这个Mordifier是否在状态栏中显示
+								<td> 返回这个Mordifier是否在状态栏中显示，不需要马上移除但又不再显示的可以设置self:GetStackCount()==0，灵活返回值
 								</td>
+							</tr>
+							<tr>
+								<td>IsMotionController</td>
+								<td>bool IsMotionController(  ) </td>
+								<td>是否能动作控制。</td>
 							</tr>
 							<tr>
 								<td>IsPermanent</td>
@@ -13819,7 +13867,7 @@
 								</td>
 								<td> void OnRefresh(handle table)
 								</td>
-								<td> 当Mordifier被刷新时运行
+								<td> 当Mordifier被刷新时运行，当使用self:SetHasCustomTransmitterData( true )时，要设置self:SendBuffRefreshToClients()
 								</td>
 							</tr>
 							<tr>
@@ -13853,7 +13901,7 @@
 							<tr>
 								<td>ShouldUseOverheadOffset</td>
 								<td>bool ShouldUseOverheadOffset(  ) </td>
-								<td>Apply the overhead offset to the attached effect. 是否将头上的偏移应用于附加效果？？？</td>
+								<td>Apply the overhead offset to the attached effect. 是否将头上的偏移应用于附着点效果？？？</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Modifier_Lua.StatusEffectPriority"
@@ -22539,7 +22587,7 @@
 								</td>
 								<td> 2097152
 								</td>
-								<td>
+								<td>被控制也能放技能
 								</td>
 							</tr>
 							<tr>
@@ -23782,7 +23830,7 @@
 								<td>DOTA_DAMAGE_CATEGORY_ATTACK</td>
 								<td> 1
 								</td>
-								<td>
+								<td>在伤害记录里,damage_category == 1为普攻
 								</td>
 							</tr>
 						</table>
@@ -26874,14 +26922,15 @@
 								</td>
 								<td> GetModifierPreAttack_BonusDamage
 								</td>
-								<td>
+								<td>增加或者减少绿字攻击，自身可叠加,可返回负数，负数就是减少。如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_TARGET</td>
 								<td>1</td>
 								<td>GetModifierPreAttack_BonusDamage_Target</td>
-								<td></td>
+								<td>作为被普通攻击增加伤害的对象。比如自己的英雄身上有这个BUFF，返回值是100,那么其他单位攻击你,都会增加100的绿字攻击(计算护甲前)。
+									自身可叠加,可返回负数,就是降低其他人的攻击(可以被用来做减伤BUFF)。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_PROC
@@ -26890,7 +26939,7 @@
 								</td>
 								<td> GetModifierPreAttack_BonusDamage_Proc
 								</td>
-								<td>
+								<td>好像已经无效了。
 								</td>
 							</tr>
 							<tr>
@@ -26900,7 +26949,9 @@
 								</td>
 								<td> GetModifierPreAttack_BonusDamagePostCrit
 								</td>
-								<td>
+								<td>在暴击的伤害(计算护甲前)基础上增加或者减少攻击,面板数值不改变。
+									自身可叠加，可返回负数,就是抵消暴击值。比如暴击500,返回-100,伤害就是400,然后再计算护甲。
+									注意,没有出暴击时,就在普通攻击基础上加或者减少攻击。不需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -26909,7 +26960,7 @@
 								<td> 4</td>
 								<td> GetModifierBaseAttack_BonusDamage
 								</td>
-								<td>
+								<td>增加或减少白字基础攻击，可返回负数值。自身可叠加,不需要SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -26918,7 +26969,7 @@
 								<td> 5</td>
 								<td> GetModifierProcAttack_BonusDamage_Physical
 								</td>
-								<td>
+								<td>在普攻的同时增加或者减少一个物理伤害，面板无改变。自身可叠加,可返回负数,可以减到0伤害。不需要SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -26927,7 +26978,7 @@
 								<td> 6</td>
 								<td> GetModifierProcAttack_BonusDamage_Magical
 								</td>
-								<td>
+								<td>在普攻的同时增加或者减少一个魔法伤害，面板无改变，分别计算护甲和魔抗。自身可叠加，可返回负数,可以减到0伤害。不需要SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -26936,7 +26987,7 @@
 								<td> 7</td>
 								<td> GetModifierProcAttack_BonusDamage_Pure
 								</td>
-								<td>
+								<td>在普攻的同时增加或者减少一个纯粹伤害，面板无改变。自身可叠加,可返回负数,可以减到0伤害。不需要SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -26945,7 +26996,7 @@
 								<td> 8</td>
 								<td> GetModifierProcAttack_BonusDamage_Magical_Target
 								</td>
-								<td>
+								<td>好像已经无效了
 								</td>
 							</tr>
 							<tr>
@@ -26954,7 +27005,9 @@
 								<td> 9</td>
 								<td> GetModifierProcAttack_Feedback
 								</td>
-								<td>
+								<td>攻击命中后的反馈,OnAttack之后,OnAttackLanded之前(但实际效果是OnAttackLanded后,没命中不会触发此API)。
+									返回数字可以增加或者减少攻击，未计算护甲的,返回负数就是减少攻击,可以减到0,自身可叠加,不需要SetHasCustomTransmitterData。
+									也可以不返回任何值,做点特效啥的也可以，比如攻击弹道命中目标产生一个特效。
 								</td>
 							</tr>
 							<tr>
@@ -26962,85 +27015,94 @@
 								<td> 10
 								</td>
 								<td>GetModifierOverrideAttackDamage</td>
-								<td> 
+								<td>把攻击固定在一个值，无论怎么增加攻击都不变，不管白字绿字。面板不显示。攻击一次触发一次，等于是个伤害过滤器,自身不能叠加，
+									相同BUFF以数值大的为准,不需要SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PRE_ATTACK </td>
 								<td> 11</td>
 								<td> GetModifierPreAttack </td>
-								<td></td>
+								<td>unused</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INVISIBILITY_LEVEL </td>
 								<td> 12</td>
 								<td> GetModifierInvisibilityLevel </td>
-								<td> Generates a level of opacity on the parent. </td>
+								<td> Generates a level of opacity on the parent.控制隐身，0-1表示隐身程度，1是完全隐身，虽然不用[MODIFIER_STATE_INVISIBLE] = true也能隐身，
+									但最好加上。自身不能叠加,相同BUFF以数值大的为准。 如果返回变量,需要SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_INVISIBILITY_ATTACK_BEHAVIOR_EXCEPTION</td>
 								<td> 13
 								</td>
 								<td>GetModifierInvisibilityAttackBehaviorException</td>
-								<td>&nbsp;</td>
+								<td>隐身攻击例外行为控制，攻击一次触发一次，必须配合MODIFIER_PROPERTY_INVISIBILITY_LEVEL使用才有效果，并且隐身程度要大于0。
+									在OnAttackStart之前触发。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PERSISTENT_INVISIBILITY </td>
 								<td> 14</td>
 								<td> GetModifierPersistentInvisibility </td>
-								<td></td>
+								<td>攻击一次触发一次，返回1是生效,但是不知道怎么用.。在MODIFIER_PROPERTY_INVISIBILITY_ATTACK_BEHAVIOR_EXCEPTION之后。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT </td>
 								<td> 15</td>
 								<td> GetModifierMoveSpeedBonus_Constant </td>
 								<td> Increases the move speed of the parent by a constant returned to it. Can get
-									negative values. </td>
+									negative values.以绿字形式增加或者减少移速,自身可以叠加，注意当返回负数值时，最小减到100。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE </td>
 								<td> 16</td>
 								<td> GetModifierMoveSpeedOverride </td>
 								<td> changes the base move speed of the parent by a value returned to it. Minimum of 100
-									move speed. </td>
+									move speed.设置基础移动速度，最小100.可以被装备或者BUFF改变。自身不能叠加,相同BUFF以数值小的为准，
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE </td>
 								<td> 17</td>
 								<td> GetModifierMoveSpeedBonus_Percentage </td>
 								<td> Increases the move speed of the parent by a percentage returned to it. Can get
-									negative values. </td>
+									negative values. 百分比增加或者减少移速，以绿字形式相加,自身可以叠加，可以返回负数，但最少只能减到100。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE </td>
 								<td> 18 </td>
 								<td> GetModifierMoveSpeedBonus_Percentage_Unique </td>
-								<td></td>
+								<td>百分比增加移速，以绿字形式相加，无法返回负数，自身不叠加，相同BUFF以数值大的为准(注意比如分身斧是加8%的移速，双刀加10%，
+									则分身斧加的移速被覆盖，最终只加10%)。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE_2 </td>
 								<td> 19</td>
 								<td> GetModifierMoveSpeedBonus_Percentage_Unique_2 </td>
-								<td></td>
+								<td>不知道怎么用,好像已经无效了。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE </td>
 								<td> 20</td>
 								<td> GetModifierMoveSpeedBonus_Special_Boots </td>
-								<td></td>
+								<td>作为鞋子 增加移速，以绿字形式相加。返回负数无效，添加了个这个BUFF,就相当于已经穿了鞋，自身不叠加，相同BUFF以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE_2 </td>
 								<td> 21</td>
 								<td> GetModifierMoveSpeedBonus_Special_Boots_2 </td>
-								<td></td>
+								<td>不知道什么用,好像已经无效了。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT_UNIQUE</td>
 								<td> 22
 								</td>
 								<td>GetModifierMoveSpeedBonus_Constant_Unique</td>
-								<td>
+								<td>第一种以绿字形式增加或者减少移速,自身不能叠加，相同BUFF以数值大的为准。注意当返回负数值时，最小移速只能到100。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -27048,7 +27110,8 @@
 								<td> 23
 								</td>
 								<td>GetModifierMoveSpeedBonus_Constant_Unique_2</td>
-								<td>
+								<td>第二种以绿字形式增加或者减少移速,自身不能叠加，相同BUFF以数值大的为准。可与第一种叠加。注意当返回负数值时，最小移速只能到100。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -27056,401 +27119,485 @@
 								<td> 24</td>
 								<td> GetModifierMoveSpeed_Absolute </td>
 								<td> Sets the move speed of the parent to a value. Nothing can increase or decrease move
-									speed. </td>
+									speed. 设置绝对速度值，不能被其他装备或者BUFF改变。不能返回小于等于0的值，自身不能叠加，相同BUFF以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN </td>
 								<td> 25</td>
 								<td> GetModifierMoveSpeed_AbsoluteMin </td>
 								<td> Sets the move speed of the parent to a minimum value. Nothing can decrease move
-									speed below the chosen value. </td>
+									speed below the chosen value. 设置最低移速，任何技能和装备都不能让移速低于该值。如果设置值比当前移速大,那么移速将被直接设置成 设置的值。
+									自身不能叠加，相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MAX</td>
 								<td> 26
 								</td>
 								<td>GetModifierMoveSpeed_AbsoluteMax</td>
-								<td>&nbsp;</td>
+								<td>实际效果跟MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE一样，不会增加速度，也不会被减速。自身不能叠加，相同BUFF以数值小的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
+								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT</td>
 								<td> 27
 								</td>
 								<td>GetModifierIgnoreMovespeedLimit</td>
-								<td>返回1才能生效,解除移速限制</td>
+								<td>返回1才能生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MOVESPEED_LIMIT </td>
 								<td> 28</td>
 								<td> GetModifierMoveSpeed_Limit </td>
-								<td> Sets the move speed limit of the parent. </td>
+								<td> Sets the move speed limit of the parent. 设置移速上限，相同BUFF不叠加，以最低的值为准。如果要设置更大的值，
+									需要把老BUFF REMOVE掉。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACKSPEED_BASE_OVERRIDE </td>
 								<td> 29</td>
 								<td> GetModifierAttackSpeedBaseOverride </td>
-								<td></td>
+								<td>设置固定攻击速度，注意此API返回值,不是面板攻速值,需要换算。根据英雄的AttackRate不同，返回值 1 代表不同的面板值，
+									比如敌法最高,1等于121.429的值，AttackRate =1.7的英雄1等于100，最低白牛89.474。以AttackRate 1.7为标准值，
+									白牛是1.9,用1.7/1.9，得出白牛的值。攻击间隔的最快值为0.05(面板值3400左右) 。3400-5100会在0.5-0.6之间变动，
+									超过5100，攻击间隔会被自动限制在0.0625。
+									自身不能叠加,相同BUFF以数值小的为准,除了能被自身和MODIFIER_PROPERTY_FIXED_ATTACK_RATE改变,其他攻速BUFF都无法改变。
+									返回负数和0无效，如果返回的是变量，需要使用SetHasCustomTransmitterData。
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_ATTACK_RATE </td>
 								<td> 30</td>
 								<td> GetModifierFixedAttackRate </td>
-								<td></td>
+								<td>设置攻击间隔(多少秒攻击1次的值，不能被装备和BUFF改变)。该值是实际攻击速度值，一旦设置了这个值，就无视ATTACKSPEED值的改变和覆盖。
+									最快值为0.05。如果设置的值小于0.034，则攻击间隔自动限制为0.0625.不受MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT影响。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT </td>
 								<td> 31</td>
 								<td> GetModifierAttackSpeedBonus_Constant </td>
 								<td> Increases the attack speed of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values.增加攻击速度值,根据英雄的AttackRate不同，返回1，面板值增加的数值不同。
+									敌法最高，面板值增加1.21429，最低白牛，DOOM面板值增加0.89474，其他增加1。以AttackRate 1.7为标准值，用1.7/1.9。
+									攻击间隔的最快值为0.05(面板值3400左右) ，面板值3400-5100会在0.05-0.0625之间变动，
+									超过5100，攻击间隔会被自动限制在0.0625。注意,要设置MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT返回1,
+									不然会被限制在最快攻速(如果没有设置SetMaximumAttackSpeed,系统默认最快是0.2)。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT </td>
 								<td> 32</td>
 								<td> GetModifierAttackSpeed_Limit </td>
-								<td> 忽略攻速限制 </td>
+								<td> 返回1，取消攻速限制,但是好像现在本身没有限制了。攻速最高可到0.05，这时面板值大概3400左右。
+									面板值3400-5100会在0.05-0.0625之间变动，面板值超过5100，攻击间隔会被强制限制在0.0625。。
+									如果使用了MODIFIER_PROPERTY_ATTACKSPEED_BASE_OVERRIDE,则此API无效。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT </td>
 								<td> 33</td>
 								<td> GetModifierCooldownReduction_Constant </td>
 								<td> Reduces the cooldown of all skills and items of the parent by a constant returned
-									to it. Can get negative values to increase cooldowns instead. </td>
+									to it. 
+									所有技能和物品减少一个固定时间的冷却时间,比如一个技能本身10秒CD，现在该API返回20，那技能CD变成-10S，就等于0.
+									返回负数无效,自身不叠加，相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr> 
 							<tr>
 								<td> MODIFIER_PROPERTY_MANACOST_REDUCTION_CONSTANT </td>
 								<td> 34</td>
 								<td> GetModifierManacostReduction_Constant</td>
-								<td> </td>
+								<td> 减少 技能和装备的魔法消耗。比如返回10,表示魔法消耗减少10。返回负数无效,自身不叠加，相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT </td>
 								<td> 35</td>
 								<td> GetModifierBaseAttackTimeConstant </td>
 								<td> Decreases the base attack time of the parent by a constant returned to it. Can
-									return negative values. </td>
+									return negative values. 设置KV里的AttackRate这个值，但是最终的攻击间隔还受面板攻速值加成影响，所以使用这个API的最终的攻击间隔不好计算。
+									但是这个值无论怎么设置，最大的攻击间隔只能到0.3，所以只能被用在减速。返回负数无效。自身不能叠加，相同BUFF以生效最早为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
+									</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT_ADJUST </td>
 								<td> 36</td>
 								<td> GetModifierBaseAttackTimeConstant_Adjust </td>
-								<td> </td>
+								<td> 不知道啥用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_POINT_CONSTANT </td>
 								<td> 37</td>
 								<td> GetModifierAttackPointConstant </td>
-								<td></td>
+								<td>可以理解为普通攻击前摇。返回负数无效，自身不能叠加，相同BUFF以生效最早为准。
+									。不需要使用SetHasCustomTransmitterData。
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUSDAMAGEOUTGOING_PERCENTAGE</td>
 								<td> 38</td>
 								<td> GetModifierBonusDamageOutgoing_Percentage </td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE </td>
 								<td> 39 </td>
 								<td> GetModifierDamageOutgoing_Percentage </td>
 								<td> Increases the raw damage that the parent deals by a percentage returned to it. Can
-									return negative values. </td>
+									return negative values.百分比增加或者减少普通攻击。(计算方式是分别计算白字和绿字增加的百分比值，然后把两个增加值 相加，然后加在绿字上。
+									注意，白字攻击是不增加的，只增加绿字的攻击，这会影响其他BUFF的计算)。可返回负数,自身可叠加。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE_ILLUSION </td>
 								<td> 40</td>
 								<td> GetModifierDamageOutgoing_Percentage_Illusion </td>
-								<td></td>
+								<td>在继承了本体的攻击力后，按本体攻击力的百分比增加幻象的输出。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE_ILLUSION_AMPLIFY </td>
 								<td> 41</td>
 								<td> GetModifierDamageOutgoing_Percentage_Illusion_Amplify </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE </td>
 								<td> 42</td>
 								<td> GetModifierTotalDamageOutgoing_Percentage </td>
 								<td> Increases the damage of all sources that the parent deals by a percentage returned
-									to it. Can return negative values. </td>
+									to it. Can return negative values. 百分比增加或者减少普通和技能伤害(包括纯粹和魔法)，但是不改变面板值(普通攻击和技能都不改变)。
+								可返回负数,自身可叠加。注意，计算流程在MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+								MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE之后。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_CREEP </td>
 								<td> 43</td>
 								<td> GetModifierSpellAmplify_PercentageCreep </td>
-								<td></td>
+								<td>应该是给野怪用的，技能增强</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE </td>
 								<td> 44</td>
 								<td> GetModifierSpellAmplify_Percentage </td>
-								<td></td>
+								<td>技能伤害百分比增强或减弱,可以叠加，可以返回负数。对物理伤害技能无效。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE</td>
 								<td> 45</td>
 								<td>GetModifierSpellAmplify_PercentageUnique</td>
-								<td>法术增强唯一百分比</td>
+								<td>技能伤害百分比增强,自身不能叠加,不能返回负数。相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_SOURCE </td>
 								<td> 46
 								</td>
 								<td>GetModifierHealAmplify_PercentageSource</td>
-								<td></td>
+								<td>作为治疗源发出治疗时 治疗量百分比增强或者减弱。注意,实际效果最高增强100%,目标头上显示的治疗量特效数字是可以超过100%的，最高显示增加300%，
+									但是不起作用。可以返回负数，是百分比减少治疗量，当小于等于-100时，就没有治疗量了。超过+-100的部分，只能被用作被叠加BUFF时的抵消。
+									自身可以叠加。
+								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET </td>
 								<td> 47
 								</td>
 								<td>GetModifierHealAmplify_PercentageTarget</td>
-								<td></td>
+								<td>作为被治疗的目标时，治疗量百分比增强或者减弱。
+									注意,实际效果最高增强100%,目标头上显示的治疗量特效数字是可以超过100%的，最高显示增加300%，但是不起作用。
+									可以返回负数，是百分比减少治疗量，当小于等于-100时，就没有治疗量了。超过+-100的部分，只能被用作被叠加BUFF时的抵消。
+									还要注意的是，就算来源和目标都增强，但是最后治疗总量增加最高也只能是到最原始治疗量的100%。
+									头上显示的治疗量特效数字最高显示增加300%，但是不起作用。可以返回负数。自身可以叠加。
+									解决回血多余100%可以在SetHealingFilter中设置。
+									</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE </td>
 								<td> 48</td>
 								<td> GetModifierHPRegenAmplify_Percentage </td>
 								<td> Increases health regen and heal gained by parent by a percentage returned to it.
-									Can return negative values. </td>
+									Can return negative values. 生命回复百分比增强或者减弱，最大100。此API会在其他生命回复BUFF加成后再计算。可以返回负数,自身可叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData，
+									但是只在血条框内会正确显示回复数值，在属性面板不能正确显示，是V社的BUG。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_LIFESTEAL_AMPLIFY_PERCENTAGE </td>
 								<td> 49</td>
 								<td> GetModifierLifestealRegenAmplify_Percentage </td>
-								<td></td>
+								<td>在有吸血面具(包括撒旦等)的情况下，吸血百分比增强或减弱，最高100,所以如果要自己做吸血，应该是用Heal。可以返回负数，自身可叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELL_LIFESTEAL_AMPLIFY_PERCENTAGE </td>
 								<td> 50</td>
 								<td> GetModifierSpellLifestealRegenAmplify_Percentage </td>
-								<td></td>
+								<td>在有巫毒面具的情况下，技能吸血百分比增强，最高100,可以返回负数，自身可叠加。对最终伤害是物理类型的技能无效.</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MP_REGEN_AMPLIFY_PERCENTAGE</td>
 								<td> 51
 								</td>
 								<td>GetModifierMPRegenAmplify_Percentage</td>
-								<td></td>
+								<td>魔法值回复百分比增强或者减弱，可以超过100%！！！可以返回负数,自身可叠加，魔法值回复值最低为0，不会为负。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANA_DRAIN_AMPLIFY_PERCENTAGE</td>
 								<td> 52
 								</td>
 								<td>GetModifierManaDrainAmplify_Percentage</td>
-								<td></td>
+								<td>字面上理解是莱恩的吸蓝技能百分比增强,但是试了没效果。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MP_RESTORE_AMPLIFY_PERCENTAGE</td>
 								<td> 53</td>
 								<td>GetModifierMPRestoreAmplify_Percentage</td>
-								<td></td>
+								<td>加蓝效果增强或者减弱,比如吃芒果，可以超过100%。可返回负数,自身可以叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE </td>
 								<td> 54</td>
 								<td> GetModifierBaseDamageOutgoing_Percentage </td>
 								<td> Increases the base damage of that the parent deals by a percentage returned to it.
-									Can return negative values. </td>
+									Can return negative values. 按白字攻击(有趣的是，
+									计算时要考虑MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE_UNIQUE加成后的值，
+									但这个值又不显示在白字上,白字变了但是面板没显示。)的百分比增加或者减少攻击，可以超100，并以绿字形式加在面板上。
+									可以返回负数,自身可叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE_UNIQUE </td>
 								<td> 55</td>
 								<td> GetModifierBaseDamageOutgoing_PercentageUnique </td>
-								<td></td>
+								<td>百分比设置(不是增加)白字基础攻击，有趣的是只有返回值大于100才生效,但是始终不显示在面板上。返回负数无效，自身不能叠加，
+									相同的BUFF以数值大的为准。不需要使用SetHasCustomTransmitterData，因为面板值不会改变。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE </td>
 								<td> 56</td>
 								<td> GetModifierIncomingDamage_Percentage </td>
 								<td> Increases the damage of all sources that the parent takes by a percentage returned
-									to it. Can return negative values. </td>
+									to it. Can return negative values. 百分比增加或者减少所有伤害类型承受的伤害,
+									注意是先按原始伤害乘以百分比，再加上原始的伤害(就是伤害*(百分比+1))，然后再计算护甲,魔抗(包括物理，魔法和纯粹).返回负数就是减少伤害,-100免伤了。
+								可以返回负数,自身可叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE </td>
 								<td> 57</td>
 								<td> GetModifierIncomingPhysicalDamage_Percentage </td>
 								<td> Increases the damage of physical sources that the parent takes by a percentage
-									returned to it. Can return negative values. </td>
+									returned to it. Can return negative values.百分比增加或者减少受到的物理伤害,计算方法先用原始伤害前乘以百分比,然后再算护甲。
+									可返回负数,自身可叠加。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT </td>
 								<td> 58</td>
 								<td> GetModifierIncomingPhysicalDamageConstant </td>
-								<td></td>
+								<td>以固定数值增加或者减少承受的物理伤害。计算方式是先按原始伤害计算护甲后，然后再加上这个固定值。可返回负数，自身可叠加。
+									同类计算顺序是MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE、MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT、
+									MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE，过程中只计算一次护甲。
+									
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT </td>
 								<td> 59</td>
 								<td> GetModifierIncomingSpellDamageConstant </td>
 								<td> Increases the damage of magical sources that the parent takes by a percentage
-									returned to it. Can return negative values. </td>
+									returned to it. Can return negative values. 以固定数值增加承受的法术伤害,计算方式是原始伤害+固定值后，再计算魔抗。
+									但是有BUG的是连物理伤害也影响,所以要if p.damage_type == 2 then return 100 end 才行。可以返回负数,自身可叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EVASION_CONSTANT </td>
 								<td> 60</td>
 								<td> GetModifierEvasion_Constant </td>
 								<td> Increases the evasion of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values.设置闪避值，可以返回负数，自身可以叠加，不是线性的相加或者减少，要想线性减少(只能减少)要用MODIFIER_PROPERTY_NEGATIVE_EVASION_CONSTANT。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_NEGATIVE_EVASION_CONSTANT </td>
 								<td> 61</td>
 								<td> GetModifierNegativeEvasion_Constant </td>
-								<td></td>
+								<td>设置负的闪避值，用来线性减少闪避的(游戏是50闪避,设置10,游戏里就是40的闪避了)。可以和MODIFIER_PROPERTY_EVASION_CONSTANT组合，
+									增加和减少闪避。返回负数无效,自身不叠加,相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。
+								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE</td>
 								<td>62</td>
 								<td>GetModifierStatusResistance</td>
-								<td></td>
+								<td>状态抗性,不能返回负数,自身不叠加,相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING</td>
 								<td>63</td>
 								<td>GetModifierStatusResistanceStacking</td>
-								<td></td>
+								<td>可叠加的状态抗性,用于状态抗性的加减，但不是线性的。可以返回负数，负数可用来当做减，也可以把状态抗性设置成负数，
+									状态抗性为负，会增加晕眩时间。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE_CASTER</td>
 								<td>64</td>
 								<td>GetModifierStatusResistanceCaster</td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_AVOID_DAMAGE </td>
 								<td> 65 </td>
 								<td> GetModifierAvoidDamage </td>
-								<td></td>
+								<td>是否完全躲避伤害(可以躲避所有类型的),返回大于0的数则躲避。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_AVOID_SPELL </td>
 								<td> 66</td>
 								<td> GetModifierAvoidSpell </td>
-								<td></td>
+								<td>有BUG，返回任何数都无法躲避任何技能伤害。对全部要对目标施放的技能有反应(刚被的鼻涕只有施放第一层时有反应，后面叠加的没反应)，
+									对大部分需要指向但不用对目标施放的技能有反应(对风行强力击没反应)。对非指向(点击就放的，比如剑圣风暴)技能没反应。
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MISS_PERCENTAGE </td>
 								<td> 67</td>
 								<td> GetModifierMiss_Percentage </td>
 								<td> Increases the chance of the parent to miss by a percentage returned to it. Can
-									return negative values. </td>
+									return negative values.攻击丢失率，0是完全命中，100是完全丢失。可以返回负数,自身可叠加。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_BASE_PERCENTAGE</td>
 								<td> 68</td>
 								<td>GetModifierPhysicalArmorBase_Percentage</td>
-								<td>&nbsp;</td>
+								<td>按照当前基础护甲(添加装备后，重新计算基础护甲)的百分比设置护甲(不是增加),正数最大100(就是当前护甲,不变，超过100的都按100处理,
+									0就是没有基础护甲),可以返回负数,并且可以小于-100。自身不叠加，相同BUFF以数值小的为准。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_TOTAL_PERCENTAGE</td>
 								<td> 69</td>
 								<td>GetModifierPhysicalArmorTotal_Percentage</td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS </td>
 								<td> 70 </td>
 								<td> GetModifierPhysicalArmorBonus </td>
 								<td> Increases the armor of the parent by a constant returned to it. Can return negative
-									values. </td>
+									values. 以绿字形式增加或者减少护甲,可以返回负数，自身可叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE </td>
 								<td> 71</td>
 								<td> GetModifierPhysicalArmorBonusUnique </td>
-								<td></td>
+								<td>以绿字形式增加护甲,不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE </td>
 								<td> 72</td>
 								<td> GetModifierPhysicalArmorBonusUniqueActive </td>
-								<td></td>
+								<td>以绿字形式增加护甲,不能返回负数，自身不能叠加，相同BUFF以数值大的为准。可以和MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE叠加。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。不知道还有什么特别的地方。
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR </td>
 								<td> 73</td>
 								<td> GetModifierIgnorePhysicalArmor </td>
-								<td></td>
+								<td>无视所有护甲,返回1即可。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BASE_REDUCTION </td>
 								<td> 74</td>
 								<td> GetModifierMagicalResistanceBaseReduction </td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION </td>
 								<td> 75</td>
 								<td> GetModifierMagicalResistanceDirectModification </td>
-								<td></td>
+								<td>百分比增加或减少魔抗(就是面板值)。可以返回负数,自身可线性叠加,比如游戏里是25%的魔抗,-100后，就是-75%，并且可以超过100%。
+									有趣的是,如果先通过MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS增加了魔抗,并且如果已经增加到100了,
+									那么用此API再增加任意数值都没有任何效果,魔抗还是100。如果MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS没有增加到100,那么此API增加一个值,
+									会以非线性的方式叠加，如果原值为负数,那么增加的值会被夸大,如果原值是正数,这个增加的值大大折扣。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS </td>
 								<td> 76</td>
 								<td> GetModifierMagicalResistanceBonus </td>
 								<td> Increases the magical resistance of the parent by a constant returned to it. Can
-									return negative values. </td>
+									return negative values. 增加或者减少魔抗点数(不是面板值,应该是老版本用的),相同BUFF是非线性叠加，并且正数最大只能到100%,负数可以无限。
+									有趣的是，如果在先通过MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION增加魔抗超过100%后，再用此API添加一个正数,结果是非线性相减,
+									但是不管这个正数多大,最后的结果只能减到100%。添加一个负数,是非线性相加。
+									挑战头巾用的这个属性。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS_ILLUSIONS </td>
 								<td> 77</td>
 								<td> GetModifierMagicalResistanceBonusIllusions </td>
-								<td> </td>
+								<td> 幻象魔抗增加</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE </td>
 								<td> 78</td>
 								<td> GetModifierMagicalResistanceDecrepifyUnique </td>
-								<td></td>
+								<td>绿杖、虚无时魔抗减小的专用API(但是也可以增加魔抗)。注意的是,和魔抗面板值是非线性相加的。可以返回负数，负数是减少，不能叠加，相同BUFF时以数值小的为准。
+									当这个API和MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION叠加时，
+									结果很异常(明明是相加，结果却是更小了，而且这两个BUFF的结果还不一样)。可以突破100%。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASE_MANA_REGEN </td>
 								<td> 79</td>
-								<td> GetModifierBaseRegen </td>
-								<td> Increases the base mana regeneration of the parent by a constant returned to it.
-									Can return negative values. </td>
+								<td> GetModifierBaseManaRegen </td>
+								<td> Set the base mana regeneration of the parent by a constant returned to it. Can return negative values. 
+									设置基础回蓝(以智力决定的回蓝,如果设置了此API，则装备增加智力的装备是不增加回蓝的,只有增加魔法恢复的才有效)。
+									可以返回负数,负数是会扣蓝的！！！但是面板和蓝条上的数值都不会显示负的值，最少显示到原始回蓝。
+									自身不能叠加,相同BUFF以生效早的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT </td>
 								<td> 80</td>
 								<td> GetModifierConstantManaRegen </td>
 								<td> Increases the mana regeneration of the parent by a constant returned to it. Can
-									return negative values. </td>
+									return negative values. 以固定值增加或者减少 回蓝，甚至是扣除蓝，以绿字形式相加。可以返回负数，自身可以叠加。负数是减少，当回蓝值低于0时，会变成扣除蓝，
+									面板和蓝条上的数值都能正常显示负数值。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE </td>
 								<td> 81</td>
 								<td> GetModifierConstantManaRegenUnique </td>
-								<td></td>
+								<td>增加回蓝，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE </td>
 								<td> 82</td>
 								<td> GetModifierTotalPercentageManaRegen </td>
 								<td> Increases the total mana regeneration of the parent by a percentage returned to it.
-									Can return negative values. </td>
+									Can return negative values. 以总蓝量的百分比值增加或者减少回蓝。比如本身总共200蓝,0.5的回蓝,用此API返回100，回蓝就是200.5。
+								可以返回负数,自身可以叠加，当回蓝值低于0时，会变成扣除蓝。面板值不显示,只有蓝条上的数值会显示正确数值。
+								如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT </td>
 								<td> 83 </td>
 								<td> GetModifierConstantHealthRegen </td>
 								<td> Increases the health regeneration of the parent by a constant returned to it. Can
-									return negative values. </td>
+									return negative values. 增加或者减少固定的生命回复数值，可以返回负数，自身可叠加，但是回血值不会为负,最少为0，不会扣血。
+									面板和血条数值都正常显示。如果返回的是变量，需要使用SetHasCustomTransmitterData。
+									</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE </td>
 								<td>84</td>
 								<td> GetModifierHealthRegenPercentage </td>
 								<td> Increases the evasion of the parent by a percentage returned to it. Can return
-									negative values. </td>
+									negative values.以总血量的百分比增加或者减少回血(比如600血，回复2，返回100，回复变成602),可以超过100。
+									可以返回负数,自身可叠加，但是回血值不会为负,最少为0，不会扣血。面板值不显示,血条数值才显示。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE_UNIQUE</td>
 								<td>85
 								</td>
 								<td>GetModifierHealthRegenPercentageUnique</td>
-								<td>血量恢复唯一百分比
+								<td>以总血量的百分比增加回血,不能返回负数，自身不叠加，相同BUFF以数值大的为准。面板值不显示,血条数值才显示。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -27459,6 +27606,8 @@
 								<td> GetModifierHealthBonus </td>
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Health is scaled to the same percentage as before the increase.
+									增加或者减少英雄总血量,注意返回负数值时，当前总血量加上这个负数值为0或者负时,会出现英雄会立即死亡,但还能攻击,并且无法复活的BUG。
+									增加总血量后,当前血量会发生变化,因为当前血量和当前总血量的比值会和改变前一样。不需要使用SetHasCustomTransmitterData。不跑客户端。
 								</td>
 							</tr>
 							<tr>
@@ -27466,40 +27615,50 @@
 								<td>87</td>
 								<td> GetModifierManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
-									negative values. Mana is scaled to the same percentage as before the increase. </td>
+									negative values. Mana is scaled to the same percentage as before the increase. 
+									增加或者减少英雄总蓝量。注意返回负数值时，当前总蓝量加上这个负数值小于1时,蓝条会消失，并且蓝量为0了。
+								增加总蓝量后,当前蓝量会发生变化,因为当前蓝量和当前总蓝量的比值会和改变前一样。不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS </td>
 								<td> 88</td>
 								<td> GetModifierExtraStrengthBonus </td>
-								<td></td>
+								<td>以绿字形式增加或者减少力量。当增加力量时，总血量会变化，但不影响当前血量。负数时是减少力量，但是最多减到0力量,当前血量可能会变化。
+									不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS </td>
 								<td>89</td>
 								<td> GetModifierExtraHealthBonus </td>
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
-									negative values. Ignores current health. </td>
+									negative values. Ignores current health.增加或者减少英雄总血量。
+									当减少血量时，当前总血量加上这个负数值为0或者负时,会出现英雄会立即死亡,但还能攻击,并且无法复活的BUG。
+									和MODIFIER_PROPERTY_HEALTH_BONUS的区别是,这个API增加总血量时,当前血量不受影响。
+									 不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_BONUS </td>
 								<td> 90 </td>
 								<td> GetModifierExtraManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
-									negative values. Ignores current mana. </td>
+									negative values. Ignores current mana.增加或者减少英雄总蓝量。注意返回负数值时，当前总蓝量加上这个负数值小于1时,蓝条会消失，并且蓝量为0了。
+									和MODIFIER_PROPERTY_MANA_BONUS的区别是,这个API增加总蓝量时,当前蓝量不受影响。
+									不需要使用SetHasCustomTransmitterData。不跑客户端。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE </td>
 								<td>91</td>
 								<td> GetModifierExtraHealthPercentage </td>
 								<td> Increases the maximum health of the parent by a percentage returned to it. Can
-									return negative values. Ignores current health. </td>
+									return negative values. Ignores current health.	百分比增加或减少总血量。减少血量过多时,也会出死亡BUG。
+									增加总血量时,不影响当前血量。不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE </td>
 								<td>92</td>
 								<td> GetModifierExtraManaPercentage </td>
-								<td> </td>
+								<td> 百分比增加或减少总蓝量。减少过多时，蓝条会消失。增加总蓝量时，不影响当前蓝量。
+									不需要使用SetHasCustomTransmitterData。不跑客户端</td>
 							</tr>
 
 							<tr>
@@ -27507,7 +27666,8 @@
 								<td> 93</td>
 								<td> GetModifierBonusStats_Strength </td>
 								<td> Increases the strength stat of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values.以绿字形式增加或者减少力量。当增加力量时，总血量变化的同时也影响当前血量。负数时是减少力量，但是最多减到0力量。
+									不需要使用SetHasCustomTransmitterData。不跑客户端。 </td>
 							</tr>
 
 							<tr>
@@ -27515,109 +27675,119 @@
 								<td> 94</td>
 								<td> GetModifierBonusStats_Agility </td>
 								<td> Increases the agility stat of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values. 以绿字形式增加或者减少敏捷。负数时是减少敏捷，但是最多减到0敏捷。不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS </td>
 								<td> 95</td>
 								<td> GetModifierBonusStats_Intellect </td>
 								<td> Increases the intelligence stat of the parent by a constant returned to it. Can
-									return negative values. </td>
+									return negative values.以绿字形式增加或者减少智力。当增加智力时，总蓝量变化的同时也会影响当前血量。负数时是减少智力，但是最多减到0智力。
+									不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE</td>
 								<td> 96</td>
 								<td> GetModifierBonusStats_Strength_Percentage </td>
-								<td> </td>
+								<td>好像已经无效了 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS_PERCENTAGE</td>
 								<td> 97</td>
 								<td> GetModifierBonusStats_Agility_Percentage </td>
-								<td> </td>
+								<td> 好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS_PERCENTAGE</td>
 								<td> 98</td>
 								<td> GetModifierBonusStats_Intellect_Percentage </td>
-								<td> </td>
+								<td> 好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_CAST_RANGE_BONUS </td>
 								<td> 99</td>
 								<td> GetModifierCastRangeBonus </td>
 								<td> Increases the cast range of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values.只能增加所有技能和物品的施法距离,无法减小(返回负数无效)，相同BUFF不会叠加,以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。
+								注意的是比如敌法的闪烁，施法范围的圈和面板数据都不改变，但是有效果，能跳更远。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET</td>
 								<td> 100</td>
 								<td>GetModifierCastRangeBonusTarget</td>
-								<td>施法距离加成目标</td>
+								<td>增加 施法者 对 拥有此BUFF单位的  施法距离。但是不会改变施法者技能的施法范围圈。不需要使用SetHasCustomTransmitterData，但是跑客户端。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING</td>
 								<td> 101</td>
 								<td>GetModifierCastRangeBonusStacking</td>
-								<td></td>
+								<td>增加或者减少所有技能和物品的施法距离,可叠加，可返回负数。无论负数多小，都只能减少到一个最小施法距离。如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE</td>
 								<td> 102</td>
 								<td>GetModifierAttackRangeOverride</td>
-								<td>攻击距离基础覆盖</td>
+								<td>直接设置基础攻击距离，必须大于0。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS </td>
 								<td> 103</td>
 								<td> GetModifierAttackRangeBonus </td>
 								<td> Increases the attack range of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values.以绿字形式增加或者减少攻击距离，返回负数最大减到0。相同BUFF可以叠加。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE </td>
 								<td> 104</td>
 								<td> GetModifierAttackRangeBonusUnique </td>
-								<td></td>
+								<td>以绿字形式增加或者减少攻击距离，返回负数最大减到0。相同BUFF不能叠加，以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE</td>
 								<td> 105</td>
 								<td>GetModifierAttackRangeBonusPercentage</td>
-								<td>攻击距离加成百分比</td>
+								<td>百分比增加或减少攻击距离,返回负数减少距离,最小为0，但是已经无法攻击了。可以叠加。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAX_ATTACK_RANGE </td>
 								<td> 106 </td>
 								<td> GetModifierMaxAttackRange </td>
-								<td></td>
+								<td>设置攻击距离最小值,当前攻击距离比最小值低时,系统会加 绿字 补偿到最小值，绿字补偿会 根据装备和BUFF变化。
+									比如最小值设置为700,当前攻击距离为600,没装备和BUFF时，面板数据是600+100，这个100就是系统的补偿。这时装备一个魔龙枪,
+									面板数据就是600+140了，因为用魔龙枪的属性加成就已经超过了最小值700，所以系统自动补偿的绿字就会消失。
+									如果是加 一个 增加80攻击距离的 BUFF,面板数据还是600+100，但是系统补偿的只有20了。
+									如果直接把基础攻击距离设置为1，那么面板数据就是1+699。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS </td>
 								<td> 107</td>
 								<td> GetModifierProjectileSpeedBonus </td>
 								<td> Increases the projectile speed of attacks sourced by the parent by a constant
-									returned to it. Can return negative values. </td>
+									returned to it. Can return negative values.增加或者减少普通攻击弹道速度。可以返回负数值,为0时就已经攻击不到人了。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE </td>
 								<td> 108</td>
 								<td> GetModifierProjectileSpeedBonusPercentage </td>
-								<td> </td>
+								<td> 好像已经失效了</td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_PROJECTILE_NAME</td>
 								<td> 109</td>
 								<td>GetModifierProjectileName</td>
-								<td></td>
+								<td>设置普攻攻击弹道特效,比如冰眼攻击特效"particles/items2_fx/skadi_projectile.vpcf"</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REINCARNATION </td>
 								<td>110</td>
 								<td> ReincarnateTime </td>
-								<td></td>
+								<td>设置原地复活时间,返回大于0的值就能和盾，骷髅王大一样原地复活。返回小于等于0则不能原地复活，就是正常死亡复活流程了。</td>
 							</tr>
 
 							<tr>
@@ -27625,34 +27795,37 @@
 								<td> 111</td>
 								<td> GetModifierConstantRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
-									negative values. </td>
+									negative values.增加或者减少复活时间，不能叠加。最少只能减到1秒(对的,原地复活可以设置0.1秒)。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE </td>
 								<td> 112</td>
 								<td> GetModifierPercentageRespawnTime </td>
 								<td> Increases the respawn time of the parent by a percentage returned to it. Can return
-									negative values. </td>
+									negative values. 百分比增加或者减少复活时间，不能叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_STACKING </td>
 								<td> 113</td>
 								<td> GetModifierStackingRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
-									negative values. Stacks with other modifiers. </td>
+									negative values. Stacks with other modifiers.增加或减少复活时间,可以叠加。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE </td>
 								<td> 114</td>
 								<td> GetModifierPercentageCooldown </td>
 								<td> Increases the cooldown of the parent by a percentage returned to it. Can return
-									negative values. </td>
+									negative values. 百分比增加或者减少所有技能和物品的冷却时间。注意返回正数是减少冷却,
+									比如返回50就是减去50%的冷却时间。可以叠加,但是是在第一次减去的基础上再乘以第二次的返回值，比如原本CD是15s，经过第一层BUFF 50后,
+									是7.5s，然后进过第二层BUFF 50后，是3.75s。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_ONGOING</td>
 								<td> 115</td>
 								<td>GetModifierPercentageCooldownOngoing</td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 
 							<tr>
@@ -27660,266 +27833,293 @@
 								<td> 116</td>
 								<td> GetModifierPercentageCasttime </td>
 								<td> Increases the cast time of the parent's abilities by a percentage returned to it.
-									Can return negative values. </td>
+									Can return negative values.百分比增加或减少施法时间,返回正数是减少。可以叠加,但是不知道叠加用的什么方式，应该是线性 </td>
 							</tr>
 							
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_ANIM_TIME_PERCENTAGE </td>
 								<td> 117</td>
 								<td> GetModifierPercentageAttackAnimTime </td>
-								<td>  </td>
+								<td> 好像无效了 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANACOST_PERCENTAGE </td>
 								<td>118</td>
 								<td> GetModifierPercentageManacost </td>
 								<td> Increases the mana cost of the parent's abilities by a percentage returned to it.
-									Can return negative values. </td>
+									Can return negative values.百分比减少技能和物品耗蓝，相同Buff不能叠加,以数值大的为准,只能返回正数(是的,英语说明是错的)。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING</td>
 								<td>119</td>
 								<td>GetModifierPercentageManacostStacking</td>
-								<td></td>
+								<td>百分比增加和减少技能和物品耗蓝,可以叠加,可以返回负数(增加蓝耗).如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_DEATHGOLDCOST </td>
 								<td> 120</td>
 								<td> GetModifierConstantDeathGoldCost </td>
-								<td></td>
+								<td>好像已经失效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXP_RATE_BOOST </td>
 								<td> 121</td>
 								<td> GetModifierPercentageExpRateBoost </td>
-								<td></td>
+								<td>获得经验时，百分比给与额外的经验加成。可以返回负数,就是减少经验获取，最多扣到0,比如少一个怪获得20的经验,-100就是获得0经验,
+									-200就是获得扣20经验。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_GOLD_RATE_BOOST </td>
 								<td> 122</td>
 								<td> GetModifierPercentageGoldRateBoost </td>
-								<td></td>
+								<td>获得金钱时，百分比给与额外的金钱加成。比如击杀一个英雄80 块钱，返回200,
+									总共就可以获得240.可以返回负数,就是减少金钱获取，并且可以扣钱，最多扣到0。</td>
 							</tr>
 							
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE </td>
 								<td> 123</td>
 								<td> GetModifierPreAttack_CriticalStrike </td>
-								<td> Procs a critical strike dealing the extra damage returned to it. </td>
+								<td> Procs a critical strike dealing the extra damage returned to it.设置暴击伤害,这个伤害是没计算护甲的。
+									返回100就是没有暴击，200是2倍英雄本身总攻击(白字+绿字)。不能叠加,以数值大为准，小于100的返回值无效，不跑客户端。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE </td>
 								<td> 124</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike </td>
-								<td></td>
+								<td>设置 做为被攻击目标时，攻击单位的暴击值。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK </td>
 								<td> 125</td>
 								<td> GetModifierMagical_ConstantBlock </td>
-								<td></td>
+								<td>增加一个固定的 魔法伤害 格挡，计算方式是原始伤害先减去这个抵抗值，然后再计算魔抗。不能返回负数,不能叠加,以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK </td>
 								<td> 126</td>
 								<td> GetModifierPhysical_ConstantBlock </td>
 								<td> Blocks damage the parent takes by a constant returned to it. Can return negative
-									values. </td>
+									values.增加一个固定的 物理伤害 格挡。计算方式是原始伤害先减去这个抵抗值，然后再计算护甲。不能返回负数,不能叠加,以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL </td>
 								<td> 127</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial </td>
-								<td></td>
+								<td>增加一个固定的 物理伤害 格挡。不能和自己叠加，但可以和MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
+									MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。计算方式是先
+									通过MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+									然后MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR </td>
 								<td> 128</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor </td>
-								<td></td>
+								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算格挡,再计算护甲和魔抗。相同BUFF不叠加，以数值大的为准。
+									可以和MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。
+								计算方式是先MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,然后MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK，
+								MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL,MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK。
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK </td>
 								<td> 129</td>
 								<td> GetModifierTotal_ConstantBlock </td>
-								<td></td>
+								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算护甲和魔抗,再计算格挡。相同BUFF不叠加，以数值大的为准。
+									可以和 MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK 、
+									MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK叠加，但是计算方式是先通过MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR，
+									MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
+									MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK，然后是MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION </td>
 								<td> 130</td>
 								<td> GetOverrideAnimation </td>
-								<td> Forces the parent to play a specific animation. </td>
+								<td> Forces the parent to play a specific animation.强制单位执行一个动画动作,不能被覆盖,以最先设置的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT </td>
 								<td> 131</td>
 								<td> GetOverrideAnimationWeight </td>
-								<td></td>
+								<td>好像无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE </td>
 								<td> 132</td>
 								<td> GetOverrideAnimationRate </td>
-								<td></td>
+								<td>设置动画播放频率,几秒播放一次。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSORB_SPELL </td>
 								<td> 133</td>
 								<td> GetAbsorbSpell </td>
-								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) </td>
+								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) 抵挡指向性技能,只能返回1才生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REFLECT_SPELL </td>
 								<td> 134</td>
 								<td> GetReflectSpell </td>
-								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) </td>
+								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) 。要自己编写程序才能实现反弹效果。。。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_AUTOATTACK </td>
 								<td> 135</td>
 								<td> GetDisableAutoAttack </td>
-								<td></td>
+								<td>是否自动攻击附近单位。即使设置了 自动攻击:始终,就算使用A键A空地,也不会主动攻击身边单位。返回1才生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_DAY_VISION </td>
 								<td> 136</td>
 								<td> GetBonusDayVision </td>
 								<td> Increases the vision of the parent during the day by a constant returned to it. Can
-									return negative values. </td>
+									return negative values. 增加或者减少白天视野,上限值大概3000左右，可以叠加。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION </td>
 								<td> 137</td>
 								<td> GetBonusNightVision </td>
 								<td> Increases the vision of the parent during the night by a constant returned to it.
-									Can return negative values. </td>
+									Can return negative values. 增加或者减少夜间视野,视野总上限值大概4000左右，可以叠加。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE </td>
 								<td> 138</td>
 								<td> GetBonusNightVisionUnique </td>
-								<td></td>
+								<td>增加或者减少夜间视野,视野总上限值大概4000左右，相同BUFF不叠加,以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE </td>
 								<td> 139</td>
 								<td> GetBonusVisionPercentage </td>
 								<td> Increases the vision of the parent by a percentage returned to it. Can return
-									negative values. </td>
+									negative values. 百分比增加或者减少视野,包括白天和黑夜。可以叠加，
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_DAY_VISION </td>
 								<td> 140</td>
 								<td> GetFixedDayVision </td>
 								<td> Sets the vision of the parent during the day to a fixed value returned to it.
-									Cannot be changed by any means. </td>
+									Cannot be changed by any means. 设置白天视野最大值(不是英雄实际拥有的视野，但是设置比KV视野值(一般是1800)小时,会直接减少视野)，
+									不能返回负数。相同BUFF不叠加,以数值大的为准。和 MODIFIER_PROPERTY_BONUS_DAY_VISION叠加时，最后英雄拥有的视野值是KV值+BONUS值，
+									但是无论BONUS多大都不能超过FIXED设置的值。比如FIXED返回2000(比KV视野值大),没有叠加MODIFIER_PROPERTY_BONUS_DAY_VISION时,视野是不会改变的，
+									但是一旦叠加一个BONUS,比如100,那么总视野就是1900(1800+100)。叠加一个300,总视野还是2000。视野总上限大约4000左右。<br>
+									另外如果FIXED返回1000(比KV视野值大小),叠加一个500的BONUS,没有任何效果,因为1800+500已经大于了 FIXED 的1000，视野还是1000。
+									叠加一个-300的BONUS,也没有效果，因为1800-300还是大于1000。叠加一个-1000,那么现在总视野值就是800了，因为1800-1000已经小于FIXED 的1000了,所以有效果。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_NIGHT_VISION </td>
 								<td> 141</td>
 								<td> GetFixedNightVision </td>
 								<td> Sets the vision of the parent during the night to a fixed value returned to it.
-									Cannot be changed by any means. </td>
+									Cannot be changed by any means.直接设置夜间视野最大值,不能返回负数，原理同上。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MIN_HEALTH </td>
 								<td> 142</td>
 								<td> GetMinHealth </td>
-								<td></td>
+								<td>设置单位最小的当前血量(不是总血量),受到任何攻击不会低于这个血量。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL </td>
 								<td> 143</td>
 								<td> GetAbsoluteNoDamagePhysical </td>
-								<td></td>
+								<td>绝对不受物理类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL </td>
 								<td> 144</td>
 								<td> GetAbsoluteNoDamageMagical </td>
-								<td></td>
+								<td>绝对不受魔法类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE </td>
 								<td> 145</td>
 								<td> GetAbsoluteNoDamagePure </td>
-								<td></td>
+								<td>绝对不受纯粹类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_ILLUSION </td>
 								<td> 146</td>
 								<td> GetIsIllusion </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ILLUSION_LABEL </td>
 								<td> 147</td>
 								<td> GetModifierIllusionLabel </td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_STRONG_ILLUSION </td>
 								<td> 148</td>
 								<td> GetModifierStrongIllusion </td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION </td>
 								<td> 149</td>
 								<td> GetModifierSuperIllusion </td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION_WITH_ULTIMATE </td>
 								<td> 150</td>
 								<td> GetModifierSuperIllusionWithUltimate </td>
-								<td></td>
+								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_XP_DURING_DEATH </td>
 								<td> 151</td>
 								<td> GetModifierXPDuringDeath </td>
-								<td>死亡时获得经验</td>
+								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE </td>
 								<td> 152</td>
 								<td> GetModifierTurnRate_Percentage </td>
 								<td> Increases the turn rate of the parent by a percentage returned to it. Can return
-									negative values. </td>
+									negative values. 百分比增加或者减少转身速率。正数是加快转身速率。可以叠加。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TURN_RATE_OVERRIDE</td>
 								<td> 153</td>
 								<td>GetModifierTurnRate_Override</td>
-								<td>转身速率覆盖
+								<td>转身速率覆盖,数值越大，速率越快。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_HEALING </td>
 								<td> 154</td>
 								<td> GetDisableHealing </td>
-								<td> Negates healing applied to the parent. </td>
+								<td> Negates healing applied to the parent.是否禁止治疗,生命恢复和吸血效果。(1为禁止) </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK </td>
 								<td> 155</td>
 								<td> GetAlwaysAllowAttack </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ETHEREAL_ATTACK </td>
 								<td> 156</td>
 								<td> GetAllowEtherealAttack </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL </td>
 								<td> 157 </td>
 								<td> GetOverrideAttackMagical </td>
-								<td></td>
+								<td>使普通攻击对其他单位无效，只有魔法攻击有效
+
+								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH </td>
@@ -28008,7 +28208,7 @@
 								</td>
 								<td> OnAttackRecord
 								</td>
-								<td>
+								<td>记录攻击动作,假动作也记录。攻击动作序列2
 								</td>
 							</tr>
 							<tr>
@@ -28018,16 +28218,16 @@
 								</td>
 								<td> OnAttackStart
 								</td>
-								<td> Event that fires when an attack starts.
+								<td> Event that fires when an attack starts.攻击动作序列1
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK
 								</td>
-								<td> 171/td>
+								<td> 171</td>
 								<td> OnAttack
 								</td>
-								<td> Event that fires when an attack was completed, regardless of the result of it.
+								<td> Event that fires when an attack was completed, regardless of the result of it.产生攻击弹道,假动作不触发,攻击动作序列3。
 								</td>
 							</tr>
 							<tr>
@@ -28036,7 +28236,7 @@
 								<td> 172</td>
 								<td> OnAttackLanded
 								</td>
-								<td> Event that fires when an attack landed on its target successfully.
+								<td> Event that fires when an attack landed on its target successfully.当攻击弹道到达目标,攻击动作序列4。
 								</td>
 							</tr>
 							<tr>
@@ -28157,7 +28357,7 @@
 								</td>
 								<td> OnTakeDamage
 								</td>
-								<td> Event that fires when taking damage.
+								<td> Event that fires when taking damage.攻击弹道对目标产生实际伤害,攻击动作序列8。
 								</td>
 							</tr>
 							<tr>
@@ -28165,7 +28365,7 @@
 								</td>
 								<td> 186
 								</td>
-								<td> OnDamagePrevented
+								<td> OnDeathPrevented
 								</td>
 								<td>
 								</td>
@@ -28199,7 +28399,7 @@
 								<td>MODIFIER_EVENT_ON_DAMAGE_CALCULATED</td>
 								<td>190</td>
 								<td>OnDamageCalculated</td>
-								<td></td>
+								<td>在OnAttackLanded之后,开始计算经过各种BUFF后的伤害,攻击动作序列5.</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACKED
@@ -28208,7 +28408,7 @@
 								</td>
 								<td> OnAttacked
 								</td>
-								<td> Event that fires when being attacked.
+								<td> Event that fires when being attacked.弹道对目标准备产生伤害，攻击动作序列6。
 								</td>
 							</tr>
 							<tr>
@@ -28294,7 +28494,7 @@
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
-								<td>
+								<td>判断伤害是否致死，在OnTakeDamage之前，攻击动作序列7
 								</td>
 							</tr>
 							<tr>
@@ -28464,13 +28664,13 @@
 								<td> 218</td>
 								<td> GetModifierDisableTurning
 								</td>
-								<td>
+								<td>禁止转身
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 								</td>
-								<td> 219/td>
+								<td> 219</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
 								<td>
@@ -28519,7 +28719,7 @@
 								<td> 224</td>
 								<td> OnDominated
 								</td>
-								<td> An event that fires when a unit is being dominated.
+								<td> An event that fires when a unit is being dominated.当一个单位被控制时触发的事件。
 								</td>
 							</tr>
 							<tr>
@@ -28557,7 +28757,7 @@
 								<td> 228</td>
 								<td> GetModifierIgnoreCooldown
 								</td>
-								<td>
+								<td>好像已经失效了
 								</td>
 							</tr>
 							<tr>
@@ -28584,7 +28784,7 @@
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_ILLUSION
 								</td>
 								<td> 231</td>
-								<td>
+								<td>GetModifierIncomingDamage_Illusion
 								</td>
 								<td>
 								</td>
@@ -28610,7 +28810,7 @@
 								<td> 234</td>
 								<td>OnAttackRecordDestroy
 								</td>
-								<td>
+								<td>攻击记录被清除，攻击动作序列9。
 								</td>
 							</tr>
 							<tr>
@@ -28665,6 +28865,7 @@
 								<td>
 									被施加减速BUFF后,相对于减速技能参数的减速的比列。比如减速技能要减速受害者的50%,
 									受害者本身有该Modifier属性return 50,那么实际受害者就会收到25%的减速,return 0,就相当于无视减速。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -28674,7 +28875,8 @@
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
 								<td>被施加减速BUFF后,相对于减速技能参数的减速的比列。比如减速技能要减速受害者的50%,
-									受害者本身有该Modifier属性return 50,那么实际受害者就会收到25%的减速,return 0,就相当于无视减速。
+									受害者本身有该Modifier属性return 50,那么实际受害者就会受到25%的减速,return 0,就相当于无视减速。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -28692,7 +28894,7 @@
 								</td>
 								<td>GetModifierAttackSpeedPercentage
 								</td>
-								<td>
+								<td>在基础攻速上(包括敏捷加成后的，不包括直接加的攻速)，百分比增加攻击速度，修改的是面板上的攻击速度值。如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -28710,7 +28912,7 @@
 								</td>
 								<td> 245
 								</td>
-								<td>
+								<td>Last
 								</td>
 								<td>
 								</td>
@@ -28956,7 +29158,7 @@
 								</td>
 								<td> 14
 								</td>
-								<td> Set to true to cause the parent to make it unselectable.
+								<td> Set to true to cause the parent to make it unselectable.不能被选中
 								</td>
 							</tr>
 							<tr>
@@ -31716,7 +31918,7 @@
 								</td>
 								<td>"entindex"	"long"
 								</td>
-								<td>npc生成
+								<td>单位出生,复活，包括英雄和普通单位。
 								</td>
 							</tr>							
 							<tr>
@@ -31729,7 +31931,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> entity_killed(可能会失效)
+								<td> entity_killed
 								</td>
 								<td> entindex_killed( number ): 被杀实体索引<br>
 									entindex_attacker ( number ): 攻击者实体索引<br>
@@ -37707,6 +37909,18 @@
 								<td>远古侍僧潜行者,潜行光环</td>
 							</tr>
 							<tr>
+								<td>spawnlord_master_stomp</td>
+								<td>远古萨满潜行者,亵渎</td>
+							</tr>
+							<tr>
+								<td>spawnlord_master_freeze</td>
+								<td>远古萨满潜行者,停滞</td>
+							</tr>
+							<tr>
+								<td>spawnlord_master_freeze_root</td>
+								<td>远古萨满潜行者,停滞</td>
+							</tr>
+							<tr>
 								<td>blue_dragonspawn_overseer_devotion_aura</td>
 								<td>亚龙兵士,守卫光环,提高他对物理伤害的忍受力。附近友军受他影响，也可承受更多伤害</td>
 							</tr>
@@ -40331,7 +40545,20 @@
 									modifier_greevil_miniboss_green_overgrowth<br>
 									modifier_greevil_miniboss_orangelight_strike_array<br>
 									modifier_greevil_miniboss_purple_venomous_gale<br>
-									modifier_greevil_miniboss_sight(可能失效)<br>
+									modifier_greevil_miniboss_sight<br>
+									modifier_movespeed_change<br>
+									modifier_fall<br>
+									modifier_aghanim_crystal_attack_active<br>
+									modifier_aghanim_crystal_attack_debuff<br>
+									modifier_aghanim_staff_beams_thinker<br>
+									modifier_aghanim_staff_beams_linger_thinker<br>
+									modifier_aghanim_staff_beams_debuff<br>
+									modifier_aghanim_portal_spawn_effect<br>
+									modifier_aghanim_summon_portals_thinker<br>
+									modifier_aghanim_spell_swap<br>
+									modifier_aghanim_spell_swap_crystal<br>
+									modifier_aghanim_shard_attack<br>
+									modifier_aghanim_passive<br>	
 									modifier_passive_gold(可能失效)<br>
 									modifier_health_lua(可能失效)<br>
 									modifier_mana_lua(可能失效)<br>
