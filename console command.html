@@ -1,0 +1,3797 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<meta http-equiv="Cache" content="0">
+	<meta http-equiv="X-UA-Compatible" content="IE=8">
+	<title>DOTA2 LUA API大全</title>
+	<style>
+		body {
+			background-color: #222222;
+			height: 100%;
+			width: 100%;
+			overflow-x: hidden;
+			padding: 0;
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		#main {
+			padding: 0;
+			color: #b8b8b8;
+			height: 100%;
+			width: 100%;
+			margin: 0;
+		}
+
+		#nav {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			overflow-y: scroll;
+			padding: 0px;
+			width: 21.3%;
+		}
+
+		#navtop {
+			width: fit-content;
+			margin: 1px auto;
+			font-size: 25px;
+			font-weight: bold;
+			color: aliceblue;
+		}
+
+		#navlist {
+			width: auto;
+			margin: 0px;
+			word-break: break-all;
+			font-size: 16px;
+		}
+
+		#navlist ol {
+			list-style-type: none;
+			counter-reset: sectioncounter;
+			color: #0CF;
+			padding: 0px;
+			margin-left: 5px;
+			list-style-position: outside;
+		}
+
+		#navlist ol li:before {
+			content: counter(sectioncounter) "、";
+			counter-increment: sectioncounter;
+		}
+
+		#navlist ol li {
+
+			margin-top: 5px;
+
+		}
+
+		#content {
+			position: relative;
+			top: -11px;
+			left: 20.7%;
+			width: 79.2%;
+			height: 100%;
+		}
+
+		#note {
+			width: 100%;
+			color: rgb(32, 202, 9);
+			margin-top: 5px;
+			text-align: center;
+		}
+
+		#contentname {
+			margin: 30px auto;
+			font-size: 30px;
+			text-align: center;
+			font-weight: 700;
+			color: aliceblue;
+		}
+
+		#apicontent,
+		#eventcontent {
+			margin-bottom: 60px;
+		}
+
+		.classcontent {}
+
+		#classname {
+			font-size: 16px;
+			font-weight: 400;
+			margin: 20px 9px;
+		}
+
+		#constantname {
+			font-size: 18px;
+			font-weight: 400;
+			margin: 20px 9px;
+		}
+
+		#constantcontent {
+			margin-bottom: 50px;
+		}
+
+		table,
+		td,
+		tr,
+		th {
+			border-collapse: collapse;
+			border: solid 0.1px #515151;
+
+			word-break: break-all;
+		}
+
+		#content tr {
+			background-color: #3a3a3a;
+			height: 30px;
+		}
+
+		#apicontent table tr td:first-child {
+			font-size: 14px;
+			width: 21.5%;
+		}
+
+		#apicontent table tr td:last-child {
+			font-size: 14px;
+			width: 40.5%;
+		}
+
+		#constantcontent table tr td:first-child {
+
+			width: 36%;
+		}
+
+		#constantcontent table tr td:nth-child(2) {
+			text-align: center;
+			width: 5%;
+		}
+
+		#constantcontent table tr td:last-child {
+			width: 33%;
+		}
+
+		#eventcontent table tr td:first-child {
+
+			width: 25%;
+		}
+
+		#eventcontent table tr td:last-child {
+			width: 30%;
+		}
+
+
+		#CommandContent table tr td:first-child {
+			/* font-size: 18px; */
+			width: 35%;
+		}
+		#CommandContent table tr td:nth-child(2) {
+			text-align: center;
+			width: 5%;
+		}
+		#CommandContent table tr td:nth-child(3) {
+			text-align: center;
+			width: 7%;
+		}
+		#CommandContent table tr td:last-child {
+
+			width: 53%;
+		}
+
+
+		th {
+			background-color: #b8b8b8;
+			color: black;
+		}
+
+		a:link {
+			text-decoration: none;
+			color: #0CF;
+		}
+
+		a:visited {
+			text-decoration: none;
+			color: #0CF;
+		}
+
+		a:hover {
+			text-decoration: underline;
+			color: #09F;
+		}
+
+
+		nav li {}
+
+		summary {
+			cursor: pointer;
+			font-size: 20px;
+			color: aliceblue;
+
+		}
+
+		table {
+			width: 99%;
+			margin: 5px auto;
+		}
+
+		span {
+			color: aliceblue;
+			font-size: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id='main'>
+		<div id='nav'>
+			<div id='navtop'>
+				目录
+			</div>
+
+			<!-- <div id='navlist'>
+				<details>
+					<summary>
+						<a href="#luaapi">Lua API</a>
+					</summary>
+					<nav>
+						<ol>
+							<li><a href="#Global">Global</a></li>
+							<li><a href="#CBaseAnimating">CBaseAnimating</a></li>
+							<li><a href="#CBaseEntity">CBaseEntity</a></li>
+							<li><a href="#CBaseModelEntity">CBaseModelEntity</a></li>
+							<li><a href="#CCustomGameEventManager">CCustomGameEventManager</a></li>
+							<li><a href="#CCustomNetTableManager">CCustomNetTableManager</a></li>
+							<li><a href="#CDOTABaseAbility">CDOTABaseAbility</a></li>
+							<li><a href="#CDOTABaseGameMode">CDOTABaseGameMode</a></li>
+							<li><a href="#CDOTAGamerules">CDOTAGamerules</a></li>
+							<li><a href="#CDOTAPlayer">CDOTAPlayer</a></li>
+							<li><a href="#CDOTA_Ability_Lua">CDOTA_Ability_Lua</a></li>
+							<li><a href="#CDOTA_BaseNPC">CDOTA_BaseNPC</a></li>
+							<li><a href="#CDOTA_BaseNPC_Creature">CDOTA_BaseNPC_Creature</a></li>
+							<li><a href="#CDOTA_BaseNPC_Hero">CDOTA_BaseNPC_Hero</a></li>
+							<li><a href="#CDOTA_Buff">CDOTA_Buff</a></li>
+							<li><a href="#CDOTA_Item">CDOTA_Item</a></li>
+							<li><a href="#CDOTA_Item_Lua">CDOTA_Item_Lua</a></li>
+							<li><a href="#CDOTA_Modifier_Lua">CDOTA_Modifier_Lua</a></li>
+							<li><a href="#CDOTA_Modifier_Lua_Horizontal_Motion">CDOTA_Modifier_Lua_Horizontal_Motion</a>
+							</li>
+							<li><a href="#CDOTA_Modifier_Lua_Motion_Both">CDOTA_Modifier_Lua_Motion_Both</a></li>
+							<li><a href="#CDOTA_Modifier_Lua_Vertical_Motion">CDOTA_Modifier_Lua_Vertical_Motion</a>
+							</li>
+							<li><a href="#CDOTA_PlayerResource">CDOTA_PlayerResource</a></li>
+							<li><a href="#CEntities">CEntities</a></li>
+							<li><a href="#CEntityInstance">CEntityInstance</a></li>
+							<li><a href="#Convars">Convars</a></li>
+							<li><a href="#Vector">Vector</a></li>
+							<li><a href="#CBaseCombatCharacter">CBaseCombatCharacter</a></li>
+							<li><a href="#CBaseFlex">CBaseFlex</a></li>
+							<li><a href="#CBasePlayer">CBasePlayer</a></li>
+							<li><a href="#CBaseTrigger">CBaseTrigger</a></li>
+							<li><a href="#CBodyComponent">CBodyComponent</a></li>
+							<li><a href="#CDebugOverlayScriptHelper">CDebugOverlayScriptHelper</a></li>
+							<li><a href="#CDOTA_Ability_Animation_Attack">CDOTA_Ability_Animation_Attack</a></li>
+							<li><a href="#CDOTA_Ability_Animation_TailSpin">CDOTA_Ability_Animation_TailSpin</a></li>
+							<li><a href="#CDOTA_Ability_DataDriven">CDOTA_Ability_DataDriven</a></li>
+							<li><a href="#CDOTA_Ability_Nian_Dive">CDOTA_Ability_Nian_Dive</a></li>
+							<li><a href="#CDOTA_Ability_Nian_Leap">CDOTA_Ability_Nian_Leap</a></li>
+							<li><a href="#CDOTA_Ability_Nian_Roar">CDOTA_Ability_Nian_Roar</a></li>
+							<li><a href="#CDOTA_BaseNPC_Building">CDOTA_BaseNPC_Building</a></li>
+							<li><a href="#CDOTA_BaseNPC_Shop">CDOTA_BaseNPC_Shop</a></li>
+							<li><a href="#CDOTA_BaseNPC_Trap_Ward">CDOTA_BaseNPC_Trap_Ward</a></li>
+							<li><a href="#CDOTA_CustomUIManager">CDOTA_CustomUIManager</a></li>
+							<li><a href="#CDOTA_Item_DataDriven">CDOTA_Item_DataDriven</a></li>
+							<li><a href="#CDOTA_Item_Physical">CDOTA_Item_Physical</a></li>
+							<li><a href="#CDOTA_ItemSpawner">CDOTA_ItemSpawner</a></li>
+							<li><a href="#CDOTA_Item_BagOfGold">CDOTA_Item_BagOfGold</a></li>
+							<li><a href="#CDOTA_MapTree">CDOTA_MapTree</a></li>
+							<li><a href="#CDOTA_ShopTrigger">CDOTA_ShopTrigger</a></li>
+							<li><a href="#CDOTA_SimpleObstruction">CDOTA_SimpleObstruction</a></li>
+							<li><a href="#CDOTA_Unit_CustomGameAnnouncer">CDOTA_Unit_CustomGameAnnouncer</a></li>
+							<li><a href="#CDOTA_Unit_Diretide_Portal">CDOTA_Unit_Diretide_Portal</a></li>
+							
+							<li><a href="#CDOTA_Unit_Courier">CDOTA_Unit_Courier</a></li>
+							<li><a href="#CDOTA_Unit_Nian">CDOTA_Unit_Nian</a></li>
+							<li><a href="#CDOTAGameManager">CDOTAGameManager</a></li>
+							<li><a href="#CDotaQuest">CDotaQuest</a></li>
+							<li><a href="#CDotaSubquestBase">CDotaSubquestBase</a></li>
+							<li><a href="#CDOTATutorial">CDOTATutorial</a></li>
+							<li><a href="#CDotaTutorialNPCBlocker">CDotaTutorialNPCBlocker</a></li>
+							<li><a href="#CDOTAVoteSystem">CDOTAVoteSystem</a></li>
+							<li><a href="#CDOTA_Ability_Aghanim_Spear">CDOTA_Ability_Aghanim_Spear</a></li>
+							<li><a href="#CEnvEntityMaker">CEnvEntityMaker</a></li>
+							<li><a href="#CEnvProjectedTexture">CEnvProjectedTexture</a></li>
+							<li><a href="#CFoWBlockerRegion">CFoWBlockerRegion</a></li>
+							<li><a href="#CInfoData">CInfoData</a></li>
+							<li><a href="#CInfoPlayerStartDota">CInfoPlayerStartDota</a></li>
+							<li><a href="#CInfoWorldLayer">CInfoWorldLayer</a></li>
+							<li><a href="#CLogicRelay">CLogicRelay</a></li>
+							<li><a href="#CMarkupVolumeTagged">CMarkupVolumeTagged</a></li>
+							<li><a href="#CNativeOutputs">CNativeOutputs</a></li>
+							<li><a href="#CPhysicsProp">CPhysicsProp</a></li>
+							<li><a href="#CPointClientUIWorldPanel">CPointClientUIWorldPanel</a></li>
+							<li><a href="#CPointTemplate">CPointTemplate</a></li>
+							<li><a href="#CPointWorldText">CPointWorldText</a></li>
+							<li><a href="#CPropHMDAvatar">CPropHMDAvatar</a></li>
+							<li><a href="#CPropVRHand">CPropVRHand</a></li>
+							<li><a href="#CSceneEntity">CSceneEntity</a></li>
+							<li><a href="#CScriptHeroList">CScriptHeroList</a></li>
+							<li><a href="#CScriptKeyValues">CScriptKeyValues</a></li>
+							<li><a href="#CScriptParticleManager">CScriptParticleManager</a></li>
+							<li><a href="#CScriptPrecacheContext">CScriptPrecacheContext</a></li>
+							<li><a href="#GlobalSys">GlobalSys</a></li>
+							<li><a href="#GridNav">GridNav</a></li>
+							<li><a href="#ProjectileManager">ProjectileManager</a></li>
+							<li><a href="#SteamInfo">SteamInfo</a></li>
+							<li><a href="#CDOTA_BaseNPC_Watch_Tower">CDOTA_BaseNPC_Watch_Tower</a></li>
+							<li><a href="#CDOTA_NeutralSpawner">CDOTA_NeutralSpawner</a></li>
+						</ol>
+					</nav>
+				</details>
+
+				<details>
+					<summary>
+						<a href="#constant">Lua Constant 常量</a>
+					</summary>
+					<nav>
+						<ol>
+							<li><a href="#ABILITY_TYPES">ABILITY_TYPES</a></li>
+							<li><a href="#AbilityLearnResult_t">AbilityLearnResult_t</a></li>
+							<li><a href="#AttributeDerivedStats">AttributeDerivedStats</a></li>
+							<li><a href="#Attributes">Attributes</a></li>
+							<li><a href="#DAMAGE_TYPES">DAMAGE_TYPES</a></li>
+							<li><a href="#DOTAAbilitySpeakTrigger_t">DOTAAbilitySpeakTrigger_t</a></li>
+							<li><a href="#DOTADamageFlag_t">DOTADamageFlag_t</a></li>
+							<li><a href="#DOTAHUDVisibility_t">DOTAHUDVisibility_t</a></li>
+							<li><a href="#DOTAInventoryFlags_t">DOTAInventoryFlags_t</a></li>
+							<li><a href="#DOTALimits_t">DOTALimits_t</a></li>
+							<li><a href="#DOTAMinimapEvent_t">DOTAMinimapEvent_t</a></li>
+							<li><a href="#DOTAModifierAttribute_t">DOTAModifierAttribute_t</a></li>
+							<li><a href="#DOTAMusicStatus_t">DOTAMusicStatus_t</a></li>
+							<li><a href="#DOTAProjectileAttachment_t">DOTAProjectileAttachment_t</a></li>
+							<li><a href="#DOTAScriptInventorySlot_t">DOTAScriptInventorySlot_t</a></li>
+							<li><a href="#DOTASlotType_t">DOTASlotType_t</a></li>
+							<li><a href="#DOTASpeechType_t">DOTASpeechType_t</a></li>
+							<li><a href="#DOTATeam_t">DOTATeam_t</a></li>
+							<li><a href="#DOTAUnitAttackCapability_t">DOTAUnitAttackCapability_t</a></li>
+							<li><a href="#DOTAUnitMoveCapability_t">DOTAUnitMoveCapability_t</a></li>
+							<li><a href="#DOTA_UNIT_ORDERS">DOTA_UNIT_ORDERS</a></li>
+							<li><a href="#DOTA_ABILITY_BEHAVIOR">DOTA_ABILITY_BEHAVIOR</a></li>
+							<li><a href="#DOTA_GameState">DOTA_GameState</a></li>
+							<li><a href="#DOTA_HeroPickState">DOTA_HeroPickState</a></li>
+							<li><a href="#DOTA_MOTION_CONTROLLER_PRIORITY">DOTA_MOTION_CONTROLLER_PRIORITY</a></li>
+							<li><a href="#DOTA_RUNES">DOTA_RUNES</a></li>
+							<li><a href="#DOTA_SHOP_TYPE">DOTA_SHOP_TYPE</a></li>
+							<li><a href="#DOTA_UNIT_TARGET_FLAGS">DOTA_UNIT_TARGET_FLAGS</a></li>
+							<li><a href="#DOTA_UNIT_TARGET_TEAM">DOTA_UNIT_TARGET_TEAM</a></li>
+							<li><a href="#DOTA_UNIT_TARGET_TYPE">DOTA_UNIT_TARGET_TYPE</a></li>
+							<li><a href="#DamageCategory_t">DamageCategory_t</a></li>
+							<li><a href="#DotaDefaultUIElement_t">DotaDefaultUIElement_t</a></li>
+							<li><a href="#EDOTA_ModifyGold_Reason">EDOTA_ModifyGold_Reason</a></li>
+							<li><a href="#EDOTA_ModifyXP_Reason">EDOTA_ModifyXP_Reason</a></li>
+							<li><a href="#EShareAbility">EShareAbility</a></li>
+							<li><a href="#GameActivity_t">GameActivity_t</a></li>
+							<li><a href="#LuaModifierType">LuaModifierType</a></li>
+							<li><a href="#ParticleAttachment_t">ParticleAttachment_t</a></li>
+							<li><a href="#UnitFilterResult">UnitFilterResult</a></li>
+							<li><a href="#attackfail">attackfail</a></li>
+							<li><a href="#modifierfunction">modifierfunction</a></li>
+							<li><a href="#modifierpriority">modifierpriority</a></li>
+							<li><a href="#modifierremove">modifierremove</a></li>
+							<li><a href="#modifierstate">modifierstate</a></li>
+							<li><a href="#quest_text_replace_values_t">quest_text_replace_values_t</a></li>
+							<li><a href="#subquest_text_replace_values_t">subquest_text_replace_values_t</a></li>
+							<li><a href="#DOTA_CONNECTION_STATE">DOTA_CONNECTION_STATE</a></li>
+							<li><a href="#Find Types">Find Types</a></li>
+							<li><a href="#BoundsHullName">BoundsHullName</a></li>
+							<li><a href="#CombatClassAttack">CombatClassAttack</a></li>
+							<li><a href="#CombatClassDefend">CombatClassDefend</a></li>
+							<li><a href="#UnitRelationshipClass">UnitRelationshipClass</a></li>
+						</ol>
+					</nav>
+				</details>
+
+				<details>
+					<summary>
+						<a href="#ListenEvents">Lua Listen Events 监听事件</a>
+					</summary>
+					<nav>
+						<ol>
+							<li><a href="#核心队伍事件">核心队伍事件</a></li>
+							<li><a href="#玩家事件">玩家事件</a></li>
+							<li><a href="#游戏事件">游戏事件</a></li>
+							<li><a href="#特别事件">特别事件</a></li>
+						</ol>
+					</nav>
+				</details>
+				<details>
+					<summary>
+						<a href="#Item">物品名称</a>
+					</summary>
+					<nav>
+						<ol>
+							<li><a href="#消耗品">消耗品</a></li>
+							<li><a href="#非中立物品">非中立物品</a></li>
+							<li><a href="#中立物品">中立物品</a></li>
+
+						</ol>
+					</nav>
+				</details>
+				<details>
+					<summary>
+						<a href="#HeroAndAbilityName">英雄和技能名称</a>
+					</summary>
+				</details>
+				<details>
+					<summary>
+						<a href="#UnitAndAbilityName">其他单位和技能名称</a>
+					</summary>
+					<nav>
+						<ol>
+							<li><a href="#UnitName">单位名称</a></li>
+							<li><a href="#innerAbilityName">技能名称</a></li>
+						</ol>
+					</nav>
+				</details>
+				<details>
+					<summary>
+						<a href="#InnerModifier">内置Modifier</a>
+					</summary>
+				</details>
+				<details>
+					<summary>
+						<a href="#ConsoleCommand">控制台命令</a>
+					</summary>
+				</details>
+			</div> -->
+		</div>
+		<div id='content'>
+			<div id='note'>
+				最后修改时间:2021年08月13日<br>
+				注:1、注释中有3个？的为不确定解释。
+			</div>
+
+
+			<div id='ConsoleCommand'>
+				<div id='contentname'>
+					控制台命令(cmd表示参数是复杂的或者没有参数)
+				</div>
+				<div id='CommandContent'>
+					<table>
+						<tr>
+							<th> 命令
+							</th>
+							<th> 默认值
+							</th>
+							<th> 是否作弊
+							</th>
+							<th> 解释
+							</th>
+						</tr>
+						<tr>
+							<td> <xmp><deferred></xmp>
+							</td>
+							<td> 0 
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> <xmp><unconnected></xmp>
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panoram_debug_dead_pad
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_dispatch_event
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Dispatch the event defined by the argument string. No creating panel is specified.
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_early_anim_dispatch
+							</td>
+							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_generate_layout_xsd
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Generate the Layout XML Schema Definition for the current run-time (types are dependent on which game DLL is running).
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_print_cache_status
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print internal panorama refcounts for every file
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_show_fps
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_show_fps_scale
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_steampad_button_repeat_curve_time
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_steampad_button_repeat_interval_end
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> @panorama_steampad_button_repeat_interval_start
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> _cl_minimapzoom
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> _fov
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Automates fov command to server.
+							</td>
+						</tr>
+						<tr>
+							<td> _overview_mode
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> Overview mode - 0=off, 1=inset, 2=full
+							</td>
+						</tr>
+						<tr>
+							<td> _record
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Record a demo incrementally
+							</td>
+						</tr>
+						<tr>
+							<td> _resetgamestats
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>Erases current game stats and writes out a blank stats file 
+							</td>
+						</tr>
+						<tr>
+							<td> achievement_debug
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> Turn on achievement debug msgs.
+							</td>
+						</tr>
+						<tr>
+							<td> achievement_disable
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> Turn off achievements
+							</td>
+						</tr>
+						<tr>
+							<td> activategameui
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> addip
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Add an IP address to the ban list.
+							</td>
+						</tr>						
+						<tr>
+							<td> addons
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> list current addon info.
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_alley_min
+							</td>
+							<td> 122
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_courtyard_min
+							</td>
+							<td> 126
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_debug
+							</td>
+							<td> 0
+							</td>
+							<td> a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_door_height
+							</td>
+							<td> 112
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_duct_min
+							</td>
+							<td> 106
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_hall_min
+							</td>
+							<td> 110
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_low_ceiling
+							</td>
+							<td> 108
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_opencourtyard_min
+							</td>
+							<td> 126
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_openspace_min
+							</td>
+							<td> 130
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_openstreet_min
+							</td>
+							<td> 118
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_openwall_min
+							</td>
+							<td> 130
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_room_min
+							</td>
+							<td> 102
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_street_min
+							</td>
+							<td> 118
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_tunnel_min
+							</td>
+							<td> 114
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> adsp_wall_height
+							</td>
+							<td>128
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_los
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> NPC Line-Of-Sight debug mode. If 1, solid entities that block NPC LOC will be highlighted with white bounding boxes.
+								 If 2, it'll show non-solid entities that would do it if they were solid.
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_off_nav
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_ragdoll_magnets
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_shoot_positions
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_soundent
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> Reports sounds being entered into the AI sound list. Set to 1 to see all sounds, set to 2 to only see DANGER sounds.
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_soundent_duration
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> Length of time to display ai_debug_soundent visual displays.
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_speech
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_disabled
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_expression_frametime
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> Maximum frametime to still play background expressions.
+							</td>
+						</tr>
+						<tr>
+							<td> ai_expression_optimization
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> Disable npc background expressions when you can't see them.
+							</td>
+						</tr>
+						<tr>
+							<td> ai_force_serverside_ragdoll
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_sequence_debug
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_shot_bias_max
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_shot_bias_min
+							</td>
+							<td> -1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_use_visibility_cache
+							</td>
+							<td> 1
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> alias
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Alias a command.
+							</td>
+						</tr>
+						<tr>
+							<td> all_pick_force_test
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> allow_clientside_entities
+							</td>
+							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +alt1
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -alt1
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -alt2
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +alt2
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> anim_disable
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> anim_resource_validate_on_load
+							</td>
+							<td> 1
+							</td>
+							<td> release
+							</td>
+							<td> Validates the animation group channel list against the animations on load for every animation
+							</td>
+						</tr>
+						<tr>
+							<td> animated_material_attributes
+							</td>
+							<td> 1
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animevents_dump
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> List all the currently registered anim events.
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_debug
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> Debug animation graph
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_debug_entindex
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> The entity to specifically debug
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_debug_set_filter_params
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> Comma separated list of params to filter against when drawing debug text overlays
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_debug_tags
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_debug_variables
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> Set to 1 to see animgraph variable changes for non-player entities. Set to 2 to see it for players as well. 
+								Set to 3 to see all sets, even if the value is the same.
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_draw_traces
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_enable_parallel_update
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_auto_ledge_detection
+							</td>
+							<td> 1
+							</td>
+							<td> rep
+							</td>
+							<td>Attempt to detect when the foot is partially hanging off a ledge and stop it tilting to reach the bottom 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_auto_stair_detection
+							</td>
+							<td> 1
+							</td>
+							<td> rep
+							</td>
+							<td> Attempt to detect when the foot is on a stair and will stop it from tilting to reach the next step
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_calculate_tilt
+							</td>
+							<td> 1
+							</td>
+							<td> rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_debug_foot_index
+							</td>
+							<td> -1	
+							</td>
+							<td> rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_debug_type
+							</td>
+							<td> 2
+							</td>
+							<td> rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_draw_footbase
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_enabled
+							</td>
+							<td> 1
+							</td>
+							<td> rep
+							</td>
+							<td> A master convar that effectively disables the entire footlock node.
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_ground_roll
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_hip_offset_enable
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_reachability_slide
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_tilt_mode
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_trace_ground_enabled
+							</td>
+							<td> 1
+							</td>
+							<td> rep
+							</td>
+							<td> Convar for toggling foot lock ground tracking.
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_use_hip_shift
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_footlock_use_twobone_solve
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_ik_debug
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_slope_draw_raycasts
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_slope_enable
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_slowdownonslopes_enabled
+							</td>
+							<td> 1
+							</td>
+							<td> rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> animgraph_trace_ignore_prop_physics 
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> assetbrowser
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Show the global asset browser.
+							</td>
+						</tr>
+						<tr>
+							<td> assetbrowser_name_filter_delay
+							</td>
+							<td> 250
+							</td>
+							<td> 
+							</td>
+							<td> Millisecond delay between typing in the assetbrowser filter and the filter being applied
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_check_compile_state
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Perform a detailed check of an asset's compile state
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_clear_thumbnail_cache
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Clear thumbnail cache
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_count
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Find the number of assets registered with the asset system
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_debug_substring
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Spew info for assets that match the specified substring
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_dump_string_threshold
+							</td>
+							<td> 2000
+							</td>
+							<td> 
+							</td>
+							<td> Max length of strings to dump in assetsystem_dump_table
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_dump_table
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print internal assetsystem data.
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_legacy_explicit_reload_child_resources
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Whether to explicitly reload child resources of a QueueReloadIfLoaded
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_legacy_process_file_changes_after_compile
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Use old behavior of calling ProcessFileChanges() immediately after recompiling a resource
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_quiet_inputs_before_recompile
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> Before triggering a resource recompile, wait for input dependencies to stop being written
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_quiet_inputs_before_recompile_max_pause
+							</td>
+							<td> 1000
+							</td>
+							<td> 
+							</td>
+							<td> Max amount of time to wait (in ms) for input dependencies to stop being written before abandoning the compile
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_quiet_inputs_before_reload
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> Before triggering a resource reload, wait for input dependencies to stop being written
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_reload_queue_requeue_pause
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> Time (sec) to pause assetsystem reload behavior if a requeue is requested
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_stats
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Information about the current assetsystem database.
+							</td>
+						</tr>
+						<tr>
+							<td> assetsystem_test_resort 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> (Dev command - regenerate the asset sort indicies)
+							</td>
+						</tr>
+						<tr>
+							<td> async_serialize
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Force async reads to serialize for profiling
+							</td>
+						</tr>
+						<tr>
+							<td> async_track_all
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Enable all registered asynchronous tracking convars at once
+							</td>
+						</tr>
+						<tr>
+							<td> -attack
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +attack
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -attack2 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +attack2
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> auto_bug
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>  auto_bug : create non-interactive bug report.
+							</td>
+						</tr>
+						<tr>
+							<td> autoaim_max_deflect 
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> autoaim_max_dist
+							</td>
+							<td> 2160
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> autosave_fully_async
+							</td>
+							<td> 1
+							</td>
+							<td> sv
+							</td>
+							<td> Set to 1 to have autosaves execute completely on the save thread, 
+								forces 'render only' mode while the save completes
+							</td>
+						</tr>
+						<tr>
+							<td> 	
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> axis
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>Draw an axis  Arguments:  x y z pitch yaw roll <lifetime = 10.0> <r g b a></r></xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> -back
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +back
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> banip
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Add an IP address to the ban list.
+							</td>
+						</tr>
+						<tr>
+							<td> battery_saver
+							</td>
+							<td> 0
+							</td>
+							<td> a
+							</td>
+							<td> OBSOLETE replaced by mobile_fps_* - Battery saver mode. 0=off, 1=on
+							</td>
+						</tr>
+						<tr>
+							<td> benchframe
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Takes a snapshot of a particular frame in a time demo.
+							</td>
+						</tr>
+						<tr>
+							<td> bind
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Bind a key.
+							</td>
+						</tr>
+						<tr>
+							<td> binddefaults
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Bind all keys to their default values.
+							</td>
+						</tr>
+						<tr>
+							<td> bindss
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Bind a key for a particular splitscreen player.
+							</td>
+						</tr>
+						<tr>
+							<td> bindtoggle
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>Performs a bind <key> 'increment var <cvar> 0 1 1'.</xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> blink
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Blink specified convar value between two values at the specified duration.
+							</td>
+						</tr>
+						<tr>
+							<td> blink_duration
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> How many seconds an eye blink will last.
+							</td>
+						</tr>
+						<tr>
+							<td> bone_decode_cache_enabled
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> bone_decode_cache_enabled
+							</td>
+							<td> 0
+							</td>
+							<td> cl, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> bot_mimic_spec_buttons
+							</td>
+							<td> 1
+							</td>
+							<td> cl, rep
+							</td>
+							<td> +attack, +jump etc are used for spectator control instead of being passed on to spectated bot
+							</td>
+						</tr>
+						<tr>
+							<td> box
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>Draw a bbox  Arguments:  minx miny miny maxx maxy maxz <lifetime = 10.0> <r g b a> </xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> +break
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -break
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> break_damage_inherit_scale
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_openmenu
+							</td>
+							<td>  cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_openquickstats
+							</td>
+							<td>  cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstats_baselen
+							</td>
+							<td> 6
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstats_image_mode
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstats_len
+							</td>
+							<td> 9
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstats_maxl
+							</td>
+							<td> 200
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstats_minl
+							</td>
+							<td> 100
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstats_minmovielen
+							</td>
+							<td> 10
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_quickstatsleague
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_reloadfacts
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_setsecondaryquickstats
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> broadcaster_togglegreenscreen
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> buddha
+							</td>
+							<td> 0
+							</td>
+							<td> sv, nf, cheat
+							</td>
+							<td> Player takes damage but won't die
+							</td>
+						</tr>
+						<tr>
+							<td> buddha_reset_hp
+							</td>
+							<td> 1
+							</td>
+							<td> sv, nf, cheat
+							</td>
+							<td> HP to set when damaged below zero in Buddha Mode
+							</td>
+						</tr>
+						<tr>
+							<td> bug
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>bug [auto_fill_tokens] [-title <text>] [-noscreenshot] : Activate the bug reporter.</xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> bug_submitter_override
+							</td>
+							<td> 0
+							</td>
+							<td> a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> bug_swap
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Automatically swaps the current weapon for the bug bait and back again.
+							</td>
+						</tr>
+						<tr>
+							<td> -bugvoice
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Finish recording bug voice attachment.
+							</td>
+						</tr>
+						<tr>
+							<td> -bugvoice
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Start recording bug voice attachment.
+							</td>
+						</tr>
+						<tr>
+							<td> bugvoice_clear
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Clear voice attachment data.
+							</td>
+						</tr>
+						<tr>
+							<td> bugvoice_save
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Write buffered voice attachment data to file.
+							</td>
+						</tr>
+						<tr>
+							<td> buildcubemaps
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Build Cubemaps
+							</td>
+						</tr>
+						<tr>
+							<td> c_maxdistance
+							</td>
+							<td> 200
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_maxpitch
+							</td>
+							<td> 90
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_maxyaw
+							</td>
+							<td> 135
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_mindistance
+							</td>
+							<td> 30
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_minpitch
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_minyaw
+							</td>
+							<td> -135
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_orthoheight
+							</td>
+							<td> 100
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_orthowidth
+							</td>
+							<td> 100
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_thirdpersonshoulder
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_thirdpersonshoulderaimdist
+							</td>
+							<td> 120
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_thirdpersonshoulderdist
+							</td>
+							<td> 40
+							</td>
+							<td> cl, 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_thirdpersonshoulderheight
+							</td>
+							<td> 5
+							</td>
+							<td>  cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> c_thirdpersonshoulderoffset
+							</td>
+							<td> 20
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cam_collision
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> When in thirdperson and cam_collision is set to 1, an attempt is made to keep the camera from passing though walls.
+							</td>
+						</tr>
+						<tr>
+							<td> cam_command
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>  Tells camera to change modes
+							</td>
+						</tr>
+						<tr>
+							<td> cam_idealdelta
+							</td>
+							<td> 4
+							</td>
+							<td> cl, a
+							</td>
+							<td> Controls the speed when matching offset to ideal angles in thirdperson view
+							</td>
+						</tr>
+						<tr>
+							<td> cam_idealdist
+							</td>
+							<td> 150
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cam_ideallag
+							</td>
+							<td> 4
+							</td>
+							<td> cl, a
+							</td>
+							<td> Amount of lag used when matching offset to ideal angles in thirdperson view
+							</td>
+						</tr>
+						<tr>
+							<td> cam_idealpitch
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cam_idealyaw
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cam_showangles
+							</td>
+							<td> 0
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> When in thirdperson, print viewangles/idealangles/cameraoffsets to the console.
+							</td>
+						</tr>
+						<tr>
+							<td> cam_snapto
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -camdistance
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +camdistance
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -cameragrip
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -camerayawgrip
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td>+camerayawgrip 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> camerazoomout
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -camin
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +cammousemove
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -cammousemove
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> camortho
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Switch to orthographic camera.
+							</td>
+						</tr>
+						<tr>
+							<td> +camout
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -camout
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> +campitchdown
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -campitchdown
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -camyawleft
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> capturephotogrammetry
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Capture Photogrammetry
+							</td>
+						</tr>
+						<tr>
+							<td> cast_aabb
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests box collision detection
+							</td>
+						</tr>
+						<tr>
+							<td> cast_capsule
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests capsule collision detection
+							</td>
+						</tr>
+						<tr>
+							<td> cast_convex
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests convex hull collision detection
+							</td>
+						</tr>
+						<tr>
+							<td> cast_cylinder
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests cylinder collision detection
+							</td>
+						</tr>
+						<tr>
+							<td> cast_intervals
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests interval ray cast
+							</td>
+						</tr>
+						<tr>
+							<td> cast_obb
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>  Tests cylinder collision detection
+							</td>
+						</tr>
+						<tr>
+							<td> cast_physics
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests physics shape collision detection
+							</td>
+						</tr>
+						<tr>
+							<td> cast_ray
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests ray cast
+							</td>
+						</tr>
+						<tr>
+							<td> cast_sphere
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Tests sphere cast
+							</td>
+						</tr>
+						<tr>
+							<td> cavern_crawl_pregame_intro_shown
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cc_captiontrace
+							</td>
+							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td> Show missing closecaptions (0 = no, 1 = devconsole, 2 = show in hud)
+							</td>
+						</tr>
+						<tr>
+							<td> cc_delay_time
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> Close caption delay before showing caption.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_emit
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Emits a closed caption
+							</td>
+						</tr>
+						<tr>
+							<td> cc_findsound
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Searches for soundname which emits specified text.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_flush
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Flushes async'd captions.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_lang
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> Current close caption language (emtpy = use game UI language)
+							</td>
+						</tr>
+						<tr>
+							<td> cc_linger_time
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> Close caption linger time
+							</td>
+						</tr>
+						<tr>
+							<td> cc_log
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Log caption names and contents (0 = off, 1 = found captions, 2 = unfound captions, 3 = all captions)
+							</td>
+						</tr>
+						<tr>
+							<td> cc_minvisibleitems
+							</td>
+							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td>  Minimum number of caption items to show.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_norepeat
+							</td>
+							<td> 5
+							</td>
+							<td> sv
+							</td>
+							<td> In multiplayer games, don't repeat captions more often than this many seconds.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_random
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Emits a random caption
+							</td>
+						</tr>
+						<tr>
+							<td> cc_sentencecaptionnorepeat
+							</td>
+							<td> 4
+							</td>
+							<td> cl
+							</td>
+							<td> How often a sentence can repeat.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_showblocks
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Toggles showing which blocks are pending/loaded async.	
+							</td>
+						</tr>
+						<tr>
+							<td> cc_showmissing
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> Show missing closecaption entries.
+							</td>
+						</tr>
+						<tr>
+							<td> cc_spectator_only
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cc_subtitles
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> If set, don't show sound effect captions, just voice overs (i.e., won't help hearing impaired players).
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_caption_catchup_interval
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Duration it takes for attached caption to ideal point
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_caption_speed
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td>  0 = slow, 1 = medium (default), 2 = fast
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_debug
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Debug visualization of VR closed caption placement
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_depth_test
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Have closed caption Panorama panel perform depth testing against the scene
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_epsilon
+							</td>
+							<td> 2
+							</td>
+							<td> cl
+							</td>
+							<td> Epsilon to trigger movement of VR subtitle panel in world space
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_font_size
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> 0 = small, 1 = med (default), 2 = large
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_forward_offset
+							</td>
+							<td> 30
+							</td>
+							<td> cl
+							</td>
+							<td> Subtitle offset distance (forward, in front of player)
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_vertical_offset
+							</td>
+							<td> -6
+							</td>
+							<td> cl
+							</td>
+							<td> Subtitle vertical offset distance (positive is up)
+							</td>
+						</tr>
+						<tr>
+							<td> cc_vr_width
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> 0 = narrow, 1 = med (default), 2 = wide
+							</td>
+						</tr>
+						<tr>
+							<td> cg_start_loading
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Listen server started loading
+							</td>
+						</tr>
+						<tr>
+							<td> changelevel
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>changelevel <mapname> :Multiplayer change level.</xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> chat_channel_debug
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print members of a chat channel
+							</td>
+						</tr>
+						<tr>
+							<td> chat_join
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Join a chat channel
+							</td>
+						</tr>
+						<tr>
+							<td> chat_join_hltv
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Join an hltv chat channel
+							</td>
+						</tr>
+						<tr>
+							<td> chat_leave
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>  Leave a chat channel
+							</td>
+						</tr>
+						<tr>
+							<td> chat_say
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>  Send a message to the specified channel
+							</td>
+						</tr>
+						<tr>
+							<td> chat_sound
+							</td>
+							<td> false
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_0
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_1
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_10
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_11
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_12
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_13
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_14
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_15
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_2
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_3
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_4
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_5
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_6
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_7
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_8
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_emoticon_9
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_0
+							</td>
+							<td> 8
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_1
+							</td>
+							<td> 1
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_10
+							</td>
+							<td> 79
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_11
+							</td>
+							<td> 66
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_12
+							</td>
+							<td> 80
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_13
+							</td>
+							<td> 61
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_14
+							</td>
+							<td> 62
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_15
+							</td>
+							<td> 70
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_2
+							</td>
+							<td> 2
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_3
+							</td>
+							<td> 3
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_4
+							</td>
+							<td> 4
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_5
+							</td>
+							<td> 5
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_6
+							</td>
+							<td> 6
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_7
+							</td>
+							<td> 7
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_8
+							</td>
+							<td> 65
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> chat_wheel_phrase_9
+							</td>
+							<td> 69
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -chatwheel
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Executes the highlighted chatwheel menu item
+							</td>
+						</tr>
+						<tr>
+							<td> +chatwheel
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Opens chatwheel menu while held
+							</td>
+						</tr>
+						<tr>
+							<td> check_dpi
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Show the currently detected DPI.
+							</td>
+						</tr>
+						<tr>
+							<td> cl_aggregate_particles
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cl_allowupload
+							</td>
+							<td> 1
+							</td>
+							<td> a
+							</td>
+							<td> Client uploads customization files
+							</td>
+						</tr>
+						<tr>
+							<td> cl_anglespeedkey
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cl_anim_queue_changes
+							</td>
+							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cl_auto_cursor_scale
+							</td>
+							<td> true
+							</td>
+							<td> machine
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cl_axis
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>Draw an axis  Arguments:  x y z pitch yaw roll <lifetime = 10.0> <r g b a></xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> cl_backspeed
+							</td>
+							<td> 450
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cl_box
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> <xmp>Draw a bbox  Arguments:  minx miny miny maxx maxy maxz <lifetime = 10.0> <r g b a></xmp>
+							</td>
+						</tr>
+						<tr>
+							<td> cl_burninggibs
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> A burning player that gibs has burning gibs.
+							</td>
+						</tr>
+						<tr>
+							<td> cl_cache_sendtable
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> Cache sendtables
+							</td>
+						</tr>
+						<tr>
+							<td> cl_camera_follow_bone_index
+							</td>
+							<td> -2
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> Index of the bone to follow.  -2 == disabled.  -1 == root bone.  0+ is bone index.
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

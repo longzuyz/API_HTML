@@ -167,6 +167,25 @@
 			width: 30%;
 		}
 
+
+		#CommandContent table tr td:first-child {
+			/* font-size: 18px; */
+			width: 35%;
+		}
+		#CommandContent table tr td:nth-child(2) {
+			text-align: center;
+			width: 5%;
+		}
+		#CommandContent table tr td:nth-child(3) {
+			text-align: center;
+			width: 7%;
+		}
+		#CommandContent table tr td:last-child {
+
+			width: 53%;
+		}
+
+
 		th {
 			background-color: #b8b8b8;
 			color: black;
@@ -219,7 +238,7 @@
 			<div id='navlist'>
 				<details>
 					<summary>
-						Lua API
+						<a href="#luaapi">Lua API</a>
 					</summary>
 					<nav>
 						<ol>
@@ -318,7 +337,7 @@
 
 				<details>
 					<summary>
-						Lua Constant 常量
+						<a href="#constant">Lua Constant 常量</a>
 					</summary>
 					<nav>
 						<ol>
@@ -411,7 +430,7 @@
 				</details>
 				<details>
 					<summary>
-						其他单位和技能名称
+						<a href="#UnitAndAbilityName">其他单位和技能名称</a>
 					</summary>
 					<nav>
 						<ol>
@@ -425,6 +444,7 @@
 						<a href="#InnerModifier">内置Modifier</a>
 					</summary>
 				</details>
+				
 			</div>
 		</div>
 		<div id='content'>
@@ -5143,7 +5163,8 @@
 								</td>
 								<td> void StartCooldown(float flCooldown)
 								</td>
-								<td> 使技能进入冷却
+								<td> 设置技能进入冷却的时间，可以用来做正在CD的技能 减少或增加剩余的CD时间，但减少要配合EndCooldown使用，增加则不用。
+									还可以做CD冻结，不停的设置一个值。
 								</td>
 							</tr>
 							<tr>
@@ -10099,7 +10120,7 @@
 							<tr>
 								<td><a href="file:///C|/Users/Administrator/Desktop/1">IsTempestDouble</a></td>
 								<td>bool IsTempestDouble(  ) </td>
-								<td>&nbsp;</td>
+								<td>是否是风暴双雄的复制体</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsTower"
@@ -24397,7 +24418,7 @@
 								</td>
 								<td> 1507
 								</td>
-								<td>
+								<td>退缩
 								</td>
 							</tr>
 							<tr>
@@ -24405,7 +24426,7 @@
 								</td>
 								<td> 1508
 								</td>
-								<td>
+								<td>被痛苦之源大，被谜团打住的效果，枷锁
 								</td>
 							</tr>
 							<tr>
@@ -24413,7 +24434,7 @@
 								</td>
 								<td> 1509
 								</td>
-								<td>
+								<td>不能动，比如被晕住。
 								</td>
 							</tr>
 							<tr>
@@ -24605,7 +24626,7 @@
 								</td>
 								<td> 1533
 								</td>
-								<td>
+								<td>抓住，一愣的感觉
 								</td>
 							</tr>
 							<tr>
@@ -27171,6 +27192,7 @@
 								<td> GetModifierFixedAttackRate </td>
 								<td>设置攻击间隔(多少秒攻击1次的值，不能被装备和BUFF改变)。该值是实际攻击速度值，一旦设置了这个值，就无视ATTACKSPEED值的改变和覆盖。
 									最快值为0.05。如果设置的值小于0.034，则攻击间隔自动限制为0.0625.不受MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT影响。
+									注意设置该值，值改变面板的攻击间隔值，不改攻击速度。不能返回负数，自身不叠加，相同BUFF以数值小的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
@@ -27178,20 +27200,22 @@
 								<td> 31</td>
 								<td> GetModifierAttackSpeedBonus_Constant </td>
 								<td> Increases the attack speed of the parent by a constant returned to it. Can return
-									negative values.增加攻击速度值,根据英雄的AttackRate不同，返回1，面板值增加的数值不同。
+									negative values.增加或者减少攻击速度值,根据英雄的AttackRate不同，返回1，面板值增加的数值不同。
 									敌法最高，面板值增加1.21429，最低白牛，DOOM面板值增加0.89474，其他增加1。以AttackRate 1.7为标准值，用1.7/1.9。
-									攻击间隔的最快值为0.05(面板值3400左右) ，面板值3400-5100会在0.05-0.0625之间变动，
+									当攻速值为正时，攻击间隔的最快值为0.05(面板值3400左右) ，面板值3400-5100会在0.05-0.0625之间变动，
 									超过5100，攻击间隔会被自动限制在0.0625。注意,要设置MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT返回1,
-									不然会被限制在最快攻速(如果没有设置SetMaximumAttackSpeed,系统默认最快是0.2)。
+									不然会被限制在最快攻速(如果没有设置SetMaximumAttackSpeed,系统默认最快攻速值为AttackRate 为1.7的英雄的700(其他自行换算),最慢是24)。
+									可以返回负数，自身可叠加，但是不能让攻速值变负，最小24。
+									只有MODIFIER_PROPERTY_ATTACKSPEED_PERCENTAGE能让攻速变负，注意，只要攻速值为负时，则达成最高攻击间隔0.033。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT </td>
 								<td> 32</td>
 								<td> GetModifierAttackSpeed_Limit </td>
-								<td> 返回1，取消攻速限制,但是好像现在本身没有限制了。攻速最高可到0.05，这时面板值大概3400左右。
-									面板值3400-5100会在0.05-0.0625之间变动，面板值超过5100，攻击间隔会被强制限制在0.0625。。
-									如果使用了MODIFIER_PROPERTY_ATTACKSPEED_BASE_OVERRIDE,则此API无效。 </td>
+								<td> 返回1，取消攻速限制,但是好像现在本身没有限制了。当攻速值为正数时，攻速最高可到0.05，这时面板值大概3400左右。
+									面板值3400-5100会在0.05-0.0625之间变动，面板值超过5100，攻击间隔会被强制限制在0.0625。只要攻速值为负时，则达成最高攻击间隔0.033。
+									如果使用了MODIFIER_PROPERTY_ATTACKSPEED_BASE_OVERRIDE,则此API无效。对MODIFIER_PROPERTY_ATTACKSPEED_PERCENTAGE无效。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT </td>
@@ -27200,7 +27224,9 @@
 								<td> Reduces the cooldown of all skills and items of the parent by a constant returned
 									to it. 
 									所有技能和物品减少一个固定时间的冷却时间,比如一个技能本身10秒CD，现在该API返回20，那技能CD变成-10S，就等于0.
-									返回负数无效,自身不叠加，相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
+									返回负数无效,自身不叠加，相同BUFF以数值大的为准。
+									和MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE叠加时，先减固定，在乘以百分比。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr> 
 							<tr>
 								<td> MODIFIER_PROPERTY_MANACOST_REDUCTION_CONSTANT </td>
@@ -27545,7 +27571,7 @@
 								<td> 79</td>
 								<td> GetModifierBaseManaRegen </td>
 								<td> Set the base mana regeneration of the parent by a constant returned to it. Can return negative values. 
-									设置基础回蓝(以智力决定的回蓝,如果设置了此API，则装备增加智力的装备是不增加回蓝的,只有增加魔法恢复的才有效)。
+									设置基础回蓝、魔法回复(以智力决定的回蓝,如果设置了此API，则装备增加智力的装备是不增加回蓝的,只有增加魔法恢复的才有效)。
 									可以返回负数,负数是会扣蓝的！！！但是面板和蓝条上的数值都不会显示负的值，最少显示到原始回蓝。
 									自身不能叠加,相同BUFF以生效早的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
@@ -27554,14 +27580,14 @@
 								<td> 80</td>
 								<td> GetModifierConstantManaRegen </td>
 								<td> Increases the mana regeneration of the parent by a constant returned to it. Can
-									return negative values. 以固定值增加或者减少 回蓝，甚至是扣除蓝，以绿字形式相加。可以返回负数，自身可以叠加。负数是减少，当回蓝值低于0时，会变成扣除蓝，
+									return negative values. 魔法回复。以固定值增加或者减少 回蓝，甚至是扣除蓝，以绿字形式相加。可以返回负数，自身可以叠加。负数是减少，当回蓝值低于0时，会变成扣除蓝，
 									面板和蓝条上的数值都能正常显示负数值。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE </td>
 								<td> 81</td>
 								<td> GetModifierConstantManaRegenUnique </td>
-								<td>增加回蓝，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
+								<td>魔法回复。增加回蓝，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
@@ -27607,7 +27633,7 @@
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Health is scaled to the same percentage as before the increase.
 									增加或者减少英雄总血量,注意返回负数值时，当前总血量加上这个负数值为0或者负时,会出现英雄会立即死亡,但还能攻击,并且无法复活的BUG。
-									增加总血量后,当前血量会发生变化,因为当前血量和当前总血量的比值会和改变前一样。不需要使用SetHasCustomTransmitterData。不跑客户端。
+									增加总血量后,当前血量会发生变化,因为当前血量和当前总血量的比值会和改变前一样。可返回负数，自身可叠加。不需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -27617,14 +27643,14 @@
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
 									negative values. Mana is scaled to the same percentage as before the increase. 
 									增加或者减少英雄总蓝量。注意返回负数值时，当前总蓝量加上这个负数值小于1时,蓝条会消失，并且蓝量为0了。
-								增加总蓝量后,当前蓝量会发生变化,因为当前蓝量和当前总蓝量的比值会和改变前一样。不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
+								增加总蓝量后,当前蓝量会发生变化,因为当前蓝量和当前总蓝量的比值会和改变前一样。可返回负数，自身可叠加。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS </td>
 								<td> 88</td>
 								<td> GetModifierExtraStrengthBonus </td>
-								<td>以绿字形式增加或者减少力量。当增加力量时，总血量会变化，但不影响当前血量。负数时是减少力量，但是最多减到0力量,当前血量可能会变化。
-									不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
+								<td>以绿字形式增加或者减少力量。当增加力量时，总血量会变化，但不影响当前血量。可以返回负数，自身可叠加，但是最多减到0力量,当前血量可能会变化。
+									不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS </td>
@@ -27633,8 +27659,8 @@
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Ignores current health.增加或者减少英雄总血量。
 									当减少血量时，当前总血量加上这个负数值为0或者负时,会出现英雄会立即死亡,但还能攻击,并且无法复活的BUG。
-									和MODIFIER_PROPERTY_HEALTH_BONUS的区别是,这个API增加总血量时,当前血量不受影响。
-									 不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
+									和MODIFIER_PROPERTY_HEALTH_BONUS的区别是,这个API增加总血量时,当前血量不受影响。可以返回负数，自身可叠加。
+									 不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_BONUS </td>
@@ -27642,8 +27668,8 @@
 								<td> GetModifierExtraManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
 									negative values. Ignores current mana.增加或者减少英雄总蓝量。注意返回负数值时，当前总蓝量加上这个负数值小于1时,蓝条会消失，并且蓝量为0了。
-									和MODIFIER_PROPERTY_MANA_BONUS的区别是,这个API增加总蓝量时,当前蓝量不受影响。
-									不需要使用SetHasCustomTransmitterData。不跑客户端。 </td>
+									和MODIFIER_PROPERTY_MANA_BONUS的区别是,这个API增加总蓝量时,当前蓝量不受影响。可以返回负数，自身可叠加。
+									不需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE </td>
@@ -27651,14 +27677,14 @@
 								<td> GetModifierExtraHealthPercentage </td>
 								<td> Increases the maximum health of the parent by a percentage returned to it. Can
 									return negative values. Ignores current health.	百分比增加或减少总血量。减少血量过多时,也会出死亡BUG。
-									增加总血量时,不影响当前血量。不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
+									增加总血量时,不影响当前血量。可以返回负数，自身可叠加。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE </td>
 								<td>92</td>
 								<td> GetModifierExtraManaPercentage </td>
-								<td> 百分比增加或减少总蓝量。减少过多时，蓝条会消失。增加总蓝量时，不影响当前蓝量。
-									不需要使用SetHasCustomTransmitterData。不跑客户端</td>
+								<td> 百分比增加或减少总蓝量。减少过多时，蓝条会消失。增加总蓝量时，不影响当前蓝量。可以返回负数，自身可叠加。
+									不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 
 							<tr>
@@ -27666,8 +27692,8 @@
 								<td> 93</td>
 								<td> GetModifierBonusStats_Strength </td>
 								<td> Increases the strength stat of the parent by a constant returned to it. Can return
-									negative values.以绿字形式增加或者减少力量。当增加力量时，总血量变化的同时也影响当前血量。负数时是减少力量，但是最多减到0力量。
-									不需要使用SetHasCustomTransmitterData。不跑客户端。 </td>
+									negative values.以绿字形式增加或者减少力量。当增加力量时，总血量变化的同时也影响当前血量。可以返回负数，自身可叠加，但是最多减到0力量。
+									不需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 
 							<tr>
@@ -27675,15 +27701,15 @@
 								<td> 94</td>
 								<td> GetModifierBonusStats_Agility </td>
 								<td> Increases the agility stat of the parent by a constant returned to it. Can return
-									negative values. 以绿字形式增加或者减少敏捷。负数时是减少敏捷，但是最多减到0敏捷。不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
+									negative values. 以绿字形式增加或者减少敏捷。可以返回负数，自身可叠加，但是最多减到0敏捷。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS </td>
 								<td> 95</td>
 								<td> GetModifierBonusStats_Intellect </td>
 								<td> Increases the intelligence stat of the parent by a constant returned to it. Can
-									return negative values.以绿字形式增加或者减少智力。当增加智力时，总蓝量变化的同时也会影响当前血量。负数时是减少智力，但是最多减到0智力。
-									不需要使用SetHasCustomTransmitterData。不跑客户端。</td>
+									return negative values.以绿字形式增加或者减少智力。当增加智力时，总蓝量变化的同时也会影响当前血量。可以返回负数，自身可叠加，但是最多减到0智力。
+									不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE</td>
@@ -27709,47 +27735,51 @@
 								<td> 99</td>
 								<td> GetModifierCastRangeBonus </td>
 								<td> Increases the cast range of the parent by a constant returned to it. Can return
-									negative values.只能增加所有技能和物品的施法距离,无法减小(返回负数无效)，相同BUFF不会叠加,以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。
+									negative values.只能增加所有技能和物品的施法距离,不能返回负数，无法减小，自身不叠加,相同BUFF以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。
 								注意的是比如敌法的闪烁，施法范围的圈和面板数据都不改变，但是有效果，能跳更远。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET</td>
 								<td> 100</td>
 								<td>GetModifierCastRangeBonusTarget</td>
-								<td>增加 施法者 对 拥有此BUFF单位的  施法距离。但是不会改变施法者技能的施法范围圈。不需要使用SetHasCustomTransmitterData，但是跑客户端。</td>
+								<td>增加 施法者 对 拥有此BUFF单位的  施法距离。但是不会改变施法者技能的施法范围圈。不能返回负数，自身不叠加，
+									相同BUFF以数值大的为准。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING</td>
 								<td> 101</td>
 								<td>GetModifierCastRangeBonusStacking</td>
-								<td>增加或者减少所有技能和物品的施法距离,可叠加，可返回负数。无论负数多小，都只能减少到一个最小施法距离。如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。</td>
+								<td>增加或者减少所有技能和物品的施法距离,可返回负数，自身可叠加，无论负数多小，都只能减少到一个最小施法距离。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE</td>
 								<td> 102</td>
 								<td>GetModifierAttackRangeOverride</td>
-								<td>直接设置基础攻击距离，必须大于0。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
+								<td>直接设置基础攻击距离，必须大于0。不能返回负数，自身不叠加，相同BUFF以数值小的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS </td>
 								<td> 103</td>
 								<td> GetModifierAttackRangeBonus </td>
 								<td> Increases the attack range of the parent by a constant returned to it. Can return
-									negative values.以绿字形式增加或者减少攻击距离，返回负数最大减到0。相同BUFF可以叠加。
+									negative values.以绿字形式增加或者减少攻击距离，可以返回负数，自身可叠加,最少减到0,但是已经无法攻击了。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE </td>
 								<td> 104</td>
 								<td> GetModifierAttackRangeBonusUnique </td>
-								<td>以绿字形式增加或者减少攻击距离，返回负数最大减到0。相同BUFF不能叠加，以数值大的为准。
+								<td>以绿字形式增加攻击距离，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE</td>
 								<td> 105</td>
 								<td>GetModifierAttackRangeBonusPercentage</td>
-								<td>百分比增加或减少攻击距离,返回负数减少距离,最小为0，但是已经无法攻击了。可以叠加。
+								<td>以绿字形式百分比增加或减少攻击距离,可以返回负数,自身可叠加，最少减到0，但是已经无法攻击了。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
@@ -27761,14 +27791,15 @@
 									比如最小值设置为700,当前攻击距离为600,没装备和BUFF时，面板数据是600+100，这个100就是系统的补偿。这时装备一个魔龙枪,
 									面板数据就是600+140了，因为用魔龙枪的属性加成就已经超过了最小值700，所以系统自动补偿的绿字就会消失。
 									如果是加 一个 增加80攻击距离的 BUFF,面板数据还是600+100，但是系统补偿的只有20了。
-									如果直接把基础攻击距离设置为1，那么面板数据就是1+699。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
+									如果直接把基础攻击距离设置为1，那么面板数据就是1+699。不能返回负数，自身不叠加，相同BUFF以数值大的为准。
+									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS </td>
 								<td> 107</td>
 								<td> GetModifierProjectileSpeedBonus </td>
 								<td> Increases the projectile speed of attacks sourced by the parent by a constant
-									returned to it. Can return negative values.增加或者减少普通攻击弹道速度。可以返回负数值,为0时就已经攻击不到人了。 </td>
+									returned to it. Can return negative values.增加或者减少普通攻击弹道速度。可以返回负数值,自身可叠加，但是为0时就已经攻击不到人了。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE </td>
@@ -27787,7 +27818,9 @@
 								<td> MODIFIER_PROPERTY_REINCARNATION </td>
 								<td>110</td>
 								<td> ReincarnateTime </td>
-								<td>设置原地复活时间,返回大于0的值就能和盾，骷髅王大一样原地复活。返回小于等于0则不能原地复活，就是正常死亡复活流程了。</td>
+								<td>设置原地复活时间,返回大于0的值就能和盾，骷髅王大一样原地复活。不能返回小于等于0的值，否则不能原地复活，就是正常死亡复活流程了。
+									自身不能叠加，相同BUFF以先 生效的为准。
+								</td>
 							</tr>
 
 							<tr>
@@ -27795,21 +27828,23 @@
 								<td> 111</td>
 								<td> GetModifierConstantRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
-									negative values.增加或者减少复活时间，不能叠加。最少只能减到1秒(对的,原地复活可以设置0.1秒)。 </td>
+									negative values.增加或者减少复活时间，可返回负数值，负数是减少复活时间，自身不能叠加，相同BUFF以先 生效的为准。
+									最少只能减到1秒(对的,原地复活MODIFIER_PROPERTY_REINCARNATION可以设置0.1秒)。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE </td>
 								<td> 112</td>
 								<td> GetModifierPercentageRespawnTime </td>
 								<td> Increases the respawn time of the parent by a percentage returned to it. Can return
-									negative values. 百分比增加或者减少复活时间，不能叠加。</td>
+									negative values. 百分比增加或者减少复活时间，可以返回负数，注意这里负数是增加复活时间，比如-1，是增加100%的复活时间，0.5是减少50%的复活时间。
+									自身可以叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_STACKING </td>
 								<td> 113</td>
 								<td> GetModifierStackingRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
-									negative values. Stacks with other modifiers.增加或减少复活时间,可以叠加。 </td>
+									negative values. Stacks with other modifiers.增加或减少复活时间,可以返回负数，负数是减少复活时间，自身可以叠加。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE </td>
@@ -27817,8 +27852,9 @@
 								<td> GetModifierPercentageCooldown </td>
 								<td> Increases the cooldown of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少所有技能和物品的冷却时间。注意返回正数是减少冷却,
-									比如返回50就是减去50%的冷却时间。可以叠加,但是是在第一次减去的基础上再乘以第二次的返回值，比如原本CD是15s，经过第一层BUFF 50后,
-									是7.5s，然后进过第二层BUFF 50后，是3.75s。
+									比如返回50就是减去50%的冷却时间。可以返回负数，自身可以叠加,但是是在第一次减去的基础上再乘以第二次的返回值，比如原本CD是15s，
+									经过第一层BUFF 50后,是7.5s，然后进过第二层BUFF 50后，是3.75s。
+									和MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT叠加时，先减固定，再乘以百分比。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
@@ -27833,7 +27869,7 @@
 								<td> 116</td>
 								<td> GetModifierPercentageCasttime </td>
 								<td> Increases the cast time of the parent's abilities by a percentage returned to it.
-									Can return negative values.百分比增加或减少施法时间,返回正数是减少。可以叠加,但是不知道叠加用的什么方式，应该是线性 </td>
+									Can return negative values.百分比增加或减少施法时间,返回正数是减少。可以返回负数，返回0不生效，自身不叠加,相同BUFF以数值小的为准（0不考虑）。 </td>
 							</tr>
 							
 							<tr>
@@ -27847,14 +27883,14 @@
 								<td>118</td>
 								<td> GetModifierPercentageManacost </td>
 								<td> Increases the mana cost of the parent's abilities by a percentage returned to it.
-									Can return negative values.百分比减少技能和物品耗蓝，相同Buff不能叠加,以数值大的为准,只能返回正数(是的,英语说明是错的)。
+									Can return negative values.百分比减少技能和物品耗蓝，不能返回负数(是的,英语说明是错的，正数是减少)，自身不能叠加，相同Buff以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING</td>
 								<td>119</td>
 								<td>GetModifierPercentageManacostStacking</td>
-								<td>百分比增加和减少技能和物品耗蓝,可以叠加,可以返回负数(增加蓝耗).如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
+								<td>百分比增加和减少技能和物品耗蓝,可以返回负数(增加蓝耗，正数是减少耗蓝),自身可以叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 
 							<tr>
@@ -27883,32 +27919,34 @@
 								<td> 123</td>
 								<td> GetModifierPreAttack_CriticalStrike </td>
 								<td> Procs a critical strike dealing the extra damage returned to it.设置暴击伤害,这个伤害是没计算护甲的。
-									返回100就是没有暴击，200是2倍英雄本身总攻击(白字+绿字)。不能叠加,以数值大为准，小于100的返回值无效，不跑客户端。 </td>
+									返回100就是没有暴击，200是2倍英雄本身总攻击(白字+绿字)。不能返回小于100的值，自身不能叠加,相同BUFF以数值大为准。
+									如果不做概率设计，就是百分百暴击。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE </td>
 								<td> 124</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike </td>
-								<td>设置 做为被攻击目标时，攻击单位的暴击值。 </td>
+								<td>设置 做为被攻击目标时，攻击单位的暴击值(血棘效果)。不能返回小于100的值，自身不能叠加,相同BUFF以数值大的为准。
+									如果不做概率设计，就是百分百暴击。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK </td>
 								<td> 125</td>
 								<td> GetModifierMagical_ConstantBlock </td>
-								<td>增加一个固定的 魔法伤害 格挡，计算方式是原始伤害先减去这个抵抗值，然后再计算魔抗。不能返回负数,不能叠加,以数值大的为准。</td>
+								<td>增加一个固定的 魔法伤害 格挡，计算方式是原始伤害先减去这个抵抗值，然后再计算魔抗。不能返回负数,自身不能叠加,相同BUFF以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK </td>
 								<td> 126</td>
 								<td> GetModifierPhysical_ConstantBlock </td>
 								<td> Blocks damage the parent takes by a constant returned to it. Can return negative
-									values.增加一个固定的 物理伤害 格挡。计算方式是原始伤害先减去这个抵抗值，然后再计算护甲。不能返回负数,不能叠加,以数值大的为准。</td>
+									values.增加一个固定的 物理伤害 格挡。计算方式是原始伤害先减去这个抵抗值，然后再计算护甲。不能返回负数,自身不能叠加,相同BUFF以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL </td>
 								<td> 127</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial </td>
-								<td>增加一个固定的 物理伤害 格挡。不能和自己叠加，但可以和MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
+								<td>增加一个固定的 物理伤害 格挡。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。但可以和MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
 									MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。计算方式是先
 									通过MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 									然后MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK。</td>
@@ -27917,7 +27955,7 @@
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR </td>
 								<td> 128</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor </td>
-								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算格挡,再计算护甲和魔抗。相同BUFF不叠加，以数值大的为准。
+								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算格挡,再计算护甲和魔抗。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									可以和MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。
 								计算方式是先MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,然后MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK，
 								MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL,MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK。
@@ -27927,7 +27965,7 @@
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK </td>
 								<td> 129</td>
 								<td> GetModifierTotal_ConstantBlock </td>
-								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算护甲和魔抗,再计算格挡。相同BUFF不叠加，以数值大的为准。
+								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算护甲和魔抗,再计算格挡。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									可以和 MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK 、
 									MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK叠加，但是计算方式是先通过MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR，
 									MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
@@ -27937,7 +27975,8 @@
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION </td>
 								<td> 130</td>
 								<td> GetOverrideAnimation </td>
-								<td> Forces the parent to play a specific animation.强制单位执行一个动画动作,不能被覆盖,以最先设置的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
+								<td> Forces the parent to play a specific animation.强制单位执行一个动画动作。自身不能叠加，以最先 生效的的为准。
+									返回值在GameActivity_t里找。相当于StartGesture。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT </td>
@@ -27955,7 +27994,8 @@
 								<td> MODIFIER_PROPERTY_ABSORB_SPELL </td>
 								<td> 133</td>
 								<td> GetAbsorbSpell </td>
-								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) 抵挡指向性技能,只能返回1才生效。</td>
+								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) 抵挡指向性技能,只能返回1才生效。
+									自身不能叠加，相同BUFF以返回1的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REFLECT_SPELL </td>
@@ -27967,14 +28007,14 @@
 								<td> MODIFIER_PROPERTY_DISABLE_AUTOATTACK </td>
 								<td> 135</td>
 								<td> GetDisableAutoAttack </td>
-								<td>是否自动攻击附近单位。即使设置了 自动攻击:始终,就算使用A键A空地,也不会主动攻击身边单位。返回1才生效。</td>
+								<td>是否自动攻击附近单位。即使设置了 自动攻击:始终,就算使用A键A空地,也不会主动攻击身边单位。返回1才生效。自身不叠加，相同BUFF以返回1的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_DAY_VISION </td>
 								<td> 136</td>
 								<td> GetBonusDayVision </td>
 								<td> Increases the vision of the parent during the day by a constant returned to it. Can
-									return negative values. 增加或者减少白天视野,上限值大概3000左右，可以叠加。
+									return negative values. 增加或者减少白天视野,视野总上限值大概4000左右。可以返回负数，自身可以叠加。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
@@ -27982,14 +28022,14 @@
 								<td> 137</td>
 								<td> GetBonusNightVision </td>
 								<td> Increases the vision of the parent during the night by a constant returned to it.
-									Can return negative values. 增加或者减少夜间视野,视野总上限值大概4000左右，可以叠加。
+									Can return negative values. 增加或者减少夜间视野,视野总上限值大概4000左右。可以返回负数，自身可以叠加。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE </td>
 								<td> 138</td>
 								<td> GetBonusNightVisionUnique </td>
-								<td>增加或者减少夜间视野,视野总上限值大概4000左右，相同BUFF不叠加,以数值大的为准。
+								<td>增加夜间视野,视野总上限值大概4000左右。不能返回负数，自身不能叠加,相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
@@ -27997,7 +28037,7 @@
 								<td> 139</td>
 								<td> GetBonusVisionPercentage </td>
 								<td> Increases the vision of the parent by a percentage returned to it. Can return
-									negative values. 百分比增加或者减少视野,包括白天和黑夜。可以叠加，
+									negative values. 百分比增加或者减少视野,包括白天和黑夜。可以返回负数，自身可以叠加。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
@@ -28006,7 +28046,7 @@
 								<td> GetFixedDayVision </td>
 								<td> Sets the vision of the parent during the day to a fixed value returned to it.
 									Cannot be changed by any means. 设置白天视野最大值(不是英雄实际拥有的视野，但是设置比KV视野值(一般是1800)小时,会直接减少视野)，
-									不能返回负数。相同BUFF不叠加,以数值大的为准。和 MODIFIER_PROPERTY_BONUS_DAY_VISION叠加时，最后英雄拥有的视野值是KV值+BONUS值，
+									不能返回负数。自身不能叠加，相同BUFF以数值大的为准。和 MODIFIER_PROPERTY_BONUS_DAY_VISION叠加时，最后英雄拥有的视野值是KV值+BONUS值，
 									但是无论BONUS多大都不能超过FIXED设置的值。比如FIXED返回2000(比KV视野值大),没有叠加MODIFIER_PROPERTY_BONUS_DAY_VISION时,视野是不会改变的，
 									但是一旦叠加一个BONUS,比如100,那么总视野就是1900(1800+100)。叠加一个300,总视野还是2000。视野总上限大约4000左右。<br>
 									另外如果FIXED返回1000(比KV视野值大小),叠加一个500的BONUS,没有任何效果,因为1800+500已经大于了 FIXED 的1000，视野还是1000。
@@ -28024,7 +28064,7 @@
 								<td> MODIFIER_PROPERTY_MIN_HEALTH </td>
 								<td> 142</td>
 								<td> GetMinHealth </td>
-								<td>设置单位最小的当前血量(不是总血量),受到任何攻击不会低于这个血量。</td>
+								<td>设置单位最小的当前血量(不是总血量),受到任何攻击不会低于这个血量。自身不能叠加，相同BUFF以数值小的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL </td>
@@ -28086,20 +28126,20 @@
 								<td> 152</td>
 								<td> GetModifierTurnRate_Percentage </td>
 								<td> Increases the turn rate of the parent by a percentage returned to it. Can return
-									negative values. 百分比增加或者减少转身速率。正数是加快转身速率。可以叠加。</td>
+									negative values. 百分比增加或者减少转身速率。正数是加快转身速率。可以返回负数，自身可以叠加。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TURN_RATE_OVERRIDE</td>
 								<td> 153</td>
 								<td>GetModifierTurnRate_Override</td>
-								<td>转身速率覆盖,数值越大，速率越快。
+								<td>转身速率覆盖,0-1，数值越大，速率越快。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_HEALING </td>
 								<td> 154</td>
 								<td> GetDisableHealing </td>
-								<td> Negates healing applied to the parent.是否禁止治疗,生命恢复和吸血效果。(1为禁止) </td>
+								<td> Negates healing applied to the parent.是否禁止治疗、生命恢复和吸血效果。返回1为禁止。自身不能叠加，相同BUFF以返回1的为准。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK </td>
@@ -28117,7 +28157,7 @@
 								<td> MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL </td>
 								<td> 157 </td>
 								<td> GetOverrideAttackMagical </td>
-								<td>使普通攻击对其他单位无效，只有魔法攻击有效
+								<td>使普通攻击对其他单位无效，只有魔法攻击有效。返回1生效，相同BUFF以先 生效的为准。
 
 								</td>
 							</tr>
@@ -28125,31 +28165,31 @@
 								<td> MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH </td>
 								<td> 158</td>
 								<td> GetModifierUnitStatsNeedsRefresh </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_CREEP_MULTIPLIER </td>
 								<td> 159</td>
 								<td> GetModifierBountyCreepMultiplier </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_OTHER_MULTIPLIER </td>
 								<td> 160</td>
 								<td> GetModifierBountyOtherMultiplier </td>
-								<td></td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_UNIT_DISALLOW_UPGRADING</td>
 								<td> 161</td>
-								<td>GetModifierUnitDisllowUpgrading(可能是GetModifierUnitDisallowUpgrading)</td>
-								<td>不允许升级</td>
+								<td>GetModifierUnitDisllowUpgrading</td>
+								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DODGE_PROJECTILE </td>
 								<td> 162</td>
 								<td>GetModifierDodgeProjectile</td>
-								<td>
+								<td>躲避弹道，包括有些技能、远程的普攻弹道，以及虚灵刀，否决等的弹道。返回1生效。就是跳 躲 弹道的效果。
 								</td>
 							</tr>
 							<tr>
@@ -28157,7 +28197,7 @@
 								<td> 163
 								</td>
 								<td>GetTriggerCosmeticAndEndAttack</td>
-								<td>
+								<td>不知道怎么用
 								</td>
 							</tr>	
 							<tr>
@@ -28165,7 +28205,7 @@
 								<td> 164
 								</td>
 								<td>GetModifierMaxDebuffDuration</td>
-								<td>
+								<td>好像已经无效了
 								</td>
 							</tr>
 							<tr>
@@ -28173,7 +28213,8 @@
 								<td> 165
 								</td>
 								<td>GetPrimaryStatDamageMultiplier</td>
-								<td>
+								<td>效果是 以主属性的百分比增加基础攻击。比如原始攻击50，主属性20.返回100，结果就是基础攻击变成70。可返回负数，自身可叠加。
+									不需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -28181,14 +28222,14 @@
 								<td> 166
 								</td>
 								<td>GetModifierPreAttack_DeadlyBlow</td>
-								<td>
+								<td>好像已经无效了。DeadlyBlow致命一击。
 								</td>
 							</tr>							<tr>
 								<td>MODIFIER_PROPERTY_ALWAYS_AUTOATTACK_WHILE_HOLD_POSITION</td>
 								<td> 167
 								</td>
 								<td>GetAlwaysAutoAttackWhileHoldPosition</td>
-								<td>
+								<td>好像已经无效了
 								</td>
 							</tr>
 							<tr>
@@ -28198,7 +28239,8 @@
 								</td>
 								<td> OnSpellTargetReady
 								</td>
-								<td>
+								<td>施放 对目标的指向性技能时，判断目标是否存在。无目标技能不生效，在MODIFIER_EVENT_ON_ABILITY_START之后，
+									MODIFIER_EVENT_ON_SPENT_MANA之前。施放技能序列2。
 								</td>
 							</tr>
 							<tr>
@@ -28208,7 +28250,7 @@
 								</td>
 								<td> OnAttackRecord
 								</td>
-								<td>记录攻击动作,假动作也记录。攻击动作序列2
+								<td>记录攻击动作,假动作也记录。普通攻击动作序列2。
 								</td>
 							</tr>
 							<tr>
@@ -28218,7 +28260,7 @@
 								</td>
 								<td> OnAttackStart
 								</td>
-								<td> Event that fires when an attack starts.攻击动作序列1
+								<td> Event that fires when an attack starts.普通攻击开始标志，普通攻击动作序列1
 								</td>
 							</tr>
 							<tr>
@@ -28227,7 +28269,7 @@
 								<td> 171</td>
 								<td> OnAttack
 								</td>
-								<td> Event that fires when an attack was completed, regardless of the result of it.产生攻击弹道,假动作不触发,攻击动作序列3。
+								<td> Event that fires when an attack was completed, regardless of the result of it.产生攻击弹道,假动作不触发,普通攻击动作序列3。
 								</td>
 							</tr>
 							<tr>
@@ -28236,7 +28278,7 @@
 								<td> 172</td>
 								<td> OnAttackLanded
 								</td>
-								<td> Event that fires when an attack landed on its target successfully.当攻击弹道到达目标,攻击动作序列4。
+								<td> Event that fires when an attack landed on its target successfully.当攻击弹道到达目标,普通攻击动作序列4。
 								</td>
 							</tr>
 							<tr>
@@ -28245,7 +28287,7 @@
 								<td> 173</td>
 								<td> OnAttackFail
 								</td>
-								<td> Event that fires when an attack failed to land on its target.
+								<td> Event that fires when an attack failed to land on its target.当攻击失败时，MISS或者跳躲了等。
 								</td>
 							</tr>
 							<tr>
@@ -28255,7 +28297,7 @@
 								</td>
 								<td> OnAttackAllied
 								</td>
-								<td> Event that fires when attacking allies.
+								<td> Event that fires when attacking allies.当攻击队友时，只要做出了攻击动作,没有弹道命中也会生效。
 								</td>
 							</tr>
 							<tr>
@@ -28264,7 +28306,7 @@
 								<td> 175</td>
 								<td> OnProjectileDodge
 								</td>
-								<td> Event that fires when dodging a projectile. (Disjointing it)
+								<td> Event that fires when dodging a projectile. (Disjointing it)当躲避了 普攻、技能、道具等的弹道。
 								</td>
 							</tr>
 							<tr>
@@ -28273,7 +28315,7 @@
 								<td> 176</td>
 								<td> OnOrder
 								</td>
-								<td> Event that fires when an order is given to the parent.
+								<td> Event that fires when an order is given to the parent.当执行一个命令时，比如移动，施法等,好像只跑服务器。
 								</td>
 							</tr>
 							<tr>
@@ -28282,7 +28324,7 @@
 								<td> 177</td>
 								<td> OnUnitMoved
 								</td>
-								<td> Event that fires when a unit moved.
+								<td> Event that fires when a unit moved.当单位移动时。
 								</td>
 							</tr>
 							<tr>
@@ -28291,7 +28333,7 @@
 								<td> 178</td>
 								<td> OnAbilityStart
 								</td>
-								<td> Event that fires when starting to use an ability.
+								<td> Event that fires when starting to use an ability.当施放技能开始的标志，施放技能序列1。
 								</td>
 							</tr>
 							<tr>
@@ -28301,7 +28343,7 @@
 								</td>
 								<td> OnAbilityExecuted
 								</td>
-								<td> Event that fires when finishing the ability phase stage of the ability.
+								<td> Event that fires when finishing the ability phase stage of the ability.开始施法动作，施放技能序列4。
 								</td>
 							</tr>
 							<tr>
@@ -28310,7 +28352,7 @@
 								<td> 180</td>
 								<td> OnAbilityFullyCast
 								</td>
-								<td> Event that fires when the ability has completely activated.
+								<td> Event that fires when the ability has completely activated.施法动作完毕，施放技能序列5。
 								</td>
 							</tr>
 							<tr>
@@ -28319,7 +28361,7 @@
 								<td> 181</td>
 								<td> OnBreakInvisibility
 								</td>
-								<td> Event that fires when breaking invisibility.
+								<td> Event that fires when breaking invisibility.好像已经无效了
 								</td>
 							</tr>
 							<tr>
@@ -28329,7 +28371,7 @@
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
-								<td> Event that fires when finishing a channel.
+								<td> Event that fires when finishing a channel.蓄力持续施法结束(比如光法的波),施放技能序列6，不需要蓄力的技能不生效。
 								</td>
 							</tr>
 							<tr>
@@ -28357,7 +28399,7 @@
 								</td>
 								<td> OnTakeDamage
 								</td>
-								<td> Event that fires when taking damage.攻击弹道对目标产生实际伤害,攻击动作序列8。
+								<td> Event that fires when taking damage.攻击弹道对目标产生实际伤害,普通攻击动作序列8。
 								</td>
 							</tr>
 							<tr>
@@ -28367,7 +28409,7 @@
 								</td>
 								<td> OnDeathPrevented
 								</td>
-								<td>
+								<td>当单位要死亡时。
 								</td>
 							</tr>
 							<tr>
@@ -28377,7 +28419,7 @@
 								</td>
 								<td> OnStateChanged
 								</td>
-								<td> Event that fires when a state is changed.
+								<td> Event that fires when a state is changed.当单位状态改变时，比如隐身时，被晕时。注意，会发出2遍指令。
 								</td>
 							</tr>
 							<tr>
@@ -28393,13 +28435,13 @@
 								<td>MODIFIER_EVENT_ON_PROCESS_CLEAVE</td>
 								<td>189</td>
 								<td>OnProcessCleave</td>
-								<td></td>
+								<td>当使用分裂攻击时。拿狂战斧攻击总是生效，包括远程拿狂战斧。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_DAMAGE_CALCULATED</td>
 								<td>190</td>
 								<td>OnDamageCalculated</td>
-								<td>在OnAttackLanded之后,开始计算经过各种BUFF后的伤害,攻击动作序列5.</td>
+								<td>在OnAttackLanded之后,开始计算经过各种BUFF后的伤害,普通攻击动作序列5.</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACKED
@@ -28408,7 +28450,7 @@
 								</td>
 								<td> OnAttacked
 								</td>
-								<td> Event that fires when being attacked.弹道对目标准备产生伤害，攻击动作序列6。
+								<td> Event that fires when being attacked.弹道对目标准备产生伤害，普通攻击动作序列6。
 								</td>
 							</tr>
 							<tr>
@@ -28417,7 +28459,7 @@
 								<td> 192</td>
 								<td> OnDeath
 								</td>
-								<td> Event that fires when dying.
+								<td> Event that fires when dying.当单位死亡时。
 								</td>
 							</tr>
 							<tr>
@@ -28427,7 +28469,7 @@
 								</td>
 								<td> OnRespawn
 								</td>
-								<td> Event that fires when respawning.
+								<td> Event that fires when respawning.当单位重生时。
 								</td>
 							</tr>
 							<tr>
@@ -28437,7 +28479,7 @@
 								</td>
 								<td> OnSpentMana
 								</td>
-								<td> Event that fires when spending mana on items or abilities.
+								<td> Event that fires when spending mana on items or abilities.使用技能时消耗魔法,施放技能序列3。
 								</td>
 							</tr>
 							<tr>
@@ -28447,7 +28489,7 @@
 								</td>
 								<td> OnTeleporting
 								</td>
-								<td> Event that fires when starting to teleporting.
+								<td> Event that fires when starting to teleporting.当开始TP时。
 								</td>
 							</tr>
 							<tr>
@@ -28456,7 +28498,7 @@
 								<td> 196</td>
 								<td> OnTeleported
 								</td>
-								<td> Event that fires when completing a teleport.
+								<td> Event that fires when completing a teleport.当TP结束后。
 								</td>
 							</tr>
 							<tr>
@@ -28466,7 +28508,7 @@
 								</td>
 								<td> OnSetLocation
 								</td>
-								<td>
+								<td>当被移动到某个位置，比如跳刀，帕克的幻象法球。
 								</td>
 							</tr>
 							<tr>
@@ -28475,7 +28517,9 @@
 								<td> 198</td>
 								<td> OnHealthGained
 								</td>
-								<td>
+								<td>当获得加血时，比如本身的生命回复，其他单位的加血等。要判断是否自身加血，
+									要params.unit ==self:GetParent(),获得加血量params.gain。当满血时，获得任何血量都不生效。生命回复最小间隔是0.1秒。
+									比如生命回复100,骑士是每0.1回复10。当生命回复小于1时，会凑成1回复。比如回复值0.5，实际是2秒回复1。
 								</td>
 							</tr>
 							<tr>
@@ -28484,7 +28528,7 @@
 								<td> 199</td>
 								<td> OnManaGained
 								</td>
-								<td>
+								<td>获得加蓝时，满蓝时获得任何蓝量任然生效。其他同上。
 								</td>
 							</tr>
 							<tr>
@@ -28494,7 +28538,7 @@
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
-								<td>判断伤害是否致死，在OnTakeDamage之前，攻击动作序列7
+								<td>判断伤害是否致死，在OnTakeDamage之前，普通攻击动作序列7。
 								</td>
 							</tr>
 							<tr>
@@ -28503,7 +28547,7 @@
 								<td> 201</td>
 								<td> OnHeroKilled
 								</td>
-								<td> Event that fires when a hero is killed.
+								<td> Event that fires when a hero is killed.当英雄被击杀时，被害者是params.target,攻击者是 params.attacker。 
 								</td>
 							</tr>
 							<tr>
@@ -28512,7 +28556,8 @@
 								<td> 202</td>
 								<td> OnHealReceived
 								</td>
-								<td> Event that fires when being healed.
+								<td> Event that fires when being healed.当获得治疗时,要判断是否自身加血，
+									要params.unit ==self:GetParent(),获得加血量params.gain。满血任然生效。
 								</td>
 							</tr>
 							<tr>
@@ -28521,7 +28566,7 @@
 								<td> 203</td>
 								<td> OnBuildingKilled
 								</td>
-								<td> Event that fires when a building is destroyed.
+								<td> Event that fires when a building is destroyed.当建筑物被摧毁时。
 								</td>
 							</tr>
 							<tr>
@@ -28531,7 +28576,7 @@
 								</td>
 								<td> OnModelChanged
 								</td>
-								<td> Event that fires when the model changes.
+								<td> Event that fires when the model changes.当模型更换时。
 								</td>
 							</tr>
 							<tr>
@@ -28541,7 +28586,7 @@
 								</td>
 								<td> OnModifierAdded
 								</td>
-								<td>
+								<td>添加MODIFIER时,获得的单位是params.unit。自身添加时也会生效。
 								</td>
 							</tr>
 							<tr>
@@ -28550,7 +28595,9 @@
 								<td> 206</td>
 								<td> OnTooltip
 								</td>
-								<td>
+								<td>设置提示里MODIFIER_PROPERTY_TOOLTIP的数值。这个在本地化文本里,比如
+									"DOTA_Tooltip_attack_speed_percentage1_Description"      "高级速度下，复仇的攻击力提高%dMODIFIER_PROPERTY_TOOLTIP%%%点。" 
+									%%是为了打出%这个符号。
 								</td>
 							</tr>
 							<tr>
@@ -28559,7 +28606,7 @@
 								<td> 207</td>
 								<td> GetModifierModelChange
 								</td>
-								<td> Changes the parent's model.
+								<td> Changes the parent's model.更换模型,返回模型目录地址。比如"models/heroes/lycan/lycan_wolf.vmdl"
 								</td>
 							</tr>
 							<tr>
@@ -28568,7 +28615,7 @@
 								<td> 208</td>
 								<td> GetModifierModelScale
 								</td>
-								<td> Changes the parent's model scale.
+								<td> Changes the parent's model scale.改变模型大小,可返回负数,负数是缩小,自身可叠加。
 								</td>
 							</tr>
 							<tr>
@@ -28578,7 +28625,7 @@
 								</td>
 								<td> GetModifierScepter
 								</td>
-								<td>
+								<td>A帐BUFF，返回1生效。1可以覆盖0，0不能覆盖1。
 								</td>
 							</tr>
 							<tr>
@@ -28588,7 +28635,7 @@
 								</td>
 								<td> GetModifierShard
 								</td>
-								<td>
+								<td>好像已经无效了。
 								</td>
 							</tr>
 							<tr>
@@ -28598,7 +28645,7 @@
 								</td>
 								<td> GetModifierRadarCooldownReduction
 								</td>
-								<td>
+								<td>好像已经无效了。
 								</td>
 							</tr>
 
@@ -28608,7 +28655,7 @@
 								<td> 212</td>
 								<td> GetActivityTranslationModifiers
 								</td>
-								<td>
+								<td>相当于AddActivityModifier。如果有多个值要添加，要做多个MODIFIER。
 								</td>
 							</tr>
 							<tr>
@@ -28618,7 +28665,7 @@
 								</td>
 								<td> GetAttackSound
 								</td>
-								<td>
+								<td>攻击声音,比如返回 "Hero_Gyrocopter.Attack"
 								</td>
 							</tr>
 							<tr>
@@ -28627,7 +28674,7 @@
 								<td> 214</td>
 								<td> GetUnitLifetimeFraction
 								</td>
-								<td>
+								<td>return ( ( self:GetDieTime() - GameRules:GetGameTime() ) / self:GetDuration() )
 								</td>
 							</tr>
 							<tr>
@@ -28636,7 +28683,7 @@
 								<td> 215</td>
 								<td> GetModifierProvidesFOWVision
 								</td>
-								<td> Return 1 if parent's model would show to his enemies.
+								<td> Return 1 if parent's model would show to his enemies.是否提供给敌方视野。这个视野只包含英雄本身,没有周围的视野。
 								</td>
 							</tr>
 							<tr>
@@ -28646,7 +28693,8 @@
 								</td>
 								<td> GetModifierSpellsRequireHP
 								</td>
-								<td>
+								<td>施放技能是否变成不耗蓝,而是耗血。只要返回值大于0，使用技能就不耗蓝了。返回1表示耗血是原本耗蓝的100%，耗蓝可以通过BUFF改变,扣得血量也会跟着改变。
+									可以返回负数,但是不会变成加血，最多就是不扣血。自身可以叠加。
 								</td>
 							</tr>
 							<tr>
@@ -28655,7 +28703,7 @@
 								<td> 217</td>
 								<td> GetForceDrawOnMinimap
 								</td>
-								<td>
+								<td>耗血已经无效了。
 								</td>
 							</tr>
 							<tr>
@@ -28664,7 +28712,7 @@
 								<td> 218</td>
 								<td> GetModifierDisableTurning
 								</td>
-								<td>禁止转身
+								<td>禁止转身,效果跟马尔斯举盾后的移动效果一样。返回1生效。
 								</td>
 							</tr>
 							<tr>
@@ -28673,7 +28721,7 @@
 								<td> 219</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
-								<td>
+								<td>忽略施法角度,就是背对人也能立刻放技能。返回1生效。
 								</td>
 							</tr>
 							<tr>
@@ -28682,7 +28730,7 @@
 								<td> 220</td>
 								<td> GetModifierChangeAbilityValue
 								</td>
-								<td>
+								<td>不知道怎么用
 								</td>
 							</tr>
 							<tr>
@@ -28691,7 +28739,9 @@
 								<td> 221</td>
 								<td> GetModifierOverrideAbilitySpecial
 								</td>
-								<td>
+								<td>指定要修改的特殊值。技能名称是params.ability:GetAbilityName(),
+									特殊值名称是params.ability_special_value。只有确定了params.ability_special_value后,
+									返回1才能自动开启MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL_VALUE，返回0不会开启VALUE。
 								</td>
 							</tr>
 							<tr>
@@ -28700,7 +28750,8 @@
 								<td> 222</td>
 								<td> GetModifierOverrideAbilitySpecialValue
 								</td>
-								<td>
+								<td>修改特殊值，特殊值等级params.ability_special_level,就是技能等级，但是 是从0开始。
+									获取原始特殊值params.ability:GetLevelSpecialValueNoOverride( 特殊值名称, 技能等级 )
 								</td>
 							</tr>
 							<tr>
@@ -28710,7 +28761,7 @@
 								</td>
 								<td> GetModifierAbilityLayout
 								</td>
-								<td> Changes the ability layout.
+								<td> Changes the ability layout.不知道怎么用。
 								</td>
 							</tr>
 							<tr>
@@ -28719,7 +28770,7 @@
 								<td> 224</td>
 								<td> OnDominated
 								</td>
-								<td> An event that fires when a unit is being dominated.当一个单位被控制时触发的事件。
+								<td> An event that fires when a unit is being dominated.当一个单位被支配时触发的事件。
 								</td>
 							</tr>
 							<tr>
@@ -28729,7 +28780,7 @@
 								</td>
 								<td> GetModifierTempestDouble
 								</td>
-								<td>
+								<td>是否是风暴双雄中的复制体。电狗大的复制体，不能购买和装备物品。
 								</td>
 							</tr>
 							<tr>
@@ -28739,7 +28790,7 @@
 								</td>
 								<td> PreserveParticlesOnModelChanged
 								</td>
-								<td>
+								<td>在模型改变时保留特效，好像已经无效了。
 								</td>
 							</tr>
 							<tr>
@@ -28748,7 +28799,7 @@
 								<td> 227</td>
 								<td> OnAttackFinished
 								</td>
-								<td>
+								<td>攻击动作完成(不是伤害完成，比如弹道很远，还没命中目标但是攻击动作已经完成了，就已经调用了此API)。普通攻击动作序列10(不一定是10)。
 								</td>
 							</tr>
 							<tr>
@@ -28767,7 +28818,7 @@
 								</td>
 								<td> GetModifierCanAttackTrees
 								</td>
-								<td>
+								<td>不是能攻击树，是鼠标移动到树上是，树会亮，呈现被选择的状态，以树做为施法目标，比如大圣的上树。
 								</td>
 							</tr>
 							<tr>
@@ -28777,7 +28828,7 @@
 								</td>
 								<td> GetVisualZDelta
 								</td>
-								<td>
+								<td>设置单位 在Z轴上 的高度。比如100，就是飞起来了。-100就已经在地下，看不见了。
 								</td>
 							</tr>
 							<tr>
@@ -28786,7 +28837,7 @@
 								<td> 231</td>
 								<td>GetModifierIncomingDamage_Illusion
 								</td>
-								<td>
+								<td>增加或者减少 幻象 将要 承受的伤害。
 								</td>
 							</tr>
 							<tr>
@@ -28794,7 +28845,7 @@
 								<td> 232</td>
 								<td>GetModifierNoVisionOfAttacker
 								</td>
-								<td>
+								<td>没有攻击者的视野，返回1生效。
 								</td>
 							</tr>
 							<tr>
@@ -28802,7 +28853,9 @@
 								<td> 233</td>
 								<td>OnTooltip2
 								</td>
-								<td>
+								<td>设置提示里MODIFIER_PROPERTY_TOOLTIP2的数值。这个在本地化文本里, 比如100
+									"DOTA_Tooltip_attack_speed_percentage1_Description" "高级速度下，
+									复仇的攻击力提高%dMODIFIER_PROPERTY_TOOLTIP2%%%点。"    注意%%是为了打出%这个符号。
 								</td>
 							</tr>
 							<tr>
@@ -28810,7 +28863,7 @@
 								<td> 234</td>
 								<td>OnAttackRecordDestroy
 								</td>
-								<td>攻击记录被清除，攻击动作序列9。
+								<td>攻击记录被清除，普通攻击动作序列9。施放技能序列7(施放技能,命中目标后,会消除伤害记录，但是没有创建记录)。
 								</td>
 							</tr>
 							<tr>
@@ -28819,7 +28872,7 @@
 								</td>
 								<td>OnProjectileObstructionHit
 								</td>
-								<td>
+								<td>不知道怎么用
 								</td>
 							</tr>
 							<tr>
@@ -28827,7 +28880,7 @@
 								<td> 236</td>
 								<td>GetSuppressTeleport
 								</td>
-								<td>
+								<td>好像已经失效了。
 								</td>
 							</tr>
 							<tr>
@@ -28835,7 +28888,7 @@
 								<td> 237</td>
 								<td>OnAttackCancelled
 								</td>
-								<td>
+								<td>当攻击取消时。
 								</td>
 							</tr>
 							<tr>
@@ -28844,7 +28897,7 @@
 								</td>
 								<td>GetSuppressCleave
 								</td>
-								<td>
+								<td>好久已经无效了。
 								</td>
 							</tr>
 							<tr>
@@ -28853,7 +28906,7 @@
 								</td>
 								<td>BotAttackScoreBonus
 								</td>
-								<td>
+								<td>不知道怎么用
 								</td>
 							</tr>
 							<tr>
@@ -28863,8 +28916,10 @@
 								<td>GetModifierAttackSpeedReductionPercentage
 								</td>
 								<td>
-									被施加减速BUFF后,相对于减速技能参数的减速的比列。比如减速技能要减速受害者的50%,
-									受害者本身有该Modifier属性return 50,那么实际受害者就会收到25%的减速,return 0,就相当于无视减速。
+									被施加减速BUFF后,百分比增加或者减少 被减的移速，正数是减少，最高100。比如减速技能要减速受害者50%的移速,
+									return 100,就是100%承受这个减速，结果是50%乘以100%，受害者承受50%的减速。return 50,就是50%承受，
+									结果是50%乘以50%等于25%,受害者承受25%的减速。return 0就相当于无视减速。
+									可以返回负数，变成加速，负数可以-100000,。自身不叠加，相同BUFF以数值小的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
@@ -28874,8 +28929,10 @@
 								</td>
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
-								<td>被施加减速BUFF后,相对于减速技能参数的减速的比列。比如减速技能要减速受害者的50%,
-									受害者本身有该Modifier属性return 50,那么实际受害者就会受到25%的减速,return 0,就相当于无视减速。
+								<td>被施加减速BUFF后,百分比增加或者减少 被减的移速，正数是减少，最高100。比如减速技能要减速受害者50%的移速,
+									return 100,就是100%承受这个减速，结果是50%乘以100%，受害者承受50%的减速。return 50,就是50%承受，
+									结果是50%乘以50%等于25%,受害者承受25%的减速。return 0就相当于无视减速。
+									可以返回负数，变成加速，负数可以-1000000。自身不叠加，相同BUFF以数值小的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
@@ -28894,7 +28951,9 @@
 								</td>
 								<td>GetModifierAttackSpeedPercentage
 								</td>
-								<td>在基础攻速上(包括敏捷加成后的，不包括直接加的攻速)，百分比增加攻击速度，修改的是面板上的攻击速度值。如果返回的是变量，需要使用SetHasCustomTransmitterData。
+								<td>百分比增加或者减少攻击速度，直接根据面板上攻速值进行计算。不被系统最大最小值限制，也不被MODIFIER_PROPERTY_IGNORE_ATTACKSPEED_LIMIT限制。
+									和MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT叠加时，先计算CONSTANT，再算PERCENTAGE。
+									可以返回负数，自身可叠加。攻速值为负，则达成最高攻击间隔0.033。如果返回的是变量，需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
 							<tr>
@@ -28904,7 +28963,7 @@
 								</td>
 								<td>OnAttemptProjectileDodge
 								</td>
-								<td>
+								<td>不知道怎么用
 								</td>
 							</tr>
 							<tr>
@@ -28914,7 +28973,7 @@
 								</td>
 								<td>Last
 								</td>
-								<td>
+								<td>不知道什么用
 								</td>
 							</tr>
 							<tr>
@@ -34932,7 +34991,7 @@
 			</div>
 			<div id='HeroAndAbilityName'>
 				<div id='contentname'>
-					<div id='Item'>英雄和技能名称</div>
+					英雄和技能名称
 				</div>
 				<div id='HeroName'>
 					<div id='eventcontent'>
@@ -36409,7 +36468,7 @@
 			</div>
 			<div id='UnitAndAbilityName'>
 				<div id='contentname'>
-					<div id='Item'>其他单位和技能名称</div>
+					其他单位和技能名称
 				</div>
 				<div id='Name'>
 					<div id='eventcontent'>
@@ -38050,7 +38109,7 @@
 			</div>
 			<div id='InnerModifier'>
 				<div id='contentname'>
-					<div id='Item'>内置Modifier</div>
+					内置Modifier
 				</div>
 				<div id='Name'>
 					<div id='eventcontent'>
@@ -40585,6 +40644,7 @@
 					</div>
 				</div>
 			</div>
+	
 		</div>
 	</div>
 </body>
