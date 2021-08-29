@@ -331,6 +331,8 @@
 							<li><a href="#SteamInfo">SteamInfo</a></li>
 							<li><a href="#CDOTA_BaseNPC_Watch_Tower">CDOTA_BaseNPC_Watch_Tower</a></li>
 							<li><a href="#CDOTA_NeutralSpawner">CDOTA_NeutralSpawner</a></li>
+							<li><a href="#Hooks">Hooks</a></li>
+							<li><a href="#VLua">VLua</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -449,7 +451,7 @@
 		</div>
 		<div id='content'>
 			<div id='note'>
-				最后修改时间:2020年12月20日<br>
+				最后修改时间:2021年08月27日<br>
 				注:1、注释中有3个？的为不确定解释。
 			</div>
 
@@ -577,6 +579,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td>Clamp
+								</td>
+								<td>float Clamp(float val, float min,float max) 
+								</td>
+								<td> 返回的value介于min、max之间，若value小于min，返回min，若大于max，返回max。utilsinit.lua
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.ClearTeamCustomHealthbarColor"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.ClearTeamCustomHealthbarColor">
 										ClearTeamCustomHealthbarColor</a>
@@ -588,8 +598,8 @@
 							</tr>
 							<tr>
 								<td>CreateDamageInfo
-								<td> handle CreateDamageInfo(handle Inflictor, handle Attacker, Vector_3, Vector_4,
-									float Damage, int_6 )
+								<td> handle CreateDamageInfo(handle Inflictor, handle Attacker, Vector force, Vector hitPos,
+									float Damage, int damageTypes )
 								</td>
 								<td> Allocate a damageinfo object, used as an argument to TakeDamage(). Call
 									DestroyDamageInfo( hInfo ) to free the object。分配一个伤害信息对象，用作takedamage的参数
@@ -934,6 +944,11 @@
 								</td>
 							</tr>
 							<tr>
+								<td>DeepPrint</td>
+								<td>void DeepPrint(variable content)</td>
+								<td>深度打印,但是不打印表的元表和bool值。content可以是字符串、数字、表。要打印元表要使用DeepPrintTable(table,"",true) </td>
+							</tr>
+							<tr>
 								<td>DestroyDamageInfo</td>
 								<td>void DestroyDamageInfo( handle_1 )</td>
 								<td>Free a damageinfo object that was created with CreateDamageInfo(). </td>
@@ -996,6 +1011,13 @@
 								</td>
 								<td> UniqueString:使用任意的根字符串构造一个保证在VM脚本运行周期内唯一的字符串。当给表增加数据但不确定已用关键字时有用
 								</td>
+							</tr>
+
+							<tr>
+								<td>UniqueString</td>
+								<td>string UniqueString([string:additional])</td>
+								<td>生成一个字符串，保证在脚本VM的整个生命周期中都是唯一的，并带有一个可选的参数，用于添加标识。
+									比如UniqueString()就可以产生一个唯一的字符串_A4324D_,而UniqueString("ABC")就是产生_A4324D_ABC,有了这个ABC可以方便查找。</td>
 							</tr>
 							<tr>
 								<td>DotProduct</td>
@@ -1265,9 +1287,9 @@
 							<tr>
 								<td>  GetAbilityKeyValuesByName
 								</td>
-								<td> table GetAbilityKeyValuesByName( string_1 )
+								<td> table GetAbilityKeyValuesByName( string abilityName )
 								</td>
-								<td> Get ability data by ability name.	
+								<td> Get ability data by ability name.获取指定技能的KV值。	
 								</td>
 							</tr>
 							<tr>
@@ -1314,7 +1336,7 @@
 								</td>
 								<td> int GetFrameCount()
 								</td>
-								<td> 返回引擎当前的帧数
+								<td> 返回引擎当前的帧数总和。
 								</td>
 							</tr>
 							<tr>
@@ -1705,9 +1727,9 @@
 										title="Dota 2 Workshop Tools/Scripting/API/Global.LoadKeyValues">
 										LoadKeyValues</a>
 								</td>
-								<td> table LoadKeyValues(string a)
+								<td> table LoadKeyValues(string filePath)
 								</td>
-								<td> 用给定的关键字文件创建table
+								<td> 在指定文件里读取KV值。
 								</td>
 							</tr>
 							<tr>
@@ -1717,7 +1739,7 @@
 								</td>
 								<td> table LoadKeyValuesFromString(string a)
 								</td>
-								<td> 用给定的关键字string创建table
+								<td> 从字符串里读取KV值。
 								</td>
 							</tr>
 							<tr>
@@ -1732,7 +1754,7 @@
 								</td>
 								<td> int MakeStringToken(string a)
 								</td>
-								<td> 检查给定的hScript是否是有效实体（？）
+								<td>用字符串生成一个 整数，可以用来做随机种子。
 								</td>
 							</tr>
 							<tr>
@@ -1751,7 +1773,7 @@
 								<td> void MinimapEvent(int TeamID, handle Entity, int X, int Y, int EventType, int
 									Duration)
 								</td>
-								<td> 设置一个小地图事件。
+								<td> 设置一个小地图事件。EventType在常量DOTAMinimapEvent_t里
 								</td>
 							</tr>
 							<tr>
@@ -1903,7 +1925,7 @@
 								</td>
 								<td> int RandomInt(int a, int b)
 								</td>
-								<td> 获取范围内随机int
+								<td> 获取范围内随机int,还可以用于做概率。比如33%可以RandomInt(1,3) == 1，10%可以RandomInt(1,10) == 1。
 								</td>
 							</tr>
 							<tr>
@@ -1943,9 +1965,9 @@
 							<tr>
 								<td> RemapValClamped
 								</td>
-								<td> float RemapValClamped( float_1, float_2, float_3, float_4, float_5 )
+								<td> float RemapValClamped( float input, float_2, float_3, float_4, float_5 )
 								</td>
-								<td> 
+								<td> Remap a value in the range [a,b] to [c,d], clamping the output to the range.utilsinit.lua
 								</td>
 							</tr>
 							<tr>
@@ -1984,7 +2006,7 @@
 								</td>
 								<td> bool RollPercentage(int a)
 								</td>
-								<td> 随机生成1-100内的数，小于等于给定数则返回true
+								<td> 随机生成1-100内的数，小于等于给定数则返回true,做概率用。17%的概率就是RollPercentage(17)
 								</td>
 							</tr>
 							<tr>
@@ -1992,7 +2014,7 @@
 								</td>
 								<td> bool RollPseudoRandomPercentage( unsigned chance, int pseudo_random_id, handle unit )
 								</td>
-								<td> 伪随机
+								<td> 伪随机，但有BUG，并不是伪随机。
 								</td>
 							</tr>
 							<tr>
@@ -3422,7 +3444,7 @@
 								<td> void SetContextThink(string name, handle func, float delay)
 								</td>
 								<td> 在这个实体上设置一个计时器，可以用来设置多少秒执行一次或者多少秒后执行这个函数。函数func中返回数字来设置执行间隔，最小0.03（0-0.03的值都将默认为0.03）。return
-									除了大于等于0的数和true以外的值以及无返回值，都将不会再执行下次THINK了，比如nil只执行一次。如果要执行一个类的函数，可以使用Dynamic_Wrap(handle
+									除了大于等于0的数和true以外的值以及无返回值，都将不会再执行下次THINK了，比如nil只执行一次，也可以使用StopThink停止。如果要执行一个类的函数，可以使用Dynamic_Wrap(handle
 									class,string funcname)class可使用self做参数或者直接使用classname.funcname（注意没有（））。
 								</td>
 							</tr>
@@ -3450,7 +3472,7 @@
 								</td>
 								<td> void SetFriction(float a)
 								</td>
-								<td> 设置玩家阻力,无视物体
+								<td> 设置摩擦力,无视物体
 								</td>
 							</tr>
 
@@ -3461,7 +3483,7 @@
 								</td>
 								<td> void SetGravity(float a)
 								</td>
-								<td> 设置玩家引力,无视物体
+								<td> 设置重力,无视物体
 								</td>
 							</tr>
 
@@ -7901,7 +7923,7 @@
 								</td>
 								<td> bool IsCosmetic( hEntity )
 								</td>
-								<td> Is this a cosmetic only ability?
+								<td> Is this a cosmetic only ability?是否是活动性质的技能，比如击掌，打鼓,丢气球等。
 								</td>
 							</tr>
 							<tr>
@@ -9944,7 +9966,7 @@
 								</td>
 								<td> bool IsNightmared()
 								</td>
-								<td> 是否在做噩梦？？？</td>
+								<td> 是否在被噩梦,祸乱之源1技能。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsOpposingTeam"
@@ -13696,7 +13718,7 @@
 								</td>
 								<td> int GetEffectAttachType()
 								</td>
-								<td> 通过GetEffectName获取将添加的粒子特效类型
+								<td> 设置GetEffectName这个特效的附着类型,在模型里查看Attachments.
 								</td>
 							</tr>
 							<tr>
@@ -19559,9 +19581,10 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.CreateParticle">
 										CreateParticle</a>
 								</td>
-								<td> int CreateParticle(string particleName, int particleAttach, handle owningEntity)
+								<td> int CreateParticle(string particlePath, int particleAttach, handle owningEntity)
 								</td>
-								<td> 创建一个新的粒子特效
+								<td> 创建一个新的粒子特效,返回一个particleID。参数particlePath是特效文件的路径,比如particles/msg_fx/msg_gold.vpcf。
+									particleAttach是特效产生或者附着的位置，在常量ParticleAttachment_t里。owningEntity是拥有者实体,某些情况可以为nil。
 								</td>
 							</tr>
 							<tr>
@@ -19569,10 +19592,9 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.CreateParticleForPlayer">
 										CreateParticleForPlayer</a>
 								</td>
-								<td> int CreateParticleForPlayer(string particleName, int particleAttach, handle
-									owningEntity, handle owningPlayer)
+								<td> int CreateParticleForPlayer(string particlePath, int particleAttach, handle owningEntity, handle owningPlayer)
 								</td>
-								<td> 创建一个只对指定玩家播放的粒子特效
+								<td> 创建一个只对指定玩家播放的粒子特效，返回一个particleID。
 								</td>
 							</tr>
 							<tr>
@@ -19580,9 +19602,9 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.CreateParticleForTeam">
 										CreateParticleForTeam</a>
 								</td>
-								<td> int CreateParticleForTeam(string string_1, int int_2, handle handle_3, int int_4)
+								<td> int CreateParticleForTeam(string particlePath, int particleAttach, handle owningEntity, int teamNumber)
 								</td>
-								<td> 创建一个仅为某方队伍播放的粒子特效。
+								<td> 创建一个仅为某方队伍播放的粒子特效，返回一个particleID。
 								</td>
 							</tr>
 							<tr>
@@ -19592,7 +19614,7 @@
 								</td>
 								<td> void DestroyParticle(int particleID, bool immediately)
 								</td>
-								<td> 清除粒子。
+								<td> 清除粒子,immediately是否立即清除。
 								</td>
 							</tr>
 							<tr>
@@ -19600,7 +19622,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.GetParticleReplacement">
 										GetParticleReplacement</a>
 								</td>
-								<td> string GetParticleReplacement(string a, handle b)
+								<td> string GetParticleReplacement(string particlePath, handle b)
 								</td>
 								<td> No Description Set
 								</td>
@@ -19620,7 +19642,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.SetParticleAlwaysSimulate">
 										SetParticleAlwaysSimulate</a>
 								</td>
-								<td> void SetParticleAlwaysSimulate(int a)
+								<td> void SetParticleAlwaysSimulate(int particleId)
 								</td>
 								<td> No Description Set
 								</td>
@@ -19632,7 +19654,7 @@
 								</td>
 								<td> void SetParticleControl(int particleId, int controlPoint, Vector controlData)
 								</td>
-								<td> 设置控制粒子特效的控制点数据
+								<td> 设置控制粒子特效的控制点数据,controlData是通过Vector(A,B,C)来传递参数，不是坐标。
 								</td>
 							</tr>
 							<tr>
@@ -19640,15 +19662,15 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.SetParticleControlEnt">
 										SetParticleControlEnt</a>
 								</td>
-								<td> void SetParticleControlEnt(int ParticleID, int controlPoint, handle target, 
-									int ParticleAttachment_t, string attachment, Vector f, bool	lockOrientation)
+								<td> void SetParticleControlEnt(int particleID, int controlPoint, handle target, 
+									int particleAttachment_t, string attachment, Vector castPostion, bool lockOrientation)
 								</td>
-								<td> No Description Set
+								<td> attachment是附着点,在模型里查看Attachments.
 								</td>
 							</tr>
 							<tr>
 								<td>SetParticleControlFallback</td>
-								<td>void SetParticleControlFallback( int Index, int Point, Vector_3 )</td>
+								<td>void SetParticleControlFallback(int particleID, int controlPoint, Vector postion)</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
@@ -19656,38 +19678,41 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.SetParticleControlForward">
 										SetParticleControlForward</a>
 								</td>
-								<td> void SetParticleControlForward(int int_1, int int_2, Vector Vector_3)(int nFXIndex,
-									int nPoint, vForward)
+								<td> void void SetParticleControlForward(int particleID, int controlPoint, Vector forward)
 								</td>
 								<td> 设置粒子的前进运动
 								</td>
+							</tr>
+							<tr>
+								<td>SetParticleControlOffset</td>
+								<td>void SetParticleControlOffset(int particleID, int controlPoint, Vector offset)</td>
+								<td>Set the linear offset for a control on a particle effect.(可能无效)</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CScriptParticleManager.SetParticleControlOrientation"
 										title="Dota 2 Workshop Tools/Scripting/API/CScriptParticleManager.SetParticleControlOrientation">
 										SetParticleControlOrientation</a>
 								</td>
-								<td> void SetParticleControlOrientation(int int_1, int int_2, Vector Vector_3, Vector
-									Vector_4, Vector Vector_5)(int nFXIndex, int nPoint, vForward, vRight, vUp)
+								<td> void SetParticleControlOrientation(int particleID, int controlPoint, Vector forward, Vector right, Vector up)
 								</td>
-								<td> 设置粒子的三向运动。
+								<td> 设置粒子的方向,注意This is left handed。
 								</td>
 							</tr>
+
 							<tr>
 								<td>SetParticleControlOrientationFLU</td>
-								<td>void SetParticleControlOrientationFLU(int nFXIndex, int nPoint, Vector vecForward,
-									Vector vecLeft, Vector vecUp)</td>
-								<td>Set the orientation for a control on a particle effect</td>
+								<td>void SetParticleControlOrientationFLU(int particleID, int controlPoint, Vector forward, Vector left, Vector up)</td>
+								<td>设置粒子的方向，This is right handed。</td>
 							</tr>
 							<tr>
 								<td>SetParticleFoWProperties</td>
-								<td>void SetParticleFoWProperties(int nfxindex, int nPoint, int nPoint2, float flRadius)
+								<td>void SetParticleFoWProperties(int particleID, int controlPoint1, int controlPoint2, float radius)
 								</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
 								<td>SetParticleShouldCheckFoW</td>
-								<td> bool SetParticleShouldCheckFoW(int nfxindex, bool bCheckFoW)</td>
+								<td> bool SetParticleShouldCheckFoW(int particleID, bool checkFoW)</td>
 								<td>&nbsp;</td>
 							</tr>
 						</table>
@@ -20117,7 +20142,165 @@
 							</tr>
 						</table>
 					</div>
-			</div>
+				</div>
+				<div id = 'Hooks' class = 'classcontent'>
+					<div id = 'classname'>
+						<p><span>Hooks</span></p>
+						<p>Adding a function with this signature to the entity script causes it to be called from code at the appropriate moment.</p>
+					</div>
+					<div id = 'apicontent'>
+						<table>
+							<tr>
+								<th> 常量名
+								</th>
+								<th> 值</th>
+								<th> 解释
+								</th>
+							</tr>
+							<tr>
+								<td>Activate</td>
+								<td>void Activate(int activateType) </td>
+								<td>Called on Activate(), after the entity has spawned. If the entity is spawned on map load, Activate() is called after all entities have spawned. 
+									The activateType parameter contains an enumeration as documented here.</td>
+							</tr>
+							<tr>
+								<td>OnBreak</td>
+								<td>void OnBreak(CBaseEntity inflictor) </td>
+								<td>Called when a breakable entity is broken. To do: Find out what entity classes this works for?</td>
+							</tr>
+							<tr>
+								<td>OnEntText</td>
+								<td>string OnEntText() </td>
+								<td>Called every frame when ent_text is enabled on the entity. Return a string to be added to the ent_text printout.</td>
+							</tr>
+							<tr>
+								<td>OnTakeDamage</td>
+								<td>unknown OnTakeDamage(table damageTable) </td>
+								<td>Called when the entity takes damage. Table format: {inflictor = handle, damage_direction = Vector, damage_position = Vector, damage_force = Vector, damage = int, attacker = handle} To do: Check which entity classes can take damage. 
+									Prop_physics and prop_dynamic confirmed, but the function doesn't get called in every case.</td>
+							</tr>
+							<tr>
+								<td>Precache</td>
+								<td>void Precache(CScriptPrecacheContext context) </td>
+								<td>Called when the entity is precached. Used to precache any additional resources needed by the script using the global Precache family of script functions.</td>
+							</tr>
+							<tr>
+								<td>Spawn</td>
+								<td>vvoid Spawn(CScriptKeyValues spawnkeys) </td>
+								<td>Called on Spawn(), just after the entity has been created, but before it has been initialized. Passes a CScriptKeyValues handle that can be used to query the entity spawn keyvalues.</td>
+							</tr>
+							<tr>
+								<td>UpdateOnRemove</td>
+								<td>void UpdateOnRemove() </td>
+								<td>Called before the entity is killed.</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id = 'VLua' class = 'classcontent'>
+					<div id = 'classname'>
+						<p><span>VLua</span></p>
+						<p>全局变量：vlua,但是这里要用 . 号，不能用 : 号</p>
+					</div>
+					<div id = 'apicontent'>
+						<table>
+							<tr>
+								<th> 常量名
+								</th>
+								<th> 值</th>
+								<th> 解释
+								</th>
+							</tr>
+							<tr>
+								<td>vlua.clear</td>
+								<td>table vlua.clear(table t) </td>
+								<td>clear table method.清除表里的内容,返回值是清除内容后的t表。不使用返回值也可以，直接使用t表也是被清除的。</td>
+							</tr>
+							<tr>
+								<td>vlua.compare</td>
+								<td>int vlua.compare(float a, float b) </td>
+								<td>比较。当a小于b时返回-1，相等时返回0，大于返回1。</td>
+							</tr>
+							<tr>
+								<td>vlua.contains</td>
+								<td>bool vlua.contains(table t, variable key) </td>
+								<td>表是否包含某个键名，不是键值。包含返回true，不包含返回false。</td>
+							</tr>
+							<tr>
+								<td>vlua.delete</td>
+								<td>unknown vlua.delete(table t, variable key) </td>
+								<td>删除键值为key的键值对,成功删除返回这个键值对的键值，不成功返回nil。删除的值是可以是"",就是空值，但不是nil。</td>
+							</tr>
+							<tr>
+								<td>vlua.clone</td>
+								<td>int vlua.clone(table t) </td>
+								<td>克隆。内存地址不同，内容相同。直接用变量给变量赋值，内存地址是相同的。</td>
+							</tr>
+							<tr>
+								<td>vlua.rawdelete</td>
+								<td>int vlua.rawdelete(table t, variable key) </td>
+								<td>暂时和vlua.delete没区别</td>
+							</tr>
+							<tr>
+								<td>vlua.rawin</td>
+								<td>int vlua.rawin(table t, variable key)</td>
+								<td>暂时和vlua.contains没区别。</td>
+							</tr>
+							<tr>
+								<td>vlua.find</td>
+								<td>variable vlua.find([table/string] o, variable value, [int startIndex])</td>
+								<td>在表和字符串中找value值的键名或者起始索引值。(o, substr, [startidx](开始查找的索引值)) for strings, (o, value) for tables。
+									表里的键名可以为字符串。
+								</td>
+							</tr>
+							<tr>
+								<td>vlua.slice</td>
+								<td>variable vlua.slice([table/string] o, int startIndex, [int endIndex])</td>
+								<td>返回在表或者字符串中截取的内容。截取时包含startIndex的键值，但是不包含endIndex(如果有的话)</td>
+							</tr>
+							<tr>
+								<td>vlua.reverse</td>
+								<td>table vlua.reverse(table o)</td>
+								<td>翻转表。返回翻转后的原表(原表被改变)。键名是字符串的键值对不能被翻转。</td>
+							</tr>
+							<tr>
+								<td>vlua.resize</td>
+								<td>table vlua.resize(table o, int size, [variable fill])</td>
+								<td>设置表的长度(原文显示是设置字符串,是错的)。如果设置的比原来的短，则直接去掉多余的。如果要比原来的长，则需要填variable fill。返回修改后的表(原表被改变)</td>
+							</tr>
+							<tr>
+								<td>vlua.extend</td>
+								<td>table vlua.extend(table a, array b)</td>
+								<td>合并表，如果表b里存在以字符串为键名的键值对会被丢弃(意思就是b一定为array数组)。表a被修改，然后被返回，表b不变。表a里有字符串为键名的键值对不会被丢弃。</td>
+							</tr>
+							<tr>
+								<td>vlua.map</td>
+								<td>table vlua.map(table o, function mapFunc)</td>
+								<td>遍历、映射,。mapFunc样子是function(a) return a*2 end。返回值是一个表，注意如果mapFunc里没有return,会返回一个空表，如果有return就返回一个映射过后的表。原表不会被改变。</td>
+							</tr>
+							<tr>
+								<td>vlua.reduce</td>
+								<td>unknown vlua.reduce(table o, function reduceFunc)</td>
+								<td>累加器,可返回数字，字符串，表。reduceFunc的样子是function(currentValue,nextValue)  return vlua.extend(currentValue+nextValue) end,用于多个数组的合并。</td>
+							</tr>
+							<tr>
+								<td>vlua.tableadd</td>
+								<td>table vlua.tableadd (table t1, table t2)</td>
+								<td>把t2表里内容加入t1，如果2个表存在相同键名的键值对，t1会被t2里的键值对覆盖，最后返回被修改的t1表(t1表已经改变),t2表不变。</td>
+							</tr>
+							<tr>
+								<td>vlua.split</td>
+								<td>table vlua.split(string input, string separator)</td>
+								<td>用separator分割字符串，分割出来的字符串组成了一个表返回。分割时，是根据separator里每一个单字符去分割。</td>
+							</tr>
+							<tr>
+								<td>vlua.select</td>
+								<td>variable vlua.select(bool conditional, variable valueIfTrue, variable valueIfFalse)</td>
+								<td>三元运算,vlua.select(a>b, a, b),a大于b返回a。</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 
 			<div id='constant'>
@@ -23652,7 +23835,7 @@
 								</td>
 								<td> 524288
 								</td>
-								<td> Targets only those that are not nightmared.
+								<td> Targets only those that are not nightmared.祸乱之源1技能
 								</td>
 							</tr>
 							<tr>
@@ -26833,7 +27016,7 @@
 								<td>UF_FAIL_NIGHTMARED </td>
 								<td> 27
 								</td>
-								<td>
+								<td>祸乱之源1技能
 								</td>
 							</tr>
 							<tr>
@@ -29111,7 +29294,7 @@
 								</td>
 								<td> 0
 								</td>
-								<td> Set to true to cause the parent to become rooted.
+								<td> Set to true to cause the parent to become rooted.被缠住
 								</td>
 							</tr>
 							<tr>
@@ -29119,7 +29302,7 @@
 								</td>
 								<td> 1
 								</td>
-								<td> Set to true to cause the parent to become disarmed.
+								<td> Set to true to cause the parent to become disarmed.被缴械
 								</td>
 							</tr>
 							<tr>
@@ -29127,7 +29310,7 @@
 								</td>
 								<td> 2
 								</td>
-								<td> Set to true to cause the parent to become attack immune.
+								<td> Set to true to cause the parent to become attack immune.物理免疫
 								</td>
 							</tr>
 							<tr>
@@ -29135,7 +29318,7 @@
 								</td>
 								<td> 3
 								</td>
-								<td> Set to true to cause the parent to become silenced.
+								<td> Set to true to cause the parent to become silenced.被沉默。
 								</td>
 							</tr>
 							<tr>
@@ -29143,7 +29326,7 @@
 								</td>
 								<td> 4
 								</td>
-								<td> Set to true to cause the parent to become muted.
+								<td> Set to true to cause the parent to become muted.被静音。
 								</td>
 							</tr>
 							<tr>
@@ -29151,7 +29334,7 @@
 								</td>
 								<td> 5
 								</td>
-								<td> Set to true to cause the parent to become stunned.
+								<td> Set to true to cause the parent to become stunned.被晕眩
 								</td>
 							</tr>
 							<tr>
@@ -29159,7 +29342,7 @@
 								</td>
 								<td> 6
 								</td>
-								<td> Set to true to cause the parent to become hexed.
+								<td> Set to true to cause the parent to become hexed.被迷惑住。
 								</td>
 							</tr>
 							<tr>
@@ -29167,7 +29350,7 @@
 								</td>
 								<td> 7
 								</td>
-								<td> Set to true to cause the parent to become invisible.
+								<td> Set to true to cause the parent to become invisible.隐身
 								</td>
 							</tr>
 							<tr>
@@ -29175,7 +29358,7 @@
 								</td>
 								<td> 8
 								</td>
-								<td> Set to true to cause the parent to become invulnerable.
+								<td> Set to true to cause the parent to become invulnerable.无敌。
 								</td>
 							</tr>
 							<tr>
@@ -29183,7 +29366,7 @@
 								</td>
 								<td> 9
 								</td>
-								<td> Set to true to cause the parent to become immune to magic.
+								<td> Set to true to cause the parent to become immune to magic.魔免
 								</td>
 							</tr>
 							<tr>
@@ -29192,7 +29375,7 @@
 								<td> 10
 								</td>
 								<td> Set to true to cause the parent to share its vision with the source of the
-									modifier.
+									modifier.给技能施放者共享视野。
 								</td>
 							</tr>
 							<tr>
@@ -29200,7 +29383,7 @@
 								</td>
 								<td> 11
 								</td>
-								<td> Set to true to cause the parent to become nightmared.
+								<td> Set to true to cause the parent to become nightmared.噩梦,祸乱之源1技能
 								</td>
 							</tr>
 							<tr>
@@ -29208,7 +29391,7 @@
 								</td>
 								<td> 12
 								</td>
-								<td> Set to true to cause the parent to become unable to block attacks.
+								<td> Set to true to cause the parent to become unable to block attacks.不能格挡。
 								</td>
 							</tr>
 							<tr>
@@ -29216,7 +29399,7 @@
 								</td>
 								<td> 13
 								</td>
-								<td> Set to true to cause the parent to become unable to evade attacks.
+								<td> Set to true to cause the parent to become unable to evade attacks.被敌人攻击不能闪避别
 								</td>
 							</tr>
 							<tr>
@@ -29230,13 +29413,13 @@
 							<tr>
 								<td>MODIFIER_STATE_CANNOT_TARGET_ENEMIES</td>
 								<td>15</td>
-								<td>&nbsp;</td>
+								<td>不能攻击和对 敌方施法</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_STATE_CANNOT_MISS
 								</td>
 								<td> 16</td>
-								<td> Set to true to cause the parent to always hit its target.
+								<td> Set to true to cause the parent to always hit its target.攻击敌人不会丢失。
 								</td>
 							</tr>
 							<tr>
@@ -29244,27 +29427,27 @@
 								</td>
 								<td> 17
 								</td>
-								<td> Set to true to cause allies to be able to deny the parent.
+								<td> Set to true to cause allies to be able to deny the parent.可以被队友反补,头上会显示可反补的标志。self:GetParent():GetHealthPercent() < 50,当血量低于50%时可以反补。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_STATE_FROZEN
 								</td>
 								<td> 18</td>
-								<td> Set to true to cause the parent to become frozen.
+								<td> Set to true to cause the parent to become frozen.被冻住
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_STATE_COMMAND_RESTRICTED
 								</td>
 								<td> 19</td>
-								<td> Set to true to cause the parent to become unable to issue orders.
+								<td> Set to true to cause the parent to become unable to issue orders.操作受限，不能移动，不能用物品，不能用技能。可以学习技能
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_STATE_NOT_ON_MINIMAP </td>
 								<td> 20</td>
-								<td> Set to true to cause the parent to become invisible on the minimap. </td>
+								<td> Set to true to cause the parent to become invisible on the minimap. 不在小地图显示。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_STATE_LOW_ATTACK_PRIORITY
@@ -29272,7 +29455,7 @@
 								<td> 21
 								</td>
 								<td> Set to true to cause the parent to become low attack priority, causing it to be the
-									last to be hit when attack moving.
+									last to be hit when attack moving.被攻击优先级很低,就算在面前也会去先攻击其他单位。
 								</td>
 							</tr>
 							<tr>
@@ -29280,7 +29463,7 @@
 								</td>
 								<td> 22
 								</td>
-								<td> Set to true to cause the parent to have its health bar disabled (invisible).
+								<td> Set to true to cause the parent to have its health bar disabled (invisible).不显示血条。
 								</td>
 							</tr>
 							<tr>
@@ -29289,7 +29472,7 @@
 								<td> 23
 								</td>
 								<td> Set to true to cause the parent to fly, ignoring terrains and increasing its offset
-									from the ground.
+									from the ground.飞行状态。
 								</td>
 							</tr>
 							<tr>
@@ -29297,7 +29480,7 @@
 								</td>
 								<td> 24
 								</td>
-								<td> Set to true to cause the parent to become phased.
+								<td> Set to true to cause the parent to become phased.相位鞋状态
 								</td>
 							</tr>
 							<tr>
@@ -29321,7 +29504,7 @@
 								</td>
 								<td> 27
 								</td>
-								<td> Set to true to cause the parent to have its passives disabled.
+								<td> Set to true to cause the parent to have its passives disabled.被动技能被禁。
 								</td>
 							</tr>
 							<tr>
@@ -29329,7 +29512,7 @@
 								</td>
 								<td> 28
 								</td>
-								<td> Set to true to cause the parent to become dominated.
+								<td> Set to true to cause the parent to become dominated.被支配
 								</td>
 							</tr>
 							<tr>
@@ -29337,7 +29520,7 @@
 								</td>
 								<td> 29
 								</td>
-								<td> Set to true to cause the parent to become blind.
+								<td> Set to true to cause the parent to become blind.眼瞎了，周围全黑
 								</td>
 							</tr>
 							<tr>
@@ -29345,7 +29528,7 @@
 								</td>
 								<td> 30
 								</td>
-								<td>
+								<td>暂时在游戏里消失
 								</td>
 							</tr>
 							<tr>
@@ -29353,7 +29536,7 @@
 								</td>
 								<td> 31
 								</td>
-								<td>
+								<td>假队友。
 								</td>
 							</tr>
 							<tr>
@@ -29370,79 +29553,79 @@
 								</td>
 								<td> 33
 								</td>
-								<td> Set to true to cause the parent to become immune to truesight.
+								<td> Set to true to cause the parent to become immune to truesight.对真视 免疫,地雷标识。
 								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_UNTARGETABLE </td>
 								<td>34</td>
-								<td></td>
+								<td>不能被作为目标</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS</td>
 								<td>35</td>
-								<td></td>
+								<td>忽略移动和攻击命令</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_ALLOW_PATHING_THROUGH_TREES</td>
 								<td>36</td>
-								<td></td>
+								<td>允许穿过树林</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES</td>
 								<td>37</td>
-								<td> Set to true to cause the parent to become invisible on the minimap for enemies.
+								<td> Set to true to cause the parent to become invisible on the minimap for enemies.不在小地图上为敌人显示
 								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_UNSLOWABLE</td>
 								<td>38</td>
-								<td></td>
+								<td>不能被减速</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_TETHERED </td>
 								<td>39</td>
-								<td></td>
+								<td>被束缚,无法施放技能,可以用物品。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_IGNORING_STOP_ORDERS </td>
 								<td>40</td>
-								<td></td>
+								<td>忽略停住命令</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_FEARED </td>
 								<td>41</td>
-								<td></td>
+								<td>被恐惧,应该是暗夜魔王的2技能。但是没什么效果</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_TAUNTED </td>
 								<td>42</td>
-								<td></td>
+								<td>不知道什么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_CANNOT_BE_MOTION_CONTROLLED </td>
 								<td>43</td>
-								<td></td>
+								<td>不能被动作控制器控制,就是不能被移动、抛起,被吹风</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_FORCED_FLYING_VISION </td>
 								<td>44</td>
-								<td></td>
+								<td>强制飞行视野</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_ATTACK_ALLIES </td>
 								<td>45</td>
-								<td></td>
+								<td>可以攻击队友</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_ALLOW_PATHING_THROUGH_CLIFFS </td>
 								<td>46</td>
-								<td></td>
+								<td>可以通过悬崖,就是不怕上山了</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_ALLOW_PATHING_THROUGH_FISSURE </td>
 								<td>47</td>
-								<td>能否通过沟壑</td>
+								<td>能通过牛头的沟壑</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_STATE_SPECIALLY_UNDENIABLE </td>
