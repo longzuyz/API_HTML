@@ -365,6 +365,8 @@
 							<li><a href="#DOTAUnitMoveCapability_t">DOTAUnitMoveCapability_t</a></li>
 							<li><a href="#DOTA_UNIT_ORDERS">DOTA_UNIT_ORDERS</a></li>
 							<li><a href="#DOTA_ABILITY_BEHAVIOR">DOTA_ABILITY_BEHAVIOR</a></li>
+							<li><a href="#BEHAVIOR_TOOLTIPS">BEHAVIOR_TOOLTIPS</a></li>
+							<li><a href="#DOTA_ABILITY_TYPE">DOTA_ABILITY_TYPE</a></li>
 							<li><a href="#DOTA_GameState">DOTA_GameState</a></li>
 							<li><a href="#DOTA_HeroPickState">DOTA_HeroPickState</a></li>
 							<li><a href="#DOTA_MOTION_CONTROLLER_PRIORITY">DOTA_MOTION_CONTROLLER_PRIORITY</a></li>
@@ -650,7 +652,7 @@
 									NumIllusions, int Padding, bool ScramblePosition, bool FindClearSpace )
 								</td>
 								<td> Create illusions of the passed hero that belong to passed unit using passed
-									modifier data。生成幻象。Supported modifierkeys: outgoing_damage, incoming_damage, bounty_base, bounty_growth,
+									modifier data。生成幻象。ModiiferKeys支持的属性: duration,outgoing_damage, incoming_damage, bounty_base, bounty_growth,
 									outgoing_damage_structure, outgoing_damage_roshan
 								</td>
 							</tr>
@@ -1729,7 +1731,7 @@
 								</td>
 								<td> table LoadKeyValues(string filePath)
 								</td>
-								<td> 在指定文件里读取KV值。
+								<td> 在指定文件里读取KV值。GetAbilityKeyValuesByName可以指定具体技能。
 								</td>
 							</tr>
 							<tr>
@@ -1831,7 +1833,8 @@
 								</td>
 								<td> void PrecacheItemByNameAsync(string a, handle b)
 								</td>
-								<td> 用DOTA物品的dota_npc_items.txt名称异步预缓存它,结束时提供回调
+								<td> 用DOTA物品的dota_npc_items.txt名称异步预缓存它,结束时提供回调。也能缓存npc_abilities_custom.txt里的技能。handle b可以是function也可以是context。
+									所以这个函数不需要放在主Precache里,放在其他地方可以减少刚进游戏时的缓存时间。
 								</td>
 							</tr>
 							<tr>
@@ -1841,7 +1844,7 @@
 								</td>
 								<td> void PrecacheItemByNameSync(string a, handle b)
 								</td>
-								<td> 用DOTA物品的dota_npc_items.txt名称预缓存它
+								<td> 用DOTA物品的npc_items_custom.txt名称预缓存它,也能缓存npc_abilities_custom.txt里的技能。如果不是英雄出生就自带的技能,都要提前缓存一下。
 								</td>
 							</tr>
 							<tr>
@@ -1849,7 +1852,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/Global.PrecacheModel">
 										PrecacheModel</a>
 								</td>
-								<td> void PrecacheModel(string a, handle b)( modelName, context ) -
+								<td> void PrecacheModel(string a, handle b)
 								</td>
 								<td> 手动预缓存一个单一模型
 								</td>
@@ -1861,7 +1864,8 @@
 								</td>
 								<td> void PrecacheResource(string precacheMode, string resource, handle context)
 								</td>
-								<td> 手动预缓存一个单一资源
+								<td> 手动预缓存一个单一资源。注意的是,如果PrecacheResource是在技能或者物品的代码里的Precache,那么需要提前在主程序里用PrecacheItemByNameSync把技能或者代码缓存下(如果是英雄自带技能,要么不用缓存，要么可以缓存一下英雄),
+									如果不缓存直接添加技能,技能Precache里的PrecacheResource不会生效。
 								</td>
 							</tr>
 							<tr>
@@ -2949,7 +2953,7 @@
 								</td>
 								<td> Vector GetAbsOrigin()
 								</td>
-								<td> No Description Set
+								<td> 获得单位的坐标,双端
 								</td>
 							</tr>
 
@@ -3167,7 +3171,7 @@
 								</td>
 								<td> Vector GetOrigin()
 								</td>
-								<td> 获得实体坐标
+								<td> 获得实体坐标,客户端不运行。双端用GetAbsOrigin
 								</td>
 							</tr>
 
@@ -4201,7 +4205,7 @@
 								</td>
 								<td> int GetCastRange(Vector vLocation, handle hTarget)
 								</td>
-								<td> 获取技能施法范围.
+								<td> 获取技能施法范围.双端运行,当自定义技能时，self.BaseClass.GetCastRange(self,casterpos,caster)可以获取KV里AbilityCastRange的值
 								</td>
 							</tr>
 							<tr>
@@ -4439,7 +4443,7 @@
 								</td>
 								<td> int GetManaCost(int iLevel)
 								</td>
-								<td> 获取技能指定等级在KV里定义的耗蓝.
+								<td> 获取技能指定等级在KV里定义的耗蓝.。当自定义技能,self.BaseClass.GetManaCost(self,0)可以获取KV里AbilityManaCost的值.
 								</td>
 							</tr>
 							<tr>
@@ -4808,7 +4812,7 @@
 								<td> bool OnAbilityPhaseStart()
 								</td>
 								<td> Launches when the ability is being cast (before cast point has been reached, which
-									means it was not yet activated)
+									means it was not yet activated)返回true，表示可以继续是否,返回false停止后面的动作,比如OnSpellStart。只在服务器端。
 								</td>
 							</tr>
 							<tr>
@@ -5021,7 +5025,7 @@
 								</td>
 								<td> bool ResetToggleOnRespawn()
 								</td>
-								<td> 重生时，技能切换到OFF
+								<td> 复活时，技能切换到默认状态
 								</td>
 							</tr>
 							<tr>
@@ -7771,7 +7775,7 @@
 								</td>
 								<td> int GetCastRange(Vector vLocation, handle hTarget)
 								</td>
-								<td> 返回技能的施法范围
+								<td> 返回技能的施法范围,双端运行。当自定义技能时，self.BaseClass.GetCastRange(self,casterpos,caster)可以获取KV里AbilityCastRange的值
 								</td>
 							</tr>
 							<tr>
@@ -7897,7 +7901,7 @@
 								</td>
 								<td> int GetManaCost(int iLevel)
 								</td>
-								<td> 返回某等级的魔法消耗（当前为-1）
+								<td> 返回某等级的魔法消耗（当前为-1）,当自定义技能,self.BaseClass.GetManaCost(self,0)可以获取KV里AbilityManaCost的值.
 								</td>
 							</tr>
 							<tr>
@@ -7991,7 +7995,7 @@
 								</td>
 								<td> bool OnAbilityPhaseStart()
 								</td>
-								<td> 施法开始（施法成功时返回True）
+								<td> 施法开始,返回true，表示可以继续是否,返回false停止后面的动作,比如OnSpellStart。只在服务器端
 								</td>
 							</tr>
 							<tr>
@@ -8213,7 +8217,7 @@
 								<td>ResetToggleOnRespawn</td>
 								<td>bool ResetToggleOnRespawn(  )</td>
 								<td>Returns true if this ability should return to the default toggle state when its
-									parent respawns.是否当这个技能的父类刷新时，该技能重置到默认转换状态。</td>
+									parent respawns.复活时，该技能重置到默认状态。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Ability_Lua.SpeakTrigger"
@@ -9419,7 +9423,7 @@
 							</tr>
 							<tr>
 								<td>GetSpellAmplification </td>
-								<td>float etSpellAmplification(bool bBaseOnly )</td>
+								<td>float GetSpellAmplification(bool bBaseOnly )</td>
 								<td>获得法术增强</td>
 							</tr>
 							<tr>
@@ -9727,7 +9731,7 @@
 								</td>
 								<td> bool IsCommandRestricted()
 								</td>
-								<td> Is this unit's command restricted?</td>
+								<td> Is this unit's command restricted? 命令受限,比如小狗钻进别人身体</td>
 							</tr>
 							<tr>
 								<td>IsConsideredHero</td>
@@ -13209,7 +13213,7 @@
 								</td>
 								<td> int GetCastRange(Vector vLocation, handle hTarget)
 								</td>
-								<td> 返回技能的施法范围
+								<td> 返回技能的施法范围,双端运行。当自定义技能时，self.BaseClass.GetCastRange(self,casterpos,caster)可以获取KV里AbilityCastRange的值
 								</td>
 							</tr>
 							<tr>
@@ -13317,7 +13321,7 @@
 								</td>
 								<td> int GetManaCost(int iLevel)
 								</td>
-								<td> 返回某等级的魔法消耗（当前为-1）
+								<td> 返回某等级的魔法消耗（当前为-1）当自定义技能,self.BaseClass.GetManaCost(self,0)可以获取KV里AbilityManaCost的值.
 								</td>
 							</tr>
 							<tr>
@@ -13392,7 +13396,7 @@
 								</td>
 								<td> bool OnAbilityPhaseStart()
 								</td>
-								<td> 施法开始（施法成功时返回True）
+								<td> 施法开始,返回true，表示可以继续是否,返回false停止后面的动作,比如OnSpellStart。只在服务器端。
 								</td>
 							</tr>
 							<tr>
@@ -22590,7 +22594,7 @@
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST </td>
 								<td>0</td>
-								<td></td>
+								<td>能对自身施法，KV CastFilterRejectCaster 也能设置</td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES </td>
@@ -22615,14 +22619,14 @@
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE</td>
 								<td>0</td>
-								<td></td>
+								<td>不会被沉默</td>
 							</tr>
 							<tr>
 								<td> DOTA_ABILITY_BEHAVIOR_HIDDEN
 								</td>
 								<td> 1
 								</td>
-								<td> Ability doesn't appear on the HUD.
+								<td>  Can't be cast, and won't show up on the HUD. KV IsOnCastBar 也能使技能隐藏,IsCastableWhileHidden 可以在技能隐藏后使用
 								</td>
 							</tr>
 							<tr>
@@ -22646,7 +22650,7 @@
 								</td>
 								<td> 8
 								</td>
-								<td> Ability needs a unit target to be cast.
+								<td> Ability needs a unit target to be cast.AbilityUnitTargetTeam and AbilityUnitTargetType, see Targeting.
 								</td>
 							</tr>
 							<tr>
@@ -22654,7 +22658,8 @@
 								</td>
 								<td> 16
 								</td>
-								<td> Ability needs a target point to be cast.
+								<td> Ability needs a target point to be cast.Can be cast anywhere the mouse cursor is.
+									If a unit is clicked, it will just be cast where the unit was standing.
 								</td>
 							</tr>
 							<tr>
@@ -22662,8 +22667,9 @@
 								</td>
 								<td> 32
 								</td>
-								<td> Ability is considered an AoE ability, respecting "AOERadius" KV when drawing the
-									AoE overlay.
+								<td> Can draw a radius where the ability will have effect.
+									Like POINT, but with an area of effect display.
+									Makes use of AOERadius.
 								</td>
 							</tr>
 							<tr>
@@ -22671,7 +22677,8 @@
 								</td>
 								<td> 64
 								</td>
-								<td> Ability cannot be skilled.
+								<td> Cannot be learned by clicking on the HUD.
+									Example: Invoker's abilities.
 								</td>
 							</tr>
 							<tr>
@@ -22679,7 +22686,8 @@
 								</td>
 								<td> 128
 								</td>
-								<td> Ability is considered a channeling ability.
+								<td> Ability is considered a channeling ability.Channeled ability.
+									If the user moves, or is silenced/stunned, the ability is interrupted.
 								</td>
 							</tr>
 							<tr>
@@ -22687,7 +22695,8 @@
 								</td>
 								<td> 256
 								</td>
-								<td>
+								<td>Ability is tied to an item. There is no need to use this, the game will internally assign this behavior to any "item_datadriven"
+									技能绑定在物品上。没有必要使用这个，游戏内部会将这个行为分配给任何“item_datadriven”
 								</td>
 							</tr>
 							<tr>
@@ -22703,7 +22712,7 @@
 								</td>
 								<td> 1024
 								</td>
-								<td>
+								<td>Has a direction from the hero.Examples: Mirana's Arrow, or Pudge's Hook.技能是带方向的，例如:Mirana的Arrow，或者Pudge的Hook。
 								</td>
 							</tr>
 							<tr>
@@ -22711,7 +22720,7 @@
 								</td>
 								<td> 2048
 								</td>
-								<td> Ability ignores cast points and is fired as soon as the skill is pressed.
+								<td> Ability ignores cast points and is fired as soon as the skill is pressed. without going into the action queue.没有施法前摇，不会进入动作等待序列,点击立刻执行
 								</td>
 							</tr>
 							<tr>
@@ -22719,7 +22728,8 @@
 								</td>
 								<td> 4096
 								</td>
-								<td> Ability can be set to auto cast.
+								<td> Ability can be set to auto cast.Usually doesn't work by itself in anything that is not an ATTACK ability.
+									通常在任何非攻击技能的情况下都不会起作用。
 								</td>
 							</tr>
 							<tr>
@@ -22727,7 +22737,7 @@
 								</td>
 								<td> 8192
 								</td>
-								<td>
+								<td>Bottle and Wards.瓶子和眼。
 								</td>
 							</tr>
 							<tr>
@@ -22751,7 +22761,7 @@
 								</td>
 								<td> 65536
 								</td>
-								<td> Ability is considered an aura.
+								<td> Ability is considered an aura.除了用来标记这种能力之外，并没有真正使用过。
 								</td>
 							</tr>
 							<tr>
@@ -22759,7 +22769,7 @@
 								</td>
 								<td> 131072
 								</td>
-								<td>
+								<td>Is an attack, and cannot hit attack-immune targets.是普通攻击类型,不能攻击 物理攻击免疫的 目标
 								</td>
 							</tr>
 							<tr>
@@ -22767,7 +22777,8 @@
 								</td>
 								<td> 262144
 								</td>
-								<td> After casting that ability, the caster won't resume its last order.
+								<td> After casting that ability, the caster won't resume its last order.Only applicable to no-target, non-immediate abilities.
+									技能执行完后,不会再执行移动命令,原地待命。只能应用于  非立即生效,非针对目标的技能 
 								</td>
 							</tr>
 							<tr>
@@ -22783,7 +22794,8 @@
 								</td>
 								<td> 1048576
 								</td>
-								<td>
+								<td>Ability is allowed when commands are restricted.
+									Example: Lifestealer's Consume.当单位被restricted时，可以使用技能。restricted是操作受限，不能移动，不能用物品，不能用技能。可以学习技能。比如小狗钻进别人身体
 								</td>
 							</tr>
 							<tr>
@@ -22791,7 +22803,7 @@
 								</td>
 								<td> 2097152
 								</td>
-								<td>被控制也能放技能
+								<td>被控制也能放技能,Only applicable to toggled abilities.
 								</td>
 							</tr>
 							<tr>
@@ -22799,7 +22811,7 @@
 								</td>
 								<td> 4194304
 								</td>
-								<td>
+								<td>Doesn't cancel abilities with DOTA_ABILITY_BEHAVIOR_CHANNELLED behavior.不会取消具有 DOTA_ABILITY_BEHAVIOR_CHANNELLED 行为的技能。
 								</td>
 							</tr>
 							<tr>
@@ -22815,7 +22827,8 @@
 								</td>
 								<td> 16777216
 								</td>
-								<td>
+								<td>Does not alert enemies when target-cast on them.
+									Example: Spirit Breaker's Charge.对目标施放时不会提醒敌人,比如白牛的暗影冲刺。
 								</td>
 							</tr>
 							<tr>
@@ -22824,7 +22837,7 @@
 								<td> 33554432
 								</td>
 								<td> After using ability, caster won't proceed to attack the nearby enemy (even if set
-									otherwise in options)
+									otherwise in options) Only applicable to no-target, non-immediate abilities and unit-target abilities.
 								</td>
 							</tr>
 							<tr>
@@ -22832,7 +22845,8 @@
 								</td>
 								<td> 67108864
 								</td>
-								<td>
+								<td>Ability still uses its normal cast point when stolen.
+									Examples: Meepo's Poof, Furion's Teleport.技能被偷了,但施法前摇不变。
 								</td>
 							</tr>
 							<tr>
@@ -22865,6 +22879,120 @@
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='BEHAVIOR_TOOLTIPS'>
+					<div id='constantname'>
+						<p><span>BEHAVIOR_TOOLTIPS</span></p>
+						The following behaviors will generate a line in the ability tooltip. You want at least one of 1 behavior of this list. The rest of the ability behaviors don't have any UI support yet.
+						The UI can only show one behavior tooltip, but internally it will behave as expected, as long two contradicting keys are not used together (like NO_TARGET with UNIT_TARGET).
+						只有以下几个能显示为技能类型,虽然一个技能可以有多个BEHAVIOR,但是只能显示出一种技能类型,同时存在时显示优先级如下。
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> AbilityBehaviorName
+								</th>
+								<th> Tooltip
+								</th>
+								<th> 解释
+								</th>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_AURA</td>
+								<td>Aura(光环)</td>
+								<td>优先级最高</td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_AUTOCAST</td>
+								<td>Auto-Cast(自动施放)</td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_PASSIVE</td>
+								<td>Passive(被动)</td>
+								<td>虽然比AURA、AUTOCAST优先级低,但是技能会变成被动技能的样子(嵌进去一样)</td>
+							</tr>
+
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_TOGGLE</td>
+								<td>Toggle(切换)</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_CHANNELLED</td>
+								<td>Channeled(持续施法)</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_NO_TARGET</td>
+								<td>No Target(无目标)</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_POINT</td>
+								<td>Point Target(点目标)</td>
+								<td></td>
+							</tr>	
+							<tr>
+								<td> DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+								</td>
+								<td> Unit Target(单位目标)
+								</td>
+								<td>优先级最低
+								</td>
+							</tr>
+		
+						</table>
+					</div>
+				</div>
+				<div id='DOTA_ABILITY_TYPE'>
+					<div id='constantname'>
+						<p><span>DOTA_ABILITY_TYPE</span></p>
+						在KV里可以按如下设置等级<br>
+						"MaxLevel"              "7"/ <br>
+						"RequiredLevel"         "-4" /<br>
+						"LevelsBetweenUpgrades" "7"<br>
+						Results in an ability that can be first skilled at levels 3/10/17/24/31/38/45.
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_TYPE_BASIC</td>
+								<td></td>
+								<td>Normal ability, learnable at level 1 and upgradeable every 2 levels.</td>
+							</tr>
+							<tr>
+								<td> DOTA_ABILITY_TYPE_ULTIMATE
+								</td>
+								<td> 
+								</td>
+								<td>5 levels between upgrades, and requires level 6 to spend the first point on it.
+									Also tags the ability as ultimate for the HUD.
+
+								</td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_TYPE_ATTRIBUTES </td>
+								<td></td>
+								<td>Used for attribute_bonus.</td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_TYPE_HIDDEN </td>
+								<td></td>
+								<td></td>
+							</tr>
+						
 						</table>
 					</div>
 				</div>
@@ -29441,7 +29569,7 @@
 								<td> MODIFIER_STATE_COMMAND_RESTRICTED
 								</td>
 								<td> 19</td>
-								<td> Set to true to cause the parent to become unable to issue orders.操作受限，不能移动，不能用物品，不能用技能。可以学习技能
+								<td> Set to true to cause the parent to become unable to issue orders.操作受限，不能移动，不能用物品，不能用技能。可以学习技能。比如小狗钻进别人身体
 								</td>
 							</tr>
 							<tr>
@@ -30314,7 +30442,7 @@
 								</td>
 								<td> 
 								</td>
-								<td>玩家更新选择的单位((JS可用)
+								<td>玩家更新选择的单位((JS可用)，可能已经无效
 								</td>
 							</tr>
 							<tr>
