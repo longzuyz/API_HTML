@@ -231,7 +231,7 @@
                 </details>
                 <details>
                     <summary>
-                        <a href="#PreEmissionOperater">Pre Emission Operater</a>
+                        <a href="#Pre Emission Operator">Pre Emission Operator</a>
                     </summary>
                     <nav>
                         <ol>
@@ -587,14 +587,27 @@
                     </summary>
                     <nav>
                         <ol>
-                            <li><a href="#PreEmissionOperater">Pre Emission Operater</a></li>
-                            <li><a href="#Emitter">Emitter</a></li>
-                            <li><a href="#Initializer">Initializer</a></li>
-                            <li><a href="#Operator">Operator</a></li>
-                            <li><a href="#Force Generator">Force Generator</a></li>
-                            <li><a href="#Constraint">Constraint</a></li>
-                            <li><a href="#Renderer">Renderer</a></li>
-         
+                            <li><a href="#Render blobs">Render blobs</a></li>
+                            <li><a href="#Render Cables">Render Cables</a></li>
+                            <li><a href="#Render Callback">Render Callback</a></li>
+                            <li><a href="#Render deferred light">Render deferred light</a></li>
+                            <li><a href="#Render Flatten Grass">Render Flatten Grass</a></li>
+                            <li><a href="#Render material attribute proxy">Render material attribute proxy</a></li>
+                            <li><a href="#Render models">Render models</a></li>
+                            <li><a href="#Render Post Processing">Render Post Processing</a></li>
+                            <li><a href="#Render projected">Render projected</a></li>
+                            <li><a href="#Render rope">Render rope</a></li>
+                            <li><a href="#Render screen shake">Render screen shake</a></li>
+                            <li><a href="#Render sound">Render sound</a></li>
+                            <li><a href="#Render sprite trail">Render sprite trail</a></li>
+                            <li><a href="#Render sprites">Render sprites</a></li>
+                            <li><a href="#Render standard light">Render standard light</a></li>
+                            <li><a href="#Render Status Effect">Render Status Effect</a></li>
+                            <li><a href="#Render Status Effect (Citadel)">Render Status Effect (Citadel)</a></li>
+                            <li><a href="#Render Text">Render Text</a></li>
+                            <li><a href="#Render tonemap controller">Render tonemap controller</a></li>
+                            <li><a href="#Render Tree Shake">Render Tree Shake</a></li>
+                            <li><a href="#Render VR Haptic Event">Render VR Haptic Event</a></li>
                         </ol>
                     </nav>
                 </details>
@@ -667,23 +680,24 @@
                                 </td>
                                 <td> integer
                                 </td>
-                                <td> 暂无解释
+                                <td> The control point used by the snapshot that has been assigned to the particle system. The snapshot control point is utilized by initializers such as "Init from CP snapshot" and "Position skin to bones from CP snapshot" to send/read data sent to/from the specified control point (such as position, color, life duration, radius, etc.). Default value is set to 0.
                                 </td>
                             </tr>
                             <tr>
                                 <td> snapshot
                                 </td>
-                                <td> 
+                                <td> resource
                                 </td>
-                                <td> 暂无解释
+                                <td> A .vsnap (valve particle snapshot file) that is used by the particle system as a reference for control point data. Generally a .vsnap is a collection of vectors such as vertices from a model, and can be used - for example - to position particles in a certain manner. The .vsnap directory path should be included in the field (ie. particles/particle_snapshots/good_barracks_melee002_lvl1.vsnap). A .vsnap can be generated in the model editor tool after importing a model and specifying a "fx" version of that model (usually a .obj file). Default value is set to blank.
                                 </td>
                             </tr>
                             <tr>
                                 <td> target layer ID for rendering
                                 </td>
-                                <td> psz
+                                <td> string
                                 </td>
-                                <td> 
+                                <td> Defines the target layer ID for rendering the particle on. Default value is set to blank.
+                                    Note.png Note: 	Actual use is unknown, but is presumed to be used for rendering particles under/over certain parts of the GUI. Possibly Legacy. Generally unused by most particles.
                                 </td>
                             </tr>
                             <tr>
@@ -699,7 +713,8 @@
                                 </td>
                                 <td> vector
                                 </td>
-                                <td> 
+                                <td> Particle normal alignment. Values range between 0 and 1. For most effects this should remain unchanged from its default (0,0,1). This field is ignored unless the orientation type property in the effect's renderer is set to "Particle Normal Align" or "Screen & Particle Normal Align".
+                                    Note.png Note: 	Can be overridden and be used as input by/for operators and initializers.
                                 </td>
                             </tr>
                             <tr>
@@ -707,7 +722,9 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> The default size of all the spawned particles.粒子默认大小。
+                                <td> The default size of all the spawned particles.Radius for each particle, in world units. Default value is set to 5.
+                                    Note.png Note: 	Can be overridden and be used as input by/for operators and initializers.
+                                    粒子默认大小。
                                 </td>
                             </tr>
                             <tr>
@@ -715,15 +732,19 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> The default rotation of the emitted particles.粒子默认的初始旋转角度。
+                                <td> Defines the rotation of a particle. Default value is set to 0.
+                                    Note.png Note: 	Does not use the standard 360 degrees of rotation for input. Most particle systems override this base property instead of using it directly. Can be overridden and be used as input by/for operators and initializers.
+                                    粒子默认的初始旋转角度。
                                 </td>
                             </tr>
                             <tr>
-                                <td> rotation_speed
+                                <td> rotation speed
                                 </td>
                                 <td> float
                                 </td>
-                                <td> Default rotation speed.默认旋转速度。
+                                <td> Defines the rotation speed of a particle. Default value is set to 0.
+                                    Note.png Note: 	Can be enabled for use if the particle system has a "Rotation Basic" operator attached. Most particle systems override this base property instead of using it directly. Can be overridden and be used as input by/for operators and initializers.
+                                    默认旋转速度。
                                 </td>
                             </tr>
                             <tr>
@@ -731,7 +752,9 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> 默认生命时间。
+                                <td> The amount of time, in seconds, that each particle will exist before being destroyed. Default value is set to 1.
+                                    Note.png Note: 	Can be overridden and be used as input by/for operators and initializers.
+                                    默认生命时间。
                                 </td>
                             </tr>
                             <tr>
@@ -740,6 +763,10 @@
                                 <td> integer
                                 </td>
                                 <td> When using a material with a sequenced sheet texture, this will control the initial sequence of every particle.
+                                    Defines which part of the sequence a particle starts with, if that particle's renderer(s) uses sprite sheets or if using a sequence number as input/output through a control point. Default value is set to 0.
+                                    Note.png Note: 	If a particle uses a sprite sheet with sequences, all renderers within the particle system that use sprite sheets will use this sequence number, 
+                                    even though only the top-most listed renderer in the Renderer area of the Functions panel will show its sprite sheet when selecting a sequence from the dropdown menu (no sheet will show if the top-most renderer does not contain a sprite sheet, 
+                                    but a value can still be input). Can be affected and overridden by operators and initializers.
                                     当使用具有多个纹理的材质时，这将控制每个粒子的纹理。
                                 </td>
                             </tr>
@@ -749,6 +776,10 @@
                                 <td> integer
                                 </td>
                                 <td> Same as sequence_number, except this controls the second initial sequence in dual-sequence materials.
+                                    Defines which part of the sequence a particle can end with if, that particle's renderer(s) uses sprite sheets or if using a sequence number as input/output through a control point. Default value is set to 0.
+                                    Note.png Note: 	If a particle uses a sprite sheet with sequences, all renderers within the particle system that use sprite sheets will use this sequence number, 
+                                    even though only the top-most listed renderer in the Renderer area of the Functions panel will show its sprite sheet when selecting a sequence from the dropdown menu (no sheet will show if the top-most renderer does not contain a sprite sheet, but a value can still be input). 
+                                    Selecting a value different from "Sequence Number" can randomize which sequence is chosen between the two values (ie. if 1 and 3 are chosen, chosen sequence can be 1, 2 or 3). Can be affected and overridden by operators and initializers.
                                     控制双纹理材质中第二纹理。
                                 </td>
                             </tr>
@@ -757,7 +788,7 @@
                                 </td>
                                 <td> integer
                                 </td>
-                                <td> 暂无解释
+                                <td> Defines the Group ID of the particle. Particles with the same ID will be grouped together when emitted and can be affected by functions which require or reference a Group ID. Default value is set to 0.
                                 </td>
                             </tr>
                             <tr>
@@ -765,7 +796,8 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> 暂无解释
+                                <td> Defines the time, after not being drawn, before the particle goes to sleep. Default value is set to 8.
+                                    Note.png Note: 	Low-level engine property. Usually untouched and left at default value, possibly for performance reasons.
                                 </td>
                             </tr>
                             <tr>
@@ -774,6 +806,8 @@
                                 <td> float
                                 </td>
                                 <td> The maximum distance at which the particle system is rendered. The particle system will not be visible beyond this value.
+                                    Defines the maximum distance (in game units) at which the particle will draw. Default value is set to 100000.
+                                    Note.png Note: 	Low-level engine property. Usually untouched and left at default value.
                                     渲染粒子系统的最大距离。 超过此值时，粒子系统将不可见。(不知道默认值-1是代表什么意思)
                                 </td>
                             </tr>
@@ -782,7 +816,8 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> 暂无解释
+                                <td> Defines the distance (in game units) at which the particle will start to fade. Default value is set to 200000.
+                                    Note.png Note: 	Low-level engine property. Usually untouched and left at default value.                                    
                                 </td>
                             </tr>
                             <tr>
@@ -790,7 +825,7 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> 暂无解释
+                                <td> 
                                 </td>
                             </tr>
                             <tr>
@@ -807,7 +842,7 @@
                                 </td>
                                 <td> float
                                 </td>
-                                <td> 暂无解释
+                                <td> 
                                 </td>
                             </tr>
                             <tr>
@@ -815,15 +850,15 @@
                                 </td>
                                 <td> boolean
                                 </td>
-                                <td> 暂无解释
+                                <td> 
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div id='PreEmissionOperater'>
+                <div id='Pre Emission Operator'>
                     <div id='classname'>
-                        <p><span>Pre Emission Operater</span></p>
+                        <p><span>Pre Emission Operator</span></p>
                     </div>
                     <div id='apicontent'>
                         <table id="Cp to Radial direction of Screen Space">
@@ -893,8 +928,8 @@
                         <table id="Drive CP from global sound float">
                             <tr>
                                 <td colspan="3"> 
-                                    <p><span>Drive CP from global sound float </span></p>
-                                    <p>      </p>
+                                    <p><span>Drive CP from global sound float</span></p>
+                                    <p> </p>
                                 </td>
                             </tr>
                             <tr>
@@ -24711,7 +24746,6 @@
                         </table>
                     </div>
                 </div>
-
 			</div>
 		</div>
 	</div>

@@ -662,7 +662,8 @@
 								</td>
 								<td> handle CreateItem(string item_name, handle owner, handle owner)
 								</td>
-								<td> 用类名称item_name创建一个owner可以使用的物品
+								<td> 用物品名称item_name创建一个物品实体(这个实体现在还只是在内存中,并没有添加到游戏里。要添加给单位要使用AddItem,这个过程没有产生新实体。要在地上创建要使用
+									CreateItemOnPositionSync或者CreateItemOnPositionForLaunch,这个过程就创建了一个新的实体。)。
 								</td>
 							</tr>
 							<tr>
@@ -670,9 +671,10 @@
 										title="Dota 2 Workshop Tools/Scripting/API/Global.CreateItemOnPositionForLaunch">
 										CreateItemOnPositionForLaunch</a>
 								</td>
-								<td> handle CreateItemOnPositionForLaunch(Vector Vector_1, handle handle_2)
+								<td> handle CreateItemOnPositionForLaunch(Vector Vector_1, handle item)
 								</td>
-								<td> 在给定地点生成一个实际物品。 目标地点可以是空中(但这不会清空这个位置)
+								<td> 在指定地点把参数 item(用CreateItem生成)生成为一个可见的实际物品,可以创建在空中(但这不会清空这个位置)，返回一个新的实体table。因为item没有用于在地面上显示的包装，这个实体相当于是装item的容器,把item装了起来,变相等于拥有者。
+									所以要设置物品大小不能直接使用item设置,而是要使用item:GetContainer():SetModelScale(5)，或者直接使用该函数返回的table设置，table:SetModelScale(5)。
 								</td>
 							</tr>
 							<tr>
@@ -682,7 +684,7 @@
 								</td>
 								<td> handle CreateItemOnPositionSync(Vector a, handle b)
 								</td>
-								<td> 在给定位置创建一个可见的物品
+								<td> 不能创建在空中。其他同上。
 								</td>
 							</tr>
 							<tr>
@@ -2341,6 +2343,14 @@
 								<td> handle SpawnEntityListFromTableSynchronous(handle a)
 								</td>
 								<td> 从一个生成表列表同步生成一个实体组.
+								</td>
+							</tr>
+							<tr>
+								<td> SpawnMangoTree
+								</td>
+								<td> handle SpawnMangoTree(Vector Pos, int Team, float Duration, float MangoInterval, int InitialMangoes )
+								</td>
+								<td> Spawn a mango tree。种一颗芒果树
 								</td>
 							</tr>
 							<tr>
@@ -4055,7 +4065,7 @@
 								</td>
 								<td> string GetAbilityName()
 								</td>
-								<td> 获取技能名称.
+								<td> 获取技能名称,也可以获取物品名称
 								</td>
 							</tr>
 							<tr>
@@ -6071,6 +6081,12 @@
 								<td>Allows clicks on friendly buildings to be handled normally.？？？</td>
 							</tr>
 							<tr>
+								<td>SetGiveFreeTPOnDeath</td>
+								<td>void SetGiveFreeTPOnDeath(bool Enabled ) </td>
+								<td>是否死亡时给与免费TP</td>
+							</tr>
+							
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseGameMode.SetGoldSoundDisabled"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseGameMode.SetGoldSoundDisabled">
 										SetGoldSoundDisabled</a>
@@ -6295,7 +6311,7 @@
 								</td>
 								<td> void SetStashPurchasingDisabled(bool bDisabled)
 								</td>
-								<td> 是否关闭/开启储藏处购买功能。如果该功能被关闭，英雄必须在商店范围内购买物品
+								<td> 是否关闭/开启储藏处购买功能。如果该功能被关闭，英雄必须在商店范围内购买物品。设置为true时,在策略阶段不能购买物品。
 								</td>
 							</tr>
 							<tr>
@@ -6402,6 +6418,11 @@
 								<td>SetWeatherEffectsDisabled</td>
 								<td>void SetWeatherEffectsDisabled(bool bDisable )</td>
 								<td>Set if weather effects are disabled.</td>
+							</tr>
+							<tr>
+								<td>ShouldGiveFreeTPOnDeath</td>
+								<td>bool ShouldGiveFreeTPOnDeath()</td>
+								<td>死亡时是否免费给TP</td>
 							</tr>
 						</table>
 					</div>
@@ -8481,7 +8502,7 @@
 								</td>
 								<td> void DropItemAtPosition(Vector a, handle b)
 								</td>
-								<td> 将物品扔在指定地点。
+								<td> 将物品扔在指定地点,只能扔在地上。
 								</td>
 							</tr>
 							<tr>
@@ -8491,7 +8512,7 @@
 								</td>
 								<td> void DropItemAtPositionImmediate(handle a, Vector b)
 								</td>
-								<td> 立即将物品扔在指定地点。
+								<td> 立即将物品扔在指定地点,只能扔在地上。
 								</td>
 							</tr>
 							<tr>
@@ -9710,6 +9731,12 @@
 								<td>是否是BOSS</td>
 							</tr>
 							<tr>
+								<td>IsBossCreature
+								</td>
+								<td>bool IsBossCreature(  ) </td>
+								<td>Is this unit a Boss Creature? (used by custom games)</td>
+							</tr>
+							<tr>
 								<td><a href="file:///C|/Users/Administrator/Desktop/1">IsBuilding</a></td>
 								<td>bool IsBuilding(  ) </td>
 								<td>是否是建筑</td>
@@ -10493,6 +10520,11 @@
 								<td>RemoveAllModifiers</td>
 								<td>void RemoveAllModifiers(int targets, bool Now, bool Permanent, bool Death ) </td>
 								<td> int targets [0=all, 1=enemy, 2=ally], bool bNow, bool bPermanent永久, bool bDeath </td>
+							</tr>
+							<tr>
+								<td>RemoveAllModifiersOfName</td>
+								<td>void RemoveAllModifiers(string ScriptName ) </td>
+								<td> Removes all copies of a modifier.清除一个修改器的所有复制体。 </td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.RemoveGesture"
@@ -12967,7 +12999,9 @@
 								</td>
 								<td> void LaunchLoot(bool AutoUse, float height, float flDuration, Vector EndPoint)
 								</td>
-								<td> 当物品掉落在地面时，将物品发射出去，使其落在某个地点。
+								<td> 将物品发射出去，使其落在某个地点。AutoUse为true时，比如钱袋，单位碰到就会自动拾取。
+									这里的主体要使用CreateItem创建的实体,比如local newItem = CreateItem(),newItem:LaunchLoot()。不能使用CreateItemOnPositionForLaunch创建的实体。
+									但是发射之前必须要把newItem容器化。要么使用CreateItemOnPositionForLaunch或者DropItemAtPositionImmediate
 								</td>
 							</tr>
 							<tr>
@@ -12978,7 +13012,7 @@
 								<td> void LaunchLootInitialHeight(bool bAutoUse, float flInitialHeight, float
 									flLaunchHeight, float flDuration, Vector vEndPoint)
 								</td>
-								<td> 设置发射物品时的初始高度。
+								<td> 发射物品,并且可以设置发射物品时的初始高度。AutoUse为true时，比如钱袋，单位碰到就会自动拾取。
 								</td>
 							</tr>
 							<tr>
@@ -12994,12 +13028,12 @@
 							<tr>
 								<td>OnEquip</td>
 								<td>void OnEquip(  ) </td>
-								<td>装备此物品？？？</td>
+								<td>当装备物品时</td>
 							</tr>
 							<tr>
 								<td>OnUnequip</td>
 								<td>void OnUnequip(  ) </td>
-								<td>卸下此物品？？？</td>
+								<td>当卸下物品时</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Item.RequiresCharges"
@@ -13713,6 +13747,14 @@
 								<td> int GetAuraSearchType()
 								</td>
 								<td> 返回光环效果将施加的单位类型
+								</td>
+							</tr>
+							<tr>
+								<td> GetCritDamage
+								</td>
+								<td> float GetCritDamage()
+								</td>
+								<td> A Modifier that listens to MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE has to have a GetCritDamage implementation so we can know when to evaluate it. Value should be in 'times the original value format' e.g: 1.5 not 150 
 								</td>
 							</tr>
 							<tr>
@@ -18537,7 +18579,7 @@
 								</td>
 								<td> void StartTutorialMode()
 								</td>
-								<td> 初始化教学模式。
+								<td> 开启教学模式。并且可以开启DOTA地图里的机器人AI。
 								</td>
 							</tr>
 							<tr>
@@ -22559,7 +22601,13 @@
 								<td>
 								</td>
 							</tr>
-
+							<tr>
+								<td>DOTA_UNIT_ORDER_MOVE_RELATIVE</td>
+								<td> 39
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 
 					</div>
@@ -22604,7 +22652,7 @@
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE</td>
 								<td>0</td>
-								<td></td>
+								<td>消耗品</td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_UNLOCKED_BY_EFFECT_INDEX</td>
@@ -22737,7 +22785,7 @@
 								</td>
 								<td> 8192
 								</td>
-								<td>Bottle and Wards.瓶子和眼。
+								<td>Bottle and Wards.瓶子、眼、芒果。
 								</td>
 							</tr>
 							<tr>
@@ -23072,23 +23120,32 @@
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_GAMERULES_STATE_GAME_IN_PROGRESS
+								<td> DOTA_GAMERULES_STATE_SCENARIO_SETUP
 								</td>
-								<td> 8</td>
+								<td> 8
+								</td>
 								<td>
 								</td>
 							</tr>
+							
 							<tr>
-								<td> DOTA_GAMERULES_STATE_POST_GAME
+								<td> DOTA_GAMERULES_STATE_GAME_IN_PROGRESS
 								</td>
 								<td> 9</td>
 								<td>
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_GAMERULES_STATE_DISCONNECT
+								<td> DOTA_GAMERULES_STATE_POST_GAME
 								</td>
 								<td> 10</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GAMERULES_STATE_DISCONNECT
+								</td>
+								<td> 11</td>
 								<td>
 								</td>
 							</tr>
@@ -23550,9 +23607,16 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_COUNT
+								<td> DOTA_HEROPICK_STATE_SCENARIO
 								</td>
 								<td> 61</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_HEROPICK_STATE_COUNT
+								</td>
+								<td> 62</td>
 								<td>
 								</td>
 							</tr>
@@ -24615,6 +24679,7 @@
 				<div id='EShareAbility'>
 					<div id='constantname'>
 						<p><span>EShareAbility</span></p>
+						KV的共享属性
 					</div>
 					<div id='constantcontent'>
 						<table>
@@ -24631,7 +24696,7 @@
 								</td>
 								<td> 0
 								</td>
-								<td>
+								<td>比如宝石
 								</td>
 							</tr>
 							<tr>
@@ -24639,7 +24704,7 @@
 								</td>
 								<td> 1
 								</td>
-								<td>
+								<td>比如瓶子
 								</td>
 							</tr>
 							<tr>
@@ -24647,7 +24712,15 @@
 								</td>
 								<td> 2
 								</td>
-								<td>
+								<td>比如圣剑
+								</td>
+							</tr>
+							<tr>
+								<td> ITEM_FULLY_SHAREABLE_STACKING
+								</td>
+								<td> 3
+								</td>
+								<td>比如眼
 								</td>
 							</tr>
 						</table>
@@ -27570,7 +27643,7 @@
 							
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_POINT_CONSTANT </td>
-								<td> 37</td>
+								<td> 38</td>
 								<td> GetModifierAttackPointConstant </td>
 								<td>可以理解为普通攻击前摇。返回负数无效，自身不能叠加，相同BUFF以生效最早为准。
 									。不需要使用SetHasCustomTransmitterData。
@@ -27578,13 +27651,13 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUSDAMAGEOUTGOING_PERCENTAGE</td>
-								<td> 38</td>
+								<td> 39</td>
 								<td> GetModifierBonusDamageOutgoing_Percentage </td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE </td>
-								<td> 39 </td>
+								<td> 40 </td>
 								<td> GetModifierDamageOutgoing_Percentage </td>
 								<td> Increases the raw damage that the parent deals by a percentage returned to it. Can
 									return negative values.百分比增加或者减少普通攻击。(计算方式是分别计算白字和绿字增加的百分比值，然后把两个增加值 相加，然后加在绿字上。
@@ -27593,19 +27666,19 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE_ILLUSION </td>
-								<td> 40</td>
+								<td> 41</td>
 								<td> GetModifierDamageOutgoing_Percentage_Illusion </td>
 								<td>在继承了本体的攻击力后，按本体攻击力的百分比增加幻象的输出。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE_ILLUSION_AMPLIFY </td>
-								<td> 41</td>
+								<td> 42</td>
 								<td> GetModifierDamageOutgoing_Percentage_Illusion_Amplify </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE </td>
-								<td> 42</td>
+								<td> 43</td>
 								<td> GetModifierTotalDamageOutgoing_Percentage </td>
 								<td> Increases the damage of all sources that the parent deals by a percentage returned
 									to it. Can return negative values. 百分比增加或者减少普通和技能伤害(包括纯粹和魔法)，但是不改变面板值(普通攻击和技能都不改变)。
@@ -27614,25 +27687,25 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_CREEP </td>
-								<td> 43</td>
+								<td> 44</td>
 								<td> GetModifierSpellAmplify_PercentageCreep </td>
 								<td>应该是给野怪用的，技能增强</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE </td>
-								<td> 44</td>
+								<td> 45</td>
 								<td> GetModifierSpellAmplify_Percentage </td>
 								<td>技能伤害百分比增强或减弱,可以叠加，可以返回负数。对物理伤害技能无效。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE</td>
-								<td> 45</td>
+								<td> 46</td>
 								<td>GetModifierSpellAmplify_PercentageUnique</td>
 								<td>技能伤害百分比增强,自身不能叠加,不能返回负数。相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_SOURCE </td>
-								<td> 46
+								<td> 47
 								</td>
 								<td>GetModifierHealAmplify_PercentageSource</td>
 								<td>作为治疗源发出治疗时 治疗量百分比增强或者减弱。注意,实际效果最高增强100%,目标头上显示的治疗量特效数字是可以超过100%的，最高显示增加300%，
@@ -27642,7 +27715,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET </td>
-								<td> 47
+								<td> 48
 								</td>
 								<td>GetModifierHealAmplify_PercentageTarget</td>
 								<td>作为被治疗的目标时，治疗量百分比增强或者减弱。
@@ -27655,7 +27728,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE </td>
-								<td> 48</td>
+								<td> 49</td>
 								<td> GetModifierHPRegenAmplify_Percentage </td>
 								<td> Increases health regen and heal gained by parent by a percentage returned to it.
 									Can return negative values. 生命回复百分比增强或者减弱，最大100。此API会在其他生命回复BUFF加成后再计算。可以返回负数,自身可叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData，
@@ -27663,39 +27736,39 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_LIFESTEAL_AMPLIFY_PERCENTAGE </td>
-								<td> 49</td>
+								<td> 50</td>
 								<td> GetModifierLifestealRegenAmplify_Percentage </td>
 								<td>在有吸血面具(包括撒旦等)的情况下，吸血百分比增强或减弱，最高100,所以如果要自己做吸血，应该是用Heal。可以返回负数，自身可叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELL_LIFESTEAL_AMPLIFY_PERCENTAGE </td>
-								<td> 50</td>
+								<td> 51</td>
 								<td> GetModifierSpellLifestealRegenAmplify_Percentage </td>
 								<td>在有巫毒面具的情况下，技能吸血百分比增强，最高100,可以返回负数，自身可叠加。对最终伤害是物理类型的技能无效.</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MP_REGEN_AMPLIFY_PERCENTAGE</td>
-								<td> 51
+								<td> 52
 								</td>
 								<td>GetModifierMPRegenAmplify_Percentage</td>
 								<td>魔法值回复百分比增强或者减弱，可以超过100%！！！可以返回负数,自身可叠加，魔法值回复值最低为0，不会为负。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANA_DRAIN_AMPLIFY_PERCENTAGE</td>
-								<td> 52
+								<td> 53
 								</td>
 								<td>GetModifierManaDrainAmplify_Percentage</td>
 								<td>字面上理解是莱恩的吸蓝技能百分比增强,但是试了没效果。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MP_RESTORE_AMPLIFY_PERCENTAGE</td>
-								<td> 53</td>
+								<td> 54</td>
 								<td>GetModifierMPRestoreAmplify_Percentage</td>
 								<td>加蓝效果增强或者减弱,比如吃芒果，可以超过100%。可返回负数,自身可以叠加。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE </td>
-								<td> 54</td>
+								<td> 55</td>
 								<td> GetModifierBaseDamageOutgoing_Percentage </td>
 								<td> Increases the base damage of that the parent deals by a percentage returned to it.
 									Can return negative values. 按白字攻击(有趣的是，
@@ -27705,14 +27778,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE_UNIQUE </td>
-								<td> 55</td>
+								<td> 56</td>
 								<td> GetModifierBaseDamageOutgoing_PercentageUnique </td>
 								<td>百分比设置(不是增加)白字基础攻击，有趣的是只有返回值大于100才生效,但是始终不显示在面板上。返回负数无效，自身不能叠加，
 									相同的BUFF以数值大的为准。不需要使用SetHasCustomTransmitterData，因为面板值不会改变。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE </td>
-								<td> 56</td>
+								<td> 57</td>
 								<td> GetModifierIncomingDamage_Percentage </td>
 								<td> Increases the damage of all sources that the parent takes by a percentage returned
 									to it. Can return negative values. 百分比增加或者减少所有伤害类型承受的伤害,
@@ -27721,7 +27794,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE </td>
-								<td> 57</td>
+								<td> 58</td>
 								<td> GetModifierIncomingPhysicalDamage_Percentage </td>
 								<td> Increases the damage of physical sources that the parent takes by a percentage
 									returned to it. Can return negative values.百分比增加或者减少受到的物理伤害,计算方法先用原始伤害前乘以百分比,然后再算护甲。
@@ -27729,7 +27802,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT </td>
-								<td> 58</td>
+								<td> 59</td>
 								<td> GetModifierIncomingPhysicalDamageConstant </td>
 								<td>以固定数值增加或者减少承受的物理伤害。计算方式是先按原始伤害计算护甲后，然后再加上这个固定值。可返回负数，自身可叠加。
 									同类计算顺序是MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE、MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT、
@@ -27739,7 +27812,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT </td>
-								<td> 59</td>
+								<td> 60</td>
 								<td> GetModifierIncomingSpellDamageConstant </td>
 								<td> Increases the damage of magical sources that the parent takes by a percentage
 									returned to it. Can return negative values. 以固定数值增加承受的法术伤害,计算方式是原始伤害+固定值后，再计算魔抗。
@@ -27747,7 +27820,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EVASION_CONSTANT </td>
-								<td> 60</td>
+								<td> 61</td>
 								<td> GetModifierEvasion_Constant </td>
 								<td> Increases the evasion of the parent by a constant returned to it. Can return
 									negative values.设置闪避值，可以返回负数，自身可以叠加，不是线性的相加或者减少，要想线性减少(只能减少)要用MODIFIER_PROPERTY_NEGATIVE_EVASION_CONSTANT。
@@ -27755,7 +27828,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_NEGATIVE_EVASION_CONSTANT </td>
-								<td> 61</td>
+								<td> 62</td>
 								<td> GetModifierNegativeEvasion_Constant </td>
 								<td>设置负的闪避值，用来线性减少闪避的(游戏是50闪避,设置10,游戏里就是40的闪避了)。可以和MODIFIER_PROPERTY_EVASION_CONSTANT组合，
 									增加和减少闪避。返回负数无效,自身不叠加,相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。
@@ -27763,32 +27836,32 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE</td>
-								<td>62</td>
+								<td>63</td>
 								<td>GetModifierStatusResistance</td>
 								<td>状态抗性,不能返回负数,自身不叠加,相同BUFF以数值大的为准。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING</td>
-								<td>63</td>
+								<td>64</td>
 								<td>GetModifierStatusResistanceStacking</td>
 								<td>可叠加的状态抗性,用于状态抗性的加减，但不是线性的。可以返回负数，负数可用来当做减，也可以把状态抗性设置成负数，
 									状态抗性为负，会增加晕眩时间。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_STATUS_RESISTANCE_CASTER</td>
-								<td>64</td>
+								<td>65</td>
 								<td>GetModifierStatusResistanceCaster</td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_AVOID_DAMAGE </td>
-								<td> 65 </td>
+								<td> 66 </td>
 								<td> GetModifierAvoidDamage </td>
 								<td>是否完全躲避伤害(可以躲避所有类型的),返回大于0的数则躲避。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_AVOID_SPELL </td>
-								<td> 66</td>
+								<td> 67</td>
 								<td> GetModifierAvoidSpell </td>
 								<td>有BUG，返回任何数都无法躲避任何技能伤害。对全部要对目标施放的技能有反应(刚被的鼻涕只有施放第一层时有反应，后面叠加的没反应)，
 									对大部分需要指向但不用对目标施放的技能有反应(对风行强力击没反应)。对非指向(点击就放的，比如剑圣风暴)技能没反应。
@@ -27796,41 +27869,41 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MISS_PERCENTAGE </td>
-								<td> 67</td>
+								<td> 68</td>
 								<td> GetModifierMiss_Percentage </td>
 								<td> Increases the chance of the parent to miss by a percentage returned to it. Can
 									return negative values.攻击丢失率，0是完全命中，100是完全丢失。可以返回负数,自身可叠加。 </td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_BASE_PERCENTAGE</td>
-								<td> 68</td>
+								<td> 69</td>
 								<td>GetModifierPhysicalArmorBase_Percentage</td>
 								<td>按照当前基础护甲(添加装备后，重新计算基础护甲)的百分比设置护甲(不是增加),正数最大100(就是当前护甲,不变，超过100的都按100处理,
 									0就是没有基础护甲),可以返回负数,并且可以小于-100。自身不叠加，相同BUFF以数值小的为准。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_TOTAL_PERCENTAGE</td>
-								<td> 69</td>
+								<td> 70</td>
 								<td>GetModifierPhysicalArmorTotal_Percentage</td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS </td>
-								<td> 70 </td>
+								<td> 71 </td>
 								<td> GetModifierPhysicalArmorBonus </td>
 								<td> Increases the armor of the parent by a constant returned to it. Can return negative
 									values. 以绿字形式增加或者减少护甲,可以返回负数，自身可叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE </td>
-								<td> 71</td>
+								<td> 72</td>
 								<td> GetModifierPhysicalArmorBonusUnique </td>
 								<td>以绿字形式增加护甲,不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE </td>
-								<td> 72</td>
+								<td> 73</td>
 								<td> GetModifierPhysicalArmorBonusUniqueActive </td>
 								<td>以绿字形式增加护甲,不能返回负数，自身不能叠加，相同BUFF以数值大的为准。可以和MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE叠加。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。不知道还有什么特别的地方。
@@ -27838,20 +27911,20 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR </td>
-								<td> 73</td>
+								<td> 74</td>
 								<td> GetModifierIgnorePhysicalArmor </td>
 								<td>无视所有护甲,返回1即可。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BASE_REDUCTION </td>
-								<td> 74</td>
+								<td> 75</td>
 								<td> GetModifierMagicalResistanceBaseReduction </td>
 								<td>好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION </td>
-								<td> 75</td>
+								<td> 76</td>
 								<td> GetModifierMagicalResistanceDirectModification </td>
 								<td>百分比增加或减少魔抗(就是面板值)。可以返回负数,自身可线性叠加,比如游戏里是25%的魔抗,-100后，就是-75%，并且可以超过100%。
 									有趣的是,如果先通过MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS增加了魔抗,并且如果已经增加到100了,
@@ -27861,7 +27934,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS </td>
-								<td> 76</td>
+								<td> 77</td>
 								<td> GetModifierMagicalResistanceBonus </td>
 								<td> Increases the magical resistance of the parent by a constant returned to it. Can
 									return negative values. 增加或者减少魔抗点数(不是面板值,应该是老版本用的),相同BUFF是非线性叠加，并且正数最大只能到100%,负数可以无限。
@@ -27871,13 +27944,13 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS_ILLUSIONS </td>
-								<td> 77</td>
+								<td> 78</td>
 								<td> GetModifierMagicalResistanceBonusIllusions </td>
 								<td> 幻象魔抗增加</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE </td>
-								<td> 78</td>
+								<td> 79</td>
 								<td> GetModifierMagicalResistanceDecrepifyUnique </td>
 								<td>绿杖、虚无时魔抗减小的专用API(但是也可以增加魔抗)。注意的是,和魔抗面板值是非线性相加的。可以返回负数，负数是减少，不能叠加，相同BUFF时以数值小的为准。
 									当这个API和MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DIRECT_MODIFICATION叠加时，
@@ -27886,7 +27959,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BASE_MANA_REGEN </td>
-								<td> 79</td>
+								<td> 80</td>
 								<td> GetModifierBaseManaRegen </td>
 								<td> Set the base mana regeneration of the parent by a constant returned to it. Can return negative values. 
 									设置基础回蓝、魔法回复(以智力决定的回蓝,如果设置了此API，则装备增加智力的装备是不增加回蓝的,只有增加魔法恢复的才有效)。
@@ -27895,7 +27968,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT </td>
-								<td> 80</td>
+								<td> 81</td>
 								<td> GetModifierConstantManaRegen </td>
 								<td> Increases the mana regeneration of the parent by a constant returned to it. Can
 									return negative values. 魔法回复。以固定值增加或者减少 回蓝，甚至是扣除蓝，以绿字形式相加。可以返回负数，自身可以叠加。负数是减少，当回蓝值低于0时，会变成扣除蓝，
@@ -27903,14 +27976,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE </td>
-								<td> 81</td>
+								<td> 82</td>
 								<td> GetModifierConstantManaRegenUnique </td>
 								<td>魔法回复。增加回蓝，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE </td>
-								<td> 82</td>
+								<td> 83</td>
 								<td> GetModifierTotalPercentageManaRegen </td>
 								<td> Increases the total mana regeneration of the parent by a percentage returned to it.
 									Can return negative values. 以总蓝量的百分比值增加或者减少回蓝。比如本身总共200蓝,0.5的回蓝,用此API返回100，回蓝就是200.5。
@@ -27919,7 +27992,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT </td>
-								<td> 83 </td>
+								<td> 84 </td>
 								<td> GetModifierConstantHealthRegen </td>
 								<td> Increases the health regeneration of the parent by a constant returned to it. Can
 									return negative values. 增加或者减少固定的生命回复数值，可以返回负数，自身可叠加，但是回血值不会为负,最少为0，不会扣血。
@@ -27928,7 +28001,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE </td>
-								<td>84</td>
+								<td>85</td>
 								<td> GetModifierHealthRegenPercentage </td>
 								<td> Increases the evasion of the parent by a percentage returned to it. Can return
 									negative values.以总血量的百分比增加或者减少回血(比如600血，回复2，返回100，回复变成602),可以超过100。
@@ -27937,7 +28010,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE_UNIQUE</td>
-								<td>85
+								<td>86
 								</td>
 								<td>GetModifierHealthRegenPercentageUnique</td>
 								<td>以总血量的百分比增加回血,不能返回负数，自身不叠加，相同BUFF以数值大的为准。面板值不显示,血条数值才显示。
@@ -27946,7 +28019,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HEALTH_BONUS </td>
-								<td> 86</td>
+								<td> 87</td>
 								<td> GetModifierHealthBonus </td>
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Health is scaled to the same percentage as before the increase.
@@ -27956,7 +28029,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANA_BONUS </td>
-								<td>87</td>
+								<td>88</td>
 								<td> GetModifierManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
 									negative values. Mana is scaled to the same percentage as before the increase. 
@@ -27965,14 +28038,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS </td>
-								<td> 88</td>
+								<td> 89</td>
 								<td> GetModifierExtraStrengthBonus </td>
 								<td>以绿字形式增加或者减少力量。当增加力量时，总血量会变化，但不影响当前血量。可以返回负数，自身可叠加，但是最多减到0力量,当前血量可能会变化。
 									不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS </td>
-								<td>89</td>
+								<td>90</td>
 								<td> GetModifierExtraHealthBonus </td>
 								<td> Increases the maximum health of the parent by a constant returned to it. Can return
 									negative values. Ignores current health.增加或者减少英雄总血量。
@@ -27982,7 +28055,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_BONUS </td>
-								<td> 90 </td>
+								<td> 91</td>
 								<td> GetModifierExtraManaBonus </td>
 								<td> Increases the maximum mana of the parent by a constant returned to it. Can return
 									negative values. Ignores current mana.增加或者减少英雄总蓝量。注意返回负数值时，当前总蓝量加上这个负数值小于1时,蓝条会消失，并且蓝量为0了。
@@ -27991,7 +28064,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE </td>
-								<td>91</td>
+								<td>92</td>
 								<td> GetModifierExtraHealthPercentage </td>
 								<td> Increases the maximum health of the parent by a percentage returned to it. Can
 									return negative values. Ignores current health.	百分比增加或减少总血量。减少血量过多时,也会出死亡BUG。
@@ -27999,7 +28072,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE </td>
-								<td>92</td>
+								<td>93</td>
 								<td> GetModifierExtraManaPercentage </td>
 								<td> 百分比增加或减少总蓝量。减少过多时，蓝条会消失。增加总蓝量时，不影响当前蓝量。可以返回负数，自身可叠加。
 									不需要使用SetHasCustomTransmitterData。</td>
@@ -28007,7 +28080,7 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS </td>
-								<td> 93</td>
+								<td> 94</td>
 								<td> GetModifierBonusStats_Strength </td>
 								<td> Increases the strength stat of the parent by a constant returned to it. Can return
 									negative values.以绿字形式增加或者减少力量。当增加力量时，总血量变化的同时也影响当前血量。可以返回负数，自身可叠加，但是最多减到0力量。
@@ -28016,14 +28089,14 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS </td>
-								<td> 94</td>
+								<td> 95</td>
 								<td> GetModifierBonusStats_Agility </td>
 								<td> Increases the agility stat of the parent by a constant returned to it. Can return
 									negative values. 以绿字形式增加或者减少敏捷。可以返回负数，自身可叠加，但是最多减到0敏捷。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS </td>
-								<td> 95</td>
+								<td> 96</td>
 								<td> GetModifierBonusStats_Intellect </td>
 								<td> Increases the intelligence stat of the parent by a constant returned to it. Can
 									return negative values.以绿字形式增加或者减少智力。当增加智力时，总蓝量变化的同时也会影响当前血量。可以返回负数，自身可叠加，但是最多减到0智力。
@@ -28031,26 +28104,26 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE</td>
-								<td> 96</td>
+								<td> 97</td>
 								<td> GetModifierBonusStats_Strength_Percentage </td>
 								<td>好像已经无效了 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS_PERCENTAGE</td>
-								<td> 97</td>
+								<td> 98</td>
 								<td> GetModifierBonusStats_Agility_Percentage </td>
 								<td> 好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS_PERCENTAGE</td>
-								<td> 98</td>
+								<td> 99</td>
 								<td> GetModifierBonusStats_Intellect_Percentage </td>
 								<td> 好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_CAST_RANGE_BONUS </td>
-								<td> 99</td>
+								<td> 100</td>
 								<td> GetModifierCastRangeBonus </td>
 								<td> Increases the cast range of the parent by a constant returned to it. Can return
 									negative values.只能增加所有技能和物品的施法距离,不能返回负数，无法减小，自身不叠加,相同BUFF以数值大的为准。
@@ -28059,28 +28132,28 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET</td>
-								<td> 100</td>
+								<td> 101</td>
 								<td>GetModifierCastRangeBonusTarget</td>
 								<td>增加 施法者 对 拥有此BUFF单位的  施法距离。但是不会改变施法者技能的施法范围圈。不能返回负数，自身不叠加，
 									相同BUFF以数值大的为准。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING</td>
-								<td> 101</td>
+								<td> 102</td>
 								<td>GetModifierCastRangeBonusStacking</td>
 								<td>增加或者减少所有技能和物品的施法距离,可返回负数，自身可叠加，无论负数多小，都只能减少到一个最小施法距离。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE</td>
-								<td> 102</td>
+								<td> 103</td>
 								<td>GetModifierAttackRangeOverride</td>
 								<td>直接设置基础攻击距离，必须大于0。不能返回负数，自身不叠加，相同BUFF以数值小的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS </td>
-								<td> 103</td>
+								<td> 104</td>
 								<td> GetModifierAttackRangeBonus </td>
 								<td> Increases the attack range of the parent by a constant returned to it. Can return
 									negative values.以绿字形式增加或者减少攻击距离，可以返回负数，自身可叠加,最少减到0,但是已经无法攻击了。
@@ -28088,14 +28161,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE </td>
-								<td> 104</td>
+								<td> 105</td>
 								<td> GetModifierAttackRangeBonusUnique </td>
 								<td>以绿字形式增加攻击距离，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE</td>
-								<td> 105</td>
+								<td> 106</td>
 								<td>GetModifierAttackRangeBonusPercentage</td>
 								<td>以绿字形式百分比增加或减少攻击距离,可以返回负数,自身可叠加，最少减到0，但是已经无法攻击了。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。
@@ -28103,7 +28176,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAX_ATTACK_RANGE </td>
-								<td> 106 </td>
+								<td> 107 </td>
 								<td> GetModifierMaxAttackRange </td>
 								<td>设置攻击距离最小值,当前攻击距离比最小值低时,系统会加 绿字 补偿到最小值，绿字补偿会 根据装备和BUFF变化。
 									比如最小值设置为700,当前攻击距离为600,没装备和BUFF时，面板数据是600+100，这个100就是系统的补偿。这时装备一个魔龙枪,
@@ -28114,27 +28187,27 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS </td>
-								<td> 107</td>
+								<td> 108</td>
 								<td> GetModifierProjectileSpeedBonus </td>
 								<td> Increases the projectile speed of attacks sourced by the parent by a constant
 									returned to it. Can return negative values.增加或者减少普通攻击弹道速度。可以返回负数值,自身可叠加，但是为0时就已经攻击不到人了。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE </td>
-								<td> 108</td>
+								<td> 109</td>
 								<td> GetModifierProjectileSpeedBonusPercentage </td>
 								<td> 好像已经失效了</td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_PROJECTILE_NAME</td>
-								<td> 109</td>
+								<td> 110</td>
 								<td>GetModifierProjectileName</td>
 								<td>设置普攻攻击弹道特效,比如冰眼攻击特效"particles/items2_fx/skadi_projectile.vpcf"</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REINCARNATION </td>
-								<td>110</td>
+								<td>111</td>
 								<td> ReincarnateTime </td>
 								<td>设置原地复活时间,返回大于0的值就能和盾，骷髅王大一样原地复活。不能返回小于等于0的值，否则不能原地复活，就是正常死亡复活流程了。
 									自身不能叠加，相同BUFF以先 生效的为准。
@@ -28143,7 +28216,7 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME </td>
-								<td> 111</td>
+								<td> 112</td>
 								<td> GetModifierConstantRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
 									negative values.增加或者减少复活时间，可返回负数值，负数是减少复活时间，自身不能叠加，相同BUFF以先 生效的为准。
@@ -28151,7 +28224,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE </td>
-								<td> 112</td>
+								<td> 113</td>
 								<td> GetModifierPercentageRespawnTime </td>
 								<td> Increases the respawn time of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少复活时间，可以返回负数，注意这里负数是增加复活时间，比如-1，是增加100%的复活时间，0.5是减少50%的复活时间。
@@ -28159,14 +28232,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_STACKING </td>
-								<td> 113</td>
+								<td> 114</td>
 								<td> GetModifierStackingRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
 									negative values. Stacks with other modifiers.增加或减少复活时间,可以返回负数，负数是减少复活时间，自身可以叠加。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE </td>
-								<td> 114</td>
+								<td> 115</td>
 								<td> GetModifierPercentageCooldown </td>
 								<td> Increases the cooldown of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少所有技能和物品的冷却时间。注意返回正数是减少冷却,
@@ -28177,14 +28250,14 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_ONGOING</td>
-								<td> 115</td>
+								<td> 116</td>
 								<td>GetModifierPercentageCooldownOngoing</td>
 								<td>好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_CASTTIME_PERCENTAGE </td>
-								<td> 116</td>
+								<td> 117</td>
 								<td> GetModifierPercentageCasttime </td>
 								<td> Increases the cast time of the parent's abilities by a percentage returned to it.
 									Can return negative values.百分比增加或减少施法时间,返回正数是减少。可以返回负数，返回0不生效，自身不叠加,相同BUFF以数值小的为准（0不考虑）。 </td>
@@ -28192,13 +28265,13 @@
 							
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_ANIM_TIME_PERCENTAGE </td>
-								<td> 117</td>
+								<td> 118</td>
 								<td> GetModifierPercentageAttackAnimTime </td>
 								<td> 好像无效了 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANACOST_PERCENTAGE </td>
-								<td>118</td>
+								<td>119</td>
 								<td> GetModifierPercentageManacost </td>
 								<td> Increases the mana cost of the parent's abilities by a percentage returned to it.
 									Can return negative values.百分比减少技能和物品耗蓝，不能返回负数(是的,英语说明是错的，正数是减少)，自身不能叠加，相同Buff以数值大的为准。
@@ -28206,27 +28279,27 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING</td>
-								<td>119</td>
+								<td>120</td>
 								<td>GetModifierPercentageManacostStacking</td>
 								<td>百分比增加和减少技能和物品耗蓝,可以返回负数(增加蓝耗，正数是减少耗蓝),自身可以叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_DEATHGOLDCOST </td>
-								<td> 120</td>
+								<td> 121</td>
 								<td> GetModifierConstantDeathGoldCost </td>
 								<td>好像已经失效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXP_RATE_BOOST </td>
-								<td> 121</td>
+								<td> 122</td>
 								<td> GetModifierPercentageExpRateBoost </td>
 								<td>获得经验时，百分比给与额外的经验加成。可以返回负数,就是减少经验获取，最多扣到0,比如少一个怪获得20的经验,-100就是获得0经验,
 									-200就是获得扣20经验。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_GOLD_RATE_BOOST </td>
-								<td> 122</td>
+								<td> 123</td>
 								<td> GetModifierPercentageGoldRateBoost </td>
 								<td>获得金钱时，百分比给与额外的金钱加成。比如击杀一个英雄80 块钱，返回200,
 									总共就可以获得240.可以返回负数,就是减少金钱获取，并且可以扣钱，最多扣到0。</td>
@@ -28234,7 +28307,7 @@
 							
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE </td>
-								<td> 123</td>
+								<td> 124</td>
 								<td> GetModifierPreAttack_CriticalStrike </td>
 								<td> Procs a critical strike dealing the extra damage returned to it.设置暴击伤害,这个伤害是没计算护甲的。
 									返回100就是没有暴击，200是2倍英雄本身总攻击(白字+绿字)。不能返回小于100的值，自身不能叠加,相同BUFF以数值大为准。
@@ -28242,27 +28315,27 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE </td>
-								<td> 124</td>
+								<td> 125</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike </td>
 								<td>设置 做为被攻击目标时，攻击单位的暴击值(血棘效果)。不能返回小于100的值，自身不能叠加,相同BUFF以数值大的为准。
 									如果不做概率设计，就是百分百暴击。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK </td>
-								<td> 125</td>
+								<td> 126</td>
 								<td> GetModifierMagical_ConstantBlock </td>
 								<td>增加一个固定的 魔法伤害 格挡，计算方式是原始伤害先减去这个抵抗值，然后再计算魔抗。不能返回负数,自身不能叠加,相同BUFF以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK </td>
-								<td> 126</td>
+								<td> 127</td>
 								<td> GetModifierPhysical_ConstantBlock </td>
 								<td> Blocks damage the parent takes by a constant returned to it. Can return negative
 									values.增加一个固定的 物理伤害 格挡。计算方式是原始伤害先减去这个抵抗值，然后再计算护甲。不能返回负数,自身不能叠加,相同BUFF以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL </td>
-								<td> 127</td>
+								<td> 128</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial </td>
 								<td>增加一个固定的 物理伤害 格挡。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。但可以和MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
 									MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。计算方式是先
@@ -28271,7 +28344,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR </td>
-								<td> 128</td>
+								<td> 129</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor </td>
 								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算格挡,再计算护甲和魔抗。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									可以和MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。
@@ -28281,7 +28354,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK </td>
-								<td> 129</td>
+								<td> 130</td>
 								<td> GetModifierTotal_ConstantBlock </td>
 								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算护甲和魔抗,再计算格挡。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									可以和 MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK 、
@@ -28291,45 +28364,45 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION </td>
-								<td> 130</td>
+								<td> 131</td>
 								<td> GetOverrideAnimation </td>
 								<td> Forces the parent to play a specific animation.强制单位执行一个动画动作。自身不能叠加，以最先 生效的的为准。
 									返回值在GameActivity_t里找。相当于StartGesture。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT </td>
-								<td> 131</td>
+								<td> 132</td>
 								<td> GetOverrideAnimationWeight </td>
 								<td>好像无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE </td>
-								<td> 132</td>
+								<td> 133</td>
 								<td> GetOverrideAnimationRate </td>
 								<td>设置动画播放频率,几秒播放一次。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSORB_SPELL </td>
-								<td> 133</td>
+								<td> 134</td>
 								<td> GetAbsorbSpell </td>
 								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) 抵挡指向性技能,只能返回1才生效。
 									自身不能叠加，相同BUFF以返回1的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REFLECT_SPELL </td>
-								<td> 134</td>
+								<td> 135</td>
 								<td> GetReflectSpell </td>
 								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) 。要自己编写程序才能实现反弹效果。。。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_AUTOATTACK </td>
-								<td> 135</td>
+								<td> 136</td>
 								<td> GetDisableAutoAttack </td>
 								<td>是否自动攻击附近单位。即使设置了 自动攻击:始终,就算使用A键A空地,也不会主动攻击身边单位。返回1才生效。自身不叠加，相同BUFF以返回1的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_DAY_VISION </td>
-								<td> 136</td>
+								<td> 137</td>
 								<td> GetBonusDayVision </td>
 								<td> Increases the vision of the parent during the day by a constant returned to it. Can
 									return negative values. 增加或者减少白天视野,视野总上限值大概4000左右。可以返回负数，自身可以叠加。
@@ -28337,7 +28410,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION </td>
-								<td> 137</td>
+								<td> 138</td>
 								<td> GetBonusNightVision </td>
 								<td> Increases the vision of the parent during the night by a constant returned to it.
 									Can return negative values. 增加或者减少夜间视野,视野总上限值大概4000左右。可以返回负数，自身可以叠加。
@@ -28345,14 +28418,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE </td>
-								<td> 138</td>
+								<td> 139</td>
 								<td> GetBonusNightVisionUnique </td>
 								<td>增加夜间视野,视野总上限值大概4000左右。不能返回负数，自身不能叠加,相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE </td>
-								<td> 139</td>
+								<td> 140</td>
 								<td> GetBonusVisionPercentage </td>
 								<td> Increases the vision of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少视野,包括白天和黑夜。可以返回负数，自身可以叠加。
@@ -28360,7 +28433,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_DAY_VISION </td>
-								<td> 140</td>
+								<td> 141</td>
 								<td> GetFixedDayVision </td>
 								<td> Sets the vision of the parent during the day to a fixed value returned to it.
 									Cannot be changed by any means. 设置白天视野最大值(不是英雄实际拥有的视野，但是设置比KV视野值(一般是1800)小时,会直接减少视野)，
@@ -28373,107 +28446,107 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_NIGHT_VISION </td>
-								<td> 141</td>
+								<td> 142</td>
 								<td> GetFixedNightVision </td>
 								<td> Sets the vision of the parent during the night to a fixed value returned to it.
 									Cannot be changed by any means.直接设置夜间视野最大值,不能返回负数，原理同上。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MIN_HEALTH </td>
-								<td> 142</td>
+								<td> 143</td>
 								<td> GetMinHealth </td>
 								<td>设置单位最小的当前血量(不是总血量),受到任何攻击不会低于这个血量。自身不能叠加，相同BUFF以数值小的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL </td>
-								<td> 143</td>
+								<td> 144</td>
 								<td> GetAbsoluteNoDamagePhysical </td>
 								<td>绝对不受物理类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL </td>
-								<td> 144</td>
+								<td> 145</td>
 								<td> GetAbsoluteNoDamageMagical </td>
 								<td>绝对不受魔法类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE </td>
-								<td> 145</td>
+								<td> 146</td>
 								<td> GetAbsoluteNoDamagePure </td>
 								<td>绝对不受纯粹类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_ILLUSION </td>
-								<td> 146</td>
+								<td> 147</td>
 								<td> GetIsIllusion </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ILLUSION_LABEL </td>
-								<td> 147</td>
+								<td> 148</td>
 								<td> GetModifierIllusionLabel </td>
 								<td>好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_STRONG_ILLUSION </td>
-								<td> 148</td>
+								<td> 149</td>
 								<td> GetModifierStrongIllusion </td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION </td>
-								<td> 149</td>
+								<td> 150</td>
 								<td> GetModifierSuperIllusion </td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION_WITH_ULTIMATE </td>
-								<td> 150</td>
+								<td> 151</td>
 								<td> GetModifierSuperIllusionWithUltimate </td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_XP_DURING_DEATH </td>
-								<td> 151</td>
+								<td> 152</td>
 								<td> GetModifierXPDuringDeath </td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE </td>
-								<td> 152</td>
+								<td> 153</td>
 								<td> GetModifierTurnRate_Percentage </td>
 								<td> Increases the turn rate of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少转身速率。正数是加快转身速率。可以返回负数，自身可以叠加。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TURN_RATE_OVERRIDE</td>
-								<td> 153</td>
+								<td> 154</td>
 								<td>GetModifierTurnRate_Override</td>
 								<td>转身速率覆盖,0-1，数值越大，速率越快。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_HEALING </td>
-								<td> 154</td>
+								<td> 155</td>
 								<td> GetDisableHealing </td>
 								<td> Negates healing applied to the parent.是否禁止治疗、生命恢复和吸血效果。返回1为禁止。自身不能叠加，相同BUFF以返回1的为准。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK </td>
-								<td> 155</td>
+								<td> 156</td>
 								<td> GetAlwaysAllowAttack </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ETHEREAL_ATTACK </td>
-								<td> 156</td>
+								<td> 157</td>
 								<td> GetAllowEtherealAttack </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL </td>
-								<td> 157 </td>
+								<td> 158 </td>
 								<td> GetOverrideAttackMagical </td>
 								<td>使普通攻击对其他单位无效，只有魔法攻击有效。返回1生效，相同BUFF以先 生效的为准。
 
@@ -28481,38 +28554,38 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH </td>
-								<td> 158</td>
+								<td> 159</td>
 								<td> GetModifierUnitStatsNeedsRefresh </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_CREEP_MULTIPLIER </td>
-								<td> 159</td>
+								<td> 160</td>
 								<td> GetModifierBountyCreepMultiplier </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_OTHER_MULTIPLIER </td>
-								<td> 160</td>
+								<td> 161</td>
 								<td> GetModifierBountyOtherMultiplier </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_UNIT_DISALLOW_UPGRADING</td>
-								<td> 161</td>
+								<td> 162</td>
 								<td>GetModifierUnitDisllowUpgrading</td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DODGE_PROJECTILE </td>
-								<td> 162</td>
+								<td> 163</td>
 								<td>GetModifierDodgeProjectile</td>
 								<td>躲避弹道，包括有些技能、远程的普攻弹道，以及虚灵刀，否决等的弹道。返回1生效。就是跳 躲 弹道的效果。
 								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TRIGGER_COSMETIC_AND_END_ATTACK</td>
-								<td> 163
+								<td> 164
 								</td>
 								<td>GetTriggerCosmeticAndEndAttack</td>
 								<td>不知道怎么用
@@ -28520,7 +28593,7 @@
 							</tr>	
 							<tr>
 								<td>MODIFIER_PROPERTY_MAX_DEBUFF_DURATION</td>
-								<td> 164
+								<td> 165
 								</td>
 								<td>GetModifierMaxDebuffDuration</td>
 								<td>好像已经无效了
@@ -28528,7 +28601,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PRIMARY_STAT_DAMAGE_MULTIPLIER</td>
-								<td> 165
+								<td> 166
 								</td>
 								<td>GetPrimaryStatDamageMultiplier</td>
 								<td>效果是 以主属性的百分比增加基础攻击。比如原始攻击50，主属性20.返回100，结果就是基础攻击变成70。可返回负数，自身可叠加。
@@ -28537,14 +28610,14 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PREATTACK_DEADLY_BLOW</td>
-								<td> 166
+								<td> 167
 								</td>
 								<td>GetModifierPreAttack_DeadlyBlow</td>
 								<td>好像已经无效了。DeadlyBlow致命一击。
 								</td>
 							</tr>							<tr>
 								<td>MODIFIER_PROPERTY_ALWAYS_AUTOATTACK_WHILE_HOLD_POSITION</td>
-								<td> 167
+								<td> 168
 								</td>
 								<td>GetAlwaysAutoAttackWhileHoldPosition</td>
 								<td>好像已经无效了
@@ -28553,7 +28626,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SPELL_TARGET_READY
 								</td>
-								<td> 168
+								<td> 169
 								</td>
 								<td> OnSpellTargetReady
 								</td>
@@ -28564,7 +28637,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_RECORD
 								</td>
-								<td> 169
+								<td> 170
 								</td>
 								<td> OnAttackRecord
 								</td>
@@ -28574,7 +28647,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_START
 								</td>
-								<td> 170
+								<td> 171
 								</td>
 								<td> OnAttackStart
 								</td>
@@ -28584,7 +28657,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK
 								</td>
-								<td> 171</td>
+								<td> 172</td>
 								<td> OnAttack
 								</td>
 								<td> Event that fires when an attack was completed, regardless of the result of it.产生攻击弹道,假动作不触发,普通攻击动作序列3。
@@ -28593,7 +28666,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_LANDED
 								</td>
-								<td> 172</td>
+								<td> 173</td>
 								<td> OnAttackLanded
 								</td>
 								<td> Event that fires when an attack landed on its target successfully.当攻击弹道到达目标,普通攻击动作序列4。
@@ -28602,7 +28675,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_FAIL
 								</td>
-								<td> 173</td>
+								<td> 174</td>
 								<td> OnAttackFail
 								</td>
 								<td> Event that fires when an attack failed to land on its target.当攻击失败时，MISS或者跳躲了等。
@@ -28611,7 +28684,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_ALLIED
 								</td>
-								<td> 174
+								<td> 175
 								</td>
 								<td> OnAttackAllied
 								</td>
@@ -28621,7 +28694,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PROJECTILE_DODGE
 								</td>
-								<td> 175</td>
+								<td> 176</td>
 								<td> OnProjectileDodge
 								</td>
 								<td> Event that fires when dodging a projectile. (Disjointing it)当躲避了 普攻、技能、道具等的弹道。
@@ -28630,7 +28703,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ORDER
 								</td>
-								<td> 176</td>
+								<td> 177</td>
 								<td> OnOrder
 								</td>
 								<td> Event that fires when an order is given to the parent.当执行一个命令时，比如移动，施法等,好像只跑服务器。
@@ -28639,7 +28712,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_UNIT_MOVED
 								</td>
-								<td> 177</td>
+								<td> 178</td>
 								<td> OnUnitMoved
 								</td>
 								<td> Event that fires when a unit moved.当单位移动时。
@@ -28648,7 +28721,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_START
 								</td>
-								<td> 178</td>
+								<td> 179</td>
 								<td> OnAbilityStart
 								</td>
 								<td> Event that fires when starting to use an ability.当施放技能开始的标志，施放技能序列1。
@@ -28657,7 +28730,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_EXECUTED
 								</td>
-								<td> 179
+								<td> 180
 								</td>
 								<td> OnAbilityExecuted
 								</td>
@@ -28667,7 +28740,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 								</td>
-								<td> 180</td>
+								<td> 181</td>
 								<td> OnAbilityFullyCast
 								</td>
 								<td> Event that fires when the ability has completely activated.施法动作完毕，施放技能序列5。
@@ -28676,7 +28749,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_BREAK_INVISIBILITY
 								</td>
-								<td> 181</td>
+								<td> 182</td>
 								<td> OnBreakInvisibility
 								</td>
 								<td> Event that fires when breaking invisibility.好像已经无效了
@@ -28685,7 +28758,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_END_CHANNEL
 								</td>
-								<td> 182
+								<td> 183
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
@@ -28695,7 +28768,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PROCESS_UPGRADE
 								</td>
-								<td> 183</td>
+								<td> 184</td>
 								<td>
 								</td>
 								<td>Unused
@@ -28704,7 +28777,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_REFRESH
 								</td>
-								<td> 184</td>
+								<td> 185</td>
 								<td>
 								</td>
 								<td>Unused
@@ -28713,7 +28786,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TAKEDAMAGE
 								</td>
-								<td> 185
+								<td> 186
 								</td>
 								<td> OnTakeDamage
 								</td>
@@ -28723,7 +28796,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DEATH_PREVENTED
 								</td>
-								<td> 186
+								<td> 187
 								</td>
 								<td> OnDeathPrevented
 								</td>
@@ -28733,7 +28806,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_STATE_CHANGED
 								</td>
-								<td> 187
+								<td> 188
 								</td>
 								<td> OnStateChanged
 								</td>
@@ -28743,7 +28816,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ORB_EFFECT
 								</td>
-								<td> 188</td>
+								<td> 189</td>
 								<td>
 								</td>
 								<td>Unused
@@ -28751,20 +28824,20 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_PROCESS_CLEAVE</td>
-								<td>189</td>
+								<td>190</td>
 								<td>OnProcessCleave</td>
 								<td>当使用分裂攻击时。拿狂战斧攻击总是生效，包括远程拿狂战斧。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_DAMAGE_CALCULATED</td>
-								<td>190</td>
+								<td>191</td>
 								<td>OnDamageCalculated</td>
 								<td>在OnAttackLanded之后,开始计算经过各种BUFF后的伤害,普通攻击动作序列5.</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACKED
 								</td>
-								<td> 191
+								<td> 192
 								</td>
 								<td> OnAttacked
 								</td>
@@ -28774,7 +28847,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DEATH
 								</td>
-								<td> 192</td>
+								<td> 193</td>
 								<td> OnDeath
 								</td>
 								<td> Event that fires when dying.当单位死亡时。
@@ -28783,7 +28856,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_RESPAWN
 								</td>
-								<td> 193
+								<td> 194
 								</td>
 								<td> OnRespawn
 								</td>
@@ -28793,7 +28866,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SPENT_MANA
 								</td>
-								<td> 194
+								<td> 195
 								</td>
 								<td> OnSpentMana
 								</td>
@@ -28803,7 +28876,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TELEPORTING
 								</td>
-								<td> 195
+								<td> 196
 								</td>
 								<td> OnTeleporting
 								</td>
@@ -28813,7 +28886,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TELEPORTED
 								</td>
-								<td> 196</td>
+								<td> 197</td>
 								<td> OnTeleported
 								</td>
 								<td> Event that fires when completing a teleport.当TP结束后。
@@ -28822,7 +28895,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SET_LOCATION
 								</td>
-								<td> 197
+								<td> 198
 								</td>
 								<td> OnSetLocation
 								</td>
@@ -28832,7 +28905,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HEALTH_GAINED
 								</td>
-								<td> 198</td>
+								<td> 199</td>
 								<td> OnHealthGained
 								</td>
 								<td>当获得加血时，比如本身的生命回复，其他单位的加血等。要判断是否自身加血，
@@ -28843,7 +28916,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MANA_GAINED
 								</td>
-								<td> 199</td>
+								<td> 200</td>
 								<td> OnManaGained
 								</td>
 								<td>获得加蓝时，满蓝时获得任何蓝量任然生效。其他同上。
@@ -28852,7 +28925,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
 								</td>
-								<td> 200
+								<td> 201
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
@@ -28862,7 +28935,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HERO_KILLED
 								</td>
-								<td> 201</td>
+								<td> 202</td>
 								<td> OnHeroKilled
 								</td>
 								<td> Event that fires when a hero is killed.当英雄被击杀时，被害者是params.target,攻击者是 params.attacker。 
@@ -28871,7 +28944,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HEAL_RECEIVED
 								</td>
-								<td> 202</td>
+								<td> 203</td>
 								<td> OnHealReceived
 								</td>
 								<td> Event that fires when being healed.当获得治疗时,要判断是否自身加血，
@@ -28881,7 +28954,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_BUILDING_KILLED
 								</td>
-								<td> 203</td>
+								<td> 204</td>
 								<td> OnBuildingKilled
 								</td>
 								<td> Event that fires when a building is destroyed.当建筑物被摧毁时。
@@ -28890,7 +28963,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MODEL_CHANGED
 								</td>
-								<td> 204
+								<td> 205
 								</td>
 								<td> OnModelChanged
 								</td>
@@ -28900,7 +28973,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MODIFIER_ADDED
 								</td>
-								<td> 205
+								<td> 206
 								</td>
 								<td> OnModifierAdded
 								</td>
@@ -28910,7 +28983,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TOOLTIP
 								</td>
-								<td> 206</td>
+								<td> 207</td>
 								<td> OnTooltip
 								</td>
 								<td>设置提示里MODIFIER_PROPERTY_TOOLTIP的数值。这个在本地化文本里,比如
@@ -28921,7 +28994,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_MODEL_CHANGE
 								</td>
-								<td> 207</td>
+								<td> 208</td>
 								<td> GetModifierModelChange
 								</td>
 								<td> Changes the parent's model.更换模型,返回模型目录地址。比如"models/heroes/lycan/lycan_wolf.vmdl"
@@ -28930,7 +29003,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_MODEL_SCALE
 								</td>
-								<td> 208</td>
+								<td> 209</td>
 								<td> GetModifierModelScale
 								</td>
 								<td> Changes the parent's model scale.改变模型大小,可返回负数,负数是缩小,自身可叠加。
@@ -28939,7 +29012,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_SCEPTER
 								</td>
-								<td> 209
+								<td> 210
 								</td>
 								<td> GetModifierScepter
 								</td>
@@ -28949,7 +29022,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_SHARD
 								</td>
-								<td> 210
+								<td> 211
 								</td>
 								<td> GetModifierShard
 								</td>
@@ -28959,7 +29032,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_RADAR_COOLDOWN_REDUCTION
 								</td>
-								<td> 211
+								<td> 212
 								</td>
 								<td> GetModifierRadarCooldownReduction
 								</td>
@@ -28970,7 +29043,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 								</td>
-								<td> 212</td>
+								<td> 213</td>
 								<td> GetActivityTranslationModifiers
 								</td>
 								<td>相当于AddActivityModifier。如果有多个值要添加，要做多个MODIFIER。
@@ -28979,7 +29052,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
 								</td>
-								<td> 213
+								<td> 214
 								</td>
 								<td> GetAttackSound
 								</td>
@@ -28989,7 +29062,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_LIFETIME_FRACTION
 								</td>
-								<td> 214</td>
+								<td> 215</td>
 								<td> GetUnitLifetimeFraction
 								</td>
 								<td>return ( ( self:GetDieTime() - GameRules:GetGameTime() ) / self:GetDuration() )
@@ -28998,7 +29071,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
 								</td>
-								<td> 215</td>
+								<td> 216</td>
 								<td> GetModifierProvidesFOWVision
 								</td>
 								<td> Return 1 if parent's model would show to his enemies.是否提供给敌方视野。这个视野只包含英雄本身,没有周围的视野。
@@ -29007,7 +29080,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELLS_REQUIRE_HP
 								</td>
-								<td> 216
+								<td> 217
 								</td>
 								<td> GetModifierSpellsRequireHP
 								</td>
@@ -29018,7 +29091,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
 								</td>
-								<td> 217</td>
+								<td> 218</td>
 								<td> GetForceDrawOnMinimap
 								</td>
 								<td>耗血已经无效了。
@@ -29027,7 +29100,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_TURNING
 								</td>
-								<td> 218</td>
+								<td> 219</td>
 								<td> GetModifierDisableTurning
 								</td>
 								<td>禁止转身,效果跟马尔斯举盾后的移动效果一样。返回1生效。
@@ -29036,7 +29109,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 								</td>
-								<td> 219</td>
+								<td> 220</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
 								<td>忽略施法角度,就是背对人也能立刻放技能。返回1生效。
@@ -29045,7 +29118,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_CHANGE_ABILITY_VALUE
 								</td>
-								<td> 220</td>
+								<td> 221</td>
 								<td> GetModifierChangeAbilityValue
 								</td>
 								<td>不知道怎么用
@@ -29054,7 +29127,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL
 								</td>
-								<td> 221</td>
+								<td> 222</td>
 								<td> GetModifierOverrideAbilitySpecial
 								</td>
 								<td>指定要修改的特殊值。技能名称是params.ability:GetAbilityName(),
@@ -29065,7 +29138,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL_VALUE
 								</td>
-								<td> 222</td>
+								<td> 223</td>
 								<td> GetModifierOverrideAbilitySpecialValue
 								</td>
 								<td>修改特殊值，特殊值等级params.ability_special_level,就是技能等级，但是 是从0开始。
@@ -29075,7 +29148,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_ABILITY_LAYOUT
 								</td>
-								<td> 223
+								<td> 224
 								</td>
 								<td> GetModifierAbilityLayout
 								</td>
@@ -29085,7 +29158,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DOMINATED
 								</td>
-								<td> 224</td>
+								<td> 225</td>
 								<td> OnDominated
 								</td>
 								<td> An event that fires when a unit is being dominated.当一个单位被支配时触发的事件。
@@ -29094,7 +29167,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TEMPEST_DOUBLE
 								</td>
-								<td> 225
+								<td> 226
 								</td>
 								<td> GetModifierTempestDouble
 								</td>
@@ -29104,7 +29177,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_PRESERVE_PARTICLES_ON_MODEL_CHANGE
 								</td>
-								<td> 226
+								<td> 227
 								</td>
 								<td> PreserveParticlesOnModelChanged
 								</td>
@@ -29114,7 +29187,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_FINISHED
 								</td>
-								<td> 227</td>
+								<td> 228</td>
 								<td> OnAttackFinished
 								</td>
 								<td>攻击动作完成(不是伤害完成，比如弹道很远，还没命中目标但是攻击动作已经完成了，就已经调用了此API)。普通攻击动作序列10(不一定是10)。
@@ -29123,7 +29196,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_COOLDOWN
 								</td>
-								<td> 228</td>
+								<td> 229</td>
 								<td> GetModifierIgnoreCooldown
 								</td>
 								<td>好像已经失效了
@@ -29132,7 +29205,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_CAN_ATTACK_TREES
 								</td>
-								<td> 229
+								<td> 230
 								</td>
 								<td> GetModifierCanAttackTrees
 								</td>
@@ -29142,7 +29215,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_VISUAL_Z_DELTA
 								</td>
-								<td> 230
+								<td> 231
 								</td>
 								<td> GetVisualZDelta
 								</td>
@@ -29152,7 +29225,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_ILLUSION
 								</td>
-								<td> 231</td>
+								<td> 232</td>
 								<td>GetModifierIncomingDamage_Illusion
 								</td>
 								<td>增加或者减少 幻象 将要 承受的伤害。
@@ -29160,7 +29233,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DONT_GIVE_VISION_OF_ATTACKER</td>
-								<td> 232</td>
+								<td> 233</td>
 								<td>GetModifierNoVisionOfAttacker
 								</td>
 								<td>没有攻击者的视野，返回1生效。
@@ -29168,7 +29241,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TOOLTIP2</td>
-								<td> 233</td>
+								<td> 234</td>
 								<td>OnTooltip2
 								</td>
 								<td>设置提示里MODIFIER_PROPERTY_TOOLTIP2的数值。这个在本地化文本里, 比如100
@@ -29178,7 +29251,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY</td>
-								<td> 234</td>
+								<td> 235</td>
 								<td>OnAttackRecordDestroy
 								</td>
 								<td>攻击记录被清除，普通攻击动作序列9。施放技能序列7(施放技能,命中目标后,会消除伤害记录，但是没有创建记录)。
@@ -29186,7 +29259,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_PROJECTILE_OBSTRUCTION_HIT </td>
-								<td> 235
+								<td> 236
 								</td>
 								<td>OnProjectileObstructionHit
 								</td>
@@ -29195,7 +29268,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SUPPRESS_TELEPORT</td>
-								<td> 236</td>
+								<td> 237</td>
 								<td>GetSuppressTeleport
 								</td>
 								<td>好像已经失效了。
@@ -29203,7 +29276,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_ATTACK_CANCELLED</td>
-								<td> 237</td>
+								<td> 238</td>
 								<td>OnAttackCancelled
 								</td>
 								<td>当攻击取消时。
@@ -29211,7 +29284,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SUPPRESS_CLEAVE </td>
-								<td> 238
+								<td> 239
 								</td>
 								<td>GetSuppressCleave
 								</td>
@@ -29220,7 +29293,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_BOT_ATTACK_SCORE_BONUS</td>
-								<td> 239
+								<td> 240
 								</td>
 								<td>BotAttackScoreBonus
 								</td>
@@ -29229,7 +29302,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACKSPEED_REDUCTION_PERCENTAGE</td>
-								<td> 240
+								<td> 241
 								</td>
 								<td>GetModifierAttackSpeedReductionPercentage
 								</td>
@@ -29243,7 +29316,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MOVESPEED_REDUCTION_PERCENTAGE</td>
-								<td> 241
+								<td> 242
 								</td>
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
@@ -29256,7 +29329,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_WHILE_MOVING_TARGET</td>
-								<td> 242
+								<td> 243
 								</td>
 								<td>
 								</td>
@@ -29265,7 +29338,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACKSPEED_PERCENTAGE</td>
-								<td> 243
+								<td> 244
 								</td>
 								<td>GetModifierAttackSpeedPercentage
 								</td>
@@ -29277,7 +29350,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTEMPT_PROJECTILE_DODGE
 								</td>
-								<td> 244
+								<td> 245
 								</td>
 								<td>OnAttemptProjectileDodge
 								</td>
@@ -29285,9 +29358,31 @@
 								</td>
 							</tr>
 							<tr>
+								<td> MODIFIER_EVENT_ON_PREDEBUFF_APPLIED
+								</td>
+								<td> 246
+								</td>
+								<td>OnPreDebuffApplied
+								</td>
+								<td>不知道怎么用
+								</td>
+							</tr>
+							
+							<tr>
+								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING
+								</td>
+								<td> 247
+								</td>
+								<td>GetModifierPercentageCooldownStacking
+								</td>
+								<td>可叠加的冷却减少一个固定值。
+								</td>
+							</tr>
+							
+							<tr>
 								<td> MODIFIER_FUNCTION_LAST
 								</td>
-								<td> 245
+								<td> 248
 								</td>
 								<td>Last
 								</td>
@@ -31103,6 +31198,15 @@
 								</td>
 							</tr>
 							<tr>
+								<td> dota_rune_deny
+								</td>
+								<td>"userid"		"short"<br>
+									"rune"			"short"<br>
+								</td>
+								<td>神符被反补
+								</td>
+							</tr>
+							<tr>
 								<td> dota_rune_spotted
 								</td>
 								<td>
@@ -31111,7 +31215,7 @@
 									"map_location"	"string"<br>
 									"rune_team"		"short"
 								</td>
-								<td>
+								<td>不知道什么用,不是装瓶
 								</td>
 							</tr>
 							<tr>
@@ -32288,6 +32392,16 @@
 									"killer_player_id"	"int"
 								</td>
 								<td>清除了中立生物营地？
+								</td>
+							</tr>
+							<tr>
+								<td> dota_watch_tower_captured
+								</td>
+								<td>"entindex"			"short"<br>
+									"team_number"		"short"<br>
+									"old_team_number"	"short""<br>
+								</td>
+								<td>前哨被占领
 								</td>
 							</tr>
 							<tr>
@@ -35861,7 +35975,7 @@
 									gyrocopter_flak_cannon 高射火炮<br>
 									gyrocopter_call_down 召唤飞弹
 								</td>
-								<td>矮人直升机,飞机
+								<td>矮人直升机,飞机,gyro搜索模型
 								</td>
 							</tr>
 							<tr>
@@ -36874,7 +36988,7 @@
 									monkey_king_untransform 变回原状<br>
 									monkey_king_wukongs_command 猴子猴孙
 								</td>
-								<td>齐天大圣,猴子
+								<td>齐天大圣、猴子
 								</td>
 							</tr>
 							<tr>
@@ -36887,7 +37001,7 @@
 									snapfire_spit_creep 喷吐(A杖技能)<br>
 									snapfire_mortimer_kisses 蜥蜴绝吻
 								</td>
-								<td>电炎绝手,老奶奶
+								<td>电炎绝手、老奶奶、突突突
 								</td>
 							</tr>
 							<tr>
@@ -36899,7 +37013,18 @@
 									hoodwink_sharpshooter 一箭穿心<br>
 									hoodwink_sharpshooter_release 中止一箭穿心<br>
 								</td>
-								<td>森海飞霞
+								<td>森海飞霞、小松鼠
+								</td>
+							</tr>
+							<tr>
+								<td> npc_dota_hero_void_spirit
+								</td>
+								<td> void_spirit_aether_remnant 残阴<br>
+									void_spirit_dissimilate 异化<br>
+									void_spirit_resonant_pulse 共鸣脉冲走<br>
+									void_spirit_astral_step 太虚之径<br>
+								</td>
+								<td>虚无之灵、紫猫
 								</td>
 							</tr>
 						</table>
@@ -38632,6 +38757,12 @@
 									modifier_urn_upheaval<br>
 									modifier_upheaval_urn_reincarnation<br>
 									modifier_aghsfort_minor_stats_upgrade<br>
+									modifier_aghsfort_aggro_override<br>
+									modifier_aghsfort_swamp_sickness<br>
+									modifier_aghsfort_restorative_flower<br>
+									modifier_aghsfort_trap_room_hookshot<br>
+									modifier_aghsfort_trap_room_meathook_pathingfix<br>
+									modifier_aghsfort_trap_room_meathook<br>
 									modifier_aghsfort_skeleton_king_vampiric_aura<br>
 									modifier_aghsfort_shadow_demon_shadow_poison<br>
 									modifier_aghsfort_shadow_shaman_shackles<br>
@@ -38639,10 +38770,182 @@
 									modifier_aghsfort_wisp_tether_haste<br>
 									modifier_aghsfort_wisp_tether_slow<br>
 									modifier_aghsfort_wildwing_tornado_blast_debuff<br>
-									modifier_ascension_meteoric_land<br>
+									modifier_aghsfort_treant_miniboss_natures_guise<br>
+									modifier_aghsfort_treant_miniboss_natures_guise_tree_walking<br>
+									modifier_aghsfort_treant_miniboss_natures_guise_invis<br>
+									modifier_aghsfort_treant_miniboss_natures_guise_near_tree_display<br>
+									modifier_aghsfort_treant_miniboss_natures_guise_root<br>
+									modifier_aghsfort_venomancer_poison_nova_thinker<br>
+									modifier_aghsfort_venomancer_poison_nova<br>
+									modifier_aghsfort_venomancer_poison_sting_applier<br>
+									modifier_aghsfort_venomancer_poison_sting<br>
 									modifier_aghsfort_effigy<br>
 									modifier_aghsfort_watch_tower_capturing<br>
 									modifier_aghsfort_watch_tower<br>
+									modifier_aghsfort_arc_warden_boss_flux<br>
+									modifier_aghsfort_arc_warden_boss_magnetic_field_thinker_evasion<br>
+									modifier_aghsfort_arc_warden_boss_magnetic_field_thinker_attack_speed<br>
+									modifier_aghsfort_arc_warden_boss_magnetic_field_evasion<br>
+									modifier_aghsfort_arc_warden_boss_magnetic_field_attack_speed<br>
+									modifier_aghsfort_arc_warden_boss_spark_wraith_purge<br>
+									modifier_aghsfort_arc_warden_boss_spark_wraith_thinker<br>
+									modifier_aghsfort_arc_warden_boss_tempest_double<br>
+									modifier_aghsfort_arc_warden_boss_tempest_double_phase<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_thinker<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_evasion<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_air_time<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_disable<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_after_land<br>
+									modifier_aghsfort_dawnbreaker_luminosity<br>
+									modifier_aghsfort_dawnbreaker_luminosity_attack_buff<br>
+									modifier_aghsfort_dawnbreaker_converge_thinker<br>
+									modifier_aghsfort_dawnbreaker_celestial_hammer_movement<br>
+									modifier_aghsfort_dawnbreaker_celestial_hammer_caster<br>
+									modifier_aghsfort_celestial_hammer_thinker<br>
+									modifier_aghsfort_dawnbreaker_fire_wreath_caster<br>
+									modifier_aghsfort_dawnbreaker_fire_wreath_attack_bonus<br>
+									modifier_aghsfort_dawnbreaker_fire_wreath_slow<br>
+									modifier_aghsfort_dawnbreaker_fire_wreath_smash_stun<br>
+									modifier_aghsfort_dawnbreaker_converge<br>
+									modifier_aghsfort_dawnbreaker_celestial_fire_thinker<br>
+									modifier_aghsfort_dawnbreaker_celestial_fire_debuff<br>
+									modifier_aghsfort_dawnbreaker_bright_foundry_debuff<br>
+									modifier_aghsfort_dawnbreaker_luminosity_solar_battery<br>
+									modifier_aghsfort_dawnbreaker_sun_sentinel_luminosity_attack_buff<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_death_of_a_star<br>
+									modifier_aghsfort_dawnbreaker_solar_guardian_death_of_a_star_active<br>
+									modifier_aghsfort_dawnbreaker_solar_flare_debuff<br>
+									modifier_aghsfort_dawnbreaker_starbreaker_counter_orbital<br>
+									modifier_aghsfort_boss_earthshaker_skewer_movement<br>
+									modifier_aghsfort_boss_earthshaker_skewer_impact<br>
+									modifier_aghsfort_boss_earthshaker_skewer_slow<br>
+									modifier_aghsfort_gyrocopter_rocket_barrage<br>
+									modifier_aghsfort_special_gyrocopter_homing_missile_ride<br>
+									modifier_aghsfort_gyrocopter_homing_missile<br>
+									modifier_aghsfort_gyrocopter_flak_cannon<br>
+									modifier_aghsfort_gyrocopter_flak_cannon_scepter<br>
+									modifier_aghsfort_gyrocopter_call_down_thinker<br>
+									modifier_aghsfort_gyrocopter_call_down_slow<br>
+									modifier_aghsfort_special_gyrocopter_rocket_barrage_on_attack<br>
+									modifier_aghsfort_gyrocopter_rocket_barrage_thinker<br>
+									modifier_aghsfort_special_gyrocopter_homing_missile_ride_loaded_unit<br>
+									modifier_aghsfort_special_gyrocopter_homing_missile_ride_loaded_unit_timeout<br>
+									modifier_aghsfort_special_gyrocopter_flak_cannon_fire_trail_thinker<br>
+									modifier_aghsfort_special_gyrocopter_flak_cannon_fire_trail_burn<br>
+									modifier_special_aghsfort_gyrocopter_call_down_attack_buff<br>
+									modifier_special_gyrocopter_call_down_mine<br>
+									modifier_aghsfort_special_gyrocopter_calldown_wingman<br>
+									modifier_aghsfort_juggernaut_blade_fury<br>
+									modifier_aghsfort_juggernaut_blade_fury_force<br>
+									modifier_aghsfort_juggernaut_blade_fury_force_pull<br>
+									modifier_aghsfort_juggernaut_healing_ward<br>
+									modifier_aghsfort_juggernaut_healing_ward_primed<br>
+									modifier_aghsfort_juggernaut_blade_dance<br>
+									modifier_aghsfort_juggernaut_double_attack<br>
+									modifier_aghsfort_juggernaut_omnislash<br>
+									modifier_aghsfort_juggernaut_omnislash_camera<br>
+									modifier_aghsfort_juggernaut_omnislash_invulnerability<br>
+									modifier_aghsfort_kunkka_torrent_thinker<br>
+									modifier_aghsfort_kunkka_torrent<br>
+									modifier_aghsfort_kunkka_torrent_slow<br>
+									modifier_aghsfort_kunkka_tidebringer_slow<br>
+									modifier_aghsfort_kunkka_torrent_storm<br>
+									modifier_aghsfort_kunkka_tidebringer<br>
+									modifier_aghsfort_kunkka_x_marks_the_spot<br>
+									modifier_aghsfort_kunkka_x_marks_the_spot_marker<br>
+									modifier_aghsfort_kunkka_x_marks_the_spot_thinker<br>
+									modifier_aghsfort_kunkka_ghost_ship_fire_cannons<br>
+									modifier_aghsfort_kunkka_ghost_ship_fleet<br>
+									modifier_aghsfort_kunkka_ghost_ship_knockback<br>
+									modifier_aghsfort_kunkka_ghost_ship_loaded<br>
+									modifier_aghsfort_kunkka_ghost_ship_damage_absorb<br>
+									modifier_aghsfort_kunkka_ghost_ship_damage_delay<br>
+									modifier_aghsfort_lich_frostnova_slow<br>
+									modifier_aghsfort_lich_sinister_gaze_self<br>
+									modifier_aghsfort_lich_sinister_gaze<br>
+									modifier_aghsfort_lich_ice_spire<br>
+									modifier_aghsfort_lich_ice_spire_debuff<br>
+									modifier_aghsfort_lich_chainfrost_slow<br>
+									modifier_aghsfort_lich_frost_shield<br>
+									modifier_aghsfort_lich_frost_shield_slow<br>
+									modifier_aghsfort_lich_frost_shield_magic_resist_debuff<br>
+									modifier_aghsfort_lich_chain_frost_thinker<br>
+									modifier_aghsfort_special_lina_dragon_slave_ignite<br>
+									modifier_aghsfort_lina_light_strike_array<br>
+									modifier_aghsfort_special_lina_light_strike_array_vacuum<br>
+									modifier_aghsfort_lina_fiery_soul_active<br>
+									modifier_aghsfort_lina_fiery_soul<br>
+									modifier_aghsfort_lina_laguna_blade_line<br>
+									modifier_aghsfort_lina_laguna_blade<br>
+									modifier_aghsfort_special_lina_fiery_soul_multishot<br>
+									modifier_aghsfort_lina_laguna_blade_channel<br>
+									modifier_aghsfort_lina_laguna_blade_bounce<br>
+									modifier_aghsfort_special_lina_light_strike_array_attacks_bonus<br>
+									modifier_aghsfort_lina_light_strike_array_stun<br>
+									modifier_aghsfort_lina_dragon_slave_movement<br>
+									modifier_aghsfort_luna_lucent_beam_moonglow<br>
+									modifier_aghsfort_luna_lunar_blessing<br>
+									modifier_aghsfort_luna_lunar_blessing_aura<br>
+									modifier_aghsfort_luna_lunar_blessing_lunar_remnant_buff<br>
+									modifier_aghsfort_luna_moon_glaive_active<br>
+									modifier_aghsfort_luna_moon_glaive_knockback_buff<br>
+									modifier_aghsfort_luna_moon_glaive_knockback<br>
+									modifier_aghsfort_luna_moon_glaive_knockback_bounce<br>
+									modifier_aghsfort_luna_moon_glaive<br>
+									modifier_aghsfort_luna_moon_glaive_fx<br>
+									modifier_aghsfort_luna_moon_mark<br>
+									modifier_aghsfort_luna_lunar_remnant<br>
+									modifier_aghsfort_luna_lunar_blessing_moonfright<br>
+									modifier_aghsfort_luna_lunar_blessing_lunar_power<br>
+									modifier_aghsfort_luna_lunar_blessing_moon_shield_aura<br>
+									modifier_aghsfort_luna_lunar_blessing_aura_moon_shield_trigger<br>
+									modifier_aghsfort_luna_lunar_blessing_aura_moon_shield<br>
+									modifier_aghsfort_luna_lunar_blessing_active_buff<br>
+									modifier_aghsfort_luna_lunar_grace<br>
+									modifier_aghsfort_luna_eclipse<br>
+									modifier_aghsfort_undying_tombstone_zombie_deathstrike<br>
+									modifier_aghsfort_tombstone_hp<br>
+									modifier_aghsfort_undying_tombstone_zombie_aura<br>
+									modifier_aghsfort_undying_tombstone_bunker<br>
+									modifier_aghsfort_undying_tombstone_bunker_friendly<br>
+									modifier_aghsfort_undying_decay_buff_counter<br>
+									modifier_aghsfort_undying_decay_thinker<br>
+									modifier_aghsfort_undying_decay_buff<br>
+									modifier_aghsfort_undying_decay_on_attack<br>
+									modifier_aghsfort_undying_soul_rip_share_strength<br>
+									modifier_aghsfort_undying_tombstone_zombie_deathstrike_slow<br>
+									modifier_aghsfort_undying_tombstone_zombie_deathstrike_slow_counter<br>
+									modifier_aghsfort_undying_tombstone_zombie_deathlust<br>
+									modifier_aghsfort_undying_tombstone_zombie_modifier<br>
+									modifier_aghsfort_undying_exploding_zombie<br>
+									modifier_aghsfort_special_undying_consume_zombies_buff<br>
+									modifier_aghsfort_undying_flesh_golem<br>
+									modifier_aghsfort_undying_flesh_golem_slow<br>
+									modifier_aghsfort_undying_flesh_golem_plague_aura<br>
+									modifier_aghsfort_undying_tombstone_death_trigger<br>
+									modifier_aghsfort_special_undying_consume_zombies_dummy<br>
+									modifier_aghsfort_void_spirit_aether_remnant_unit<br>
+									modifier_aghsfort_void_spirit_aether_remnant_watch_thinker<br>
+									modifier_aghsfort_void_spirit_aether_remnant_pull<br>
+									modifier_aghsfort_void_spirit_aether_remnant_thinker<br>
+									modifier_aghsfort_void_spirit_aether_remnant_unit_truesight<br>
+									modifier_aghsfort_void_spirit_astral_step_charge_counter<br>
+									modifier_aghsfort_void_spirit_astral_step_debuff<br>
+									modifier_aghsfort_void_spirit_astral_step_caster<br>
+									modifier_aghsfort_void_spirit_dissimilate_phase_ally<br>
+									modifier_aghsfort_void_spirit_dissimilate_phase<br>
+									modifier_aghsfort_void_spirit_dissimilate_invis<br>
+									modifier_aghsfort_void_spirit_resonant_pulse_physical_buff<br>
+									modifier_aghsfort_void_spirit_resonant_pulse_ring<br>
+									modifier_aghsfort_void_spirit_aether_remnant_push<br>
+									modifier_aghsfort_void_spirit_aether_remnant_phantom_attack_crit<br>
+									modifier_aghsfort_void_spirit_resonant_pulse_spell_amped<br>
+									modifier_aghsfort_void_spirit_resonant_pulse_cadence<br>
+									modifier_aghsfort_void_spirit_astral_step_vacuum_motion<br>
+									modifier_aghsfort_special_void_spirit_astral_step_trail_thinker<br>
+									modifier_aghsfort_special_void_spirit_astral_step_trail_burn<br>
+									modifier_aghsfort_special_void_spirit_astral_step_breach_burn<br>
+									modifier_ascension_meteoric_land<br>
 									modifier_attribute_bonus<br>
 									modifier_high_five_requested<br>
 									modifier_seasonal_ti10_portal<br>
@@ -39337,6 +39640,7 @@
 									modifier_windrunner_gale_force<br>
 									modifier_zuus_static_field_slow<br>
 									modifier_zuus_arc_lightning<br>
+									modifier_zuus_arc_lightning_slow<br>
 									modifier_zuus_lightningbolt_vision_thinker<br>
 									modifier_zuus_thundergodswrath_vision_thinker<br>
 									modifier_zuus_cloud<br>
@@ -39633,7 +39937,7 @@
 									modifier_broodmother_insatiable_hunger<br>
 									modifier_broodmother_silken_bola<br>
 									modifier_broodmother_sticky_snare<br>
-									broodmother_sticky_snare_root<br>
+									modifier_broodmother_sticky_snare_root<br>
 									modifier_broodmother_tough<br>
 									modifier_chen_penitence<br>
 									modifier_chen_penitence_attack_speed_buff<br>
@@ -39909,7 +40213,7 @@
 									modifier_spectre_spectral_dagger_illusions<br>
 									modifier_spectre_arcana_kill_effect<br>
 									modifier_spirit_breaker_greater_bash<br>
-									modifier_spiritbreaker_greaterbash_break<br>
+									modifier_spirit_breaker_greater_bash_break<br>
 									modifier_spirit_breaker_greater_bash_speed<br>
 									modifier_spirit_breaker_charge_of_darkness<br>
 									modifier_spirit_breaker_charge_of_darkness_target<br>
@@ -40735,7 +41039,7 @@
 									modifier_ceremonial_robe_aura<br>
 									modifier_item_chipped_vest<br>
 									modifier_item_cloak_of_flames<br>
-									modifier_cloak_of_flames_debuff<br>
+									modifier_item_cloak_of_flames_debuff<br>
 									modifier_clumsy_net_ensnare<br>
 									modifier_item_clumsy_net<br>
 									modifier_item_craggy_coat<br>
@@ -40746,7 +41050,7 @@
 									modifier_item_dragon_scale<br>
 									modifier_dragon_scale_burn<br>
 									modifier_item_black_powder_bag<br>
-									modifier_jacket_blind<br>
+									modifier_item_black_powder_bag_blind<br>
 									modifier_elixer_healing<br>
 									modifier_item_assassins_dagger<br>
 									modifier_assassins_dagger_debuff<br>
@@ -40816,6 +41120,7 @@
 									modifier_mirror_shield_delay<br>
 									modifier_item_misericorde<br>
 									modifier_item_mysterious_hat<br>
+									modifier_item_naginata<br>
 									modifier_item_nether_shawl<br>
 									modifier_item_ninja_gear<br>
 									modifier_item_oakheart<br>
@@ -40870,7 +41175,7 @@
 									modifier_item_spy_gadget<br>
 									modifier_item_star_mace<br>
 									modifier_item_stormcrafter<br>
-									modifier_stormcrafter_slow<br>
+									modifier_item_stormcrafter_slow<br>
 									modifier_item_swift_blink<br>
 									modifier_item_super_swift_blink<br>
 									modifier_item_swift_blink_buff<br>
@@ -40903,8 +41208,8 @@
 									modifier_item_witch_blade_slow<br>
 									modifier_item_witless_shako<br>
 									modifier_item_wizard_glass<br>
-									modifier_item_woodland_striders(可能失效)<br>
-									modifier_woodland_striders_active(可能失效)<br>
+									modifier_item_woodland_striders<br>
+									modifier_woodland_striders_active<br>
 									modifier_lua<br>
 									modifier_lua_horizontal_motion<br>
 									modifier_lua_vertical_motion<br>
