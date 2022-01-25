@@ -259,6 +259,16 @@ aaaabbbbccccc
 		#buttomfill {
 			height: 900px;
 		}
+		#pdf{
+			margin-left:5px;
+			width: 99%;
+
+		}
+		iframe { 
+			width: 100%; 
+			height: 900px;
+		}
+
 	</style>
 </head>
 
@@ -310,8 +320,8 @@ aaaabbbbccccc
 							<li><a href="#TextButton">TextButton</a></li>
 							<li><a href="#RadioButton">RadioButton</a></li>
 							<li><a href="#ToggleButton">ToggleButton</a></li>
-							<li><a href="#DropDown">DropDown下来菜单</a></li>
-							<li><a href="#ProgressBar">ProgressBar进度条</a></li>
+							<li><a href="#DropDown">DropDown下拉菜单</a></li>
+							<li><a href="#ProgressBar">ProgressBar、CircularProgressBar进度条</a></li>
 							<li><a href="#TextEntry">TextEntry</a></li>
 							<li><a href="#SlottedSlider">SlottedSlider、Slider</a></li>
 							<li><a href="#NumberEntry">NumberEntry</a></li>
@@ -324,9 +334,14 @@ aaaabbbbccccc
 							<li><a href="#DOTAHeroImage">DOTAHeroImage</a></li>
 							<li><a href="#DOTAUserName">DOTAUserName</a></li>
 							<li><a href="#DOTAScenePanel">DOTAScenePanel</a></li>
+							<li><a href="#DOTAParticleScenePanel">DOTAParticleScenePanel</a></li>
 							<li><a href="#DOTAAbilityPanel">DOTAAbilityPanel</a></li>
 							<li><a href="#DOTAHudPreGame">DOTAHudPreGame</a></li>
-							<li><a href="#DOTAHudPreGame">DOTAMinimap</a></li>
+							<li><a href="#DOTAMinimap">DOTAMinimap</a></li>
+							<li><a href="#DOTAHeroMovie">DOTAHeroMovie</a></li>
+							<li><a href="#DOTAHTMLPanel">DOTAHTMLPanel</a></li>
+							<li><a href="#DOTAEmoticon">DOTAEmoticon</a></li>
+							<li><a href="#DOTAPortrait">DOTAPortrait</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -2165,6 +2180,13 @@ aaaabbbbccccc
 								<td> Players.PlayerPortraitClicked( integer nClickedPlayerID, boolean bHoldingCtrl,
 									boolean bHoldingAlt )
 								</td>
+								<td> 
+								</td>
+							</tr>
+							<tr>
+								<td> PlayerPortraitDoubleClicked
+								</td>
+								<td> Players.PlayerPortraitDoubleClicked( integer nClickedPlayerID, boolean bHoldingCtrl, boolean bHoldingAlt )
 								<td> 
 								</td>
 							</tr>
@@ -5870,6 +5892,10 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/Panel.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='Label' class='classcontent'>
@@ -5919,14 +5945,17 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
-
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/Label.pdf"></iframe>
+						</div>		
 					</div>
 				</div>
 				<div id='TextButton' class='classcontent'>
 					<div id='classname'>
 						<p><span>TextButton</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。标签，用于显示文本。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -5952,7 +5981,7 @@ aaaabbbbccccc
 				<div id='RadioButton' class='classcontent'>
 					<div id='classname'>
 						<p><span>RadioButton</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。单选按钮</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -5978,7 +6007,7 @@ aaaabbbbccccc
 				<div id='ToggleButton' class='classcontent'>
 					<div id='classname'>
 						<p><span>ToggleButton</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。开关（多选）按钮，显示出类似开关效果的UI。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6007,12 +6036,16 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/ToggleButton.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='DropDown' class='classcontent'>
 					<div id='classname'>
 						<p><span>DropDown</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。下拉菜单，通过下拉列表进行选择的UI。选择项为其子类。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6089,11 +6122,15 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DropDown.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='ProgressBar' class='classcontent'>
 					<div id='classname'>
-						<p><span>ProgressBar</span></p>
+						<p><span>ProgressBar、CircularProgressBar圆形进度条</span></p>
 						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
 					</div>
 					<div id='apicontent'>
@@ -6131,12 +6168,16 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/ProgressBar.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='TextEntry' class='classcontent'>
 					<div id='classname'>
 						<p><span>TextEntry</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。文本输入，创建一个文本输入框UI，可以处理输入文字相关操作。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6213,12 +6254,16 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/TextEntry.pdf" ></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='SlottedSlider' class='classcontent'>
 					<div id='classname'>
 						<p><span>SlottedSlider、Slider</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。滑动条</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6311,6 +6356,10 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/Slider.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='NumberEntry' class='classcontent'>
@@ -6366,7 +6415,7 @@ aaaabbbbccccc
 				<div id='Image' class='classcontent'>
 					<div id='classname'>
 						<p><span>Image</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。用于显示图片，支持图片格式png,tga,psd,jpg，gif格式虽然也支持，但是不支持透明而且也无法编译。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6395,6 +6444,10 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/Image.pdf" ></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='Carousel' class='classcontent'>
@@ -6532,7 +6585,7 @@ aaaabbbbccccc
 				<div id='DOTAAvatarImage' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAAvatarImage</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。玩家头像，注意这个元素默认宽高都是0</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6569,12 +6622,16 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAAvatarImage.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='DOTAAbilityImage' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAAbilityImage</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。技能图标，用于显示技能图标，继承至Image，可以用技能的EntityIndex或AbilityName来显示技能的图标，而不必去读取技能的图标路径。可用于物品。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6635,12 +6692,16 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAAbilityImage.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='DOTAItemImage' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAItemImage</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。继承至Image，只能显示物品图标</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6690,7 +6751,7 @@ aaaabbbbccccc
 				<div id='DOTAHeroImage' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAHeroImage</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。英雄头像，用于显示英雄头像，继承至Image，可以用英雄的HeroId或HeroName来显示英雄的头像，而不必去读取英雄的头像路径。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6751,12 +6812,16 @@ aaaabbbbccccc
 								</td>
 							</tr>
 						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAHeroImage.pdf"></iframe>
+						</div>
 					</div>
 				</div>
 				<div id='DOTAUserName' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAUserName</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。玩家名称，文字样式的修改如：DOTAUserName.PlayerName Label{ color: #fff; }</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6773,7 +6838,7 @@ aaaabbbbccccc
 								</td>
 								<td> steamid( cstring cstring_1 )
 								</td>
-								<td>
+								<td>Steam64位ID，特别的local是表示本地玩家
 								</td>
 							</tr>
 							<tr>
@@ -6781,7 +6846,7 @@ aaaabbbbccccc
 								</td>
 								<td> accountid( cstring cstring_1 )
 								</td>
-								<td>
+								<td>Steam32位ID，就是Dota2的数字ID
 								</td>
 							</tr>
 						</table>
@@ -6790,7 +6855,8 @@ aaaabbbbccccc
 				<div id='DOTAScenePanel' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAScenePanel</span></p>
-						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用。场景组件，可以在UI中显示特效、模型、地形等，这是个功能强大的组件，也比较复杂，主要是Hammer块的内容需要花心思； 目前这个组件的效率不是很高，所
+							以尽量少用大型的场景。</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -6875,6 +6941,14 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> ReplaceEconItemSlot
+								</td>
+								<td> ReplaceEconItemSlot( integer integer_1, integer integer_2, integer integer_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
 								<td> SetPostProcessFade
 								</td>
 								<td> SetPostProcessFade( float float_1 )
@@ -6914,26 +6988,33 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
+						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAScenePanel.pdf"></iframe>
+						</div>
+					</div>
+				</div>
+				<div id='DOTAParticleScenePanel' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAParticleScenePanel</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+						属性包括particleName、particleonly=true、squarePixels="true"、cameraOrigin="400 0 -110"、lookAt="180 0 0"、fov="10"、startActive="true"
+					</div>
+					<div id='apicontent'>
+						<table>
 							<tr>
-								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
-								</td>
-								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
 							</tr>
 							<tr>
-								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
+								<td> 暂无
 								</td>
-								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView
-								</td>
-								<td> SpawnHeroInScenePanelByPlayerSlotWithFullBodyView( cstring cstring_1, integer integer_2 )
+								<td> 
 								</td>
 								<td>
 								</td>
@@ -6975,7 +7056,6 @@ aaaabbbbccccc
 						</table>
 					</div>
 				</div>
-				
 				<div id='DOTAHudPreGame' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAHudPreGame</span></p>
@@ -7039,7 +7119,7 @@ aaaabbbbccccc
 				<div id='DOTAHUDOverlayMap' class='classcontent'>
 					<div id='classname'>
 						<p><span>DOTAHUDOverlayMap</span></p>
-						<p>全局变量：无。具体对象使用</p>
+						<p>全局变量：无。具体对象使用。另外一种小地图，这个小地图是镜头跟踪的，你当前在看哪里这个小地图就指向哪里。这是Dota2破泞之战那时加进来的</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -7111,6 +7191,139 @@ aaaabbbbccccc
 								<td> SetFixedBackgroundTexturePosition
 								</td>
 								<td> SetFixedBackgroundTexturePosition( float float_1, float float_2, float float_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAHeroMovie' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAHeroMovie</span></p>
+						<p>全局变量：无。具体对象使用。英雄视频，这个在Dota2主界面的英雄那一块，当你鼠标滑动到一个英雄头像会弹出一个动画效果的英雄头像，这就是这个组件的效果
+							这个组件所使用的视频格式是webm，目前尚不知如何自定义这个webm格式</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>	
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> 暂无
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAHeroMovie.pdf"></iframe>
+						</div>
+					</div>
+				</div>
+				<div id='DOTAHTMLPanel' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAHTMLPanel</span></p>
+						<p>全局变量：无。具体对象使用。网页浏览器，游戏内尽量不要使用内置浏览器，毕竟浏览器这玩意占用的内存是比较大的</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>	
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> SetURL
+								</td>
+								<td> void SetURL(string url)
+								</td>
+								<td>设置网址
+								</td>
+							</tr>
+							<tr>
+								<td> RunJavascript
+								</td>
+								<td> void void RunJavascript(bool canRun)
+								</td>
+								<td>是否可以运行Javascript
+								</td>
+							</tr>
+							<tr>
+								<td> SetIgnoreCursor
+								</td>
+								<td> void SetIgnoreCursor(bool ignore)
+								</td>
+								<td>是否忽略鼠标
+								</td>
+							</tr>
+						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAHTMLPanel.pdf"></iframe>
+						</div>
+					</div>
+				</div>
+				<div id='DOTAEmoticon' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAEmoticon</span></p>
+						<p>全局变量：无。具体对象使用。Dota2表情，继承至Image</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>	
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> 暂无
+								</td>
+								<td> 
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+						<div id="pdf">
+							<p><span>用法</span></p>
+							<iframe src="image/DOTAEmoticon.pdf"></iframe>
+						</div>
+					</div>
+				</div>
+				<div id='DOTAPortrait' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAPortrait</span></p>
+						<p>全局变量：无。具体对象使用。头像，也就是游戏界面底部中间的单位头像，此元素会自动渲染你当前选择的单位，无法控制</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>	
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> 暂无
+								</td>
+								<td> 
 								</td>
 								<td>
 								</td>
@@ -8799,7 +9012,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTA_HeroPickState.DOTA_HEROPICK_STATE_SCENARIO
+								<td> DOTA_HeroPickState.DOTA_HEROPICK_STATE_SCENARIO_PICK
 								</td>
 								<td> 61
 								</td>
@@ -9762,6 +9975,14 @@ aaaabbbbccccc
 								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_WardKill
 								</td>
 								<td> 20
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> EDOTA_ModifyGold_Reason.DOTA_ModifyGold_CourierKilledByThisPlayer
+								</td>
+								<td> 21
 								</td>
 								<td>
 								</td>

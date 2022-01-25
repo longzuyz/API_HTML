@@ -8272,7 +8272,7 @@
                         <tr>
 							<td> default_fov
 							</td>
-							<td> 75
+							<td> 90
 							</td>
 							<td> cl, cheat
 							</td>
@@ -10154,7 +10154,7 @@
                         <tr>
 							<td> dota_cache_duration_league_list_s
 							</td>
-							<td> 15
+							<td> 600
 							</td>
 							<td> cl
 							</td>
@@ -11654,6 +11654,16 @@
 							<td>  Look over unit and ability data to verify that all the expected localization strings are present
 							</td>
 						</tr>
+						<tr>
+							<td> dota_cheers_enable_scene_reload
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> dota_cl_projection_enabled
 							</td>
@@ -13048,6 +13058,16 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> dota_externalwebapi_debug_leagueid
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Set this to test the external web API as if the game were a specific league.
+							</td>
+						</tr>
                         <tr>
 							<td> dota_fake_accept_slots
 							</td>
@@ -13106,6 +13126,16 @@
 							<td> cl
 							</td>
 							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_fake_front_page_cell_top_game
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Creates fake game data for a top game on the front page cells. 0 = disabled, 1 = regular game, 2 = league game
 							</td>
 						</tr>
                         <tr>
@@ -13930,7 +13960,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_greevil_orange_essence
+							<td> dota_greevil_purple_essence
 							</td>
 							<td> -1
 							</td>
@@ -19834,6 +19864,36 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_scenario_autosave
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a, release
+							</td>
+							<td> Enable autosaves while spectating a match from lobby
+							</td>
+						</tr>
+						<tr>
+							<td> dota_scenario_autosave_interval
+							</td>
+							<td> 10
+							</td>
+							<td> cl, a, release
+							</td>
+							<td> Interval in seconds between auto-saves
+							</td>
+						</tr>
+						<tr>
+							<td> dota_scenario_enable
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a, release
+							</td>
+							<td> Enable scenario ui in private lobbies
+							</td>
+						</tr>
+						<tr>
 							<td> dota_scoreboard_force_visible
 							</td>
 							<td> 0
@@ -21145,6 +21205,56 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_spectator_skip
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Skip replay by a number of seconds.
+							</td>
+						</tr>
+						<tr>
+							<td> dota_spectator_skip_back_1
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Skip replay back by 1st increment
+							</td>
+						</tr>
+						<tr>
+							<td> dota_spectator_skip_back_2
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Skip replay back by 2nd increment
+							</td>
+						</tr>
+						<tr>
+							<td> dota_spectator_skip_fwd_1
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Skip replay forward by 1st increment
+							</td>
+						</tr>
+						<tr>
+							<td> dota_spectator_skip_fwd_2
+							</td>
+							<td> cmd
+							</td>
+							<td> cl
+							</td>
+							<td> Skip replay forward by 2nd increment
+							</td>
+						</tr>
+						<tr>
 							<td> dota_spectator_spawn_duration
 							</td>
 							<td> 1
@@ -21440,7 +21550,7 @@
 						<tr>
 							<td> dota_splash_ad_acknowledged_id
 							</td>
-							<td> 108
+							<td> 109
 							</td>
 							<td> per-user
 							</td>
@@ -21875,6 +21985,16 @@
 							<td> sv
 							</td>
 							<td> Delay after an entire team has officially left the game (not just disconnected from the server) before timing the game out.
+							</td>
+						</tr>
+						<tr>
+							<td> dota_sv_load_scenario_timeout
+							</td>
+							<td> 20
+							</td>
+							<td> sv
+							</td>
+							<td> Timeout to receive saved scenario from GC
 							</td>
 						</tr>
 						<tr>
@@ -23591,6 +23711,26 @@
 							<td> dota_watch_pause_at_the_end_of_all_replays
 							</td>
 							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td> Pause at the end of replays
+							</td>
+						</tr>
+						<tr>
+							<td> dota_watch_show_ti_standings_this_many_days_after
+							</td>
+							<td> 3
+							</td>
+							<td> cl
+							</td>
+							<td> Pause at the end of replays
+							</td>
+						</tr>
+						<tr>
+							<td> dota_watch_show_ti_standings_this_many_days_in_advance
+							</td>
+							<td> 3
 							</td>
 							<td> cl
 							</td>
@@ -26410,6 +26550,16 @@
 							<td> 
 							</td>
 							<td> Freezes the display client side only
+							</td>
+						</tr>
+						<tr>
+							<td> frontpage_overwrite_twitch_stream
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
 							</td>
 						</tr>
 						<tr>
@@ -43319,7 +43469,7 @@
 							</td>
 							<td>  
 							</td>
-							<td> [-binary] [-ugly] save scenario of the game currently being spectated
+							<td> [-binary] [-nopretty] save scenario of the game currently being spectated
 							</td>
 						</tr>
 						<tr>
@@ -45595,16 +45745,6 @@
 							</td>
 						</tr>
 						<tr>
-							<td> test_room_reward
-							</td>
-							<td> cmd
-							</td>
-							<td>  
-							</td>
-							<td> <xmp>Usage: test_room_reward <nRoomDepth> <bIsElite></xmp>
-							</td>
-						</tr>
-						<tr>
 							<td> Test_StartLoop
 							</td>
 							<td> cmd
@@ -46333,6 +46473,16 @@
 							<td>  cl, user
 							</td>
 							<td> Bitfield of entindices to listen to voice messages from when connected to SourceTV, default is none
+							</td>
+						</tr>
+						<tr>
+							<td>tv_listen_voice_indices_h
+							</td>
+							<td> 0
+							</td>
+							<td>  cl, user
+							</td>
+							<td> High 32 bits of bitfield of entindices to listen to voice messages from when connected to SourceTV, default is none
 							</td>
 						</tr>
 						<tr>

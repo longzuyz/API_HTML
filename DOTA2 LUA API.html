@@ -343,7 +343,6 @@
 					</summary>
 					<nav>
 						<ol>
-							<li><a href="#ABILITY_TYPES">ABILITY_TYPES</a></li>
 							<li><a href="#AbilityLearnResult_t">AbilityLearnResult_t</a></li>
 							<li><a href="#AttributeDerivedStats">AttributeDerivedStats</a></li>
 							<li><a href="#Attributes">Attributes</a></li>
@@ -1213,8 +1212,9 @@
 									radius, int teamFilter, int typeFilter, int flagFilter, int order, bool
 									canGrowCache)
 								</td>
-								<td> 在给定范围内用给定flags搜索单位(TeamNumber自己队伍ID, Position中心点, hCacheUnit未知, radius搜素范围（float or 常量FIND_UNITS_EVERYWHERE）
-									, teamFilter目标队伍（常量DOTA_UNIT_TARGET_TEAM）,typeFilter目标类型（常量DOTA_UNIT_TARGET_TYPE）,flagFilter目标状态（常量DOTA_UNIT_TARGET_FLAGS）, iOrder查找方式（使用常量Find Types中0-2）, bCanGrowCache是否允许增涨缓存 )
+								<td> 在给定范围内用给定flags搜索单位(TeamNumber这个队伍ID是设置搜索概念上的"我方",不一定是真正的我方,也可以是敌方的队伍ID,因为这个影响到后续的参数, Position中心点, hCacheUnit未知, radius搜素范围（float or 常量FIND_UNITS_EVERYWHERE）
+									, teamFilter目标队伍（常量DOTA_UNIT_TARGET_TEAM,这里要分辨出概念上的"我方",比如我方ID为2,上面的TeamNumber设置3,那么DOTA_UNIT_TARGET_TEAM_FRIENDLY就是3）,typeFilter目标类型（常量DOTA_UNIT_TARGET_TYPE）,flagFilter目标状态（常量DOTA_UNIT_TARGET_FLAGS）, 
+									iOrder查找方式（使用常量Find Types中0-2）, bCanGrowCache是否允许增涨缓存 )。注意的是，要查找 敌方的 眼、炸弹人的炸弹、骨法的棒子等，要以敌方的队伍为"我方",并且teamFilter设置为FRIENDLY来查找才行。不然teamFilter设置为ENEMY只能找到英雄，BOTH只能找到敌方英雄和我方的眼、炸弹。
 								</td>
 							</tr>
 							<tr>
@@ -4115,7 +4115,7 @@
 								</td>
 								<td> int GetAbilityType()
 								</td>
-								<td> 获取技能类型，返回值为常量ABILITY_TYPES中的一种。通过在 npc_ability_custom.txt 设置"AbilityType"值.
+								<td> 获取技能类型，返回值为常量DOTA_ABILITY_TYPE中的一种。通过在 npc_ability_custom.txt 设置"AbilityType"值.
 								</td>
 							</tr>
 							<tr>
@@ -4750,7 +4750,7 @@
 								</td>
 								<td> bool IsNetherWardStealable()
 								</td>
-								<td> 不知道什么意思
+								<td> 幽冥守卫是否能被拉比克偷。。。
 								</td>
 							</tr>
 							<tr>
@@ -5056,7 +5056,7 @@
 								<td> void SetActivated(bool bActivated)
 								</td>
 								<td> Set this ability as activated (true) or disabled (false). Disabled abilities are
-									colored dark and cannot be used.
+									colored dark and cannot be used.使技能可用
 								</td>
 							</tr>
 							<tr>
@@ -7724,7 +7724,7 @@
 								</td>
 								<td> int CastFilterResultLocation(Vector vLocation)
 								</td>
-								<td> (Vector vLocation)判断一个作用于某个地点的命令是否有效
+								<td> 判断地点是否有效
 								</td>
 							</tr>
 							<tr>
@@ -7734,7 +7734,7 @@
 								</td>
 								<td> int CastFilterResultTarget(handle hTarget)
 								</td>
-								<td> (HSCRIPT hTarget) 判断一个作用于某个单位的命令是否有效
+								<td> 判断目标是否有效,返回值在常量UnitFilterResult
 								</td>
 							</tr>
 							<tr>
@@ -7781,7 +7781,7 @@
 								</td>
 								<td> int GetCastAnimation()
 								</td>
-								<td> 返回技能的施法动画
+								<td> 返回技能的施法动画，在每次OnSpellStart之前生效,可以在这里添加AddActivityModifier,不能直接在KV里加。
 								</td>
 							</tr>
 							<tr>
@@ -7884,7 +7884,7 @@
 								</td>
 								<td> string GetCustomCastErrorTarget(handle hTarget)
 								</td>
-								<td> 返回一条失效的指向目标的命令的错误信息
+								<td> 返回自定义错误信息。如果CastFilterResultTarget返回了UF_FAIL_CUSTOM,那么就要用GetCustomCastErrorTarget返回这个自定义错误信息的具体信息,这个信息需要再addon_english.txt里。
 								</td>
 							</tr>
 							<tr>
@@ -8081,7 +8081,7 @@
 								</td>
 								<td> void OnInventoryContentsChanged()
 								</td>
-								<td> 施法者物品库存发生变化
+								<td> 施法者物品库存发生变化,会执行3次。
 								</td>
 							</tr>
 							<tr>
@@ -8362,7 +8362,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.AttackNoEarlierThan">
 										AttackNoEarlierThan</a>
 								</td>
-								<td> void AttackNoEarlierThan(float a)
+								<td> void AttackNoEarlierThan(float a,float TimeDisparityTolerance)
 								</td>
 								<td> No Description Set
 								</td>
@@ -9450,7 +9450,7 @@
 							<tr>
 								<td>GetStatusResistance </td>
 								<td>float GetStatusResistance(  )</td>
-								<td>获得状态抗性</td>
+								<td>获得状态抗性,非英雄单位无效</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.GetStatsBasedManaRegen"
@@ -9681,7 +9681,7 @@
 								</td>
 								<td> bool IsAttackImmune()
 								</td>
-								<td> Is this unit immune to attacks? (e.g. Ethereal effect)禁止被攻击</td>
+								<td> Is this unit immune to attacks? (e.g. Ethereal effect)禁止被攻击，物理免疫</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsAttacking"
@@ -13205,7 +13205,7 @@
 								</td>
 								<td> int CastFilterResultTarget(handle hTarget)
 								</td>
-								<td> (HSCRIPT hTarget) 判断一个作用于目标的命令是否有效
+								<td> 判断目标是否有效,返回值在常量UnitFilterResult
 								</td>
 							</tr>
 							<tr>
@@ -13317,7 +13317,7 @@
 								</td>
 								<td> string GetCustomCastErrorTarget(handle hTarget)
 								</td>
-								<td> 返回一条失效的指向目标的命令的错误信息
+								<td> 返回自定义错误信息。如果CastFilterResultTarget返回了UF_FAIL_CUSTOM,那么就要用GetCustomCastErrorTarget返回这个自定义错误信息的具体内容,这个信息需要再addon_english.txt里。
 								</td>
 							</tr>
 							<tr>
@@ -13440,7 +13440,7 @@
 								</td>
 								<td> void OnChannelFinish(bool bInterrupted)
 								</td>
-								<td> (bool bInterrupted) 持续施法完成
+								<td> 持续施法完成,是否会被打断
 								</td>
 							</tr>
 							<tr>
@@ -13491,7 +13491,7 @@
 								</td>
 								<td> void OnInventoryContentsChanged()
 								</td>
-								<td> 施法者物品库存发生变化
+								<td> 施法者物品库存发生变化，会执行3次。不能用作KV
 								</td>
 							</tr>
 							<tr>
@@ -13501,7 +13501,7 @@
 								</td>
 								<td> void OnItemEquipped(handle hItem)
 								</td>
-								<td> ( HSCRIPT hItem ) 施法者装备了物品
+								<td> 施法者装备了物品.不能用作KV
 								</td>
 							</tr>
 							<tr>
@@ -13511,7 +13511,7 @@
 								</td>
 								<td> void OnOwnerDied()
 								</td>
-								<td> 施法者死亡
+								<td> 施法者死亡,可以KV
 								</td>
 							</tr>
 							<tr>
@@ -13521,7 +13521,7 @@
 								</td>
 								<td> void OnOwnerSpawned()
 								</td>
-								<td> 施法者第一次出生或重生
+								<td> 施法者第一次出生或重生,可以KV
 								</td>
 							</tr>
 							<tr>
@@ -13551,7 +13551,7 @@
 								</td>
 								<td> void OnSpellStart()
 								</td>
-								<td> 施法前摇结束，技能效果开始
+								<td> 施法前摇结束，技能效果开始，可以KV
 								</td>
 							</tr>
 							<tr>
@@ -13561,7 +13561,7 @@
 								</td>
 								<td> void OnStolen(handle hSourceAbility)
 								</td>
-								<td> ( HSCRIPT hAbility ) 当技能被窃取时，进行的某特殊行为
+								<td> 当技能被窃取时。
 								</td>
 							</tr>
 							<tr>
@@ -13654,7 +13654,7 @@
 							<tr>
 								<td>CanParentBeAutoAttacked</td>
 								<td> bool CanParentBeAutoAttacked(  )</td>
-								<td>&nbsp;</td>
+								<td>英雄使用A地板后,能不能被英雄自动攻击。比如A地板是可以A小兵和塔的，但是不能A装备</td>
 							</tr>
 							<tr>
 								<td>CheckMotionControllers</td>
@@ -13990,7 +13990,7 @@
 							<tr>
 								<td>ShouldUseOverheadOffset</td>
 								<td>bool ShouldUseOverheadOffset(  ) </td>
-								<td>Apply the overhead offset to the attached effect. 是否将头上的偏移应用于附着点效果？？？</td>
+								<td>Apply the overhead offset to the attached effect. 头顶附着点位移。比如头上同时出现2个沉默图标。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Modifier_Lua.StatusEffectPriority"
@@ -14309,7 +14309,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.AddRunePickup">
 										AddRunePickup</a>
 								</td>
-								<td> void AddRunePickup(int PlayerID)
+								<td> void AddRunePickup(int PlayerID,int Runes)
 								</td>
 								<td> No Description Set
 								</td>
@@ -15264,7 +15264,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementClaimedDenies">
 										IncrementClaimedDenies</a>
 								</td>
-								<td> void IncrementClaimedDenies(int PlayerID)
+								<td> void IncrementClaimedDenies(int PlayerID,int Value)
 								</td>
 								<td> No Description Set
 								</td>
@@ -15275,7 +15275,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementClaimedMisses">
 										IncrementClaimedMisses</a>
 								</td>
-								<td> void IncrementClaimedMisses(int PlayerID)
+								<td> void IncrementClaimedMisses(int PlayerID,int Value)
 								</td>
 								<td> No Description Set
 								</td>
@@ -15296,7 +15296,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementDenies">
 										IncrementDenies</a>
 								</td>
-								<td> void IncrementDenies(int PlayerID)
+								<td> void IncrementDenies(int PlayerID,int Value)
 								</td>
 								<td>增加反补</td>
 							</tr>
@@ -15317,7 +15317,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementKills">
 										IncrementKills</a>
 								</td>
-								<td> void IncrementKills(int playerID, int kills)
+								<td> void IncrementKills(int playerID, int VictimID)
 								</td>
 								<td> No Description Set
 								</td>
@@ -15328,7 +15328,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementLastHitMultikill">
 										IncrementLastHitMultikill</a>
 								</td>
-								<td> void IncrementLastHitMultikill(int PlayerID)
+								<td> void IncrementLastHitMultikill(int PlayerID,int Count)
 								</td>
 								<td>增加多杀数据。 （超神类）</td>
 							</tr>
@@ -15338,7 +15338,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementLastHits">
 										IncrementLastHits</a>
 								</td>
-								<td> void IncrementLastHits(int PlayerID)
+								<td> void IncrementLastHits(int PlayerID,int Count)
 								</td>
 								<td>增加正补数据。</td>
 							</tr>
@@ -15348,7 +15348,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementLastHitStreak">
 										IncrementLastHitStreak</a>
 								</td>
-								<td> void IncrementLastHitStreak(int PlayerID)
+								<td> void IncrementLastHitStreak(int PlayerID,int Count)
 								</td>
 								<td>增加正补连中数据。</td>
 							</tr>
@@ -15358,7 +15358,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementMisses">
 										IncrementMisses</a>
 								</td>
-								<td> void IncrementMisses(int PlayerID)
+								<td> void IncrementMisses(int PlayerID,int Value)
 								</td>
 								<td>增加MISS</td>
 							</tr>
@@ -15368,7 +15368,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementNearbyCreepDeaths">
 										IncrementNearbyCreepDeaths</a>
 								</td>
-								<td> void IncrementNearbyCreepDeaths(int PlayerID)
+								<td> void IncrementNearbyCreepDeaths(int PlayerID, int Creeps)
 								</td>
 								<td> 增加附近小兵死亡数
 								</td>
@@ -15379,7 +15379,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.IncrementStreak">
 										IncrementStreak</a>
 								</td>
-								<td> void IncrementStreak(int PlayerID)
+								<td> void IncrementStreak(int PlayerID,int Count)
 								</td>
 								<td>增加连杀数据。（暴走类）</td>
 							</tr>
@@ -20232,7 +20232,7 @@
 							</tr>
 							<tr>
 								<td>Spawn</td>
-								<td>vvoid Spawn(CScriptKeyValues spawnkeys) </td>
+								<td>void Spawn(CScriptKeyValues spawnkeys) </td>
 								<td>Called on Spawn(), just after the entity has been created, but before it has been initialized. Passes a CScriptKeyValues handle that can be used to query the entity spawn keyvalues.</td>
 							</tr>
 							<tr>
@@ -20352,55 +20352,6 @@
 			<div id='constant'>
 				<div id='contentname'>
 					Lua Constant 常量
-				</div>
-				<div id='ABILITY_TYPES'>
-					<div id='constantname'>
-						<p><span>ABILITY_TYPES</span></p>
-					</div>
-					<div id='constantcontent'>
-						<table>
-							<tr>
-								<th> Name
-								</th>
-								<th> Value
-								</th>
-								<th> Description
-								</th>
-							</tr>
-							<tr>
-								<td> ABILITY_TYPE_BASIC
-								</td>
-								<td> 0
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ABILITY_TYPE_ULTIMATE
-								</td>
-								<td> 1
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ABILITY_TYPE_ATTRIBUTES
-								</td>
-								<td> 2
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> ABILITY_TYPE_HIDDEN
-								</td>
-								<td> 3
-								</td>
-								<td>
-								</td>
-							</tr>
-						</table>
-					</div>
 				</div>
 				<div id='AbilityLearnResult_t'>
 					<div id='constantname'>
@@ -22642,7 +22593,7 @@
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST </td>
 								<td>0</td>
-								<td>能对自身施法，KV CastFilterRejectCaster 也能设置</td>
+								<td>能对自身施法。不能对自身施法要在LUA里写CastFilterResultTarget,并返回UF_FAIL_。KV CastFilterRejectCaster在LUA驱动已经无效。</td>
 							</tr>
 							<tr>
 								<td>DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES </td>
@@ -23607,7 +23558,7 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td> DOTA_HEROPICK_STATE_SCENARIO
+								<td> DOTA_HEROPICK_STATE_SCENARIO_PICK
 								</td>
 								<td> 61</td>
 								<td>
@@ -23883,7 +23834,7 @@
 								</td>
 								<td> 2
 								</td>
-								<td> Targets only ranged units and heroes.
+								<td> Targets only ranged units and heroes.DOTA_UNIT_CAP_RANGED_ATTACK.
 								</td>
 							</tr>
 							<tr>
@@ -23891,7 +23842,7 @@
 								</td>
 								<td> 4
 								</td>
-								<td> Targets only melee units and heroes.
+								<td> Targets only melee units and heroes.DOTA_UNIT_CAP_MELEE_ATTACK
 								</td>
 							</tr>
 							<tr>
@@ -23907,7 +23858,7 @@
 								</td>
 								<td> 16
 								</td>
-								<td> Targets magic immune enemies as well.
+								<td> Targets magic immune enemies as well.Targets ENEMY units with MODIFIER_STATE_MAGIC_IMMUNE。敌方魔免
 								</td>
 							</tr>
 							<tr>
@@ -23915,7 +23866,7 @@
 								</td>
 								<td> 32
 								</td>
-								<td> Targets non-magic immune allies as well.
+								<td> Targets non-magic immune allies as well.Ignores FRIENDLY units with MODIFIER_STATE_MAGIC_IMMUNE友方非魔免
 								</td>
 							</tr>
 							<tr>
@@ -23923,7 +23874,7 @@
 								</td>
 								<td> 64
 								</td>
-								<td> Targets invulnerable units/heroes as well.
+								<td> Targets invulnerable units/heroes as well.无敌的单位
 								</td>
 							</tr>
 							<tr>
@@ -23931,7 +23882,7 @@
 								</td>
 								<td> 128
 								</td>
-								<td> Targets only those that are visible through the fog of war.
+								<td> Targets only those that are visible through the fog of war.Breaks when the unit goes into the fog of war.丢失视野会打断持续施法
 								</td>
 							</tr>
 							<tr>
@@ -23939,7 +23890,7 @@
 								</td>
 								<td> 256
 								</td>
-								<td> Targets only those that are not invisible.
+								<td> Targets only those that are not invisible.with MODIFIER_STATE_INVISIBLE
 								</td>
 							</tr>
 							<tr>
@@ -23947,7 +23898,7 @@
 								</td>
 								<td> 512
 								</td>
-								<td> Targets only those that are not considered ancients.
+								<td> Targets only those that are not considered ancients.Ignores units with "IsAncient" "1" defined.Example: Hand of Midas.
 								</td>
 							</tr>
 							<tr>
@@ -23955,7 +23906,7 @@
 								</td>
 								<td> 1024
 								</td>
-								<td> Targets player controlled units (ignores the rest of basic units).
+								<td> Targets player controlled units (ignores the rest of basic units).被人控制的单位
 								</td>
 							</tr>
 							<tr>
@@ -23963,7 +23914,7 @@
 								</td>
 								<td> 2048
 								</td>
-								<td> Targets only those that are not being dominated.
+								<td> Targets only those that are not being dominated.Ignores units with MODIFIER_STATE_DOMINATED.不是被支配的生物。
 								</td>
 							</tr>
 							<tr>
@@ -23971,7 +23922,7 @@
 								</td>
 								<td> 4096
 								</td>
-								<td> Targets only those that are not summoned creatures.
+								<td> Targets only those that are not summoned creatures.Ignores units created through the SpawnUnit action.不是召唤生物
 								</td>
 							</tr>
 							<tr>
@@ -23979,7 +23930,7 @@
 								</td>
 								<td> 8192
 								</td>
-								<td> Targets only those that are not illusions.
+								<td> Targets only those that are not illusions.非幻象
 								</td>
 							</tr>
 							<tr>
@@ -23987,7 +23938,7 @@
 								</td>
 								<td> 16384
 								</td>
-								<td> Targets only those that are not immune to attacks.
+								<td> Targets only those that are not immune to attacks.Ignores units with MODIFIER_STATE_ATTACK_IMMUNE。物理免疫、物免
 								</td>
 							</tr>
 							<tr>
@@ -23995,7 +23946,7 @@
 								</td>
 								<td> 32768
 								</td>
-								<td> Targets only those that has a mana bar.
+								<td> Targets only those that has a mana bar.Units with mana, without "StatusMana" "0" in the npc_units file.
 								</td>
 							</tr>
 							<tr>
@@ -24003,7 +23954,7 @@
 								</td>
 								<td> 65536
 								</td>
-								<td>
+								<td>Units with Disable Help on.Not sure how to make a DataDriven ability use it?
 								</td>
 							</tr>
 							<tr>
@@ -24011,7 +23962,8 @@
 								</td>
 								<td> 131072
 								</td>
-								<td> Targets only those that are not considered creep heroes.
+								<td> Targets only those that are not considered creep heroes.Ignores units with "ConsideredHero" "1" defined.
+									Examples: Astral Imprisonment(黑鸟的星体禁锢), Disruption(暗影恶魔的崩裂禁锢), Sunder(TB的换血).
 								</td>
 							</tr>
 							<tr>
@@ -24019,7 +23971,7 @@
 								</td>
 								<td> 262144
 								</td>
-								<td> Targets units/heroes that are hidden as well.
+								<td> Targets units/heroes that are hidden as well.Units with MODIFIER_STATE_OUT_OF_GAME
 								</td>
 							</tr>
 							<tr>
@@ -24027,13 +23979,13 @@
 								</td>
 								<td> 524288
 								</td>
-								<td> Targets only those that are not nightmared.祸乱之源1技能
+								<td> Targets only those that are not nightmared.Ignores units with MODIFIER_STATE_NIGHTMARED.祸乱之源1技能，噩梦
 								</td>
 							</tr>
 							<tr>
 								<td>DOTA_UNIT_TARGET_FLAG_PREFER_ENEMIES </td>
 								<td>1048576</td>
-								<td>&nbsp;</td>
+								<td>Prioritizes units over trees when both are selectable.当两者都可以选择时，优先考虑单位而不是树木？</td>
 							</tr>
 							<tr>
 								<td>DOTA_UNIT_TARGET_FLAG_RESPECT_OBSTRUCTIONS</td>
@@ -24130,7 +24082,7 @@
 								</td>
 								<td> 1
 								</td>
-								<td> Targets heroes.
+								<td> Targets heroes,DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO
 								</td>
 							</tr>
 							<tr>
@@ -24138,7 +24090,8 @@
 								</td>
 								<td> 2
 								</td>
-								<td> Targets creeps.
+								<td> Targets creeps.npc_dota_creature, npc_dota_creep。Same as BASIC, but might not include things like some summons.
+									使用范例: Death Pact(小骷髅的吃怪), Devour(DOOM的吃怪).
 								</td>
 							</tr>
 							<tr>
@@ -24146,7 +24099,7 @@
 								</td>
 								<td> 4
 								</td>
-								<td> Targets buildings.
+								<td> Targets buildings.npc_dota_tower, npc_dota_building,DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING
 								</td>
 							</tr>
 							<tr>
@@ -24154,7 +24107,7 @@
 								</td>
 								<td> 16
 								</td>
-								<td> Targets couriers.
+								<td> Targets couriers.npc_dota_courier, npc_dota_flying_courier,DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER
 								</td>
 							</tr>
 							<tr>
@@ -24162,7 +24115,7 @@
 								</td>
 								<td> 18
 								</td>
-								<td> Targets units. (not necessarily creeps)
+								<td> Targets units. (not necessarily creeps，Basic units, including summons.)
 								</td>
 							</tr>
 							<tr>
@@ -24170,7 +24123,7 @@
 								</td>
 								<td> 32
 								</td>
-								<td>
+								<td>Everything not included in the previous types.
 								</td>
 							</tr>
 							<tr>
@@ -24178,7 +24131,7 @@
 								</td>
 								<td> 55
 								</td>
-								<td> Targets everything (including buildings, couriers, Shrines etc)
+								<td> Targets everything (including buildings, couriers, Shrines，hidden entities. etc)
 								</td>
 							</tr>
 							<tr>
@@ -24186,7 +24139,7 @@
 								</td>
 								<td> 64
 								</td>
-								<td> Targets trees.
+								<td> Targets trees.ent_dota_tree。Examples: Tangos, Quelling Blade(补刀斧).
 								</td>
 							</tr>
 							<tr>
@@ -24194,7 +24147,15 @@
 								</td>
 								<td> 128
 								</td>
-								<td>
+								<td>Not exposed?使用范例: Replicate(水人的变形), Sunder(换血), Demonic Conversion(谜团的恶魔转化), Tether(小精灵的羁绊), Infest(狗的感染)...
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_UNIT_TARGET_MECHANICAL(可能失效)
+								</td>
+								<td> 
+								</td>
+								<td>npc_dota_creep_siege,DOTA_NPC_UNIT_RELATIONSHIP_TYPE_SIEGE
 								</td>
 							</tr>
 						</table>
@@ -24595,6 +24556,14 @@
 								<td> DOTA_ModifyGold_WardKill
 								</td>
 								<td> 20
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_ModifyGold_CourierKilledByThisPlayer
+								</td>
+								<td> 21
 								</td>
 								<td>
 								</td>
@@ -30231,7 +30200,7 @@
 								</td>
 								<td> 
 								</td>
-								<td>围城攻击
+								<td>投石车攻击,攻城攻击
 								</td>
 							</tr>
 
@@ -30355,7 +30324,7 @@
 								</td>
 								<td> 
 								</td>
-								<td>建筑物防御
+								<td>英雄防御
 								</td>
 							</tr>
 							<tr>
@@ -30363,7 +30332,7 @@
 								</td>
 								<td> 
 								</td>
-								<td>
+								<td>投石车
 								</td>
 							</tr>
 							<tr>
@@ -36041,14 +36010,14 @@
 								</td>
 								<td> keeper_of_the_light_illuminate 冲击波<br>
 									keeper_of_the_light_radiant_bind 炎阳之缚<br>
-									keeper_of_the_light_blinding_light 致盲之光<br>
 									keeper_of_the_light_chakra_magic 查克拉魔法<br>
-									keeper_of_the_light_will_o_wisp 灵光<br>
-									keeper_of_the_light_illuminate_end 释放冲击波<br>
+									keeper_of_the_light_blinding_light 致盲之光<br>
+									keeper_of_the_light_will_o_wisp 灵光(A杖)<br>
 									keeper_of_the_light_spirit_form 灵魂形态<br>
-									keeper_of_the_light_recall 召回<br>
-									keeper_of_the_light_spirit_form_illuminate 冲击波(A杖)<br>
-									keeper_of_the_light_spirit_form_illuminate_end 释放冲击波(A杖)<br>	
+									keeper_of_the_light_illuminate_end 释放冲击波<br>
+									keeper_of_the_light_spirit_form_illuminate 冲击波(灵魂形态)<br>
+									keeper_of_the_light_spirit_form_illuminate_end 释放冲击波(灵魂形态)<br>	
+									keeper_of_the_light_recall 召回(魔晶技能)<br>
 									keeper_of_the_light_mana_leak 法力流失(老版本的技能)<br>
 									
 								</td>
@@ -37025,6 +36994,31 @@
 									void_spirit_astral_step 太虚之径<br>
 								</td>
 								<td>虚无之灵、紫猫
+								</td>
+							</tr>
+							<tr>
+								<td> npc_dota_hero_dawnbreaker
+								</td>
+								<td> dawnbreaker_fire_wreath 星破天惊<br>
+									dawnbreaker_celestial_hammer 上界重锤<br>
+									dawnbreaker_luminosity 熠熠生辉<br>
+									dawnbreaker_converge 会合<br>
+									dawnbreaker_solar_guardian天光现世<br>
+									dawnbreaker_land着地<br>
+								</td>
+								<td>破晓辰星,女武神
+								</td>
+							</tr>
+							<tr>
+								<td> npc_dota_hero_marci
+								</td>
+								<td> marci_grapple <br>
+									marci_companion_run <br>
+									marci_guardian <br>
+									marci_unleash <br>
+									
+								</td>
+								<td>玛西，女拳
 								</td>
 							</tr>
 						</table>
@@ -38779,6 +38773,12 @@
 									modifier_aghsfort_venomancer_poison_nova<br>
 									modifier_aghsfort_venomancer_poison_sting_applier<br>
 									modifier_aghsfort_venomancer_poison_sting<br>
+									modifier_aghsfort_aziyog_underlord_firestorm_thinker<br>
+									modifier_aghsfort_aziyog_underlord_firestorm_burn<br>
+									modifier_aghsfort_aziyog_underlord_portal_warp_channel_soundstop<br>
+									modifier_aghsfort_aziyog_underlord_portal_warp_channel<br>
+									modifier_aghsfort_aziyog_underlord_portal_fx<br>
+									modifier_aghsfort_bonus_pudge_meat_hook<br>
 									modifier_aghsfort_effigy<br>
 									modifier_aghsfort_watch_tower_capturing<br>
 									modifier_aghsfort_watch_tower<br>
@@ -38816,9 +38816,17 @@
 									modifier_aghsfort_dawnbreaker_solar_guardian_death_of_a_star_active<br>
 									modifier_aghsfort_dawnbreaker_solar_flare_debuff<br>
 									modifier_aghsfort_dawnbreaker_starbreaker_counter_orbital<br>
-									modifier_aghsfort_boss_earthshaker_skewer_movement<br>
-									modifier_aghsfort_boss_earthshaker_skewer_impact<br>
-									modifier_aghsfort_boss_earthshaker_skewer_slow<br>
+									modifier_aghsfort_boss_earthshaker_skewer_movement(失效)<br>
+									modifier_aghsfort_boss_earthshaker_skewer_impact(失效)<br>
+									modifier_aghsfort_boss_earthshaker_skewer_slow(失效)<br>
+									modifier_aghsfort_boss_earthshaker_fissure_shard<br>
+									modifier_aghsfort_boss_earthshaker_fissure_shard_pathing<br>
+									modifier_aghsfort_boss_earthshaker_fissure_stun<br>
+									modifier_aghsfort_boss_earthshaker_fissure<br>
+									modifier_aghsfort_boss_earthshaker_enchant_totem_leap<br>
+									modifier_aghsfort_boss_earthshaker_enchant_totem_anim<br>
+									modifier_aghsfort_boss_earthshaker_enchant_totem_land_debuff<br>
+									modifier_aghsfort_boss_earthshaker_enchant_totem<br>
 									modifier_aghsfort_gyrocopter_rocket_barrage<br>
 									modifier_aghsfort_special_gyrocopter_homing_missile_ride<br>
 									modifier_aghsfort_gyrocopter_homing_missile<br>
@@ -38939,8 +38947,13 @@
 									modifier_aghsfort_void_spirit_resonant_pulse_ring<br>
 									modifier_aghsfort_void_spirit_aether_remnant_push<br>
 									modifier_aghsfort_void_spirit_aether_remnant_phantom_attack_crit<br>
+									modifier_aghsfort_special_void_spirit_aether_remnant_bowling_movement<br>
+									modifier_aghsfort_special_void_spirit_aether_remnant_bowling_impact_slow<br>
+									modifier_aghsfort_special_void_spirit_dissimilate_lure_thinker<br>
+									modifier_aghsfort_special_void_spirit_dissimilate_lure_burn<br>
 									modifier_aghsfort_void_spirit_resonant_pulse_spell_amped<br>
 									modifier_aghsfort_void_spirit_resonant_pulse_cadence<br>
+									aghsfort_special_void_spirit_resonant_pulse_suppression_magic_immunity<br>
 									modifier_aghsfort_void_spirit_astral_step_vacuum_motion<br>
 									modifier_aghsfort_special_void_spirit_astral_step_trail_thinker<br>
 									modifier_aghsfort_special_void_spirit_astral_step_trail_burn<br>
@@ -40117,6 +40130,7 @@
 									modifier_luna_lunar_grace<br>
 									modifier_luna_eclipse<br>
 									modifier_lycan_wolf_bite_lifesteal<br>
+									modifier_lycan_wolf_bite_attack_range<br>
 									modifier_lycan_shard<br>
 									modifier_lycan_wolf_uncontrollable<br>
 									modifier_lycan_summon_wolves_bonus_damage<br>
@@ -40419,6 +40433,7 @@
 									modifier_holdout_gladiators_unite_thinker<br>
 									modifier_holdout_gladiators_unite<br>
 									modifier_magnataur_horn_toss<br>
+									modifier_magnataur_horn_toss_slow<br>
 									modifier_magnataur_shockwave<br>
 									modifier_magnataur_shockwave_pull<br>
 									modifier_magnataur_empower<br>
@@ -40426,6 +40441,21 @@
 									modifier_magnataur_skewer_impact<br>
 									modifier_magnataur_skewer_slow<br>
 									modifier_magnataur_reverse_polarity<br>
+									modifier_marci_grapple_victim_motion<br>
+									modifier_marci_lunge_tracking_motion<br>
+									modifier_marci_lunge_arc<br>
+									modifier_marci_lunge_landing_anim<br>
+									modifier_marci_companion_run_ally_movespeed<br>
+									modifier_marci_lunge_debuff<br>
+									modifier_marci_guardian_buff<br>
+									modifier_marci_unleash<br>
+									modifier_marci_unleash_flurry<br>
+									modifier_marci_unleash_flurry_cooldown<br>
+									modifier_marci_unleash_flurry_pulse_debuff<br>
+									modifier_marci_spyglass<br>
+									modifier_marci_spyglass_hit<br>
+									modifier_marci_guardian_magic_immunity<br>
+									modifier_marci_unleash_pulse_silence<br>
 									modifier_special_mars_spear_burning_trail_thinker<br>
 									modifier_special_mars_spear_burning_trail_burn<br>
 									modifier_mars_spear_impale<br>
