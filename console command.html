@@ -635,7 +635,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> _resetgamestats
+							<td> _resetgamestats(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -845,6 +845,28 @@
 							</td>
 						</tr>
 						<tr>
+							<td> aghsfort_hero_undying_max_zombies
+							</td>
+							<td>64
+							</td>
+							<td> sv
+							</td>
+							<td> AGHSFORT - Maximum amount of zombies that can be spawned.
+							</td>
+						</tr>
+						<tr>
+							<td> ai_debug_dyninteractions
+							</td>
+							<td>0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> Debug the NPC dynamic interaction system.
+							</td>
+						</tr>
+
+
+						<tr>
 							<td> ai_debug_los
 							</td>
 							<td> 0
@@ -926,6 +948,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> ai_dynamicinteractions_lerp_time
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>	
+						<tr>
 							<td> ai_expression_frametime
 							</td>
 							<td> 0
@@ -981,6 +1013,16 @@
 							<td> -1
 							</td>
 							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> ai_task_pre_script
+							</td>
+							<td> 0
+							</td>
+							<td> sv
 							</td>
 							<td> 
 							</td>
@@ -1597,7 +1639,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> autoaim_max_deflect 
+							<td> autoaim_max_deflect(7.31失效) 
 							</td>
 							<td> 0
 							</td>
@@ -1607,7 +1649,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> autoaim_max_dist
+							<td> autoaim_max_dist(7.31失效) 
 							</td>
 							<td> 2160
 							</td>
@@ -1988,7 +2030,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> bug_swap
+							<td> bug_swap(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -3368,6 +3410,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> cl_checkdeclareclasses
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Check game code serializers
+							</td>
+						</tr>
+						<tr>
 							<td> cl_class
 							</td>
 							<td> 0
@@ -3491,7 +3543,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> cl_consistencycheck_interval
+							<td> cl_consistencycheck_interval(7.31失效)
 							</td>
 							<td> 180
 							</td>
@@ -3552,7 +3604,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> cl_debug_player_use
+							<td> cl_debug_player_use(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -3579,6 +3631,16 @@
 							<td> 
 							</td>
 							<td> Toggles visibility of the debug overlay system.
+							</td>
+						</tr>
+						<tr>
+							<td> cl_debugoverlay_hide_imgui
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Hides the overlay.
 							</td>
 						</tr>
 						<tr>
@@ -4111,6 +4173,16 @@
 							<td> Dumps all modifiers that exist in the game
 							</td>
 						</tr>
+						<tr>
+							<td> cl_dump_player_resource
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Player resource state dumping
+							</td>
+						</tr>
                         <tr>
 							<td> cl_dump_projected_texture_count
 							</td>
@@ -4168,10 +4240,10 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the total bounding box for the given entity(s) in green. 
-                                 Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td>  Displays the total bounding box for the given entity(s) in green.  Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
+						
                         <tr>
 							<td> cl_ent_actornames
 							</td>
@@ -4189,8 +4261,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays debug draws about the given entity(ies) animgraph  Arguments:   
-                                 {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays debug draws about the given entity(ies) animgraph  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4200,8 +4271,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Toggles recording of animgraph replay of the given entity(s) 
-                                 Arguments:  {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Toggles recording of animgraph replay of the given entity(s)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4211,8 +4281,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the attachment points on an entity. 
-                                 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td>  Displays the attachment points on an entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4222,9 +4291,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the movement bounding box for the given entity(ies) in orange. 
-                                 Some entites will also display entity specific overlays.  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the movement bounding box for the given entity(ies) in orange.  Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4296,8 +4363,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> isplays the hitboxes for the given entity(ies).  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the hitboxes for the given entity(ies).  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4357,8 +4423,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the joint names + axes an entity.  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the joint names + axes an entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4368,9 +4433,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Toggles input/output message display for the selected entity(ies).  
-                                The name of the entity will be displayed as well as any messages that it sends or receives.  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Toggles input/output message display for the selected entity(ies).  The name of the entity will be displayed as well as any messages that it sends or receives.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4402,8 +4465,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the pivot for the given entity(ies).  (y=up=green, z=forward=blue, x=left=red).  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the pivot for the given entity(ies).  (y=up=green, z=forward=blue, x=left=red).   Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4423,7 +4485,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Removes the given entity(s)  Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Removes the given entity(s)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4443,7 +4505,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Scales entities. Arguments: <scale factor> {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Scales entities. Arguments: &lt;scale factor&gt; <{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}>
 							</td>
 						</tr>
                         <tr>
@@ -4463,8 +4525,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Dumps the names and values of this entity's script scope to the console 
-                                 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Dumps the names and values of this entity's script scope to the console  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4474,8 +4535,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Select or deselects the given entities(s) for later manipulation 
-                                 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Select or deselects the given entities(s) for later manipulation  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4495,8 +4555,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Sets the targetname of the given entity(s)  
-                                Arguments:    {new entity name} {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Sets the targetname of the given entity(s)  Arguments:    &lt;new entity name&gt; <{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}>
 							</td>
 						</tr>
                         <tr>
@@ -4517,6 +4576,16 @@
 							<td> cl, cheat
 							</td>
 							<td> Show entity contexts in ent_text display
+							</td>
+						</tr>
+						<tr>
+							<td> cl_ent_show_damage
+							</td>
+							<td> cmd
+							</td>
+							<td>
+							</td>
+							<td> Sets damage display mode.  When on, you will see the amount of damage dealt over the target's head.
 							</td>
 						</tr>
                         <tr>
@@ -4546,8 +4615,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the skeleton for the given entity(ies).  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the skeleton for the given entity(ies).  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4567,8 +4635,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4578,9 +4645,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays text debugging information about the given entity(ies) 
-                                [within 256 units of the player] on top of the entity (See Overlay Text) 
-                                 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays text debugging information about the given entity(ies) [within 256 units of the player] on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4590,8 +4655,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Hide text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Hide text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4631,8 +4695,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays text debugging information about the given entity(ies) [near the player] on top of the entity (See Overlay Text)  
-                                2 Arguments:    Radius, {entity_name/class_name/ no argument picks what player is looking at}
+							<td> Displays text debugging information about the given entity(ies) [near the player] on top of the entity (See Overlay Text)  2 Arguments:    &lt;Radius&gt; <{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}>
 							</td>
 						</tr>
                         <tr>
@@ -4642,8 +4705,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Adds to list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text) 
-                                 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Adds to list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4653,8 +4715,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Clears the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Clears the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4664,8 +4725,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Spews the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Spews the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4675,8 +4735,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Removes from the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Removes from the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4696,8 +4755,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the interpolated vcollide wireframe pm am entity.  
-                                Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the interpolated vcollide wireframe pm am entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -4707,8 +4765,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the eye position for the given entity(ies) in red. 
-                                 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the eye position for the given entity(ies) in red.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -5078,8 +5135,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Disables all chains except for the mentioned one on the selected entity(ies), by name of the chain. 
-                                 Arguments:    {chain_name} [entity_name | {class_name} | no argument picks what player is looking at]
+							<td> Disables all chains except for the mentioned one on the selected entity(ies), by name of the chain.  Arguments:    &lt;chain_name&gt; < {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at} >
 							</td>
 						</tr>
                         <tr>
@@ -5089,8 +5145,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Toggles on a chain in the selected entity(ies), by name of the chain.  
-                                Arguments:    {chain_name} [entity_name | {class_name} | no argument picks what player is looking at]
+							<td> Toggles on a chain in the selected entity(ies), by name of the chain.  Arguments:    &lt;chain_name&gt; < {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at} >
 							</td>
 						</tr>
                         <tr>
@@ -5340,7 +5395,7 @@
 							</td>
 							<td> 
 							</td>
-							<td>  Log when a tick is recieved
+							<td>  Log when a tick is received 
 							</td>
 						</tr>
                         <tr>
@@ -5364,7 +5419,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> cl_metaduplication
+							<td> cl_metaduplication(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -5720,7 +5775,7 @@
 								-stream [1|0] : initiate|terminate streaming to physics debugger     
 								-allents: include non-physical entities     -classes: print class names    
 								 -sdk    : Rubikon build     -world  : current state of the world    
-								  -world -touch: list body pairs (bodies in contact)     -world -save <name>: save world to a file   
+								  -world -touch: list body pairs (bodies in contact)     -world -save &lt;name&gt;: save world to a file   
 									    -world -mem: memory dump     -world -snapshots: Start/Stop dumping snapshots of the world into the current directory   
 										 -world -profiletraces: ProfileRecordedTraces     -world -agg: current aggregate data registry (loaded resources) 
 							</td>
@@ -6007,7 +6062,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> cl_print_consistency_list
+							<td> cl_print_consistency_list(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -6049,7 +6104,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> cl_ragdoll_default_scale
+							<td> cl_ragdoll_default_scale(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -6739,7 +6794,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> cl_spewmeta
+							<td> cl_spewmeta(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -6798,6 +6853,16 @@
 							<td> Default team when joining a game
 							</td>
 						</tr>
+						<tr>
+							<td> cl_template_debug
+							</td>
+							<td> 0
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> cl_timeout
 							</td>
@@ -6819,7 +6884,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> cl_trade_steamid
+							<td> cl_trade_steamid(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -6880,7 +6945,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> cl_viewmodelsclonedasworld
+							<td> cl_viewmodelsclonedasworld(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -6986,8 +7051,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the interpolated attachment points on an entity. 
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the interpolated attachment points on an entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -6997,8 +7061,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the skeleton for the given entity(ies). 
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the skeleton for the given entity(ies).  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -7008,8 +7071,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the interpolated pivot for the given entity(ies).  (y=up=green, z=forward=blue, x=left=red).   
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the interpolated pivot for the given entity(ies).  (y=up=green, z=forward=blue, x=left=red).   Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -7019,8 +7081,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the skeleton for the given entity(ies).  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the skeleton for the given entity(ies).  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -7030,8 +7091,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the interpolated vcollide wireframe pm am entity.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the interpolated vcollide wireframe pm am entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
                         <tr>
@@ -7119,6 +7179,26 @@
 							<td> cloth_debug_draw_nodepth_alpha
 							</td>
 							<td> 16
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cloth_dry_drag
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> cloth_dry_drag_soften
+							</td>
+							<td> 1
 							</td>
 							<td> 
 							</td>
@@ -7425,6 +7505,16 @@
 							<td> Forward command to server.
 							</td>
 						</tr>
+						<tr>
+							<td> cojob_lock_hold_warning_threshold_ms
+							</td>
+							<td> 10000
+							</td>
+							<td> sv, rep
+							</td>
+							<td> How long in milliseconds before we warn about lock hold duration
+							</td>
+						</tr>
                         <tr>
 							<td> cojob_max_no_yield_time_us
 							</td>
@@ -7535,6 +7625,17 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> commentary_node_use_viewfacing
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
                         <tr>
 							<td> con_enable
 							</td>
@@ -7664,6 +7765,26 @@
 							</td>
 							<td> Run one usercmd per server tick and maintain a buffer.  
 								Client speeds up/slows down it's usercmd tick rate to maintain server command queue buffering.
+							</td>
+						</tr>
+						<tr>
+							<td> cq_player_times_warn_diff
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> Warn if player simulation time on client is not the same as that of server tick last received
+							</td>
+						</tr>
+						<tr>
+							<td> cq_send_player_simulation_times
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 1 = send player simulation times, verify on client, 0 = don't send simulation times
 							</td>
 						</tr>
                         <tr>
@@ -8188,6 +8309,16 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> debug_takedamage_summaries
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> debug_visibility_monitor
 							</td>
@@ -8227,6 +8358,16 @@
 							</td>
 							<td> Tell debugoverlay to not draw any entries that have aged out by the time of rendering. 
 								Useful if sim runs more often than rendering.
+							</td>
+						</tr>
+						<tr>
+							<td> debugoverlay_hide_imgui
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Hides the overlay.
 							</td>
 						</tr>
                         <tr>
@@ -8719,6 +8860,16 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> dota_ability_draft_shuffle_players
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> dota_ability_dump_refcounts
 							</td>
@@ -8862,7 +9013,7 @@
                         <tr>
 							<td> dota_active_play_section_new
 							</td>
-							<td> 11
+							<td> 3
 							</td>
 							<td> per-user
 							</td>
@@ -8895,6 +9046,16 @@
 							<td> 0
 							</td>
 							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_aghsfort_watch_tower_allow_completion
+							</td>
+							<td> 1
+							</td>
+							<td> sv
 							</td>
 							<td> 
 							</td>
@@ -8979,8 +9140,38 @@
 							<td> Allow players to pause in matchmade games
 							</td>
 						</tr>
+						<tr>
+							<td> dota_alt_show_lane_creep_gold_bounty
+							</td>
+							<td> 1
+							</td>
+							<td> sv,a
+							</td>
+							<td> Allow players to pause in matchmade games
+							</td>
+						</tr>
+						<tr>
+							<td> dota_alt_show_neutral_creep_gold_bounty
+							</td>
+							<td> 1
+							</td>
+							<td> sv,a
+							</td>
+							<td> Allow players to pause in matchmade games
+							</td>
+						</tr>
                         <tr>
 							<td> dota_alt_show_neutral_stack_times_and_arrow
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_alt_show_rune_spawn_times
 							</td>
 							<td> 1
 							</td>
@@ -9349,6 +9540,17 @@
 							</td>
 							<td> If set, new bots of the given type will be autoselected. This is for the item icon editor.
 							</td>
+							</tr>
+						</tr>
+						<tr>
+							<td> dota_battlereport_cache_duration
+							</td>
+							<td> 300
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
 						</tr>
                         <tr>
 							<td> dota_bonus_hero_rollover_time
@@ -9560,6 +9762,16 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> dota_bot_difficulty_mask
+							</td>
+							<td> 30
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> dota_bot_disable
 							</td>
@@ -9682,7 +9894,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_bot_match_difficulty
+							<td> dota_bot_match_difficulty(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -9692,7 +9904,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_bot_match_script_index
+							<td> dota_bot_match_script_index(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -9859,6 +10071,16 @@
 							<td> 
 							</td>
 							<td> Reloads all the bot scripts
+							</td>
+						</tr>
+						<tr>
+							<td> dota_bot_script_index_mask
+							</td>
+							<td> 15
+							</td>
+							<td> per-user
+							</td>
+							<td> 
 							</td>
 						</tr>
                         <tr>
@@ -10042,7 +10264,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_cache_duration_allstar_cache_s
+							<td> dota_cache_duration_allstar_cache_s(7.31失效)
 							</td>
 							<td> 300
 							</td>
@@ -12167,6 +12389,36 @@
 							<td> Custom game library sort type
 							</td>
 						</tr>
+						<tr>
+							<td> dota_custom_game_overview_ignore_version_compatibility
+							</td>
+							<td> true
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_custom_game_overview_max_lobby_age_seconds
+							</td>
+							<td> 1800
+							</td>
+							<td> per-user
+							</td>
+							<td> Custom game library sort type
+							</td>
+						</tr>
+						<tr>
+							<td> dota_custom_game_overview_max_ping
+							</td>
+							<td> 150
+							</td>
+							<td> per-user
+							</td>
+							<td> Custom game library sort type
+							</td>
+						</tr>
                         <tr>
 							<td> dota_custom_game_win_score
 							</td>
@@ -12548,6 +12800,16 @@
 							<td> 是否禁止下路线出兵
 							</td>
 						</tr>
+						<tr>
+							<td> dota_disable_controller_support
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> dota_disable_experimental_gameplay
 							</td>
@@ -12664,6 +12926,16 @@
 							<td> false
 							</td>
 							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_drow_ranger_arcana_disable_display
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
 							</td>
 							<td> 
 							</td>
@@ -13009,7 +13281,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_experimental_controller_support
+							<td> dota_experimental_controller_support(7.31失效)
 							</td>
 							<td>0
 							</td>
@@ -13049,7 +13321,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_export_team_logos
+							<td> dota_export_team_logos(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -13269,7 +13541,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_fantasy_popup_help_ti10
+							<td> dota_fantasy_popup_help_ti10(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -13279,13 +13551,33 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_fantasy_popup_help_ti9
+							<td> dota_fantasy_popup_help_ti9(7.31失效)
 							</td>
 							<td> 1
 							</td>
 							<td> cl, a
 							</td>
 							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_fantasy_league_region
+							</td>
+							<td> 1
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_fantasy_popup_help_dpc
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> cl, a
 							</td>
 						</tr>
                         <tr>
@@ -13293,9 +13585,9 @@
 							</td>
 							<td> 0
 							</td>
-							<td> 
-							</td>
 							<td> cl, cheat
+							</td>
+							<td> 
 							</td>
 						</tr>
                         <tr>
@@ -13650,7 +13942,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> dota_gamemode_ability_draft_shuffle_draft_order
+							<td> dota_gamemode_ability_draft_shuffle_draft_order(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -14632,7 +14924,7 @@
 						<tr>
 							<td> dota_highest_seen_item_id
 							</td>
-							<td> 20577293959
+							<td> 22972129927
 							</td>
 							<td> per-user
 							</td>
@@ -15430,6 +15722,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_idle_rare_tower_scale
+							</td>
+							<td> 2
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> dota_idle_time
 							</td>
 							<td> 300
@@ -15922,7 +16224,7 @@
 						<tr>
 							<td> dota_last_primary_event_id
 							</td>
-							<td> 32
+							<td> 33
 							</td>
 							<td> cl, a
 							</td>
@@ -15937,6 +16239,16 @@
 							<td> 
 							</td>
 							<td> Launch a custom game
+							</td>
+						</tr>
+						<tr>
+							<td> dota_league_force_public
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> A comma separated list of league ids to force public usage
 							</td>
 						</tr>
 						<tr>
@@ -15960,13 +16272,23 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_league_postgame_time
+							<td> dota_league_refresh_localization
 							</td>
 							<td> cmd
 							</td>
 							<td> 
 							</td>
 							<td> Refreshes the english localization file with all the latest league strings
+							</td>
+						</tr>
+						<tr>
+							<td> dota_league_shared_dump
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Dumps the shared league data to the console
 							</td>
 						</tr>
 						<tr>
@@ -16111,6 +16433,26 @@
 						</tr>
 						<tr>
 							<td> dota_lobby_settings_advanced_visible
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_local_bot_match_difficulty
+							</td>
+							<td> 1
+							</td>
+							<td> sv, a, rep
+							</td>
+							<td> Difficulty to play local bot matches against
+							</td>
+						</tr>
+						<tr>
+							<td> dota_local_bot_match_script_index
 							</td>
 							<td> 0
 							</td>
@@ -17352,6 +17694,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_number_of_samples_for_lane_prediction
+							</td>
+							<td> 8000
+							</td>
+							<td> sv
+							</td>
+							<td> Number of samples used to guess players lane selection
+							</td>
+						</tr>
+						<tr>
 							<td> dota_ogre_magi_arcana_disable_streak_display
 							</td>
 							<td> 0
@@ -17647,6 +17999,16 @@
 							<td> 0
 							</td>
 							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_pause_limit
+							</td>
+							<td> 180
+							</td>
+							<td> sv, cheat
 							</td>
 							<td> 
 							</td>
@@ -18382,7 +18744,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_portrait_model
+							<td> dota_portrait_model(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -19956,7 +20318,7 @@
 						<tr>
 							<td>dota_season_toasts 
 							</td>
-							<td> 0
+							<td> 1
 							</td>
 							<td> cl
 							</td>
@@ -20019,6 +20381,16 @@
 							<td> 0
 							</td>
 							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_selection_groups
+							</td>
+							<td> true
+							</td>
+							<td> per-user
 							</td>
 							<td> 
 							</td>
@@ -20134,6 +20506,36 @@
 							<td> Set game/team names
 							</td>
 						</tr>
+						<tr>
+							<td> dota_settings_healthbar_boss_creep_height_offset
+							</td>
+							<td> -4
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_settings_healthbar_boss_creep_icon_size
+							</td>
+							<td> 24
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_settings_healthbar_boss_creep_width_offset
+							</td>
+							<td> 20
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>	
 						<tr>
 							<td> dota_settings_quick_move
 							</td>
@@ -20282,6 +20684,16 @@
 							<td> cl, a
 							</td>
 							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_show_cast_range
+							</td>
+							<td> 1
+							</td>
+							<td> cl, a
+							</td>
+							<td> 显示施法距离 施法范围
 							</td>
 						</tr>
 						<tr>
@@ -20435,7 +20847,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_show_team_fan_content_evaluator
+							<td> dota_show_team_fan_content_evaluator(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -21550,7 +21962,7 @@
 						<tr>
 							<td> dota_splash_ad_acknowledged_id
 							</td>
-							<td> 109
+							<td> 115
 							</td>
 							<td> per-user
 							</td>
@@ -22015,6 +22427,26 @@
 							<td> 
 							</td>
 							<td> Take a single full body shot of each hero.
+							</td>
+						</tr>
+						<tr>
+							<td> dota_taunt_base_cooldown
+							</td>
+							<td> 2
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> The amount of time after a taunt is finished that you always have to wait before taunting again.
+							</td>
+						</tr>
+						<tr>
+							<td> dota_taunt_second_cooldown
+							</td>
+							<td> 60
+							</td>
+							<td> sv, cheat
+							</td>
+							<td>If trying to spam taunts, then amount of time you have to wait until that will be allowed again.
 							</td>
 						</tr>
 						<tr>
@@ -22528,7 +22960,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_trading_show_requests_from
+							<td> dota_trading_show_requests_from(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -22578,6 +23010,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_trophies_cache_duration
+							</td>
+							<td> 300
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> dota_turbo_courier_default_auto_deliver
 							</td>
 							<td> true
@@ -22598,7 +23040,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_turbo_neutral_item_time_offset
+							<td> dota_turbo_neutral_item_time_offset(7.31失效)
 							</td>
 							<td> 420
 							</td>
@@ -23128,7 +23570,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_unit_movetodirection
+							<td> -dota_unit_movetodirection
 							</td>
 							<td> cmd
 							</td>
@@ -23143,6 +23585,16 @@
 							<td> cmd
 							</td>
 							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_unit_relative_move_bounce
+							</td>
+							<td> 1
+							</td>
+							<td> sv, cheat
 							</td>
 							<td> 
 							</td>
@@ -23475,6 +23927,16 @@
 							<td> sv, cheat
 							</td>
 							<td> MMR below which we will not upload neutral item equips
+							</td>
+						</tr>
+						<tr>
+							<td> dota_use_aghanims_postprocess_material
+							</td>
+							<td> 1
+							</td>
+							<td> cl
+							</td>
+							<td> 
 							</td>
 						</tr>
 						<tr>
@@ -24754,8 +25216,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the total bounding box for the given entity(s) in green.  Some entites will also display entity specific overlays. 
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the total bounding box for the given entity(s) in green.  Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -24795,8 +25256,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays debug draws about the given entity(ies) animgraph  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays debug draws about the given entity(ies) animgraph  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -24806,8 +25266,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Toggles recording of animgraph replay of the given entity(s) 
-								 Arguments:  {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Toggles recording of animgraph replay of the given entity(s)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -24817,8 +25276,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> <xmp>Sets a variable on the animgraph of the given entity(s) </xmp>
-								<xmp>Arguments:   <varname>=<value>  {entity_name} / {class_name} / no argument picks what player is looking at</xmp>
+							<td> Sets a variable on the animgraph of the given entity(s)  Arguments:   &lt;varname&gt;=&lt;value&gt;  &lt;{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}&gt;
 							</td>
 						</tr>
 						<tr>
@@ -24828,8 +25286,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the attachment points on an entity.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the attachment points on an entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -24839,8 +25296,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the entity's autoaim radius.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the entity's autoaim radius.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -24850,8 +25306,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the movement bounding box for the given entity(ies) in orange.  Some entites will also display entity specific overlays. 
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the movement bounding box for the given entity(ies) in orange.  Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25003,8 +25458,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the hitboxes for the given entity(ies).  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the hitboxes for the given entity(ies).  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25074,8 +25528,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the joint names + axes an entity.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the joint names + axes an entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25085,7 +25538,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Kills the given entity(s)  Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Kills the given entity(s)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25095,9 +25548,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Toggles input/output message display for the selected entity(ies).  
-								The name of the entity will be displayed as well as any messages that it sends or receives.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Toggles input/output message display for the selected entity(ies).  The name of the entity will be displayed as well as any messages that it sends or receives.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25151,8 +25602,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the pivot for the given entity(ies).  (y=up=green, z=forward=blue, x=left=red).  
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the pivot for the given entity(ies).  (y=up=green, z=forward=blue, x=left=red).   Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25172,8 +25622,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the total bounding box for the given entity(s) in green.  Some entites will also display entity specific overlays.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the total bounding box for the given entity(s) in green.  Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25183,7 +25632,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Removes the given entity(s)  Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Removes the given entity(s)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25223,7 +25672,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> <xmp>Scales entities. Arguments: <scale factor> {entity_name} / {class_name} / no argument picks what player is looking at</xmp>
+							<td> <xmp>Scales entities. Arguments: <scale factor> <{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}></xmp>
 							</td>
 						</tr>
 						<tr>
@@ -25243,8 +25692,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Dumps the names and values of this entity's script scope to the console  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Dumps the names and values of this entity's script scope to the console  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25254,8 +25702,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Select or deselects the given entities(s) for later manipulation  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Select or deselects the given entities(s) for later manipulation  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25275,8 +25722,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Sets the targetname of the given entity(s) 
-								 Arguments:    {new entity name} {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Sets the targetname of the given entity(s)  Arguments:    &lt;new entity name&gt; &lt;{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}&gt;
 							</td>
 						</tr>
 						<tr>
@@ -25300,14 +25746,23 @@
 							</td>
 						</tr>
 						<tr>
+							<td> ent_show_damage
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>  Sets damage display mode.  When on, you will see the amount of damage dealt over the target's head.
+							</td>
+						</tr>
+						<tr>
 							<td> ent_show_response_criteria
 							</td>
 							<td> cmd
 							</td>
 							<td> 
 							</td>
-							<td> Print, to the console, an entity's current criteria set used to select responses.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Print, to the console, an entity's current criteria set used to select responses.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25317,8 +25772,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the skeleton for the given entity(ies). 
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the skeleton for the given entity(ies).  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25408,8 +25862,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25419,8 +25872,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays text debugging information about the given entity(ies) [within 256 units of the player] on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays text debugging information about the given entity(ies) [within 256 units of the player] on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25430,8 +25882,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Hide text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Hide text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25471,8 +25922,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays text debugging information about the given entity(ies) [near the player] on top of the entity (See Overlay Text)  
-								2 Arguments:    Radius, {entity_name/class_name/ no argument picks what player is looking at}
+							<td> Displays text debugging information about the given entity(ies) [near the player] on top of the entity (See Overlay Text)  2 Arguments:    &lt;Radius&gt; &lt;{entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}&gt;
 							</td>
 						</tr>
 						<tr>
@@ -25482,8 +25932,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Adds to list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Adds to list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25493,8 +25942,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Clears the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Clears the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25504,8 +25952,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Spews the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Spews the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25515,8 +25962,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Removes from the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Removes from the list of names to display text debugging information about the given entity(ies) on top of the entity (See Overlay Text)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25536,8 +25982,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the interpolated vcollide wireframe pm am entity.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> isplays the interpolated vcollide wireframe pm am entity.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -25547,8 +25992,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the eye position for the given entity(ies) in red.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the eye position for the given entity(ies) in red.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -26904,7 +27348,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> gamestats_file_output_directory
+							<td> gamestats_file_output_directory(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -27644,7 +28088,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> hammer_parallel_procedural_update
+							<td> hammer_parallel_procedural_update(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -27894,7 +28338,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> hidehud
+							<td> hidehud(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -27945,7 +28389,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> hlx_combine_barrier_cell_spacing
+							<td> hlx_combine_barrier_cell_spacing(7.31失效)
 							</td>
 							<td>6
 							</td>
@@ -27985,7 +28429,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> host_limitlocal
+							<td> host_limitlocal(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -27995,7 +28439,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> host_showcachemiss
+							<td> host_showcachemiss(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -28135,6 +28579,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> hud_reloadscheme
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Reloads hud layout and animation scripts.
+							</td>
+						</tr>
+						<tr>
 							<td> hud_river_vial_ui_expanded
 							</td>
 							<td> true
@@ -28155,7 +28609,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> hud_takesshots
+							<td> hud_takesshots(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -28661,8 +29115,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Disables all chains except for the mentioned one on the selected entity(ies), by name of the chain. 
-								 Arguments:    {chain_name} [entity_name | {class_name} | no argument picks what player is looking at]
+							<td> Disables all chains except for the mentioned one on the selected entity(ies), by name of the chain.  Arguments:    &lt;chain_name&gt; &lt; {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at} &gt;
 							</td>
 						</tr>
 						<tr>
@@ -28892,8 +29345,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Toggles on a chain in the selected entity(ies), by name of the chain. 
-								 Arguments:    {chain_name} [entity_name | {class_name} | no argument picks what player is looking at]
+							<td> Toggles on a chain in the selected entity(ies), by name of the chain.  Arguments:    &lt;chain_name&gt; &lt; {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at} &gt;
 							</td>
 						</tr>
 						<tr>
@@ -29227,7 +29679,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> items_game_use_gc_copy
+							<td> items_game_use_gc_copy(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -29517,7 +29969,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> joy_deadzone_mode
+							<td> joy_deadzone_mode(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -30177,7 +30629,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>-lookup
+							<td>-lookup(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -30187,7 +30639,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> +lookup
+							<td> +lookup(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -30217,7 +30669,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> lrucache_stats
+							<td> lrucache_stats(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -30237,7 +30689,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> m_customaccel
+							<td> m_customaccel(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -30250,7 +30702,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> m_filter
+							<td> m_filter(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -30260,7 +30712,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> m_mouseaccel2
+							<td> m_mouseaccel2(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -30270,13 +30722,23 @@
 							</td>
 						</tr>
 						<tr>
-							<td> m_pitch
+							<td> m_pitch(7.31失效)
 							</td>
 							<td> 0
 							</td>
 							<td> cl, a, ss
 							</td>
 							<td> Mouse pitch factor.
+							</td>
+						</tr>
+						<tr>
+							<td> markup_group_spew
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Spew all current markup groups and their members
 							</td>
 						</tr>
 						<tr>
@@ -30290,6 +30752,17 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_clearshadercache
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Clears the shader cache used for dynamic shader compile.
+							</td>
+						</tr>
+						
+						<tr>
 							<td> mat_colcorrection_disableentities
 							</td>
 							<td>0
@@ -30300,6 +30773,66 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_colcorrection_editor
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_colcorrection_forceentitiesclientside
+							</td>
+							<td> 0
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> Forces color correction entities to be updated on the client
+							</td>
+						</tr>
+						<tr>
+							<td> mat_depthbias_shadowmap
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_disable_dynamic_shader_compile
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Reloads all shaders from vcs files until the next time mat_reloadshaders is called
+							</td>
+						</tr>
+						<tr>
+							<td> mat_drawTitleSafe
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Enable title safe overlay
+							</td>
+						</tr>
+						<tr>
+							<td> mat_fullbright
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> mat_lpv_luxels
 							</td>
 							<td> 0
@@ -30307,6 +30840,26 @@
 							<td> cheat
 							</td>
 							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_luxels
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_material_frameupdate_limit
+							</td>
+							<td> 2
+							</td>
+							<td> 
+							</td>
+							<td> Maximum time in ms to spend initializing shaders for materials each frame.
 							</td>
 						</tr>
 						<tr>
@@ -30330,6 +30883,26 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_overdraw_color
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_dead_materials
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print loaded materials that have no valid layers due to not supporting any of the modes in gameinfo.gi.
+							</td>
+						</tr>
+						<tr>
 							<td> mat_print_error_materials
 							</td>
 							<td> cmd
@@ -30349,6 +30922,47 @@
 							<td> Print materials sorted by cost heuristic
 							</td>
 						</tr>
+						<tr>
+							<td> mat_print_material_info
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print info about a specific material
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_materials
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print loaded materials. Takes an optional substring as an argument.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_materials_last_frame
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print materials used last frame
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_materials_unused
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print materials that have never been used
+							</td>
+						</tr>
+						
 						<tr>
 							<td> mat_print_modes
 							</td>
@@ -30370,6 +30984,137 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_print_shader_quality 
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print current shader quality setting
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_shaders
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print loaded shaders. Takes a substring as an argument.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_textures
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print loaded textures in alphabetical order. Takes an optional substring as an argument.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_textures_size
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print loaded textures in ascending size order. Takes an optional substring as an argument.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_print_textures_size_in_memory
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print loaded textures in ascending size order as they are in memory. Takes an optional substring as an argument.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_reinitmaterials
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Reinitializes all loaded materials, reloading their shaders.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_reloadmaterials
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Reloads all materials. Takes an optional substring as an argument.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_reloadshaders
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Reloads all shaders. Takes optional substrings of shader names to recompile as arguments.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_reset_material_costs
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Reset material cost heuristic
+							</td>
+						</tr>
+						<tr>
+							<td> mat_set_shader_quality
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Force shader quality setting (valid values are 0 or 1)
+							</td>
+						</tr>
+						<tr>
+							<td> mat_shading_complexity
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> Visualize shading complexity
+							</td>
+						</tr>
+						<tr>
+							<td> mat_shading_complexity_color
+							</td>
+							<td> 1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_shading_complexity_max_instruction_count
+							</td>
+							<td> 1024
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
+						<tr>
 							<td> mat_shading_complexity_max_register_count
 							</td>
 							<td> 128
@@ -30379,6 +31124,27 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> mat_slopescaledepthbias_shadowmap
+							</td>
+							<td> 4
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_bloom_scale
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+					
 						<tr>
 							<td> mat_tonemap_bloom_start_value
 							</td>
@@ -30390,6 +31156,157 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_tonemap_csgo_bloom_scale
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_bloom_start_value
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_debug
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_accelerate_exposure_down
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_average_lum_min
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> Override. Old default was 3.0
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_max
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_min
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_percent_bright_pixels
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> Override. Old value was 1.0
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_percent_target
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> Override. Old default was 45.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_rate
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_scale
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_force_use_alpha
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_csgo_uncap_exposure
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_debug
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_force_accelerate_exposure_down
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
+						<tr>
 							<td> mat_tonemap_force_average_lum_min
 							</td>
 							<td> -1
@@ -30400,6 +31317,17 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_tonemap_force_log_lum_max
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
+						<tr>
 							<td> mat_tonemap_force_log_lum_min
 							</td>
 							<td> -1
@@ -30409,6 +31337,67 @@
 							<td> 
 							</td>
 						</tr>
+						<tr>
+							<td> mat_tonemap_force_max
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_force_min
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_force_percent_bright_pixels
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> Override. Old value was 1.0
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_force_percent_target
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> Override. Old default was 45.
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_force_rate
+							</td>
+							<td> -1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mat_tonemap_force_scale
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
 						<tr>
 							<td> mat_tonemap_force_use_alpha
 							</td>
@@ -30430,6 +31419,37 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mat_viewportscale 
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Scale down the main viewport (to reduce GPU impact on CPU profiling)
+							</td>
+						</tr>
+						<tr>
+							<td> mat_viewportupscale
+							</td>
+							<td> 1
+							</td>
+							<td> cl, cheat
+							</td>
+							<td> Scale the viewport back up
+							</td>
+						</tr>
+						<tr>
+							<td> mat_wireframe
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 0=Off, 1=Surface Wireframe, 2=Transparent Wireframe
+							</td>
+						</tr>
+						
+						<tr>
 							<td> mem_compact
 							</td>
 							<td> cmd
@@ -30439,6 +31459,37 @@
 							<td> Compacts the heap
 							</td>
 						</tr>
+						<tr>
+							<td> mem_dump
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Dump memory stats to text file or &lt;stdout&gt;.
+							</td>
+						</tr>
+						<tr>
+							<td> mem_incremental_compact
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Incrementally compacts the heap
+							</td>
+						</tr>
+						<tr>
+							<td> mem_incremental_compact_rate
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> Rate at which to attempt internal heap compaction
+							</td>
+						</tr>
+					
 						<tr>
 							<td> mem_level
 							</td>
@@ -30450,6 +31501,47 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mem_test
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>	
+						<tr>
+							<td> mem_test_each_frame
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Run heap check at end of every frame 
+							</td>
+						</tr>	
+						<tr>
+							<td> mem_test_every_n_seconds
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Run heap check at a specified interval 
+							</td>
+						</tr>	
+						<tr>
+							<td> mem_test_quiet
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Don't print stats when memtesting
+							</td>
+						</tr>	
+						
+						<tr>
 							<td> memory
 							</td>
 							<td> cmd
@@ -30459,6 +31551,67 @@
 							<td> Print memory stats.
 							</td>
 						</tr>
+						<tr>
+							<td> mesh_calculate_curvature_smooth_invert
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mesh_calculate_curvature_smooth_pass_count
+							</td>
+							<td> 3
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mesh_calculate_curvature_smooth_weight
+							</td>
+							<td> 1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mic_listen_while_nonfocused
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> Enables the ability for the mic to remain open if the window loses focus such as when a caster tabs out to adjust settings
+							</td>
+						</tr>
+						<tr>
+							<td> midi_auto_connect_port
+							</td>
+							<td> -1
+							</td>
+							<td> cl, a
+							</td>
+							<td> On init, attempt to connect to the device on this port
+							</td>
+						</tr>
+						<tr>
+							<td> midi_connect_port
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Attempt to open a connection on the passed port ( or 0 if not specfied ). Will close existing connection
+							</td>
+						</tr>
+					
 						<tr>
 							<td> -midi_note
 							</td>
@@ -30510,6 +31663,27 @@
 							</td>
 						</tr>
 						<tr>
+							<td> midi_test_off
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Send a test note OFF to the connected MIDI device
+							</td>
+						</tr>
+						<tr>
+							<td> midi_test_on
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Send a test note ON to the connected MIDI device
+							</td>
+						</tr>
+						
+						<tr>
 							<td> minimap_create
 							</td>
 							<td> cmd
@@ -30520,7 +31694,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> Does a bunch of work to create a minimap
+							<td> mobile_fps_increase_during_charging
 							</td>
 							<td> 0
 							</td>
@@ -30529,6 +31703,17 @@
 							<td> MOBILE_FPS_CONTROL: If true we increase framerate limit while charging
 							</td>
 						</tr>
+						<tr>
+							<td> mobile_fps_increase_during_touch
+							</td>
+							<td> 1
+							</td>
+							<td> a
+							</td>
+							<td> MOBILE_FPS_CONTROL: If true we increase framerate limit during touch
+							</td>
+						</tr>
+					
 						<tr>
 							<td> mobile_fps_limit
 							</td>
@@ -30549,6 +31734,37 @@
 							<td> Dump the stats for the model combiner manager.
 							</td>
 						</tr>
+						<tr>
+							<td> model_default_preview_sequence_name
+							</td>
+							<td> 0
+							</td>
+							<td> a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> model_dump_convert_info
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Print model load-time conversion info
+							</td>
+						</tr>
+							<tr>motdfile
+							<td> 
+							</td>
+							<td> 0
+							</td>
+							<td> sv, release
+							</td>
+							<td> The MOTD file to load.
+							</td>
+						</tr>
+						
 						<tr>
 							<td> mouse_disableinput
 							</td>
@@ -30580,7 +31796,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> move_fall_sound_z
+							<td> move_fall_sound_z(7.31失效)
 							</td>
 							<td> 30
 							</td>
@@ -30601,6 +31817,16 @@
 						</tr>
 						<tr>
 							<td> -movedown
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> -moveleft
 							</td>
 							<td> cmd
 							</td>
@@ -30640,7 +31866,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> -moveup
+							<td> -moveup(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -30660,9 +31886,89 @@
 							</td>
 						</tr>
 						<tr>
-							<td> mp_fraglimit
+							<td> mp_fraglimit(7.31失效)
 							</td>
 							<td> 0
+							</td>
+							<td> sv, nf
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> movie_fixwave
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Fixup corrupted .wav file if engine crashed during startmovie/endmovie, etc.
+							</td>
+						</tr>
+						<tr>
+							<td> mp_allowNPCs
+							</td>
+							<td> 1
+							</td>
+							<td> sv, nf
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mp_allowspectators
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> toggles whether the server allows spectator mode or not
+							</td>
+						</tr>
+						<tr>
+							<td> mp_disable_autokick
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Prevents a userid from being auto-kicked
+							</td>
+						</tr>
+						<tr>
+							<td> mp_fadetoblack
+							</td>
+							<td> 0
+							</td>
+							<td> sv, nf, rep
+							</td>
+							<td> fade a player's screen to black when he dies
+							</td>
+						</tr>
+						<tr>
+							<td> mp_feetyawrate_max
+							</td>
+							<td> 360
+							</td>
+							<td> sv, rep
+							</td>
+							<td> How many degrees per second that we can turn our feet or upper body when we're outside the max body yaw.
+							</td>
+						</tr>
+						<tr>
+							<td> mp_forcecamera
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> Restricts spectator modes for dead players
+							</td>
+						</tr>
+						<tr>
+							<td> mp_forcerespawn
+							</td>
+							<td> 1
 							</td>
 							<td> sv, nf
 							</td>
@@ -30690,7 +31996,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> mp_teamlist
+							<td> mp_teamlist(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -30710,13 +32016,23 @@
 							</td>
 						</tr>
 						<tr>
-							<td> mp_timelimit
+							<td> mp_timelimit(7.31失效)
 							</td>
 							<td> 0
 							</td>
 							<td> sv, nf, rep
 							</td>
 							<td>game time per map in minutes
+							</td>
+						</tr>
+						<tr>
+							<td> mp_tournament
+							</td>
+							<td> 0
+							</td>
+							<td>sv, nf, rep
+							</td>
+							<td>
 							</td>
 						</tr>
 						<tr>
@@ -30750,6 +32066,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> mp_waitingforplayers_cancel
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> Set to 1 to end the WaitingForPlayers period.
+							</td>
+						</tr>
+						<tr>
 							<td> mp_waitingforplayers_restart
 							</td>
 							<td> 0
@@ -30760,13 +32086,23 @@
 							</td>
 						</tr>
 						<tr>
-							<td> mp_weaponstay
+							<td> mp_weaponstay(7.31失效)
 							</td>
 							<td> 0
 							</td>
 							<td> sv, nf
 							</td>
 							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> mp_waitingforplayers_time
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> WaitingForPlayers time length in seconds
 							</td>
 						</tr>
 						<tr>
@@ -30780,6 +32116,27 @@
 							</td>
 						</tr>
 						<tr>
+							<td> multiunit_frame_tall_three_col
+							</td>
+							<td> 66
+							</td>
+							<td>cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> multiunit_frame_tall_two_col
+							</td>
+							<td> 104
+							</td>
+							<td>cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
+						<tr>
 							<td> multiunit_frame_wide
 							</td>
 							<td> 64
@@ -30790,6 +32147,38 @@
 							</td>
 						</tr>
 						<tr>
+							<td> multiunit_frame_wide_three_col
+							</td>
+							<td> 84
+							</td>
+							<td>cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> multiunit_frame_wide_two_col
+							</td>
+							<td> 130
+							</td>
+							<td>cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> multiunit_page_next
+							</td>
+							<td> cmd
+							</td>
+							<td>
+							</td>
+							<td> cycle to the next multiunit page
+							</td>
+						</tr>
+
+
+						<tr>
 							<td> multiunit_page_prev
 							</td>
 							<td> cmd
@@ -30797,6 +32186,26 @@
 							<td> 
 							</td>
 							<td> cycle to the previous multiunit page
+							</td>
+						</tr>
+						<tr>
+							<td> multiunit_x_gap
+							</td>
+							<td> 1
+							</td>
+							<td>cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> multiunit_x_gap_three_col
+							</td>
+							<td> 3
+							</td>
+							<td>cl
+							</td>
+							<td> 
 							</td>
 						</tr>
 						<tr>
@@ -30880,7 +32289,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> muzzleflash_light
+							<td> muzzleflash_light(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -30920,6 +32329,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_avoid
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Toggles the 'avoid this area when possible' flag used by the AI system.
+							</td>
+						</tr>
+						<tr>
 							<td> nav_avoid_obstacles
 							</td>
 							<td> 1
@@ -30937,6 +32356,16 @@
 							<td> 
 							</td>
 							<td> Start continuously removing from the selected set.
+							</td>
+						</tr>
+						<tr>
+							<td> nav_begin_drag_deselecting
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Start dragging a selection area.
 							</td>
 						</tr>
 						<tr>
@@ -30980,6 +32409,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_clear_attribute
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Remove given nav attribute from all areas in the selected set.
+							</td>
+						</tr>
+						<tr>
 							<td> nav_clear_attributes
 							</td>
 							<td> cmd
@@ -31010,6 +32449,27 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_curve_alt
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_curve_iter
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
+						<tr>
 							<td> nav_curve_lock
 							</td>
 							<td> -1	
@@ -31019,6 +32479,37 @@
 							<td>  sv, cheat
 							</td>
 						</tr>
+						<tr>
+							<td> nav_curve_max_step
+							</td>
+							<td> 10
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_curve_set
+							</td>
+							<td> -1
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_curve_step
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+
 						<tr>
 							<td> nav_debug_blocked
 							</td>
@@ -31060,15 +32551,26 @@
 							</td>
 						</tr>
 						<tr>
-							<td> nav_drag_selection_volume_zmin_offset
+							<td> nav_disconnect
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> To disconnect two Areas, mark an Area, highlight a second Area, then invoke the disconnect command. This will remove all connections between the two Areas.
+							</td>
+						</tr>
+						<tr>
+							<td> nav_drag_selection_volume_zmax_offset
 							</td>
 							<td> 32
 							</td>
 							<td> sv, rep
 							</td>
-							<td> The offset of the nav drag volume bottom from center
+							<td> The offset of the nav drag volume top from center
 							</td>
 						</tr>
+						
 						<tr>
 							<td> nav_draw_area_filled
 							</td>
@@ -31090,7 +32592,37 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_draw_area_vert_order
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> nav_draw_area_ztest
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_draw_blocked
+							</td>
+							<td> 1
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_draw_blocked_connections
 							</td>
 							<td> 0
 							</td>
@@ -31150,7 +32682,28 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_draw_indices
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> nav_draw_inset_margin 
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+							</tr>
+						</tr>
+						<tr>
+							<td> nav_draw_jump_links
 							</td>
 							<td> 0
 							</td>
@@ -31167,6 +32720,16 @@
 							<td> sv, cheat
 							</td>
 							<td>  The maximum number of areas to draw in edit mode
+							</td>
+						</tr>
+						<tr>
+							<td> nav_draw_markup
+							</td>
+							<td> 1
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 	
 							</td>
 						</tr>
 						<tr>
@@ -31211,6 +32774,16 @@
 						</tr>
 						<tr>
 							<td> nav_draw_nav_links
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_draw_nav_links_name
 							</td>
 							<td> 0
 							</td>
@@ -31270,7 +32843,47 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_edit
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> Set to one to interactively edit the Navigation Mesh. Set to zero to leave edit mode.
+							</td>
+						</tr>
+						<tr>
+							<td> nav_edit_validate
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> Validate navmesh structures.
+							</td>
+						</tr>
+						<tr>
+							<td> nav_end_deselecting
+							</td>
+							<td> cmd
+							</td>
+							<td>
+							</td>
+							<td> Stop continuously removing from the selected set.
+							</td>
+						</tr>
+						<tr>
 							<td> nav_end_drag_deselecting
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Stop dragging a selection area.
+							</td>
+						</tr>
+						<tr>
+							<td> nav_end_drag_selecting
 							</td>
 							<td> cmd
 							</td>
@@ -31320,9 +32933,39 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_gen_clip_polys_to_clearance
+							</td>
+							<td> 1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_gen_clip_polys_to_clearance_debug
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> nav_gen_connect_angle
 							</td>
 							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_gen_connect_angle_ignore_z
+							</td>
+							<td> 1
 							</td>
 							<td> cheat
 							</td>
@@ -31360,6 +33003,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_gen_connect_overlap
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> nav_gen_degen_limit
 							</td>
 							<td> 0
@@ -31383,6 +33036,16 @@
 							<td> nav_gen_island_removal
 							</td>
 							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_gen_island_removal_all_hulls
+							</td>
+							<td> 1
 							</td>
 							<td> cheat
 							</td>
@@ -32260,7 +33923,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> nav_show_player_counts
+							<td> nav_show_player_counts(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -33090,6 +34753,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_test_path_space
+							</td>
+							<td> 1
+							</td>
+							<td> sv, cheat
+							</td>
+							<td>Should nav_test_path test 3d navigation?
+							</td>
+						</tr>
+						<tr>
 							<td> nav_test_pos_name
 							</td>
 							<td> 0
@@ -33365,6 +35038,56 @@
 							<td> -1
 							</td>
 							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> 
+							</td>
+							<td>
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> navspace_debug_stringpull
+							</td>
+							<td>1
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> navspace_debug_trace
+							</td>
+							<td>0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> navspace_draw_cluster
+							</td>
+							<td>-1
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> navspace_draw_cluster_neighbor
+							</td>
+							<td>-1
+							</td>
+							<td> sv, cheat
 							</td>
 							<td> 
 							</td>
@@ -34130,7 +35853,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> nextlevel
+							<td> nextlevel(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -34196,7 +35919,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Removes the given NPC(s) from the universe Arguments:    {npc_name} / {npc_class_name} / no argument picks what player is looking at
+							<td> Removes the given NPC(s) from the universe  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -34206,7 +35929,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Kills the given NPC(s) Arguments:    {npc_name} / {npc_class_name} / no argument picks what player is looking at
+							<td> Kills the given NPC(s)  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -34216,7 +35939,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Select or deselects the given NPC(s) for later manipulation.  Selected NPC's are shown surrounded by a red translucent box  Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Select or deselects the given NPC(s) for later manipulation.  Selected NPC's are shown surrounded by a red translucent box  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -34616,9 +36339,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Dispatches the test particle system with the parameters specified in particle_test_file,  
-								particle_test_attach_mode and particle_test_attach_param on the entity the player is looking at. 
-								 Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Dispatches the test particle system with the parameters specified in particle_test_file,  particle_test_attach_mode and particle_test_attach_param on the entity the player is looking at.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -34628,8 +36349,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Stops all particle systems on the selected entities.  
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Stops all particle systems on the selected entities.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -35150,6 +36870,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> phys_threaded_transform_update
+							</td>
+							<td> 1
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> phys_timescale
 							</td>
 							<td> 1
@@ -35272,7 +37002,7 @@
 						<tr>
 							<td> physics_hull_sphere_cast_sat_experimental
 							</td>
-							<td> 0
+							<td> 1
 							</td>
 							<td> 
 							</td>
@@ -35310,7 +37040,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> physicsshadowupdate_render
+							<td> physicsshadowupdate_render(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -35530,7 +37260,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> player_incap_use_radius 
+							<td> player_incap_use_radius(7.31失效)
 							</td>
 							<td> 96
 							</td>
@@ -35580,7 +37310,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> player_use_radius
+							<td> player_use_radius(7.31失效)
 							</td>
 							<td> 80
 							</td>
@@ -35915,7 +37645,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> quit
+							<td> quit(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -35965,7 +37695,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_allow_morph_batching_on_base
+							<td> r_allow_morph_batching_on_base(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -37046,7 +38776,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_flashlight_topdown
+							<td> r_flashlight_topdown(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -37326,7 +39056,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_gpu_driver_high
+							<td> r_gpu_driver_high(7.31失效)
 							</td>
 							<td> 1638421
 							</td>
@@ -37336,7 +39066,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_gpu_driver_low
+							<td> r_gpu_driver_low(7.31失效)
 							</td>
 							<td> 919226 
 							</td>
@@ -37399,6 +39129,16 @@
 							<td> r_grass_max_brightness_change
 							</td>
 							<td> 75
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> r_grass_parallel_load
+							</td>
+							<td> 0
 							</td>
 							<td> 
 							</td>
@@ -37808,6 +39548,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> r_particle_max_texture_layers
+							</td>
+							<td> -1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> r_particle_min_timestep
 							</td>
 							<td> 0
@@ -37988,6 +39738,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> r_renderdoc_open_captures
+							</td>
+							<td> 1
+							</td>
+							<td> 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> r_rendersun
 							</td>
 							<td> 1
@@ -38008,7 +39768,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_retinaburn_capture_next_frame
+							<td> r_retinaburn_capture_next_frame(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -38068,7 +39828,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_show_skymap
+							<td> r_show_skymap(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -38078,7 +39838,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_show_ssao
+							<td> r_show_ssao(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -38088,7 +39848,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_show_zprepass_depth
+							<td> r_show_zprepass_depth(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -38098,7 +39858,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_show_zprepass_normals
+							<td> r_show_zprepass_normals(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -38161,6 +39921,16 @@
 							<td> r_size_cull_threshold
 							</td>
 							<td> 0.400000
+							</td>
+							<td> application 
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> r_size_cull_threshold_fade
+							</td>
+							<td> 0.000000
 							</td>
 							<td> application 
 							</td>
@@ -38258,7 +40028,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> r_ssr
+							<td> r_ssr(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -39088,6 +40858,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> remove_weapon
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td>Remove a weapon held by the player.  Arguments: &lt;weapon subclass name&gt;
+							</td>
+						</tr>
+						<tr>
 							<td> removeid
 							</td>
 							<td> cmd
@@ -39198,6 +40978,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> resource_manifest_validate_modules
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Scan all of the loaded modules and validate any resource manifests found
+							</td>
+						</tr>
+						<tr>
 							<td> resource_repeated_reload
 							</td>
 							<td> cmd
@@ -39228,7 +41018,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> respawn_entities
+							<td> respawn_entities(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -40441,7 +42231,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> scene_forcecombined
+							<td> scene_forcecombined(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -41157,8 +42947,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Displays the movement bounding box for the triggers in orange.  Some entites will also display entity specific overlays. 
-								Arguments:    {entity_name} / {class_name} / no argument picks what player is looking at
+							<td> Displays the movement bounding box for the triggers in orange.  Some entites will also display entity specific overlays.  Arguments:    {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -41172,7 +42961,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sk_crowbar_lead_time 
+							<td> sk_crowbar_lead_time(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -42492,7 +44281,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> snd_sos_show_client_xmit
+							<td> snd_sos_show_client_xmit(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -42712,7 +44501,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> snd_sos_show_server_xmit
+							<td> snd_sos_show_server_xmit(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -42922,6 +44711,37 @@
 							</td>
 						</tr>
 						<tr>
+							<td> snd_sound_area_entity_update_interval
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> snd_sound_areas_debug
+							</td>
+							<td> 0
+							</td>
+							<td> cl, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> snd_sound_areas_debug_interval
+							</td>
+							<td> 0
+							</td>
+							<td> cl, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
+						<tr>
 							<td> snd_soundevent_clear_deferred
 							</td>
 							<td> cmd
@@ -43012,7 +44832,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> snd_spew_particle_sound_names
+							<td> snd_spew_particle_sound_names(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -43393,7 +45213,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> spec_chasedistancestep
+							<td> spec_chasedistancestep(7.31失效)
 							</td>
 							<td> 10
 							</td>
@@ -43759,7 +45579,7 @@
 							</td>
 							<td>  
 							</td>
-							<td> Changes the subclass of the given subclass where the player is looking.
+							<td> Changes the subclass of the given entity.  Arguments:    &lt;new_subclass&gt; {entity_name} / {class_name} / {entity_index} / {no argument = pick what player is looking at}
 							</td>
 						</tr>
 						<tr>
@@ -43883,7 +45703,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_can_quit_from_script
+							<td> sv_can_quit_from_script(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -43936,6 +45756,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> sv_clientrates
+							</td>
+							<td> cmd
+							</td>
+							<td>  
+							</td>
+							<td> Show client rates.
+							</td>
+						</tr>
+						<tr>
 							<td> sv_clockcorrection_msecs
 							</td>
 							<td> 60
@@ -43956,7 +45786,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_consistency
+							<td> sv_consistency(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -43976,7 +45806,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_debug_player_us
+							<td> sv_debug_player_use(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -44309,7 +46139,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_infinite_clips
+							<td> sv_infinite_clips(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -44379,7 +46209,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_logdownloadlist 
+							<td> sv_logdownloadlist (7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -44536,6 +46366,16 @@
 							<td>  cheat
 							</td>
 							<td> If set, whenever a game ends, if the total memory used by the server is greater than this # of megabytes, the server will exit.
+							</td>
+						</tr>
+						<tr>
+							<td> sv_metaduplication
+							</td>
+							<td> cmd
+							</td>
+							<td>  
+							</td>
+							<td> Check serializer meta for duplication, add verbose to command for full spew
 							</td>
 						</tr>
 						<tr>
@@ -44789,7 +46629,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> Enable sleeping for dynamic physics bodies.
+							<td> sv_phys_stop_at_collision
 							</td>
 							<td> 0
 							</td>
@@ -44819,7 +46659,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_player_stuck_tolerance
+							<td> sv_player_stuck_tolerance(7.31失效)
 							</td>
 							<td> 10
 							</td>
@@ -45049,7 +46889,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> Time in seconds before lobby reservation expires.
+							<td> sv_reserve_slots_for_reconnecting_players(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -45069,7 +46909,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_save_session_persisters
+							<td> sv_save_session_persisters(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -45230,7 +47070,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_soundemitter_trace
+							<td> sv_soundemitter_trace(7.31失效)
 							</td>
 							<td> -1
 							</td>
@@ -45278,6 +47118,16 @@
 							<td>  sv, a, nf, rep
 							</td>
 							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> sv_spewmeta
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Spew serializer meta
 							</td>
 						</tr>
 						<tr>
@@ -45352,6 +47202,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> sv_template_debug
+							</td>
+							<td> 0
+							</td>
+							<td>  sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> sv_timeout
 							</td>
 							<td> 20
@@ -45402,7 +47262,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> sv_turbophysics
+							<td> sv_turbophysics(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -45522,7 +47382,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> tauntfrequency
+							<td> tauntfrequency(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -45552,7 +47412,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> template_debug
+							<td> template_debug(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -45775,7 +47635,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> tf_escort_score_rate
+							<td> tf_escort_score_rate(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -45982,6 +47842,16 @@
 							<td>  
 							</td>
 							<td> Toggles specified convar value on and off.
+							</td>
+						</tr>
+						<tr>
+							<td> toggle_duck
+							</td>
+							<td> cmd
+							</td>
+							<td>  
+							</td>
+							<td> 
 							</td>
 						</tr>
 						<tr>
@@ -46899,6 +48769,26 @@
 							</td>
 						</tr>
 						<tr>
+							<td>vcon_clear_buffered_log
+							</td>
+							<td> cmd
+							</td>
+							<td>  
+							</td>
+							<td>Clear buffered logging
+							</td>
+						</tr>
+						<tr>
+							<td>vcon_clients
+							</td>
+							<td> cmd
+							</td>
+							<td>  
+							</td>
+							<td>List connections
+							</td>
+						</tr>
+						<tr>
 							<td>vconsole_rcon_server_details
 							</td>
 							<td> 0
@@ -46916,6 +48806,16 @@
 							<td>  cl
 							</td>
 							<td> Interval between hightlight screens in the transition stats panel for versus mode
+							</td>
+						</tr>
+						<tr>
+							<td>vgui_drawfocus
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> Report which panel is under the mouse.
 							</td>
 						</tr>
 						<tr>
@@ -46939,13 +48839,23 @@
 							</td>
 						</tr>
 						<tr>
-							<td>video_mode_screenshots
+							<td>video_mode_screenshots(7.31失效)
 							</td>
 							<td> cmd
 							</td>
 							<td>  
 							</td>
 							<td> dump screenshots at all supported video modes
+							</td>
+						</tr>
+						<tr>
+							<td>vgui_togglepanel
+							</td>
+							<td> cmd
+							</td>
+							<td>  
+							</td>
+							<td> show/hide vgui panel by name.
 							</td>
 						</tr>
 						<tr>
@@ -46959,7 +48869,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>viewmodel_offset_x
+							<td>viewmodel_offset_x(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -46969,7 +48879,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>viewmodel_offset_y
+							<td>viewmodel_offset_y(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -46979,7 +48889,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>viewmodel_offset_z
+							<td>viewmodel_offset_z(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -47189,7 +49099,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_camera
+							<td>vm_camera(7.31失效)
 							</td>
 							<td>1
 							</td>
@@ -47199,7 +49109,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_camera_interp_speed
+							<td>vm_camera_interp_speed(7.31失效)
 							</td>
 							<td> 8
 							</td>
@@ -47209,7 +49119,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_camera_no_roll
+							<td>vm_camera_no_roll(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -47219,7 +49129,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_camera_scale
+							<td>vm_camera_scale(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -47229,7 +49139,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_debug
+							<td>vm_debug(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -47239,7 +49149,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_draw_always 
+							<td>vm_draw_always (7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -47249,7 +49159,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vm_fade
+							<td>vm_fade(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -48069,13 +49979,13 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_debug_actions
+							<td>vr_debug_actions(7.31失效)
 							</td>
 							<td> 0
 							</td>
 							<td>  cl
 							</td>
-							<td> vr_debug_actions
+							<td> Debug digital action data.
 							</td>
 						</tr>
 						<tr>
@@ -48099,7 +50009,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_fakevr_lockhands
+							<td>vr_fakevr_lockhands(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -48289,7 +50199,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_multitool_hmd_targeting_mode
+							<td>vr_multitool_hmd_targeting_mode(7.31失效)
 							</td>
 							<td>false
 							</td>
@@ -48299,7 +50209,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_screenshake_scale
+							<td>vr_screenshake_scale(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -48309,7 +50219,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_spawn_at_player_start
+							<td>vr_spawn_at_player_start(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -48370,7 +50280,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_throw_ang_scale
+							<td>vr_throw_ang_scale(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -48380,7 +50290,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>vr_throw_velocity_scale
+							<td>vr_throw_velocity_scale(7.31失效)
 							</td>
 							<td> 1
 							</td>
@@ -48420,7 +50330,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>weapon_debug_muzzles
+							<td>weapon_debug_muzzles(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -48430,7 +50340,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>weapon_showproficiency
+							<td>weapon_showproficiency(7.31失效)
 							</td>
 							<td> 0
 							</td>
@@ -48440,7 +50350,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>workshop_download_debu
+							<td>workshop_download_debug
 							</td>
 							<td>0
 							</td>
@@ -48450,7 +50360,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>world_dump_loaded_worlds
+							<td>world_dump_loaded_worlds(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -48460,7 +50370,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>world_layer_list
+							<td>world_layer_list(7.31失效)
 							</td>
 							<td> cmd
 							</td>
@@ -48486,7 +50396,7 @@
 							</td>
 							<td> 
 							</td>
-							<td> Writes a list of permanently-banned user IDs to banned_user.cfg.
+							<td>Writes a list of permanently-banned user IDs to file.
 							</td>
 						</tr>
 						<tr>
@@ -48496,7 +50406,7 @@
 							</td>
 							<td> 
 							</td>
-							<td>  Save the ban list to banned_ip.cfg.
+							<td>  Save the ban list to file.
 							</td>
 						</tr>
 						<tr>
@@ -48510,7 +50420,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>xc_crouch_debounce
+							<td>xc_crouch_debounce(7.31失效)
 							</td>
 							<td> 0
 							</td>

@@ -334,6 +334,7 @@ aaaabbbbccccc
 							<li><a href="#DOTAHeroImage">DOTAHeroImage</a></li>
 							<li><a href="#DOTAUserName">DOTAUserName</a></li>
 							<li><a href="#DOTAScenePanel">DOTAScenePanel</a></li>
+							<li><a href="#DOTABPBackgroundFall2021">DOTABPBackgroundFall2021</a></li>
 							<li><a href="#DOTAParticleScenePanel">DOTAParticleScenePanel</a></li>
 							<li><a href="#DOTAAbilityPanel">DOTAAbilityPanel</a></li>
 							<li><a href="#DOTAHudPreGame">DOTAHudPreGame</a></li>
@@ -573,11 +574,11 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> AsyncWebRequest
+								<td> AsyncWebRequest（已经失效）
 								</td>
 								<td> $.AsyncWebRequest( js_raw_args, js_raw_args_1 )
 								</td>
-								<td> Make a web request
+								<td> Make a web request(deprecated)
 								</td>
 							</tr>
 							<tr>
@@ -1010,6 +1011,38 @@ aaaabbbbccccc
 								</td>
 								<td> Game.AddCommand( cstring pszCommandName, js_value callback, cstring pszDescription,
 									integer nFlags )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> GetJoyFocusPanel
+								</td>
+								<td> Game.GetJoyFocusPanel()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetJoyFocusPanel
+								</td>
+								<td> Game.SetJoyFocusPanel(js_value pPanelArg)
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> PushJoyFocusPanel
+								</td>
+								<td> Game.PushJoyFocusPanel(js_value pPanelArg)
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> PopJoyFocusPanel
+								</td>
+								<td> Game.PopJoyFocusPanel()
 								</td>
 								<td>
 								</td>
@@ -2130,6 +2163,14 @@ aaaabbbbccccc
 								<td> GetTeam
 								</td>
 								<td> Players.GetTeam( integer iPlayerID )
+								</td>
+								<td> Get the team this player is on.
+								</td>
+							</tr>
+							<tr>
+								<td> GetSelectedHeroID
+								</td>
+								<td> Players.GetSelectedHeroID( integer iPlayerID )
 								</td>
 								<td> Get the team this player is on.
 								</td>
@@ -6893,6 +6934,23 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> SetAnimgraphParameterOnEntityInt
+								</td>
+								<td> SetAnimgraphParameterOnEntityInt( cstring cstring_1, cstring cstring_2, integer integer_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> SetAnimgraphParameterOnEntityFloat
+								</td>
+								<td> SetAnimgraphParameterOnEntityFloat( cstring cstring_1, cstring cstring_2, float float_3 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							
+							<tr>
 								<td> GetPanoramaSurfacePanel
 								</td>
 								<td> GetPanoramaSurfacePanel()
@@ -6904,6 +6962,22 @@ aaaabbbbccccc
 								<td> SetRotateParams
 								</td>
 								<td> SetRotateParams( float float_1, float float_2, float float_3, float float_4 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> ReloadScene
+								</td>
+								<td> ReloadScene()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> ClearScene
+								</td>
+								<td> ClearScene()
 								</td>
 								<td>
 								</td>
@@ -6957,14 +7031,6 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> SetRotateParams
-								</td>
-								<td> SetRotateParams( float float_1, float float_2, float float_3, float float_4 )
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
 								<td> SetCustomPostProcessMaterial
 								</td>
 								<td> SetCustomPostProcessMaterial( cstring cstring_1 )
@@ -6993,6 +7059,41 @@ aaaabbbbccccc
 							<p><span>用法</span></p>
 							<iframe src="image/DOTAScenePanel.pdf"></iframe>
 						</div>
+					</div>
+				</div>
+				
+				<div id='DOTABPBackgroundFall2021' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTABPBackgroundFall2021</span></p>
+						<p>继承Panel所有方法。全局变量：无。具体对象使用</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> RequestActionScoreByName
+								</td>
+								<td> RequestActionScoreByName( cstring cstring_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> HasEventData
+								</td>
+								<td> HasEventData()
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 				<div id='DOTAParticleScenePanel' class='classcontent'>
@@ -10659,7 +10760,14 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
-
+							<tr>
+								<td> DAMAGE_TYPES.DAMAGE_TYPE_ABILITY_DEFINED
+								</td>
+								<td> 22
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -10915,6 +11023,22 @@ aaaabbbbccccc
 								<td> DOTADamageFlag_t.DOTA_DAMAGE_FLAG_IGNORES_BASE_PHYSICAL_ARMOR
 								</td>
 								<td> 16384
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTADamageFlag_t.DOTA_DAMAGE_FLAG_SECONDARY_PROJECTILE_ATTACK
+								</td>
+								<td> 32768
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTADamageFlag_t.DOTA_DAMAGE_FLAG_FORCE_SPELL_AMPLIFICATION
+								</td>
+								<td> 65536
 								</td>
 								<td>
 								</td>
@@ -13001,7 +13125,22 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
-			
+							<tr>
+								<td> GameActivity_t.ACT_DOTA_ATTACK_SPECIAL
+								</td>
+								<td> 1758
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> GameActivity_t.ACT_DOTA_TRANSITION_IDLE
+								</td>
+								<td> 1759
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -17160,9 +17299,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_AGHANIMS_STATUS
 								</td>
 								<td> 29
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT
+								</td>
+								<td> 30
 								</td>
 								<td>
 								</td>
@@ -20497,7 +20644,7 @@ aaaabbbbccccc
 									background-image: url("file://{images}/default.tga"), url(
 									"file://{movies}/Background1080p.webm" );
 								</td>
-								<td>设置背景图片。
+								<td>Comma separated list of images or movies to draw in the background. Can specify "none" to not draw a background layer. Combined with background-position, background-size, background-texture-size and background-repeat values.设置背景图片。
 								</td>
 							</tr>
 							<tr id='background-img-opacity'>
@@ -20567,6 +20714,15 @@ aaaabbbbccccc
 									background-size:contain;//把图像图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域。
 								</td>
 								<td>控制背景图形的大小。
+								</td>
+							</tr>
+							<tr id='background-texture-size'>
+								<td> background-texture-size
+								</td>
+								<td>
+									background-texture-size: 100px 50px;//width 100px, height 50px <br>
+								</td>
+								<td>Sets the size used for generating textures from vector graphics (.svg files), default is -1 which takes the size from the svg file.
 								</td>
 							</tr>
 							<tr id='blur'>
@@ -20891,12 +21047,7 @@ aaaabbbbccccc
 								<td>context-menu-body-position: 50% 100%;
 
 								</td>
-								<td>Specifies where to position the body of a context menu relative to this panel.
-									The first value controls how the body is aligned horizontally when the context
-									menu is to the top or bottom of the panel, and the second value controls how
-									the body is aligned vertically when the context menu is to the left or right
-									of the panel. 0% means left/top aligned, 50% means center/middle aligned,
-									and 100% means right/bottom aligned. Default is '0% 0%'.
+								<td>Specifies where to position the body of a context menu relative to this panel. The first value controls how the body is aligned horizontally when the context menu is to the top or bottom of the panel, and the second value controls how the body is aligned vertically when the context menu is to the left or right of the panel. 0% means left/top aligned, 50% means center/middle aligned, and 100% means right/bottom aligned. Default is '50% 50%'.
 
 								</td>
 							</tr>
@@ -21492,13 +21643,7 @@ aaaabbbbccccc
 								<td>tooltip-body-position: 50% 100%;
 
 								</td>
-								<td>Specifies where to position the body of a tooltip relative to this
-									panel. The first value controls how the body is aligned horizontally
-									when the tooltip is to the top or bottom of the panel, and the
-									second value controls how the body is aligned vertically when the
-									tooltip is to the left or right of the panel. 0% means left/top
-									aligned, 50% means center/middle aligned, and 100% means right/bottom
-									aligned. Default is '0% 0%'.
+								<td>Specifies where to position the body of a tooltip relative to this panel. The first value controls how the body is aligned horizontally when the tooltip is to the top or bottom of the panel, and the second value controls how the body is aligned vertically when the tooltip is to the left or right of the panel. 0% means left/top aligned, 50% means center/middle aligned, and 100% means right/bottom aligned. Default is '50% 50%'.
 								</td>
 							</tr>
 							<tr id='tooltip-position'>
