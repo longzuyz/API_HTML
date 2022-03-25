@@ -273,6 +273,8 @@
 							<li><a href="#CBaseCombatCharacter">CBaseCombatCharacter</a></li>
 							<li><a href="#CBaseFlex">CBaseFlex</a></li>
 							<li><a href="#CBasePlayer">CBasePlayer</a></li>
+							<li><a href="#CBasePlayerController">CBasePlayerController</a></li>
+							<li><a href="#CBasePlayerPawn">CBasePlayerPawn</a></li>
 							<li><a href="#CBaseTrigger">CBaseTrigger</a></li>
 							<li><a href="#CBodyComponent">CBodyComponent</a></li>
 							<li><a href="#CDebugOverlayScriptHelper">CDebugOverlayScriptHelper</a></li>
@@ -958,6 +960,11 @@
 								<td>Free a damageinfo object that was created with CreateDamageInfo(). </td>
 							</tr>
 							<tr>
+								<td>DisconnectClient</td>
+								<td>void DisconnectClient( int_1, bool_2 )</td>
+								<td>Kick a specific player from the game.把指定玩家踢出游戏。</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/Global.DoCleaveAttack"
 										title="Dota 2 Workshop Tools/Scripting/API/Global.DoCleaveAttack">
 										DoCleaveAttack</a> 
@@ -1607,6 +1614,14 @@
 								<td> int GetXPNeededToReachNextLevel( int level )
 								</td>
 								<td> 取得升级需要多少经验？？？是总共还是当前还缺多少？
+								</td>
+							</tr>
+							<tr>
+								<td> HeroMaxLevel
+								</td>
+								<td> void HeroMaxLevel( handle_1 )
+								</td>
+								<td> Max out a hero's level and give them all appropriate abilities and talents.使英雄立刻满级。
 								</td>
 							</tr>
 							<tr>
@@ -2602,6 +2617,11 @@
 								</td>
 							</tr>
 							<tr>
+								<td>UserIDToControllerHScript </td>
+								<td>handle UserIDToControllerHScript( int_1 )</td>
+								<td>Turn a userid integer (typically, fields named 'userid' in game events) to an HScript representing the associated player controller's script instance. USERID转玩家实例</td>
+							</tr>
+							<tr>
 								<td>UTIL_AngleDiff(可能失效) </td>
 								<td>float UTIL_AngleDiff( float_1, float_2 )</td>
 								<td>Returns the number of degrees difference between two yaw angles 返回两个偏航角之间的度数差。</td>
@@ -3339,10 +3359,19 @@
 								</td>
 								<td> bool IsPlayer()
 								</td>
-								<td> 是否为玩家的实体
+								<td> 是否为玩家的pwan实体  Back compat: Is this entity a player spawn *or* controller?
 								</td>
 							</tr>
-
+							<tr>
+								<td>IsPlayerController</td>
+								<td>bool IsPlayerController(  ) </td>
+								<td>Is this entity a player controller? 是否是玩家的controller实体</td>
+							</tr>
+							<tr>
+								<td>IsPlayerPawn</td>
+								<td>bool IsPlayerPawn(  ) </td>
+								<td>Is this entity a player pawn? 是否是玩家的pawn实体</td>
+							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CBaseEntity.IsNull"
 										title="Dota 2 Workshop Tools/Scripting/API/CBaseEntity.IsNull"> IsNull</a>
@@ -4447,6 +4476,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetInitialAbilityCharges
+								</td>
+								<td> int GetInitialAbilityCharges(iLevel)
+								</td>
+								<td> 获取技能初始充能点数
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.GetIntrinsicModifierName"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.GetIntrinsicModifierName">
 										GetIntrinsicModifierName</a>
@@ -5508,7 +5545,7 @@
 							</tr>
 							<tr>
 								<td>GetCustomAttributeDerivedStatValue</td>
-								<td>float GetCustomAttributeDerivedStatValue(int nDerivedStatType, handle hHero )</td>
+								<td>float GetCustomAttributeDerivedStatValue(int nDerivedStatType )</td>
 								<td>Get current derived stat value constant. </td>
 							</tr>
 							<tr>
@@ -5718,6 +5755,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetWaterRuneLastSpawnTime
+								</td>
+								<td> int GetWaterRuneLastSpawnTime(string AbilityName )
+								</td>
+								<td>  Gets the time from game start during which water runes spawn
+								</td>
+							</tr>
+							<tr>
 								<td> IsAbilityUpgradeWhitelisted
 								</td>
 								<td> bool IsAbilityUpgradeWhitelisted(string AbilityName )
@@ -5874,7 +5919,7 @@
 								</td>
 								<td> void SetBountyRunePickupFilter(handle hFunction, handle hContext)
 								</td>
-								<td> 设置一个过滤器，用来控制触发赏金符时的行为(改变数据表并返回True来使用新值, 返回False来取消事件)
+								<td> 设置一个过滤器，用来控制触发赏金符时的行为(改变数据表并返回True来使用新值, 返回False来取消事件),装入瓶子时不触发，吃赏金符的时候才触发
 								</td>
 							</tr>
 							<tr>
@@ -6022,7 +6067,7 @@
 							<tr>
 								<td>SetDaynightCycleAdvanceRate</td>
 								<td>void SetDaynightCycleAdvanceRate( flRate )</td>
-								<td>Sets the rate at which the day/night cycle advances (1.0 = default). </td>
+								<td>Sets the rate at which the day/night cycle advances (1.0 = default). 设置1天的实际时间，默认是10分钟为1天,设置10就是1分钟 为1天，0.1就是100分钟为1天，默认是1</td>
 							</tr>
 							<tr>
 								<td>SetDaynightCycleDisabled</td>
@@ -6341,7 +6386,7 @@
 								</td>
 								<td> void SetRemoveIllusionsOnDeath(bool a)
 								</td>
-								<td> 使幻象死亡时立即消失，而不是延迟数秒
+								<td> 使单位死亡时幻象立即消失，而不是延迟数秒
 								</td>
 							</tr>
 							<tr>
@@ -6491,6 +6536,11 @@
 								<td>Enables or disables turbo couriers.</td>
 							</tr>
 							<tr>
+								<td>SetWaterRuneLastSpawnTime</td>
+								<td>void SetWaterRuneLastSpawnTime(int Value ) </td>
+								<td>Sets the time from game start during which water runes spawn</td>
+							</tr>
+							<tr>
 								<td>SetWeatherEffectsDisabled</td>
 								<td>void SetWeatherEffectsDisabled(bool bDisable )</td>
 								<td>Set if weather effects are disabled.</td>
@@ -6581,7 +6631,7 @@
 								</td>
 								<td>void BeginNightstalkerNight( float_1 )
 								</td>
-								<td>Begin a temporary Nightstalker night.
+								<td>Begin a temporary Nightstalker night.开启一个夜魔大的夜晚时间。
 								</td>
 							</tr>
 							<tr>
@@ -6589,7 +6639,7 @@
 								</td>
 								<td>void BeginTemporaryNight( float_1 )
 								</td>
-								<td>Begin a temporary night.
+								<td>Begin a temporary night.开启一个临时夜晚。
 								</td>
 							</tr>
 							<tr>
@@ -6964,7 +7014,7 @@
 								</td>
 								<td> bool IsNightstalkerNight( )
 								</td>
-								<td> Is it night stalker night-time?
+								<td> Is it night stalker night-time?是否是夜魔开大的夜晚时间
 								</td>
 							</tr>
 							<tr>
@@ -6972,7 +7022,7 @@
 								</td>
 								<td> bool IsTemporaryNight( )
 								</td>
-								<td> Is it temporarily night-time?
+								<td> Is it temporarily night-time?是否是临时夜晚
 								</td>
 							</tr>
 							<tr>
@@ -7579,7 +7629,7 @@
 								</td>
 								<td> void SetTimeOfDay(float time)
 								</td>
-								<td> 设置一天中的时间（游戏时间）
+								<td> 设置IN_PROGRESS开始时的时间（游戏时间），0和1代表0，24点，0.5代表中午12点
 								</td>
 							</tr>
 							<tr>
@@ -7667,9 +7717,9 @@
 						</table>
 					</div>
 				</div>
-				<div id='CDOTAPlayer' class='classcontent'>
+				<div id='CDOTAPlayerController' class='classcontent'>
 					<div id='classname'>
-						<p><span>CDOTAPlayer</span></p>
+						<p><span>CDOTAPlayerController</span></p>
 						<p>extends:<a href='#CBaseAnimating'>CBaseAnimating</a></p>
 						<p>全局变量：未知</p>
 					</div>
@@ -7886,7 +7936,7 @@
 							<tr>
 								<td> GetCastRangeBonus
 								</td>
-								<td> int GetCastRangeBonus( hTarget )
+								<td> int GetCastRangeBonus( hTarget，iPseudoCastRange )
 								</td>
 								<td> 
 								</td>
@@ -8644,7 +8694,7 @@
 								</td>
 								<td> table FindAllModifiers()
 								</td>
-								<td> 以table形式返回该单位所具有的所有Modifier。
+								<td> 以table形式返回该单位所具有的所有Modifier。不能直接获得所有Modifier的名字，要用GetName()。
 								</td>
 							</tr>
 							<tr>
@@ -8654,7 +8704,7 @@
 								</td>
 								<td> table FindAllModifiersByName(string modifierName)
 								</td>
-								<td> 根据Modifier的名字，以table形式返回该单位所具有的modifier。
+								<td> 查找单位身上所有 的名字为modifierName的modifier，通常针对可叠加的BUFF，用来查看层数。
 								</td>
 							</tr>
 							<tr>
@@ -9984,7 +10034,7 @@
 								</td>
 								<td> bool IsHexed()
 								</td>
-								<td> 是否被诅咒？？？</td>
+								<td> 是否被变羊</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.IsIdle"
@@ -12319,9 +12369,9 @@
 								</td>
 							</tr>
 							<tr>
-								<td> ModifyGoldFiltered
+								<td> Script_ModifyGoldFiltered
 								</td>
-								<td> int ModifyGoldFiltered( int GoldChange, bool Reliabe, int Reason )
+								<td> int Script_ModifyGoldFiltered( int GoldChange, bool Reliabe, int Reason )
 								</td>
 								<td> Gives this hero some gold, using the gold filter if extra filtering is on. 如果设置了金钱过滤器，但又要单独给英雄金钱，使用这个API
 								</td>
@@ -12809,7 +12859,7 @@
 							<tr>
 								<td>IsHexDebuff</td>
 								<td>bool IsHexDebuff(  )</td>
-								<td>是否是妖术（变羊？）DEBUFF???</td>
+								<td>是否被变羊？</td>
 							</tr>
 							<tr>
 								<td>IsStunDebuff</td>
@@ -13058,7 +13108,7 @@
 								</td>
 								<td> bool IsMuted()
 								</td>
-								<td> 判断是否被禁用。</td>
+								<td> 判断物品是否被禁用主动技能。</td>
 							</tr>
 							<tr>
 								<td> IsNeutralDrop
@@ -13525,7 +13575,7 @@
 							<tr>
 								<td>IsMuted</td>
 								<td>bool IsMuted(  )</td>
-								<td>该物品是否被禁用。</td>
+								<td>该物品是否被禁用主动技能。</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Item_Lua.IsRefreshable"
@@ -15680,7 +15730,14 @@
 								<td> (玩家ID,英雄职业名,金钱,经验值) - 将玩家的英雄替换成指定的英雄、金钱和经验值
 								</td>
 							</tr>
-
+							<tr>
+								<td> ReplaceHeroWithNoTransfer
+								</td>
+								<td> handle ReplaceHeroWithNoTransfer( iPlayerID, pszHeroClass, nGold, nXP )
+								</td>
+								<td> replaces the player's hero with a new one of the specified class, gold and XP, without transferring items/abilities if same hero。不继承物品和技能
+								</td>
+							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_PlayerResource.ResetBuybackCostTime"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.ResetBuybackCostTime">
@@ -16127,7 +16184,17 @@
 							<tr>
 								<td>GetLocalPlayer </td>
 								<td>handle GetLocalPlayer(  ) </td>
-								<td>获得本地玩家（主机玩家？？？）</td>
+								<td>获得本地玩家（主机玩家？？？）Get the local player controller (backcompat).</td>
+							</tr>
+							<tr>
+								<td>GetLocalPlayerController </td>
+								<td>handle GetLocalPlayerController(  ) </td>
+								<td>Get the local player controller.</td>
+							</tr>
+							<tr>
+								<td>GetLocalPlayerPawn </td>
+								<td>handle GetLocalPlayerPawn(  ) </td>
+								<td>Get the local player pawn.</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CEntities.Next"
@@ -16758,7 +16825,7 @@
 				</div>
 				<div id='CBasePlayer' class='classcontent'>
 					<div id='classname'>
-						<p><span>CBasePlayer</span></p>
+						<p><span>CBasePlayer(可能失效)</span></p>
 						<p>extends:<a href='#CBaseCombatCharacter'>CBaseCombatCharacter</a></p>
 						<p>全局变量：未知</p>
 					</div>
@@ -16875,6 +16942,71 @@
 								</td>
 								<td> 从脚本中退出游戏。
 								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='CBasePlayerController' class='classcontent'>
+					<div id='classname'>
+						<p><span>CBasePlayerController</span></p>
+						<p>extends:<a href='#CBaseCombatCharacter'>CBaseCombatCharacter</a></p>
+						<p>全局变量：未知</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> 函数名
+								</th>
+								<th> 函数原型
+								</th>
+								<th> 解释
+								</th>
+							</tr>
+
+							<tr>
+								<td>GetPawn</td>
+								<td>handle GetPawn(  )</td>
+								<td>Returns the pawn for this controller</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='CBasePlayerPawn' class='classcontent'>
+					<div id='classname'>
+						<p><span>CBasePlayerPawn</span></p>
+						<p>extends:<a href='#CBaseCombatCharacter'>CBaseCombatCharacter</a></p>
+						<p>全局变量：未知</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> 函数名
+								</th>
+								<th> 函数原型
+								</th>
+								<th> 解释
+								</th>
+							</tr>
+
+							<tr>
+								<td>GetController</td>
+								<td>handle GetController(  )</td>
+								<td>Returns the controller for this pawn</td>
+							</tr>
+							<tr>
+								<td>GetEquippedWeapons</td>
+								<td>table GetEquippedWeapons(  ) </td>
+								<td>Returns an array of all the equipped weapons</td>
+							</tr>
+							<tr>
+								<td>GetWeaponCount</td>
+								<td>int GetWeaponCount(  ) </td>
+								<td>Gets the number of weapons currently equipped</td>
+							</tr>
+							<tr>
+								<td>IsNoclipping</td>
+								<td>bool IsNoclipping(  ) </td>
+								<td>Returns true if the player is in noclip mode.</td>
 							</tr>
 						</table>
 					</div>
@@ -20974,6 +21106,11 @@
 								<td>65536</td>
 								<td></td>
 							</tr>
+							<tr>
+								<td>DOTA_DAMAGE_FLAG_MAGIC_AUTO_ATTACK </td>
+								<td>131072</td>
+								<td></td>
+							</tr>
 						</table>
 
 					</div>
@@ -21437,6 +21574,12 @@
 								<td>
 								</td>
 							</tr>
+							<tr>
+								<td>MODIFIER_ATTRIBUTE_IGNORE_DODGE</td>
+								<td> 16</td>
+								<td>忽略弹道
+								</td>
+							</tr>
 						</table>
 
 					</div>
@@ -21663,6 +21806,31 @@
 							<tr>
 								<td>DOTA_STASH_SLOT_6</td>
 								<td>14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ITEM_TP_SCROLL</td>
+								<td>15</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ITEM_NEUTRAL_SLOT</td>
+								<td>16</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ITEM_TRANSIENT_ITEM</td>
+								<td>17</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ITEM_TRANSIENT_RECIPE</td>
+								<td>18</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_ITEM_TRANSIENT_CAST_ITEM</td>
+								<td>20</td>
 								<td></td>
 							</tr>
 						</table>
@@ -22841,6 +23009,11 @@
 								<td>DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE</td>
 								<td>0</td>
 								<td>不会被沉默</td>
+							</tr>
+							<tr>
+								<td>DOTA_ABILITY_BEHAVIOR_OVERSHOOT</td>
+								<td>0</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td> DOTA_ABILITY_BEHAVIOR_HIDDEN
@@ -27001,6 +27174,14 @@
 								<td>
 								</td>
 							</tr>
+							<tr>
+								<td>ACT_DOTA_PIERCE_THE_VEIL
+								</td>
+								<td> 1760
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -27595,7 +27776,7 @@
 								<td> 6</td>
 								<td> GetModifierProcAttack_ConvertPhysicalToMagical
 								</td>
-								<td>
+								<td>7.31加入，不知道怎么用
 								</td>
 							</tr>
 							<tr>
@@ -27951,7 +28132,7 @@
 								<td> MODIFIER_PROPERTY_HP_REGEN_CAN_BE_NEGATIVE </td>
 								<td> 49</td>
 								<td> GetModifierHPRegen_CanBeNegative </td>
-								<td> </td>
+								<td> 生命回复值能否是负数</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE </td>
@@ -28091,7 +28272,9 @@
 								<td> 68</td>
 								<td> GetModifierAvoidSpell </td>
 								<td>有BUG，返回任何数都无法躲避任何技能伤害。对全部要对目标施放的技能有反应(刚被的鼻涕只有施放第一层时有反应，后面叠加的没反应)，
-									对大部分需要指向但不用对目标施放的技能有反应(对风行强力击没反应)。对非指向(点击就放的，比如剑圣风暴)技能没反应。
+									对大部分需要指向但不用对目标施放的技能有反应(对风行强力击没反应)。对非指向(点击就放的，比如剑圣风暴)技能没反应。起作用顺序也很
+									怪，非目标指向的技能在受到伤害前，指向性技能在受到伤害后（没受伤不反应），不过都在GetReflectSpell,GetAbsorbSpell之后。
+
 								</td>
 							</tr>
 							<tr>
@@ -28110,7 +28293,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PHYSICAL_ARMOR_TOTAL_PERCENTAGE</td>
-								<td> 71/td>
+								<td> 71</td>
 								<td>GetModifierPhysicalArmorTotal_Percentage</td>
 								<td>好像已经无效了</td>
 							</tr>
@@ -28140,7 +28323,7 @@
 								<td> MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_POST </td>
 								<td> 75</td>
 								<td> GetModifierPhysicalArmorBonusPost </td>
-								<td>
+								<td>7.31加入，不知道怎么用	
 								</td>
 							</tr>
 							<tr>
@@ -28368,7 +28551,7 @@
 								<td> MODIFIER_PROPERTY_CAST_RANGE_BONUS_PERCENTAGE</td>
 								<td> 103</td>
 								<td> GetModifierCastRangeBonusPercentage </td>
-								<td> </td>
+								<td> 7.31加入，暂时不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET</td>
@@ -28625,13 +28808,13 @@
 								<td> 137</td>
 								<td> GetAbsorbSpell </td>
 								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) 抵挡指向性技能,只能返回1才生效。
-									自身不能叠加，相同BUFF以返回1的为准。</td>
+									自身不能叠加，相同BUFF以返回1的为准。起作用顺序在4之后，5之前，GetReflectSpell之后。林肯</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REFLECT_SPELL </td>
 								<td> 138</td>
 								<td> GetReflectSpell </td>
-								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) 。要自己编写程序才能实现反弹效果。。。</td>
+								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) 。要自己编写程序才能实现反弹效果。顺序在4之后，5之前，GetAbsorbSpell之前。青莲宝珠</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_AUTOATTACK </td>
@@ -29000,7 +29183,7 @@
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
-								<td> Event that fires when finishing a channel.蓄力持续施法结束(比如光法的波),施放技能序列6，不需要蓄力的技能不生效。
+								<td> Event that fires when finishing a channel.蓄力或者持续施法结束(比如光法的波，巫医大),施放技能序列6，不需要蓄力的技能不生效。
 								</td>
 							</tr>
 							<tr>
@@ -29028,7 +29211,7 @@
 								</td>
 								<td> OnTakeDamage
 								</td>
-								<td> Event that fires when taking damage.攻击弹道对目标产生实际伤害,普通攻击动作序列8。
+								<td> Event that fires when taking damage.攻击弹道对目标产生实际伤害,普通攻击动作序列8，施放技能序列7。
 								</td>
 							</tr>
 							<tr>
@@ -29080,7 +29263,7 @@
 								</td>
 								<td> OnMagicDamageCalculated
 								</td>
-								<td> 
+								<td> 7.31加入，暂时不起作用
 								</td>
 							</tr>
 							<tr>
@@ -29521,7 +29704,7 @@
 								<td> 241</td>
 								<td>OnAttackRecordDestroy
 								</td>
-								<td>攻击记录被清除，普通攻击动作序列9。施放技能序列7(施放技能,命中目标后,会消除伤害记录，但是没有创建记录)。
+								<td>攻击记录被清除，普通攻击动作序列9。施放技能序列8(有时会在5前面，施放技能,命中目标后,会消除伤害记录，但是没有创建记录)。
 								</td>
 							</tr>
 							<tr>
@@ -29814,7 +29997,7 @@
 								</td>
 								<td> 4
 								</td>
-								<td> Set to true to cause the parent to become muted.被静音。
+								<td> Set to true to cause the parent to become muted.禁用物品主动技能。
 								</td>
 							</tr>
 							<tr>
@@ -29830,7 +30013,7 @@
 								</td>
 								<td> 6
 								</td>
-								<td> Set to true to cause the parent to become hexed.被迷惑住。
+								<td> Set to true to cause the parent to become hexed.被羊住。
 								</td>
 							</tr>
 							<tr>
@@ -30761,7 +30944,7 @@
 								</td>
 								<td>"name"		"string"	// player name		<br>
 									"index"		"byte"		// player slot (entity index-1)<br>
-									"userid"	"short"		// user ID on server (unique on server)<br>
+									"userid"	"player_controller"		// user ID on server (unique on server)<br>
 									"networkid" "string" // player network (i.e steam) id<br>
 									"address"	"string"	// ip:port
 								</td>
@@ -31162,12 +31345,12 @@
 							<tr>
 								<td> player_connect_full
 								</td>
-								<td> "PlayerID": "int"<br>
+								<td> "PlayerID": "short"<br>
 									"index": "int"<br>
-									"userid" : "int"<br>
+									"userid" : "player_controller" // user ID on server (unique on server)<br> 
 									
 								</td>
-								<td>玩家连接游戏完成
+								<td>玩家连接游戏完成 // player has sent final message in the connection sequence
 								</td>
 							</tr>
 							<tr>
@@ -32683,11 +32866,21 @@
 							<tr>
 								<td> npc_spawned
 								</td>
-								<td>"entindex"	"long"
+								<td>"entindex"	 "long"
+									"is_respawn" "short"
 								</td>
 								<td>单位出生,复活，包括英雄和普通单位。
 								</td>
-							</tr>							
+							</tr>	
+							<tr>
+								<td> npc_spawn_finished	
+								</td>
+								<td>"entindex"	 "long"
+								</td>
+								<td>单位完成生成
+								</td>
+							</tr>	
+												
 							<tr>
 								<td> npc_replaced
 								</td>
@@ -33777,7 +33970,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> item_recipe_orchid(7.31失效)
+								<td> item_recipe_orchid
 								</td>
 								<td> 97
 								</td>
@@ -34669,7 +34862,7 @@
 								</td>
 								<td> 175
 								</td>
-								<td>虚灵之刃,虚灵刀图纸
+								<td>虚灵之刃图纸,虚灵刀图纸
 								</td>
 							</tr>
 							<tr>
@@ -36747,7 +36940,7 @@
 									puck_ethereal_jaunt 灵动之翼<br>
 									puck_dream_coil 梦境缠绕
 								</td>
-								<td>帕克,精灵龙
+								<td>帕克,精灵龙,用PrecacheUnitByNameAsync	缓存有BUG，会崩溃
 								</td>
 							</tr>
 							<tr>
@@ -39069,7 +39262,6 @@
 									modifier_roshan_halloween_candy_buff<br>
 									modifier_roshan_halloween_fed<br>
 									modifier_roshan_halloween_levels<br>
-									modifier_magicimmune<br>
 									modifier_aghsfort_enrage<br>
 									modifier_aghsfort_luna_eclipse<br>
 									modifier_aghsfort_spectre_active_dispersion<br>
@@ -39681,7 +39873,7 @@
 									modifier_aghsfort_special_mars_spear_burning_trail_burn<br>
 									modifier_aghsfort_special_mars_gods_rebuke_strength_buff<br>
 									modifier_aghsfort_special_mars_bulwark_spears<br>
-									modifier_aghsfort_mars_bulwark_soldier_bonus(可能没有modifier_)<br>
+									modifier_aghsfort_mars_bulwark_soldier_bonus(失效)<br>
 									modifier_aghsfort_special_omniknight_purification_cooldown_reduction<br>
 									modifier_aghsfort_special_omniknight_purification_multicast<br>
 									modifier_aghsfort_omniknight_degen_aura<br>
@@ -39969,6 +40161,7 @@
 									modifier_axe_battle_hunger_self<br>
 									modifier_axe_counter_helix<br>
 									modifier_axe_counter_helix_damage_reduction<br>
+									modifier_axe_culling_blade_no_min_health<br>
 									modifier_axe_culling_blade_charge<br>
 									modifier_axe_culling_blade_boost<br>
 									modifier_axe_culling_blade_permanent<br>
@@ -40299,8 +40492,10 @@
 									modifier_enigma_midnight_pulse_damage<br>
 									modifier_enigma_black_hole_thinker<br>
 									modifier_enigma_black_hole_pull<br>
-									modifier_enigma_black_hole_thinker_scepter<br>
-									modifier_enigma_black_hole_pull_scepter<br>
+									modifier_enigma_black_hole_thinker_scepter(7.31B失效)<br>
+									modifier_enigma_black_hole_pull_scepter(7.31B失效)<br>
+									modifier_enigma_black_hole_thinker_shard<br>
+									modifier_enigma_black_hole_pull_shard<br>
 									modifier_faceless_void_backtrack<br>
 									modifier_faceless_void_time_lock<br>
 									modifier_faceless_void_timelock_freeze<br>
@@ -40611,7 +40806,7 @@
 									modifier_enchantress_bunny_hop_passive(可能失效)<br>
 									modifier_dragon_knight_fireball<br>
 									modifier_dragon_knight_fireball_burn<br>
-									modifier_enchantress_bunny_hop_attack_speed<br>
+									modifier_enchantress_bunny_hop_attack_speed(7.31B失效)<br>
 									modifier_enchantress_bunny_hop<br>
 									modifier_enchantress_untouchable<br>
 									modifier_enchantress_untouchable_slow<br>
@@ -41283,6 +41478,7 @@
 									modifier_techies_sticky_bomb_chase<br>
 									modifier_techies_sticky_bomb_countdown<br>
 									modifier_techies_sticky_bomb_slow<br>
+									modifier_techies_sticky_bomb_slow_secondary<br>
 									modifier_techies_land_mine<br>
 									modifier_techies_land_mine_burn<br>
 									modifier_techies_stasis_trap<br>
@@ -41400,6 +41596,7 @@
 									modifier_winter_wyvern_winters_curse_aura<br>
 									modifier_winter_wyvern_winters_curse<br>
 									modifier_wisp_tentacles<br>
+									modifier_wisp_tether_spell_lifesteal<br>
 									modifier_wisp_tether<br>
 									modifier_wisp_tether_stun_tracker<br>
 									modifier_wisp_tether_slow<br>
@@ -41431,8 +41628,8 @@
 									modifier_item_assault<br>
 									modifier_item_battlefury<br>
 									modifier_item_belt_of_strength<br>
-									modifier_black_king_bar_immune<br>
-									modifier_item_black_king_bar<br>
+									modifier_black_king_bar_immune(有BUFF图标有特效的BKB魔免)<br>
+									modifier_item_black_king_bar(不能使用，不是奔溃就是没作用)<br>
 									modifier_item_blade_mail_reflect<br>
 									modifier_item_blade_mail<br>
 									modifier_item_blade_of_alacrity<br>
@@ -41852,7 +42049,7 @@
 									modifier_spell_prism<br>
 									modifier_spell_prism_active<br>
 									modifier_spider_legs<br>
-									modifier_item_spider_legs_active<br>
+									modifier_item_spider_legs_active(蜘蛛腿)<br>
 									modifier_item_spy_gadget_aura<br>
 									modifier_item_spy_gadget<br>
 									modifier_item_star_mace<br>
@@ -41903,34 +42100,34 @@
 									modifier_jungle_varmint<br>
 									modifier_jungle_varmint_dive<br>
 									modifier_glyph_reset<br>
-									modifier_magic_immune<br>
+									modifier_magic_immune(有BUFF栏没有特效的魔免)<br>
 									modifier_camera_follow<br>
 									modifier_item_editor<br>
 									modifier_prosperous_soul<br>
 									modifier_movespeed_percentage<br>
-									modifier_kill<br>
-									modifier_phased<br>
+									modifier_kill(用来显示我方有时间限制的单位的圆形时间条caster:AddNewModifier(caster(必须的加), nil, "modifier_kill", {duration = 10}))<br>
+									modifier_phased(相位)<br>
 									modifier_dominated<br>
-									modifier_truesight<br>
+									modifier_truesight(真视)<br>
 									modifier_truesight_fow<br>
 									modifier_truesight_all<br>
-									modifier_stunned<br>
-									modifier_bashed<br>
-									modifier_taunt<br>
+									modifier_stunned(被晕眩住)<br>
+									modifier_bashed(被重击晕住了)<br>
+									modifier_taunt(嘲讽，但是不起作用)<br>
 									modifier_persistent_invisibility<br>
 									modifier_invisible<br>
-									modifier_invisible_truesight_immune<br>
+									modifier_invisible_truesight_immune(宝石都看不见)<br>
 									modifier_followthrough<br>
-									modifier_silence<br>
-									modifier_fear<br>
-									modifier_invulnerable<br>
-									modifier_attack_immune<br>
-									modifier_disarmed<br>
-									modifier_break<br>
-									modifier_muted<br>
-									modifier_rooted<br>
-									modifier_no_healthbar<br>
-									modifier_not_on_minimap<br>
+									modifier_silence(被沉默，不能放技能)<br>
+									modifier_fear(恐惧，禁用技能和物品，不能自主移动)<br>
+									modifier_invulnerable(无敌)<br>
+									modifier_attack_immune(物理免疫)<br>
+									modifier_disarmed(缴械)<br>
+									modifier_break(让被动技能被 禁用)<br>
+									modifier_muted(禁用所有物品的主动功能，不禁被动和属性)<br>
+									modifier_rooted(被缠住，不能移动，但能攻击放技能)<br>
+									modifier_no_healthbar(没有血条,但是复活会有)<br>
+									modifier_not_on_minimap(不在小地图上显示)<br>
 									modifier_fountain_aura<br>
 									modifier_fountain_aura_buff<br>
 									modifier_stacked_neutral<br>
@@ -41938,7 +42135,7 @@
 									modifier_filler_buff_icon<br>
 									modifier_filler_heal_aura<br>
 									modifier_filler_heal<br>
-									modifier_fountain_invulnerability<br>
+									modifier_fountain_invulnerability(基地的无敌状态)2 8 31<br>
 									modifier_illusion<br>
 									modifier_rune_doubledamage<br>
 									modifier_rune_extradamage<br>
@@ -41963,8 +42160,8 @@
 									modifier_secondary_unit_taunt<br>
 									modifier_teleporting<br>
 									modifier_teleporting_root_logic<br>
-									modifier_hexxed<br>
-									modifier_knockback<br>
+									modifier_hexxed(被羊了)<br>
+									modifier_knockback(击退，参数见卡尔技能)<br>
 									modifier_backdoor_protection<br>
 									modifier_backdoor_protection_in_base<br>
 									modifier_backdoor_protection_active<br>
@@ -41989,7 +42186,7 @@
 									modifier_creep_haste<br>
 									modifier_buyback_gold_penalty<br>
 									modifier_gold_bag_launch<br>
-									modifier_provide_vision<br>
+									modifier_provide_vision(提供视野)<br>
 									modifier_scripted_motion_controller<br>
 									modifier_teamshowcase_global<br>
 									modifier_teamshowcase_showcase<br>
@@ -41998,7 +42195,7 @@
 									modifier_book_of_agility<br>
 									modifier_book_of_intelligence<br>
 									modifier_no_invisibility<br>
-									modifier_hide_on_minimap<br>
+									modifier_hide_on_minimap(不在小地图上显示)<br>
 									modifier_change_tree_model_thinker<br>
 									modifier_fixed_number_of_hits_to_kill<br>
 									modifier_npx_buff<br>
@@ -42054,8 +42251,8 @@
 									modifier_polar_furbolg_ursa_warrior_thunder_clap<br>
 									modifier_warpine_raider_seed_shot<br>
 									modifier_warpine_raider_seed_shot_slow<br>
-									modifier_neutral_spell_immunity<br>
-									modifier_neutral_spell_immunity_visible<br>
+									modifier_neutral_spell_immunity(没有BUFF栏显示的没有BKB特效的魔法免疫)<br>
+									modifier_neutral_spell_immunity_visible(有BUFF栏显示的没有BKB特效的魔法免疫)<br>
 									modifier_ogre_magi_frost_armor<br>
 									modifier_ogre_magi_frost_armor_slow<br>
 									modifier_dark_troll_warlord_ensnare<br>
@@ -42107,6 +42304,7 @@
 									modifier_kobold_tunneler_prospecting_aura_money<br>
 									modifier_hill_troll_rally_aura<br>
 									modifier_hill_troll_rally<br>
+									modifier_hill_troll_rally_stack<br>
 									modifier_harpy_scout_take_off<br>
 									modifier_ogre_smash_swing<br>
 									modifier_giant_wolf_intimidate<br>

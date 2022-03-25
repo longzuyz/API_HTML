@@ -1369,6 +1369,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> animgraph_record_all
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td>  Automatically start recording AnimGraphs when they get created, and save them to disk when they are destroyed
+							</td>
+						</tr>
+						<tr>
 							<td> animgraph_slope_draw_raycasts
 							</td>
 							<td> 0
@@ -4174,7 +4184,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> cl_dump_player_resource
+							<td> cl_dump_player_resource(7.31B失效)
 							</td>
 							<td> cmd
 							</td>
@@ -7768,7 +7778,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> cq_player_times_warn_diff
+							<td> cq_player_times_warn_diff(7.31B失效)
 							</td>
 							<td> 0
 							</td>
@@ -7778,7 +7788,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> cq_send_player_simulation_times
+							<td> cq_send_player_simulation_times(7.31B失效)
 							</td>
 							<td> 1
 							</td>
@@ -7804,7 +7814,27 @@
 							</td>
 							<td> 
 							</td>
-							<td> Cause the engine to crash by spewing an error (Debug!!)
+							<td> Cause the engine to crash by Plat_FatalError on main thread (Debug!!)
+							</td>
+						</tr>
+						<tr>
+							<td> crash_error_job
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Cause the engine to crash by Plat_FatalError on job thread (Debug!!)
+							</td>
+						</tr>
+						<tr>
+							<td> crash_error_thread
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Cause the engine to crash by Plat_FatalError on non-main thread (Debug!!)
 							</td>
 						</tr>
                         <tr>
@@ -7838,7 +7868,7 @@
 							</td>
 						</tr>
                         <tr>
-							<td> CreatePredictionError
+							<td> CreatePredictionError(7.31B失效)
 							</td>
 							<td> cmd
 							</td>
@@ -9147,7 +9177,7 @@
 							</td>
 							<td> sv,a
 							</td>
-							<td> Allow players to pause in matchmade games
+							<td> 
 							</td>
 						</tr>
 						<tr>
@@ -9157,7 +9187,7 @@
 							</td>
 							<td> sv,a
 							</td>
-							<td> Allow players to pause in matchmade games
+							<td> 
 							</td>
 						</tr>
                         <tr>
@@ -9367,6 +9397,16 @@
 							<td> 5
 							</td>
 							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_arcana_disable_hud_display
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
 							</td>
 							<td> 
 							</td>
@@ -11916,6 +11956,16 @@
 							<td> Set fs_warning_level and fs_warning_mode to warn on synchronous file warnings.
 							</td>
 						</tr>
+						<tr>
+							<td> dota_client_first_session
+							</td>
+							<td> false
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
                         <tr>
 							<td> dota_clip_unreachable_paths
 							</td>
@@ -12390,6 +12440,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_custom_game_local_lobbies_max_ping
+							</td>
+							<td> 150
+							</td>
+							<td> cl, a
+							</td>
+							<td> per-user
+							</td>
+						</tr>
+						<tr>
 							<td> dota_custom_game_overview_ignore_version_compatibility
 							</td>
 							<td> true
@@ -12410,7 +12470,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> dota_custom_game_overview_max_ping
+							<td> dota_custom_game_overview_max_ping(7.31B失效)
 							</td>
 							<td> 150
 							</td>
@@ -12449,6 +12509,17 @@
 							<td> Comma separated list of IDs to exclude from custom games overview page
 							</td>
 						</tr>
+						<tr>
+							<td> dota_custom_games_overview_sort
+							</td>
+							<td> 0
+							</td>
+							<td> per-user
+							</td>
+							<td> 
+							</td>
+						</tr>
+						
                         <tr>
 							<td> dota_custom_ui_debug_panel
 							</td>
@@ -12505,6 +12576,16 @@
 							<td> 0
 							</td>
 							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> dota_dashboard_launch_count
+							</td>
+							<td> 3
+							</td>
+							<td> per-user
 							</td>
 							<td> 
 							</td>
@@ -12693,7 +12774,7 @@
                         <tr>
 							<td> dota_defer_panorama_on_sim_ticks
 							</td>
-							<td> 0
+							<td> 1
 							</td>
 							<td> cl
 							</td>
@@ -13573,7 +13654,7 @@
 						<tr>
 							<td> dota_fantasy_popup_help_dpc
 							</td>
-							<td> 1
+							<td> 0
 							</td>
 							<td> 
 							</td>
@@ -14652,6 +14733,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_hero_demo_default_ally
+							</td>
+							<td> 0
+							</td>
+							<td> cl, a
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> dota_hero_demo_default_enemy
 							</td>
 							<td> 0
@@ -14924,7 +15015,7 @@
 						<tr>
 							<td> dota_highest_seen_item_id
 							</td>
-							<td> 22972129927
+							<td> 23173760399
 							</td>
 							<td> per-user
 							</td>
@@ -15288,7 +15379,7 @@
 							</td>
 							<td> cl
 							</td>
-							<td> Show unit health bars, etc.设置为1,血条就没有分割竖杠了
+							<td> Show unit health bars, etc.设置为0=所有单位不显示血条，1=我方和敌方的血条都没有分割竖杠了，2=我方血条有竖杠，敌方没有，3=都显示竖杠
 							</td>
 						</tr>
 						<tr>
@@ -15822,6 +15913,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_item_free_buyback_end_time
+							</td>
+							<td> 30
+							</td>
+							<td> sv, rep, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> dota_item_free_disassemble_interval
 							</td>
 							<td> 10
@@ -16239,6 +16340,16 @@
 							<td> 
 							</td>
 							<td> Launch a custom game
+							</td>
+						</tr>
+						<tr>
+							<td> dota_launch_unpublished_custom_game
+							</td>
+							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Launch an unpublished custom game
 							</td>
 						</tr>
 						<tr>
@@ -17990,7 +18101,7 @@
 							</td>
 							<td> sv
 							</td>
-							<td> Number of seconds after which the game will automatically unpause.暂停后强制恢复游戏的时间。
+							<td> Number of seconds after which the game will automatically unpause.暂停后强制恢复游戏的时间。无效了
 							</td>
 						</tr>
 						<tr>
@@ -20416,6 +20527,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_server_add_chat_mute_entries
+							</td>
+							<td> 0
+							</td>
+							<td> sv
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> dota_server_allow_custom_games
 							</td>
 							<td> 0
@@ -22452,7 +22573,7 @@
 						<tr>
 							<td> dota_team_fandom_last_seen
 							</td>
-							<td> 1620691200
+							<td> 1647446400
 							</td>
 							<td> cl, a
 							</td>
@@ -24290,6 +24411,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> dota_workshop_legacy_model_import
+							</td>
+							<td> 0
+							</td>
+							<td> cl
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> dota_workshoptest
 							</td>
 							<td> 0
@@ -25050,6 +25181,26 @@
 							</td>
 						</tr>
 						<tr>
+							<td> engine_allow_multiple_simulates_per_frame
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> When the client is catching up in low frame rate situations, should we run client simulate more than once a frame?
+							</td>
+						</tr>
+						<tr>
+							<td> engine_allow_multiple_ticks_per_frame
+							</td>
+							<td> 0
+							</td>
+							<td> 
+							</td>
+							<td> When the client is catching up in low frame rate situations, should we run tick more than once a frame?
+							</td>
+						</tr>
+						<tr>
 							<td> engine_cpu_info_extended
 							</td>
 							<td> 8
@@ -25060,7 +25211,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> engine_drop_frame_ticks
+							<td> engine_drop_frame_ticks(7.31B失效)
 							</td>
 							<td> 1
 							</td>
@@ -32843,6 +32994,16 @@
 							</td>
 						</tr>
 						<tr>
+							<td> nav_draw_vertex_normal
+							</td>
+							<td> 0
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> nav_edit
 							</td>
 							<td> 0
@@ -32946,6 +33107,16 @@
 							<td> nav_gen_clip_polys_to_clearance_debug
 							</td>
 							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_gen_connect_allow_multiple
+							</td>
+							<td> 1
 							</td>
 							<td> cheat
 							</td>
@@ -33254,6 +33425,26 @@
 						</tr>
 						<tr>
 							<td> nav_gen_split_boundary_polys
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_gen_split_multi_connection_polys
+							</td>
+							<td> 1
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_gen_split_multi_connection_polys_tol
 							</td>
 							<td> 0
 							</td>
@@ -33916,6 +34107,16 @@
 							<td> nav_show_area_info_font_voffset
 							</td>
 							<td> -11
+							</td>
+							<td> sv, cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> nav_show_area_verts
+							</td>
+							<td> 1
 							</td>
 							<td> sv, cheat
 							</td>
@@ -36253,7 +36454,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> particle_cloth_experimental_support
+							<td> particle_cloth_experimental_support(7.31B失效)
 							</td>
 							<td> 1
 							</td>
@@ -36727,6 +36928,46 @@
 							</td>
 						</tr>
 						<tr>
+							<td> phys_powered_ragdoll_debug
+							</td>
+							<td>0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> phys_powered_ragdoll_enable
+							</td>
+							<td> 0
+							</td>
+							<td> sv, rep
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> phys_powered_ragdoll_max_frequency
+							</td>
+							<td> 10
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
+							<td> phys_powered_ragdoll_min_frequency
+							</td>
+							<td> 0
+							</td>
+							<td> cheat
+							</td>
+							<td> 
+							</td>
+						</tr>
+						<tr>
 							<td> phys_pushscale
 							</td>
 							<td> 1
@@ -36872,7 +37113,7 @@
 						<tr>
 							<td> phys_threaded_transform_update
 							</td>
-							<td> 1
+							<td>0
 							</td>
 							<td> sv, rep
 							</td>
@@ -37645,7 +37886,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td> quit(7.31失效)
+							<td> quit
 							</td>
 							<td> cmd
 							</td>
@@ -37788,6 +38029,16 @@
 							<td> r_cleardecals
 							</td>
 							<td> cmd
+							</td>
+							<td> 
+							</td>
+							<td> Clears all decals
+							</td>
+						</tr>
+						<tr>
+							<td> r_cpu_light_binner_default_spec_env_fade_time
+							</td>
+							<td> 1
 							</td>
 							<td> 
 							</td>
@@ -45014,7 +45265,7 @@
 						<tr>
 							<td> sound_device_override
 							</td>
-							<td> 
+							<td> Source2SDLDefaultDevice
 							</td>
 							<td> machine
 							</td>
