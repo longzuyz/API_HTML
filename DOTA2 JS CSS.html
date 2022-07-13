@@ -343,6 +343,7 @@ aaaabbbbccccc
 							<li><a href="#DOTAHTMLPanel">DOTAHTMLPanel</a></li>
 							<li><a href="#DOTAEmoticon">DOTAEmoticon</a></li>
 							<li><a href="#DOTAPortrait">DOTAPortrait</a></li>
+							<li><a href="#DOTAPlay">DOTAPlay</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -404,6 +405,7 @@ aaaabbbbccccc
 
 							<li><a href="#DOTAKeybindCommand_t">DOTAKeybindCommand_t</a></li>
 							<li><a href="#DOTA_SHOP_TYPE">DOTA_SHOP_TYPE</a></li>
+							<li><a href="#DOTA_GameMode">DOTA_GameMode</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -512,7 +514,7 @@ aaaabbbbccccc
 							<tr>
 								<td> AssertHelper
 								</td>
-								<td> void $.AssertHelper( js_raw_args js_raw_args_1 )
+								<td> void $.AssertHelper( string  message)
 								</td>
 								<td> Trigger an assert
 								</td>
@@ -520,7 +522,7 @@ aaaabbbbccccc
 							<tr>
 								<td> Warning
 								</td>
-								<td> void $.Warning( js_raw_args js_raw_args_1 )
+								<td> void $.Warning( string  message )
 								</td>
 								<td> Log a warning message to specified channel
 								</td>
@@ -528,9 +530,9 @@ aaaabbbbccccc
 							<tr>
 								<td> DispatchEvent
 								</td>
-								<td> void $.DispatchEvent(string paneleventname, handle panel, unknown value)
+								<td> void $.DispatchEvent(string paneleventname, panel parentpanel, [value].... )
 								</td>
-								<td> 触发板事件，参数paneleventname是板事件的事件名称（不含括号以及括号里的值），unknown的值是板事件括号里要填的值。
+								<td> 触发板事件，参数paneleventname是板事件的事件名称，unknown的值是板事件括号里要填的值。
 								</td>
 							</tr>
 							<tr>
@@ -544,23 +546,23 @@ aaaabbbbccccc
 							<tr>
 								<td> RegisterEventHandler
 								</td>
-								<td> $.RegisterEventHandler( js_raw_args, js_raw_args_1 )
+								<td> void $.RegisterEventHandler( string event, panel parentPanel,handle function)
 								</td>
-								<td> Register an event handler
+								<td> Register an event handler。DragStart、DragEnd、DragDrop、DragEnter、DragLeave.例子在ui_example的inventory_item.js
 								</td>
 							</tr>
 							<tr>
 								<td> RegisterForUnhandledEvent
 								</td>
-								<td> void $.RegisterForUnhandledEvent( string eventname, handle func )
+								<td> handle $.RegisterForUnhandledEvent( string eventname, handle func )
 								</td>
-								<td> Register a handler for an event that is not otherwise handled
+								<td> Register a handler for an event that is not otherwise handled。返回UnhandledEventListenerID
 								</td>
 							</tr>
 							<tr>
 								<td> UnregisterForUnhandledEvent
 								</td>
-								<td> $.UnregisterForUnhandledEvent( js_raw_args, js_raw_args_1 )
+								<td> $.UnregisterForUnhandledEvent( string eventname, handle UnhandledEventListenerID)
 								</td>
 								<td> Remove an unhandled event handler
 								</td>
@@ -568,7 +570,7 @@ aaaabbbbccccc
 							<tr>
 								<td> FindChildInContext
 								</td>
-								<td> handle $.FindChildInContext( js_raw_args, js_raw_args_1 )
+								<td> panel $.FindChildInContext( selector: string )
 								</td>
 								<td> Find an element
 								</td>
@@ -584,7 +586,7 @@ aaaabbbbccccc
 							<tr>
 								<td> CreatePanel
 								</td>
-								<td> handle $.CreatePanel( string type, handle parent, string panelname)
+								<td> panel $.CreatePanel( string type, handle parent, string panelname)
 								</td>
 								<td> 创建一个板，type分很多，比如Panel，Button，Image，Label，TextEntry，
 									DropDown，ToggleButton，RadioButton，DOTAHeroImage，DOTAAvatarImage，
@@ -595,7 +597,7 @@ aaaabbbbccccc
 							<tr>
 								<td> CreatePanelWithProperties
 								</td>
-								<td> handle $.CreatePanelWithProperties( object parameter )
+								<td> panel $.CreatePanelWithProperties( object parameter )
 								</td>
 								<td> Create a new panel supplying a JS object as a fourth parameter containing properties to be applied to the panel.
 								</td>
@@ -603,7 +605,7 @@ aaaabbbbccccc
 							<tr>
 								<td> Localize
 								</td>
-								<td> $.Localize( js_raw_args, js_raw_args_1 )
+								<td> string $.Localize( string value )
 								</td>
 								<td> Localize a string   $.Localize("#"+xxx)
 								</td>
@@ -611,7 +613,7 @@ aaaabbbbccccc
 							<tr>
 								<td> LocalizePlural
 								</td>
-								<td> $.LocalizePlural( js_raw_args, js_raw_args_1 )
+								<td> string $.LocalizePlural( js_raw_args, js_raw_args_1 )
 								</td>
 								<td> Localize a plural(复数) string
 								</td>
@@ -637,13 +639,13 @@ aaaabbbbccccc
 								</td>
 								<td> void $.CancelScheduled( js_raw_args)
 								</td>
-								<td> 取消一个计时器，参数是$.Schedule返回的值。
+								<td> Cancels a scheduled function 取消一个计时器，参数是$.Schedule返回的值。
 								</td>
 							</tr>
 							<tr>
 								<td> GetContextPanel
 								</td>
-								<td> handle $.GetContextPanel( )
+								<td> panel $.GetContextPanel( )
 								</td>
 								<td> 获得当前所在的Panel
 								</td>
@@ -651,7 +653,7 @@ aaaabbbbccccc
 							<tr>
 								<td> RegisterKeyBind
 								</td>
-								<td> $.RegisterKeyBind( js_raw_args, js_raw_args_1 )
+								<td> void $.RegisterKeyBind( js_raw_args, js_raw_args_1 )
 								</td>
 								<td> Register a key binding
 								</td>
@@ -667,7 +669,7 @@ aaaabbbbccccc
 							<tr>
 								<td> DbgIsReloadingScript
 								</td>
-								<td> bool $.DbgIsReloadingScript( js_raw_args, js_raw_args_1 )
+								<td> bool $.DbgIsReloadingScript( )
 								</td>
 								<td> Call during JS startup code to check if script is being reloaded
 								</td>
@@ -675,7 +677,7 @@ aaaabbbbccccc
 							<tr>
 								<td> HTMLEscape
 								</td>
-								<td> HTMLEscape( js_raw_args js_raw_args_1 )
+								<td> string HTMLEscape( string value )
 								</td>
 								<td> Convert a string to HTML-safe
 								</td>
@@ -1334,6 +1336,30 @@ aaaabbbbccccc
 								<td> Game.SetCustomShopEntityString( cstring pszCustomShopEntityString )
 								</td>
 								<td> Set custom shop context.
+								</td>
+							</tr>
+							<tr>
+								<td> GetConvarBool
+								</td>
+								<td> Game.GetConvarBool( cstring cvar  )
+								</td>
+								<td> Get the bool value of the specific convar. Asserts if invalid and returns false.
+								</td>
+							</tr>
+							<tr>
+								<td> GetConvarInt
+								</td>
+								<td> Game.GetConvarInt( cstring cvar )
+								</td>
+								<td> Get the int value of the specific convar. Asserts if invalid and returns 0.
+								</td>
+							</tr>
+							<tr>
+								<td> GetConvarFloat
+								</td>
+								<td> Game.GetConvarFloat( cstring cvar )
+								</td>
+								<td> Get the float value of the specific convar. Asserts if invalid and returns 0.f.
 								</td>
 							</tr>
 							<tr>
@@ -2315,11 +2341,19 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td>GetLeft
+								</td>
+								<td> Entities.GetLeft( integer nEntityIndex )
+								</td>
+								<td> Get the left vector of the entity.
+								</td>
+							</tr>
+							<tr>
 								<td> GetRight
 								</td>
 								<td> Entities.GetRight( integer nEntityIndex )
 								</td>
-								<td> Get the right vector of the entity.
+								<td> Get the right vector of the entity.WARNING: This produces a left-handed coordinate system. Use GetLeft instead!
 								</td>
 							</tr>
 							<tr>
@@ -4632,6 +4666,30 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
+								<td> AreTipsAvailable
+								</td>
+								<td> GameUI.AreTipsAvailable( )
+								</td>
+								<td> Query to check if Tips are available for the local player
+								</td>
+							</tr>
+							<tr>
+								<td> IsPlayerTippable
+								</td>
+								<td> GameUI.IsPlayerTippable( integer iPlayerID )
+								</td>
+								<td> Query to see if the local player can tip a specific player
+								</td>
+							</tr>
+							<tr>
+								<td> TipPlayer
+								</td>
+								<td> GameUI.TipPlayer( integer iPlayerID )
+								</td>
+								<td> Install a mouse input filter
+								</td>
+							</tr>
+							<tr>
 								<td> EnableAliMode
 								</td>
 								<td> GameUI.EnableAliMode( boolean bEnable, integer nPort, js_value offsetVal, float
@@ -5794,6 +5852,14 @@ aaaabbbbccccc
 								<td> ScrollParentToMakePanelFit(int , boolean boolean )
 								</td>
 								<td>添加板的时候，使父板往下滚动，显示刚添加的版，int为滚动的距离，1代表一个添加的板位。
+								</td>
+							</tr>
+							<tr>
+								<td> ScrollToFitRegion
+								</td>
+								<td> ScrollToFitRegion(float float_1, float float_2, float float_3, float float_4, unknown_variant_type unknown_variant_type_5, boolean boolean_6, boolean boolean_7 )
+								</td>
+								<td>
 								</td>
 							</tr>
 							<tr>
@@ -7432,6 +7498,64 @@ aaaabbbbccccc
 						</table>
 					</div>
 				</div>
+				<div id='DOTAPlay' class='classcontent'>
+					<div id='classname'>
+						<p><span>DOTAPlay</span></p>
+						<p>全局变量：无。具体对象使用。</p>
+					</div>
+					<div id='apicontent'>
+						<table>
+							<tr>
+								<th> Function
+								</th>	
+								<th> Signature
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> GetActiveFeaturedGamemode
+								</td>
+								<td> GetActiveFeaturedGamemode( js_raw_args js_raw_args_1 )
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> GetFeaturedGamemodeProgress
+								</td>
+								<td> GetFeaturedGamemodeProgress()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> GetFeaturedGamemodeMax
+								</td>
+								<td> GetFeaturedGamemodeMax()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> GetSelectedGameModes
+								</td>
+								<td> GetSelectedGameModes()
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> UpdateCasualGameModeCheckboxes
+								</td>
+								<td> UpdateCasualGameModeCheckboxes()
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 
 			<div id='jsconstant'>
@@ -7976,6 +8100,78 @@ aaaabbbbccccc
 								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_NOTEAM
 								</td>
 								<td> 5
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_1
+								</td>
+								<td> 6
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_2
+								</td>
+								<td> 7
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_3
+								</td>
+								<td> 8
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_4
+								</td>
+								<td> 9
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_5
+								</td>
+								<td> 10
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_6
+								</td>
+								<td> 11
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_7
+								</td>
+								<td> 12
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_CUSTOM_8
+								</td>
+								<td> 13
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GC_TEAM.DOTA_GC_TEAM_NEUTRALS
+								</td>
+								<td> 14
 								</td>
 								<td>
 								</td>
@@ -13165,6 +13361,14 @@ aaaabbbbccccc
 								<td>
 								</td>
 							</tr>
+							<tr>
+								<td> GameActivity_t.ACT_DOTA_RUN_RARE
+								</td>
+								<td> 1761
+								</td>
+								<td>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -13545,7 +13749,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_1
 								</td>
 								<td> 28
 								</td>
@@ -13553,7 +13757,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_2
 								</td>
 								<td> 29
 								</td>
@@ -13561,15 +13765,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_START
-								</td>
-								<td> 29
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_3
 								</td>
 								<td> 30
 								</td>
@@ -13577,7 +13773,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_4
 								</td>
 								<td> 31
 								</td>
@@ -13585,7 +13781,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_5
 								</td>
 								<td> 32
 								</td>
@@ -13593,7 +13789,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_6
 								</td>
 								<td> 33
 								</td>
@@ -13601,7 +13797,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_7
 								</td>
 								<td> 34
 								</td>
@@ -13609,7 +13805,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMS_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_8
 								</td>
 								<td> 35
 								</td>
@@ -13617,7 +13813,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_9
 								</td>
 								<td> 36
 								</td>
@@ -13625,7 +13821,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BELT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE
 								</td>
 								<td> 37
 								</td>
@@ -13633,7 +13829,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NECK_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_START
 								</td>
 								<td> 38
 								</td>
@@ -13641,7 +13837,15 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BACK_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON_PERSONA_1
+								</td>
+								<td> 38
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1
 								</td>
 								<td> 39
 								</td>
@@ -13649,7 +13853,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LEGS_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1
 								</td>
 								<td> 40
 								</td>
@@ -13657,7 +13861,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1
 								</td>
 								<td> 41
 								</td>
@@ -13665,7 +13869,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAIL_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_PERSONA_1
 								</td>
 								<td> 42
 								</td>
@@ -13673,7 +13877,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MISC_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1
 								</td>
 								<td> 43
 								</td>
@@ -13681,7 +13885,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMS_PERSONA_1
 								</td>
 								<td> 44
 								</td>
@@ -13689,7 +13893,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1
 								</td>
 								<td> 45
 								</td>
@@ -13697,7 +13901,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BELT_PERSONA_1
 								</td>
 								<td> 46
 								</td>
@@ -13705,7 +13909,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NECK_PERSONA_1
 								</td>
 								<td> 47
 								</td>
@@ -13713,7 +13917,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BACK_PERSONA_1
 								</td>
 								<td> 48
 								</td>
@@ -13721,7 +13925,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LEGS_PERSONA_1
 								</td>
 								<td> 49
 								</td>
@@ -13729,7 +13933,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1
 								</td>
 								<td> 50
 								</td>
@@ -13737,7 +13941,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAIL_PERSONA_1
 								</td>
 								<td> 51
 								</td>
@@ -13745,7 +13949,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MISC_PERSONA_1
 								</td>
 								<td> 52
 								</td>
@@ -13753,7 +13957,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1
 								</td>
 								<td> 53
 								</td>
@@ -13761,7 +13965,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1
 								</td>
 								<td> 54
 								</td>
@@ -13769,7 +13973,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1
 								</td>
 								<td> 55
 								</td>
@@ -13777,16 +13981,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE_PERSONA_1
-								</td>
-								<td> 56
-								</td>
-								<td>
-								</td>
-							</tr>
-
-							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_END
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1
 								</td>
 								<td> 56
 								</td>
@@ -13794,7 +13989,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_PERSONA_SELECTOR
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1
 								</td>
 								<td> 57
 								</td>
@@ -13802,7 +13997,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COURIER
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1
 								</td>
 								<td> 58
 								</td>
@@ -13810,15 +14005,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_PLAYER_LOADOUT_START
-								</td>
-								<td> 58
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ANNOUNCER
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1
 								</td>
 								<td> 59
 								</td>
@@ -13826,7 +14013,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MEGA_KILLS
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1
 								</td>
 								<td> 60
 								</td>
@@ -13834,7 +14021,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MUSIC
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1
 								</td>
 								<td> 61
 								</td>
@@ -13842,7 +14029,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WARD
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1
 								</td>
 								<td> 62
 								</td>
@@ -13850,7 +14037,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HUD_SKIN
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1
 								</td>
 								<td> 63
 								</td>
@@ -13858,7 +14045,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LOADING_SCREEN
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1
 								</td>
 								<td> 64
 								</td>
@@ -13866,7 +14053,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEATHER
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VOICE_PERSONA_1
+								</td>
+								<td> 65
+								</td>
+								<td>
+								</td>
+							</tr>
+	
+
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_PERSONA_1_END
 								</td>
 								<td> 65
 								</td>
@@ -13874,7 +14071,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEROIC_STATUE
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_PERSONA_SELECTOR
 								</td>
 								<td> 66
 								</td>
@@ -13882,7 +14079,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MULTIKILL_BANNER
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COURIER
 								</td>
 								<td> 67
 								</td>
@@ -13890,7 +14087,15 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_CURSOR_PACK
+								<td> DOTASlotType_t.DOTA_PLAYER_LOADOUT_START
+								</td>
+								<td> 67
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_ANNOUNCER
 								</td>
 								<td> 68
 								</td>
@@ -13898,7 +14103,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TELEPORT_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MEGA_KILLS
 								</td>
 								<td> 69
 								</td>
@@ -13906,7 +14111,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BLINK_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MUSIC
 								</td>
 								<td> 70
 								</td>
@@ -13914,7 +14119,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_EMBLEM
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WARD
 								</td>
 								<td> 71
 								</td>
@@ -13922,7 +14127,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TERRAIN
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HUD_SKIN
 								</td>
 								<td> 72
 								</td>
@@ -13930,7 +14135,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_CREEPS
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_LOADING_SCREEN
 								</td>
 								<td> 73
 								</td>
@@ -13938,7 +14143,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_CREEPS
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_WEATHER
 								</td>
 								<td> 74
 								</td>
@@ -13946,7 +14151,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_TOWER
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEROIC_STATUE
 								</td>
 								<td> 75
 								</td>
@@ -13954,7 +14159,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_TOWER
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MULTIKILL_BANNER
 								</td>
 								<td> 76
 								</td>
@@ -13962,7 +14167,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VERSUS_SCREEN
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_CURSOR_PACK
 								</td>
 								<td> 77
 								</td>
@@ -13970,7 +14175,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_STREAK_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TELEPORT_EFFECT
 								</td>
 								<td> 78
 								</td>
@@ -13978,7 +14183,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_KILL_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_BLINK_EFFECT
 								</td>
 								<td> 79
 								</td>
@@ -13986,7 +14191,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DEATH_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_EMBLEM
 								</td>
 								<td> 80
 								</td>
@@ -13994,7 +14199,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_TERRAIN
 								</td>
 								<td> 81
 								</td>
@@ -14002,7 +14207,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MAP_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_CREEPS
 								</td>
 								<td> 82
 								</td>
@@ -14010,7 +14215,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COURIER_EFFECT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_CREEPS
 								</td>
 								<td> 83
 								</td>
@@ -14018,7 +14223,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_SIEGE_CREEPS
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_TOWER
 								</td>
 								<td> 84
 								</td>
@@ -14026,15 +14231,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_SIEGE_CREEPS
-								</td>
-								<td> 84
-								</td>
-								<td>
-								</td>
-							</tr>
-							<tr>
-								<td> DOTASlotType_t.DOTA_PLAYER_LOADOUT_END
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_TOWER
 								</td>
 								<td> 85
 								</td>
@@ -14042,7 +14239,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NONE
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_VERSUS_SCREEN
 								</td>
 								<td> 86
 								</td>
@@ -14050,9 +14247,89 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COUNT
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_STREAK_EFFECT
 								</td>
 								<td> 87
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_KILL_EFFECT
+								</td>
+								<td> 88
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DEATH_EFFECT
+								</td>
+								<td> 89
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_HEAD_EFFECT
+								</td>
+								<td> 90
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_MAP_EFFECT
+								</td>
+								<td> 91
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COURIER_EFFECT
+								</td>
+								<td> 92
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_RADIANT_SIEGE_CREEPS
+								</td>
+								<td> 93
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_DIRE_SIEGE_CREEPS
+								</td>
+								<td> 94
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_PLAYER_LOADOUT_END
+								</td>
+								<td> 94
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_NONE
+								</td>
+								<td> 95
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTASlotType_t.DOTA_LOADOUT_TYPE_COUNT
+								</td>
+								<td> 96
 								</td>
 								<td>
 								</td>
@@ -14806,15 +15083,23 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_MANA_BONUS
 								</td>
-								<td> 91
+								<td> 93
 								</td>
 								<td> GetModifierExtraManaBonus
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_MANA_BONUS_PERCENTAGE
+								</td>
+								<td> 94
+								</td>
+								<td> GetModifierExtraManaBonusPercentage
+								</td>
+							</tr>
+							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE
 								</td>
-								<td> 92
+								<td> 95
 								</td>
 								<td> GetModifierExtraHealthPercentage
 								</td>
@@ -14822,7 +15107,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE
 								</td>
-								<td> 93
+								<td> 96
 								</td>
 								<td> GetModifierExtraManaPercentage
 								</td>
@@ -14830,7 +15115,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
 								</td>
-								<td> 94
+								<td> 97
 								</td>
 								<td> GetModifierBonusStats_Strength
 								</td>
@@ -14838,7 +15123,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_AGILITY_BONUS
 								</td>
-								<td> 95
+								<td> 98
 								</td>
 								<td> GetModifierBonusStats_Agility
 								</td>
@@ -14847,7 +15132,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
 								</td>
-								<td> 96
+								<td> 99
 								</td>
 								<td> GetModifierBonusStats_Intellect
 								</td>
@@ -14855,7 +15140,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE
 								</td>
-								<td> 97
+								<td> 100
 								</td>
 								<td> GetModifierBonusStats_Strength_Percentage
 								</td>
@@ -14863,7 +15148,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_AGILITY_BONUS_PERCENTAGE
 								</td>
-								<td> 98
+								<td> 101
 								</td>
 								<td> GetModifierBonusStats_Agility_Percentage
 								</td>
@@ -14871,7 +15156,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STATS_INTELLECT_BONUS_PERCENTAGE
 								</td>
-								<td> 99
+								<td> 102
 								</td>
 								<td> GetModifierBonusStats_Intellect_Percentage
 								</td>
@@ -14879,15 +15164,24 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS
 								</td>
-								<td> 100
+								<td> 103
 								</td>
 								<td> GetModifierCastRangeBonus
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS_PERCENTAGE
+								</td>
+								<td> 104
+								</td>
+								<td> GetModifierCastRangeBonusPercentage
+								</td>
+							</tr>
+							
+							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET
 								</td>
-								<td> 101
+								<td> 105
 								</td>
 								<td> GetModifierCastRangeBonusTarget
 								</td>
@@ -14895,7 +15189,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING
 								</td>
-								<td> 102
+								<td> 106
 								</td>
 								<td> GetModifierCastRangeBonusStacking
 								</td>
@@ -14903,7 +15197,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE
 								</td>
-								<td> 103
+								<td> 107
 								</td>
 								<td> GetModifierAttackRangeOverride
 								</td>
@@ -14911,7 +15205,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 								</td>
-								<td> 104
+								<td> 108
 								</td>
 								<td> GetModifierAttackRangeBonus
 								</td>
@@ -14919,7 +15213,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE
 								</td>
-								<td> 105
+								<td> 109
 								</td>
 								<td> GetModifierAttackRangeBonusUnique
 								</td>
@@ -14927,7 +15221,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE
 								</td>
-								<td> 106
+								<td> 110
 								</td>
 								<td> GetModifierAttackRangeBonusPercentage
 								</td>
@@ -14935,7 +15229,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAX_ATTACK_RANGE
 								</td>
-								<td> 107
+								<td> 111
 								</td>
 								<td> GetModifierMaxAttackRange
 								</td>
@@ -14943,7 +15237,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS
 								</td>
-								<td> 108
+								<td> 112
 								</td>
 								<td> GetModifierProjectileSpeedBonus
 								</td>
@@ -14951,7 +15245,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE
 								</td>
-								<td> 109
+								<td> 113
 								</td>
 								<td> GetModifierProjectileSpeedBonusPercentage
 								</td>
@@ -14959,7 +15253,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROJECTILE_NAME
 								</td>
-								<td> 110
+								<td> 114
 								</td>
 								<td> GetModifierProjectileName
 								</td>
@@ -14967,7 +15261,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_REINCARNATION
 								</td>
-								<td> 111
+								<td> 115
 								</td>
 								<td> ReincarnateTime
 								</td>
@@ -14975,7 +15269,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RESPAWNTIME
 								</td>
-								<td> 112
+								<td> 116
 								</td>
 								<td> GetModifierConstantRespawnTime
 								</td>
@@ -14983,7 +15277,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE
 								</td>
-								<td> 113
+								<td> 117
 								</td>
 								<td> GetModifierPercentageRespawnTime
 								</td>
@@ -14991,7 +15285,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RESPAWNTIME_STACKING
 								</td>
-								<td> 114
+								<td> 118
 								</td>
 								<td> GetModifierStackingRespawnTime
 								</td>
@@ -14999,7 +15293,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 								</td>
-								<td> 115
+								<td> 119
 								</td>
 								<td> GetModifierPercentageCooldown
 								</td>
@@ -15007,7 +15301,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_ONGOING
 								</td>
-								<td> 116
+								<td> 120
 								</td>
 								<td> GetModifierPercentageCooldownOngoing
 								</td>
@@ -15015,7 +15309,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CASTTIME_PERCENTAGE
 								</td>
-								<td> 117
+								<td> 121
 								</td>
 								<td> GetModifierPercentageCasttime
 								</td>
@@ -15023,7 +15317,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_ANIM_TIME_PERCENTAGE
 								</td>
-								<td> 118
+								<td> 122
 								</td>
 								<td> GetModifierPercentageAttackAnimTime
 								</td>
@@ -15031,7 +15325,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANACOST_PERCENTAGE
 								</td>
-								<td> 119
+								<td> 123
 								</td>
 								<td> GetModifierPercentageManacost
 								</td>
@@ -15039,7 +15333,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING
 								</td>
-								<td> 120
+								<td> 124
 								</td>
 								<td> GetModifierPercentageManacostStacking
 								</td>
@@ -15047,7 +15341,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DEATHGOLDCOST
 								</td>
-								<td> 121
+								<td> 125
 								</td>
 								<td> GetModifierConstantDeathGoldCost
 								</td>
@@ -15055,7 +15349,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_EXP_RATE_BOOST
 								</td>
-								<td> 122
+								<td> 126
 								</td>
 								<td> GetModifierPercentageExpRateBoost
 								</td>
@@ -15063,7 +15357,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_GOLD_RATE_BOOST
 								</td>
-								<td> 123
+								<td> 127
 								</td>
 								<td> GetModifierPercentageGoldRateBoost
 								</td>
@@ -15072,7 +15366,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
 								</td>
-								<td> 124
+								<td> 128
 								</td>
 								<td> GetModifierPreAttack_CriticalStrike
 								</td>
@@ -15080,7 +15374,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE
 								</td>
-								<td> 125
+								<td> 129
 								</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike
 								</td>
@@ -15088,7 +15382,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK
 								</td>
-								<td> 126
+								<td> 130
 								</td>
 								<td> GetModifierMagical_ConstantBlock
 								</td>
@@ -15096,7 +15390,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 								</td>
-								<td> 127
+								<td> 131
 								</td>
 								<td> GetModifierPhysical_ConstantBlock
 								</td>
@@ -15104,7 +15398,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL
 								</td>
-								<td> 128
+								<td> 132
 								</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial
 								</td>
@@ -15112,7 +15406,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR
 								</td>
-								<td> 129
+								<td> 133
 								</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor
 								</td>
@@ -15120,7 +15414,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
 								</td>
-								<td> 130
+								<td> 134
 								</td>
 								<td> GetModifierTotal_ConstantBlock
 								</td>
@@ -15128,7 +15422,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 								</td>
-								<td> 131
+								<td> 135
 								</td>
 								<td> GetOverrideAnimation
 								</td>
@@ -15136,7 +15430,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT
 								</td>
-								<td> 132
+								<td> 136
 								</td>
 								<td> GetOverrideAnimationWeight
 								</td>
@@ -15144,7 +15438,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE
 								</td>
-								<td> 133
+								<td> 137
 								</td>
 								<td> GetOverrideAnimationRate
 								</td>
@@ -15152,7 +15446,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSORB_SPELL
 								</td>
-								<td> 134
+								<td> 138
 								</td>
 								<td> GetAbsorbSpell
 								</td>
@@ -15160,7 +15454,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_REFLECT_SPELL
 								</td>
-								<td> 135
+								<td> 139
 								</td>
 								<td> GetReflectSpell
 								</td>
@@ -15168,7 +15462,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DISABLE_AUTOATTACK
 								</td>
-								<td> 136
+								<td> 140
 								</td>
 								<td> GetDisableAutoAttack
 								</td>
@@ -15176,7 +15470,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_DAY_VISION
 								</td>
-								<td> 137
+								<td> 141
 								</td>
 								<td> GetBonusDayVision
 								</td>
@@ -15184,7 +15478,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_NIGHT_VISION
 								</td>
-								<td> 138
+								<td> 142
 								</td>
 								<td> GetBonusNightVision
 								</td>
@@ -15192,7 +15486,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE
 								</td>
-								<td> 139
+								<td> 143
 								</td>
 								<td> GetBonusNightVisionUnique
 								</td>
@@ -15200,7 +15494,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE
 								</td>
-								<td> 140
+								<td> 144
 								</td>
 								<td> GetBonusVisionPercentage
 								</td>
@@ -15208,7 +15502,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_FIXED_DAY_VISION
 								</td>
-								<td> 141
+								<td> 145
 								</td>
 								<td> GetFixedDayVision
 								</td>
@@ -15216,7 +15510,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_FIXED_NIGHT_VISION
 								</td>
-								<td> 142
+								<td> 146
 								</td>
 								<td> GetFixedNightVision
 								</td>
@@ -15224,7 +15518,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MIN_HEALTH
 								</td>
-								<td> 143
+								<td> 147
 								</td>
 								<td> GetMinHealth
 								</td>
@@ -15232,7 +15526,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL
 								</td>
-								<td> 144
+								<td> 148
 								</td>
 								<td> GetAbsoluteNoDamagePhysical
 								</td>
@@ -15240,7 +15534,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL
 								</td>
-								<td> 145
+								<td> 149
 								</td>
 								<td> GetAbsoluteNoDamageMagical
 								</td>
@@ -15248,7 +15542,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE
 								</td>
-								<td> 146
+								<td> 150
 								</td>
 								<td> GetAbsoluteNoDamagePure
 								</td>
@@ -15256,7 +15550,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IS_ILLUSION
 								</td>
-								<td> 147
+								<td> 151
 								</td>
 								<td> GetIsIllusion
 								</td>
@@ -15264,7 +15558,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ILLUSION_LABEL
 								</td>
-								<td> 148
+								<td> 152
 								</td>
 								<td> GetModifierIllusionLabel
 								</td>
@@ -15272,7 +15566,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_STRONG_ILLUSION
 								</td>
-								<td> 149
+								<td> 153
 								</td>
 								<td> GetModifierStrongIllusion
 								</td>
@@ -15280,7 +15574,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPER_ILLUSION
 								</td>
-								<td> 150
+								<td> 154
 								</td>
 								<td> GetModifierSuperIllusion
 								</td>
@@ -15288,7 +15582,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPER_ILLUSION_WITH_ULTIMATE
 								</td>
-								<td> 151
+								<td> 155
 								</td>
 								<td> GetModifierSuperIllusionWithUltimate
 								</td>
@@ -15296,7 +15590,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_XP_DURING_DEATH
 								</td>
-								<td> 152
+								<td> 156
 								</td>
 								<td> GetModifierXPDuringDeath
 								</td>
@@ -15305,7 +15599,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
 								</td>
-								<td> 153
+								<td> 157
 								</td>
 								<td> GetModifierTurnRate_Percentage
 								</td>
@@ -15313,7 +15607,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TURN_RATE_OVERRIDE
 								</td>
-								<td> 154
+								<td> 158
 								</td>
 								<td> GetModifierTurnRate_Override
 								</td>
@@ -15321,7 +15615,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DISABLE_HEALING
 								</td>
-								<td> 155
+								<td> 159
 								</td>
 								<td> GetDisableHealing
 								</td>
@@ -15329,7 +15623,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK
 								</td>
-								<td> 156
+								<td> 160
 								</td>
 								<td> GetAlwaysAllowAttack
 								</td>
@@ -15337,7 +15631,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ALWAYS_ETHEREAL_ATTACK
 								</td>
-								<td> 157
+								<td> 161
 								</td>
 								<td> GetAllowEtherealAttack
 								</td>
@@ -15345,7 +15639,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL
 								</td>
-								<td> 158
+								<td> 162
 								</td>
 								<td> GetOverrideAttackMagical
 								</td>
@@ -15353,7 +15647,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH
 								</td>
-								<td> 159
+								<td> 163
 								</td>
 								<td> GetModifierUnitStatsNeedsRefresh
 								</td>
@@ -15361,7 +15655,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BOUNTY_CREEP_MULTIPLIER
 								</td>
-								<td> 160
+								<td> 164
 								</td>
 								<td> Unused
 								</td>
@@ -15369,7 +15663,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BOUNTY_OTHER_MULTIPLIER
 								</td>
-								<td> 161
+								<td> 165
 								</td>
 								<td> Unused
 								</td>
@@ -15377,7 +15671,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_UNIT_DISALLOW_UPGRADING
 								</td>
-								<td> 162
+								<td> 166
 								</td>
 								<td> GetModifierUnitDisllowUpgrading
 								</td>
@@ -15385,7 +15679,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DODGE_PROJECTILE
 								</td>
-								<td> 163
+								<td> 167
 								</td>
 								<td> GetModifierDodgeProjectile
 								</td>
@@ -15393,7 +15687,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TRIGGER_COSMETIC_AND_END_ATTACK
 								</td>
-								<td> 164
+								<td> 168
 								</td>
 								<td> GetTriggerCosmeticAndEndAttack
 								</td>
@@ -15401,7 +15695,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MAX_DEBUFF_DURATION
 								</td>
-								<td> 165
+								<td> 169
 								</td>
 								<td> GetModifierMaxDebuffDuration
 								</td>
@@ -15409,7 +15703,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PRIMARY_STAT_DAMAGE_MULTIPLIER
 								</td>
-								<td> 166
+								<td> 170
 								</td>
 								<td> GetPrimaryStatDamageMultiplier
 								</td>
@@ -15417,7 +15711,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PREATTACK_DEADLY_BLOW
 								</td>
-								<td> 167
+								<td> 171
 								</td>
 								<td> GetModifierPreAttack_DeadlyBlow
 								</td>
@@ -15425,7 +15719,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ALWAYS_AUTOATTACK_WHILE_HOLD_POSITION
 								</td>
-								<td> 168
+								<td> 172
 								</td>
 								<td> GetAlwaysAutoAttackWhileHoldPosition
 								</td>
@@ -15433,7 +15727,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_SPELL_TARGET_READY
 								</td>
-								<td> 169
+								<td> 173
 								</td>
 								<td> OnSpellTargetReady
 								</td>
@@ -15441,7 +15735,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_RECORD
 								</td>
-								<td> 170
+								<td> 174
 								</td>
 								<td> OnAttackRecord
 								</td>
@@ -15449,7 +15743,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_START
 								</td>
-								<td> 171
+								<td> 175
 								</td>
 								<td> OnAttackStart
 								</td>
@@ -15457,7 +15751,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK
 								</td>
-								<td> 172
+								<td> 176
 								</td>
 								<td> OnAttack
 								</td>
@@ -15465,7 +15759,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_LANDED
 								</td>
-								<td> 173
+								<td> 177
 								</td>
 								<td> OnAttackLanded
 								</td>
@@ -15473,7 +15767,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_FAIL
 								</td>
-								<td> 174
+								<td> 178
 								</td>
 								<td> OnAttackFail
 								</td>
@@ -15481,7 +15775,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_ALLIED
 								</td>
-								<td> 175
+								<td> 179
 								</td>
 								<td> OnAttackAllied
 								</td>
@@ -15489,7 +15783,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROJECTILE_DODGE
 								</td>
-								<td> 176
+								<td> 180
 								</td>
 								<td> OnProjectileDodge
 								</td>
@@ -15497,7 +15791,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ORDER
 								</td>
-								<td> 177
+								<td> 181
 								</td>
 								<td> OnOrder
 								</td>
@@ -15505,7 +15799,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_UNIT_MOVED
 								</td>
-								<td> 178
+								<td> 182
 								</td>
 								<td> OnUnitMoved
 								</td>
@@ -15513,7 +15807,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_START
 								</td>
-								<td> 179
+								<td> 183
 								</td>
 								<td> OnAbilityStart
 								</td>
@@ -15521,7 +15815,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_EXECUTED
 								</td>
-								<td> 180
+								<td> 184
 								</td>
 								<td> OnAbilityExecuted
 								</td>
@@ -15529,7 +15823,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 								</td>
-								<td> 181
+								<td> 185
 								</td>
 								<td> OnAbilityFullyCast
 								</td>
@@ -15537,7 +15831,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_BREAK_INVISIBILITY
 								</td>
-								<td> 182
+								<td> 186
 								</td>
 								<td> OnBreakInvisibility
 								</td>
@@ -15545,7 +15839,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ABILITY_END_CHANNEL
 								</td>
-								<td> 183
+								<td> 187
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
@@ -15553,7 +15847,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROCESS_UPGRADE
 								</td>
-								<td> 184
+								<td> 188
 								</td>
 								<td> Unused
 								</td>
@@ -15561,7 +15855,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_REFRESH
 								</td>
-								<td> 185
+								<td> 189
 								</td>
 								<td> Unused
 								</td>
@@ -15569,7 +15863,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TAKEDAMAGE
 								</td>
-								<td> 186
+								<td> 190
 								</td>
 								<td> OnTakeDamage
 								</td>
@@ -15577,7 +15871,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DEATH_PREVENTED
 								</td>
-								<td> 187
+								<td> 191
 								</td>
 								<td> OnDamagePrevented
 								</td>
@@ -15585,7 +15879,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_STATE_CHANGED
 								</td>
-								<td> 188
+								<td> 192
 								</td>
 								<td> OnStateChanged
 								</td>
@@ -15593,7 +15887,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ORB_EFFECT
 								</td>
-								<td> 189
+								<td> 193
 								</td>
 								<td> Unused
 								</td>
@@ -15601,7 +15895,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROCESS_CLEAVE
 								</td>
-								<td> 190
+								<td> 194
 								</td>
 								<td> OnProcessCleave
 								</td>
@@ -15609,15 +15903,23 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DAMAGE_CALCULATED
 								</td>
-								<td> 191
+								<td> 195
 								</td>
 								<td> OnDamageCalculated
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_EVENT_ON_MAGIC_DAMAGE_CALCULATED
+								</td>
+								<td> 196
+								</td>
+								<td> OnMagicDamageCalculated
+								</td>
+							</tr>
+							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACKED
 								</td>
-								<td> 192
+								<td> 197
 								</td>
 								<td> OnAttacked
 								</td>
@@ -15625,7 +15927,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DEATH
 								</td>
-								<td> 193
+								<td> 198
 								</td>
 								<td> OnDeath
 								</td>
@@ -15633,7 +15935,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_RESPAWN
 								</td>
-								<td> 194
+								<td> 199
 								</td>
 								<td> OnRespawn
 								</td>
@@ -15641,7 +15943,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_SPENT_MANA
 								</td>
-								<td> 195
+								<td> 200
 								</td>
 								<td> OnSpentMana
 								</td>
@@ -15649,7 +15951,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TELEPORTING
 								</td>
-								<td> 196
+								<td> 200
 								</td>
 								<td> OnTeleporting
 								</td>
@@ -15657,7 +15959,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TELEPORTED
 								</td>
-								<td> 197
+								<td> 202
 								</td>
 								<td> OnTeleported
 								</td>
@@ -15665,7 +15967,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_SET_LOCATION
 								</td>
-								<td> 198
+								<td> 203
 								</td>
 								<td> OnSetLocation
 								</td>
@@ -15673,7 +15975,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_HEALTH_GAINED
 								</td>
-								<td> 199
+								<td> 204
 								</td>
 								<td> OnHealthGained
 								</td>
@@ -15681,7 +15983,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_MANA_GAINED
 								</td>
-								<td> 200
+								<td> 205
 								</td>
 								<td> OnManaGained
 								</td>
@@ -15689,7 +15991,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
 								</td>
-								<td> 201
+								<td> 206
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
@@ -15697,7 +15999,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_HERO_KILLED
 								</td>
-								<td> 202
+								<td> 207
 								</td>
 								<td> OnHeroKilled
 								</td>
@@ -15705,7 +16007,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_HEAL_RECEIVED
 								</td>
-								<td> 203
+								<td> 208
 								</td>
 								<td> OnHealReceived
 								</td>
@@ -15713,7 +16015,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_BUILDING_KILLED
 								</td>
-								<td> 204
+								<td> 209
 								</td>
 								<td> OnBuildingKilled
 								</td>
@@ -15721,7 +16023,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_MODEL_CHANGED
 								</td>
-								<td> 205
+								<td> 210
 								</td>
 								<td> OnModelChanged
 								</td>
@@ -15729,7 +16031,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_MODIFIER_ADDED
 								</td>
-								<td> 206
+								<td> 211
 								</td>
 								<td> OnModifierAdded
 								</td>
@@ -15737,7 +16039,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOOLTIP
 								</td>
-								<td> 207
+								<td> 212
 								</td>
 								<td> OnTooltip
 								</td>
@@ -15745,7 +16047,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MODEL_CHANGE
 								</td>
-								<td> 208
+								<td> 213
 								</td>
 								<td> GetModifierModelChange
 								</td>
@@ -15753,7 +16055,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MODEL_SCALE
 								</td>
-								<td> 209
+								<td> 214
 								</td>
 								<td> GetModifierModelScale
 								</td>
@@ -15761,7 +16063,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IS_SCEPTER
 								</td>
-								<td> 210
+								<td> 215
 								</td>
 								<td> GetModifierScepter
 								</td>
@@ -15769,7 +16071,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IS_SHARD
 								</td>
-								<td> 211
+								<td> 216
 								</td>
 								<td> GetModifierShard
 								</td>
@@ -15777,7 +16079,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_RADAR_COOLDOWN_REDUCTION
 								</td>
-								<td> 212
+								<td> 217
 								</td>
 								<td> GetModifierRadarCooldownReduction
 								</td>
@@ -15785,7 +16087,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 								</td>
-								<td> 213
+								<td> 218
 								</td>
 								<td> GetActivityTranslationModifiers
 								</td>
@@ -15793,7 +16095,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
 								</td>
-								<td> 214
+								<td> 219
 								</td>
 								<td> GetAttackSound
 								</td>
@@ -15801,7 +16103,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_LIFETIME_FRACTION
 								</td>
-								<td> 215
+								<td> 220
 								</td>
 								<td> GetUnitLifetimeFraction
 								</td>
@@ -15809,7 +16111,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
 								</td>
-								<td> 216
+								<td> 221
 								</td>
 								<td> GetModifierProvidesFOWVision
 								</td>
@@ -15817,7 +16119,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SPELLS_REQUIRE_HP
 								</td>
-								<td> 217
+								<td> 222
 								</td>
 								<td> GetModifierSpellsRequireHP
 								</td>
@@ -15825,7 +16127,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
 								</td>
-								<td> 218
+								<td> 223
 								</td>
 								<td> GetForceDrawOnMinimap
 								</td>
@@ -15833,7 +16135,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DISABLE_TURNING
 								</td>
-								<td> 219
+								<td> 224
 								</td>
 								<td> GetModifierDisableTurning
 								</td>
@@ -15841,7 +16143,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 								</td>
-								<td> 220
+								<td> 225
 								</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
@@ -15849,7 +16151,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CHANGE_ABILITY_VALUE
 								</td>
-								<td> 221
+								<td> 226
 								</td>
 								<td> GetModifierChangeAbilityValue
 								</td>
@@ -15857,7 +16159,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL
 								</td>
-								<td> 222
+								<td> 227
 								</td>
 								<td> GetModifierOverrideAbilitySpecial
 								</td>
@@ -15865,7 +16167,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL_VALUE
 								</td>
-								<td> 223
+								<td> 228
 								</td>
 								<td> GetModifierOverrideAbilitySpecialValue
 								</td>
@@ -15873,7 +16175,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ABILITY_LAYOUT
 								</td>
-								<td> 224
+								<td> 229
 								</td>
 								<td> GetModifierAbilityLayout
 								</td>
@@ -15881,15 +16183,32 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_DOMINATED
 								</td>
-								<td> 225
+								<td> 230
 								</td>
 								<td> OnDominated
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_EVENT_ON_KILL
+								</td>
+								<td> 231
+								</td>
+								<td> OnKill
+								</td>
+							</tr>
+							<tr>
+								<td> modifierfunction.MODIFIER_EVENT_ON_ASSIST
+								</td>
+								<td> 232
+								</td>
+								<td> OnAssist
+								</td>
+							</tr>
+							
+							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TEMPEST_DOUBLE
 								</td>
-								<td> 226
+								<td> 233
 								</td>
 								<td> GetModifierTempestDouble
 								</td>
@@ -15897,7 +16216,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_PRESERVE_PARTICLES_ON_MODEL_CHANGE
 								</td>
-								<td> 227
+								<td> 234
 								</td>
 								<td> PreserveParticlesOnModelChanged
 								</td>
@@ -15905,7 +16224,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_FINISHED
 								</td>
-								<td> 228
+								<td> 235
 								</td>
 								<td> OnAttackFinished
 								</td>
@@ -15913,7 +16232,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_IGNORE_COOLDOWN
 								</td>
-								<td> 229
+								<td> 236
 								</td>
 								<td> GetModifierIgnoreCooldown
 								</td>
@@ -15921,7 +16240,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_CAN_ATTACK_TREES
 								</td>
-								<td> 230
+								<td> 237
 								</td>
 								<td> GetModifierCanAttackTrees
 								</td>
@@ -15929,7 +16248,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_VISUAL_Z_DELTA
 								</td>
-								<td> 231
+								<td> 238
 								</td>
 								<td> GetVisualZDelta
 								</td>
@@ -15937,7 +16256,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_INCOMING_DAMAGE_ILLUSION
 								</td>
-								<td> 232
+								<td> 239
 								</td>
 								<td>
 								</td>
@@ -15945,7 +16264,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_DONT_GIVE_VISION_OF_ATTACKER
 								</td>
-								<td> 233
+								<td> 240
 								</td>
 								<td> GetModifierNoVisionOfAttacker
 								</td>
@@ -15953,7 +16272,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_TOOLTIP2
 								</td>
-								<td> 234
+								<td> 241
 								</td>
 								<td> OnTooltip2
 								</td>
@@ -15961,7 +16280,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY
 								</td>
-								<td> 235
+								<td> 242
 								</td>
 								<td> OnAttackRecordDestroy
 								</td>
@@ -15969,7 +16288,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PROJECTILE_OBSTRUCTION_HIT
 								</td>
-								<td> 236
+								<td> 243
 								</td>
 								<td> OnProjectileObstructionHit
 								</td>
@@ -15977,7 +16296,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPPRESS_TELEPORT
 								</td>
-								<td> 237
+								<td> 244
 								</td>
 								<td> GetSuppressTeleport
 								</td>
@@ -15985,7 +16304,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTACK_CANCELLED
 								</td>
-								<td> 238
+								<td> 245
 								</td>
 								<td> OnAttackCancelled
 								</td>
@@ -15993,7 +16312,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_SUPPRESS_CLEAVE
 								</td>
-								<td> 239
+								<td> 246
 								</td>
 								<td> GetSuppressCleave
 								</td>
@@ -16001,7 +16320,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_BOT_ATTACK_SCORE_BONUS
 								</td>
-								<td> 240
+								<td> 247
 								</td>
 								<td>BotAttackScoreBonus
 								</td>
@@ -16009,7 +16328,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACKSPEED_REDUCTION_PERCENTAGE
 								</td>
-								<td> 241
+								<td> 248
 								</td>
 								<td>GetModifierAttackSpeedReductionPercentage
 								</td>
@@ -16017,7 +16336,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_MOVESPEED_REDUCTION_PERCENTAGE
 								</td>
-								<td> 242
+								<td> 249
 								</td>
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
@@ -16025,7 +16344,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACK_WHILE_MOVING_TARGET
 								</td>
-								<td> 243
+								<td> 250
 								</td>
 								<td>
 								</td>
@@ -16033,7 +16352,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_ATTACKSPEED_PERCENTAGE
 								</td>
-								<td> 244
+								<td> 251
 								</td>
 								<td>GetModifierAttackSpeedPercentage
 								</td>
@@ -16041,16 +16360,15 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_ATTEMPT_PROJECTILE_DODGE
 								</td>
-								<td> 245
+								<td> 252
 								</td>
 								<td>OnAttemptProjectileDodge
 								</td>
 							</tr>
-					
 							<tr>
 								<td> modifierfunction.MODIFIER_EVENT_ON_PREDEBUFF_APPLIED
 								</td>
-								<td> 246
+								<td> 253
 								</td>
 								<td>OnPreDebuffApplied
 								</td>
@@ -16058,15 +16376,23 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING
 								</td>
-								<td> 247
+								<td> 254
 								</td>
 								<td>GetModifierPercentageCooldownStacking
 								</td>
 							</tr>
 							<tr>
+								<td> modifierfunction.MODIFIER_EVENT_ON_DEAGGRO
+								</td>
+								<td> 255
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
 								<td> modifierfunction.MODIFIER_FUNCTION_LAST
 								</td>
-								<td> 248
+								<td> 256
 								</td>
 								<td>
 								</td>
@@ -16074,7 +16400,7 @@ aaaabbbbccccc
 							<tr>
 								<td> modifierfunction.MODIFIER_FUNCTION_INVALID
 								</td>
-								<td> 255
+								<td> 65535
 								</td>
 								<td>
 								</td>
@@ -17315,7 +17641,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FIGHT_RECAP
 								</td>
 								<td> 27
 								</td>
@@ -17323,7 +17649,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR
 								</td>
 								<td> 28
 								</td>
@@ -17331,7 +17657,7 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_AGHANIMS_STATUS
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS
 								</td>
 								<td> 29
 								</td>
@@ -17339,9 +17665,17 @@ aaaabbbbccccc
 								</td>
 							</tr>
 							<tr>
-								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_AGHANIMS_STATUS
 								</td>
 								<td> 30
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT
+								</td>
+								<td> 31
 								</td>
 								<td>
 								</td>
@@ -19669,6 +20003,231 @@ aaaabbbbccccc
 						</table>
 					</div>
 				</div>
+				<div id='DOTA_GameMode'>
+					<div id='constantname'>
+						<p><span>DOTA_GameMode</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Enumerator
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_NONE
+								</td>
+								<td> 0
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_AP
+								</td>
+								<td> 1
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_CM
+								</td>
+								<td> 2
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_RD
+								</td>
+								<td> 3
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_SD
+								</td>
+								<td> 4
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_AR
+								</td>
+								<td> 5
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_INTRO
+								</td>
+								<td> 6
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_HW
+								</td>
+								<td> 7
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_REVERSE_CM
+								</td>
+								<td> 8
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_XMAS
+								</td>
+								<td> 9
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_TUTORIAL
+								</td>
+								<td> 10
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_MO
+								</td>
+								<td> 11
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_LP
+								</td>
+								<td> 12
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_POOL1
+								</td>
+								<td> 13
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_FH
+								</td>
+								<td> 14
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_CUSTOM
+								</td>
+								<td> 15
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_CD
+								</td>
+								<td> 16
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_BD
+								</td>
+								<td> 17
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_ABILITY_DRAFT
+								</td>
+								<td> 18
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_EVENT
+								</td>
+								<td> 19
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_ARDM
+								</td>
+								<td> 20
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_1V1MID
+								</td>
+								<td> 21
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_ALL_DRAFT
+								</td>
+								<td> 22
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_TURBO
+								</td>
+								<td> 23
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_MUTATION
+								</td>
+								<td> 24
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_GameMode.DOTA_GAMEMODE_COACHES_CHALLENGE
+								</td>
+								<td> 25
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 			<div id='jsevent'>
 				<div id='contentname'>
@@ -20164,6 +20723,11 @@ aaaabbbbccccc
 									professional team name if applicable.</td>
 							</tr>
 							<tr>
+								<td>DOTAShowProfilePage(steamID)</td>
+								<td>Yes</td>
+								<td>显示用户 个人资料 页面。相当于在游戏中点击其他用户的头像(不是英雄头像)</td>
+							</tr>
+							<tr>
 								<td>DOTAShowRankTierTooltip(uint64 steamID, enum EDOTAPlayerMMRType)</td>
 								<td>Yes</td>
 								<td>Show the rank tier tooltip for a user</td>
@@ -20179,7 +20743,7 @@ aaaabbbbccccc
 								<td>显示包含指定信息的提示栏。</td>
 							</tr>
 							<tr>
-								<td>DOTAShowTextTooltipStyled(string text, string style)</td>
+								<td>DOTAShowTextTooltipStyled(string text, panoramasymbol style)</td>
 								<td>Yes</td>
 								<td>显示包含指定信息的提示栏。同时应用名为“style”的CSS类来使用定制样式。
 								</td>
@@ -20197,7 +20761,7 @@ aaaabbbbccccc
 							</tr>
 							<tr>
 								<td>DOTAShowTitleImageTextTooltipStyled(string title, string imagePath, string text,
-									string style)</td>
+									panoramasymbol style)</td>
 								<td>Yes</td>
 								<td>显示包含指定标题、图像、文本的提示栏。同时应用名为“style”的CSS类来使用定制样式。</td>
 							</tr>
@@ -20207,7 +20771,7 @@ aaaabbbbccccc
 								<td>显示包含指定标题和文本的提示栏。</td>
 							</tr>
 							<tr>
-								<td>DOTAShowTitleTextTooltipStyled(string title, string text, string style)</td>
+								<td>DOTAShowTitleTextTooltipStyled(string title, string text, panoramasymbol style)</td>
 								<td>Yes</td>
 								<td>显示包含指定标题和文本的提示栏。同时应用名为“style”的CSS类来使用定制样式。</td>
 							</tr>
@@ -21624,7 +22188,8 @@ aaaabbbbccccc
 								<td>text-overflow: ellipsis;<br>
 									text-overflow: clip;<br>
 									text-overflow: shrink;<br>
-									text-overflow: noclip;
+									text-overflow: shrink min( 10px );<br>
+									text-overflow: noclip;<br>
 								</td>
 								<td>Controls truncation of text that doesn't fit in a panel.  "clip" means to simply 
 									truncate (on char boundaries), "ellipsis" means to end with '...', and "shrink" means 

@@ -250,7 +250,7 @@
 							<li><a href="#CCustomNetTableManager">CCustomNetTableManager</a></li>
 							<li><a href="#CDOTABaseAbility">CDOTABaseAbility</a></li>
 							<li><a href="#CDOTABaseGameMode">CDOTABaseGameMode</a></li>
-							<li><a href="#CDOTAGamerules">CDOTAGamerules</a></li>
+							<li><a href="#CDOTAGameRules">CDOTAGameRules</a></li>
 							<li><a href="#CDOTAPlayer">CDOTAPlayer</a></li>
 							<li><a href="#CDOTA_Ability_Lua">CDOTA_Ability_Lua</a></li>
 							<li><a href="#CDOTA_BaseNPC">CDOTA_BaseNPC</a></li>
@@ -399,6 +399,9 @@
 							<li><a href="#CombatClassAttack">CombatClassAttack</a></li>
 							<li><a href="#CombatClassDefend">CombatClassDefend</a></li>
 							<li><a href="#UnitRelationshipClass">UnitRelationshipClass</a></li>
+							<li><a href="#DOTAPostGameColumn_t">DOTAPostGameColumn_t</a></li>
+							<li><a href="#DOTAPostGameLayout_t">DOTAPostGameLayout_t</a></li>
+							<li><a href="#FCVARflags">FCVARflags</a></li>
 						</ol>
 					</nav>
 				</details>
@@ -1088,7 +1091,7 @@
 								</td>
 								<td> void EmitGlobalSound(string a)
 								</td>
-								<td> 为所有玩家播放给定名称的音效
+								<td> 为所有玩家播放给定名称的音效，不知道和EmitAnnouncerSound区别是啥
 								</td>
 							</tr>
 							<tr>
@@ -1097,7 +1100,7 @@
 								</td>
 								<td> void EmitSoundOn(string a, handle b)
 								</td>
-								<td> 在一个实体上播放给定名称的音效
+								<td> 在一个实体(不能是controller实体，一般是英雄或者生物实体)上播放给定名称的音效,
 								</td>
 							</tr>
 							<tr>
@@ -1107,7 +1110,7 @@
 								</td>
 								<td> void EmitSoundOnClient(string Soundname, handle player)
 								</td>
-								<td> 为指定玩家播放给定名称的音效
+								<td> 为指定玩家播放给定名称的音效,7.31有BUG，handle player不知道传什么参数能发出声音.用EmitAnnouncerSoundForPlayer代替
 								</td>
 							</tr>
 							<tr>
@@ -1115,7 +1118,7 @@
 								</td>
 								<td> void EmitSoundOnEntityForPlayer( string Soundname, handle entity, int playerID )
 								</td>
-								<td> Emit a sound on an entity for only a specific player.在一个实体上针对特定玩家播放声音。
+								<td> Emit a sound on an entity for only a specific player.在一个实体上针对特定玩家播放声音。距离影响声音大小
 								</td>
 							</tr>
 							<tr>
@@ -3143,7 +3146,11 @@
 								</td>
 								<td>Get the health of this entity.获得实体血量。</td>
 							</tr>
-
+							<tr>
+								<td>GetLeftVector</td>
+								<td>Vector GetLocalAngles( )</td>
+								<td>Get the left vector of the entity.</td>
+							</tr>
 							<tr>
 								<td>GetLocalAngles</td>
 								<td>QAngle GetLocalAngles( )</td>
@@ -3258,7 +3265,7 @@
 								</td>
 								<td> Vector GetRightVector()
 								</td>
-								<td> 获得实体的右方矢量
+								<td> Get the right vector of the entity. WARNING: This produces a left-handed coordinate system. Use GetLeftVector instead (which is aligned with the y axis of the entity). 获得实体的右方矢量
 								</td>
 							</tr>
 
@@ -3347,7 +3354,6 @@
 								<td>bool IsDOTANPC(  ) </td>
 								<td>Is this entity a Dota NPC??</td>
 							</tr>
-							<tr>
 							<tr>
 								<td>IsNPC</td>
 								<td>bool IsNPC(  ) </td>
@@ -4264,7 +4270,7 @@
 								</td>
 								<td> float GetCastPoint()
 								</td>
-								<td>获取技能的施法点.
+								<td>获取技能的施法前摇时间.
 								</td>
 							</tr>
 							<tr>
@@ -4272,7 +4278,8 @@
 								</td>
 								<td> float GetCastPointModifier()
 								</td>
-								<td>
+								<td>返回经过Modifier(不能是OVERRIDE)后，施法前摇的变化比例。没有Modifier或者GetModifierPercentageCasttime返回0时，值为1，
+									GetModifierPercentageCasttime返回100，值为0，返回80,值是0.2，返回300，值是-2，返回-100，值为2，返回500，值是6。
 								</td>
 							</tr>
 							<tr>
@@ -4446,6 +4453,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> GetEffectiveManaCost
+								</td>
+								<td> int GetEffectiveManaCost(int iLevel)
+								</td>
+								<td> 获取技能指定等级的实际蓝耗。（不是KV里的，是经过各种减蓝耗 BUFF后的蓝耗）
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.GetGoldCost"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.GetGoldCost">
 										GetGoldCost</a>
@@ -4572,6 +4587,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> IsAttributeBonus
+								</td>
+								<td> bool IsAttributeBonus()
+								</td>
+								<td>  Is this ability an Attribute Bonus.该技能是否是属性增益
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseAbility.GetSharedCooldownName"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseAbility.GetSharedCooldownName">
 										GetSharedCooldownName</a>
@@ -4647,7 +4670,7 @@
 								<td> bool IsActivated()
 								</td>
 								<td> Return whether or not this ability is activated, e.g. can be used. Disabled
-									abilities are colored black.
+									abilities are colored black.技能是否已经在等待选择目标的阶段？
 								</td>
 							</tr>
 							<tr>
@@ -5198,7 +5221,7 @@
 								</td>
 								<td> void SetOverrideCastPoint(float flCastPoint)
 								</td>
-								<td> No Description Set
+								<td> 设置覆盖施法前摇时间
 								</td>
 							</tr>
 							<tr>
@@ -5317,7 +5340,7 @@
 								<td> void UseResources(bool bMana, bool bGold, bool bCooldown)
 								</td>
 								<td> Use the ability's resources. Return true for each resource to determine which
-									resource should be used - mana, gold, and cooldown.不知道怎么用。
+									resource should be used - mana, gold, and cooldown。bCooldown为true就能使技能立即进入CD。
 								</td>
 							</tr>
 							
@@ -5531,6 +5554,14 @@
 								<td> bool GetAnnouncerDisabled()
 								</td>
 								<td> 返回游戏内播音员是否被禁用
+								</td>
+							</tr> 
+							<tr>
+								<td> GetAnnouncerGameModeAnnounceDisabled
+								</td>
+								<td> bool GetAnnouncerGameModeAnnounceDisabled()
+								</td>
+								<td> Is the announcer announcing the mode / saying Choose Your Hero on start of custom games disabled?
 								</td>
 							</tr>
 							<tr>
@@ -5873,6 +5904,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> SetAnnouncerGameModeAnnounceDisabled
+								</td>
+								<td> void SetAnnouncerGameModeAnnounceDisabled(bool enabled)
+								</td>
+								<td> Disables the announcer announcing the mode / saying Choose Your Hero on start of custom games.
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTABaseGameMode.SetBotsAlwaysPushWithHuman"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTABaseGameMode.SetBotsAlwaysPushWithHuman">
 										SetBotsAlwaysPushWithHuman</a>
@@ -6081,6 +6120,11 @@
 									dies.指定选定英雄死亡时是否播放全屏死亡覆盖效果。</td>
 							</tr>
 							<tr>
+								<td>SetDeathTipsDisabled</td>
+								<td>void SetDeathTipsDisabled(bool bDisabled ) </td>
+								<td>Disables chat tips on death. </td>
+							</tr>
+							<tr>
 								<td>SetDefaultStickyItem</td>
 								<td>void SetDefaultStickyItem(string Item )  </td>
 								<td>Sets the default sticky item in the quickbuy.设置快速购买中的默认装备</td>
@@ -6138,7 +6182,7 @@
 								</td>
 								<td> void SetForcedHUDSkin( string pValue )
 								</td>
-								<td> Specify a HUD skin that is forced on for this game mode.
+								<td> Specify a HUD skin that is forced on for this game mode.设置界面皮肤，比如aghanims_labyrinth_2021
 								</td>
 							</tr>
 							<tr>
@@ -6262,7 +6306,7 @@
 							<tr>
 								<td>SetPlayerHeroAvailabilityFiltered</td>
 								<td>void SetPlayerHeroAvailabilityFiltered(bool bFilter ) </td>
-								<td>阿哈利姆2里使用，不知道什么作用</td>
+								<td>设置玩家可以用英雄过滤器，配合AddHeroToPlayerAvailability使用</td>
 							</tr>
 							<tr>
 								<td>SetPowerRuneSpawnInterval</td>
@@ -6553,9 +6597,9 @@
 						</table>
 					</div>
 				</div>
-				<div id='CDOTAGamerules' class='classcontent'>
+				<div id='CDOTAGameRules' class='classcontent'>
 					<div id='classname'>
-						<p><span>CDOTAGamerules </span></p>
+						<p><span>CDOTAGameRules </span></p>
 						<p>全局变量：GameRules</p>
 					</div>
 					<div id='apicontent'>
@@ -6597,11 +6641,59 @@
 								</td>
 							</tr>
 							<tr>
+								<td>AddHeroIDToBlacklist
+								</td>
+								<td>void AddHeroIDToBlacklist(int heroID)
+								</td>
+								<td>Add the hero ID to the hero blacklist if it is not already present。使用英雄ID把英雄加入黑名单。
+								</td>
+							</tr>
+							<tr>
+								<td>AddHeroIDToWhitelist
+								</td>
+								<td>void AddHeroIDToWhitelist(int heroID)
+								</td>
+								<td>Add the hero ID to the hero whitelist if it is not already present。使用英雄ID把英雄加入白名单。
+								</td>
+							</tr>
+							<tr>
+								<td>AddHeroToBlacklist
+								</td>
+								<td>void AddHeroToBlacklist(string heroName)
+								</td>
+								<td>Add the hero to the hero blacklist if it is not already present。使用英雄名称把英雄加入黑名单。
+								</td>
+							</tr>
+							<tr>
+								<td>AddHeroToWhitelist
+								</td>
+								<td>void AddHeroToWhitelist(string heroName)
+								</td>
+								<td>Add the hero to the hero whitelist if it is not already present。使用英雄名称把英雄加入白名单。
+								</td>
+							</tr>
+							<tr>
 								<td>AddItemToWhiteList
 								</td>
 								<td>void AddItemToWhiteList(string itemName)
 								</td>
 								<td>Add an item to the whitelist.
+								</td>
+							</tr>
+							<tr>
+								<td>AddHeroToPlayerAvailability
+								</td>
+								<td>void AddHeroToPlayerAvailability(int playerID, int heroID)
+								</td>
+								<td>Adds hero of given ID to available heroes of player of given ID。添加玩家可选的英雄。先启用SetPlayerHeroAvailabilityFiltered，然后在选人之前设置玩家可选的英雄。
+								</td>
+							</tr>
+							<tr>
+								<td>ClearPlayerHeroAvailability
+								</td>
+								<td>void ClearPlayerHeroAvailability(int playerID)
+								</td>
+								<td>Clears available heroes of player of given ID。清除玩家可选的英雄列表
 								</td>
 							</tr>
 							<tr>
@@ -6650,6 +6742,31 @@
 								<td>Fills all the teams with bots if cheat mode is enabled.如果作弊模式开启，用BOT填满所有队伍。
 								</td>
 							</tr>
+							<tr>
+								<td>ClearHeroBlacklist
+								</td>
+								<td>void ClearHeroBlacklist( )
+								</td>
+								<td>Clears the hero blacklist
+								</td>
+							</tr>
+							<tr>
+								<td>ClearHeroWhitelist
+								</td>
+								<td>void ClearHeroWhitelist( )
+								</td>
+								<td>Clears the hero whitelist
+								</td>
+							</tr>
+							<tr>
+								<td>ClearRiverPaint
+								</td>
+								<td>void ClearRiverPaint( )
+								</td>
+								<td>Clears the current river paint
+								</td>
+							</tr>
+							
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTAGamerules.Defeated"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTAGamerules.Defeated">
@@ -6841,7 +6958,7 @@
 								</td>
 								<td> float GetItemStockDuration(team: DOTATeam_t, itemName: string, playerId: PlayerID )
 								</td>
-								<td> Get the time it takes to add a new item to stock.获取将新物品添加到库存所需的时间
+								<td> Get the time it takes to add a new item to stock.获取将新物品添加到库存所需的时间(客户端有可能是GetIetmStockDuration)
 								</td>
 							</tr>
 							<tr>
@@ -6975,6 +7092,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td>IsDev
+								</td>
+								<td> bool IsDev( )
+								</td>
+								<td> 不知道什么意思，阿哈利姆2里面的
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTAGamerules.IsGamePaused"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTAGamerules.IsGamePaused">
 										IsGamePaused</a>
@@ -6984,7 +7109,14 @@
 								<td> 返回游戏是否被暂停了。
 								</td>
 							</tr>
-
+							<tr>
+								<td>IsHeroEnabledViaLists
+								</td>
+								<td> bool IsHeroEnabledViaLists(string heroName )
+								</td>
+								<td>  Is the hero not blacklisted, and is it either whitelisted or the whitelist is empty?
+								</td>
+							</tr>
 							<tr>
 								<td>IsHeroRespawnEnabled
 								</td>
@@ -7104,6 +7236,38 @@
 								</td>
 							</tr>
 							<tr>
+								<td>RemoveHeroFromBlacklist
+								</td>
+								<td> void RemoveHeroFromBlacklist(string heroName)
+								</td>
+								<td> Remove the hero from the hero blacklist if present
+								</td>
+							</tr>
+							<tr>
+								<td>RemoveHeroFromWhitelist
+								</td>
+								<td> void RemoveHeroFromWhitelist(string heroName)
+								</td>
+								<td> Remove the hero from the hero whitelist if present
+								</td>
+							</tr>
+							<tr>
+								<td>RemoveHeroIDFromBlacklist
+								</td>
+								<td> void RemoveHeroIDFromBlacklist(int heroID)
+								</td>
+								<td> Remove the hero ID from the hero blacklist if present
+								</td>
+							</tr>
+							<tr>
+								<td>RemoveHeroIDFromWhitelist
+								</td>
+								<td> void RemoveHeroIDFromWhitelist(int heroID)
+								</td>
+								<td> Remove the hero ID from the hero whitelist if present
+								</td>
+							</tr>
+							<tr>
 								<td>
 									RemoveItemFromWhiteList
 								</td>
@@ -7112,6 +7276,7 @@
 								<td> Remove an item from the whitelist.
 								</td>
 							</tr>
+							
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTAGamerules.ResetDefeated"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTAGamerules.ResetDefeated">
@@ -7148,6 +7313,14 @@
 								<td> void ResetToHeroSelection()
 								</td>
 								<td> 重置游戏到英雄选择阶段。
+								</td>
+							</tr>
+							<tr>
+								<td> ResetPlayer
+								</td>
+								<td> void ResetPlayer(int ID)
+								</td>
+								<td> Resets the player of a given ID。设置玩家的ID
 								</td>
 							</tr>
 							<tr>
@@ -7220,7 +7393,7 @@
 								</td>
 								<td> void SetCustomGameAllowHeroPickMusic( bool_1 )
 								</td>
-								<td> Sets a flag to enable/disable the default music handling code for custom games
+								<td> Sets a flag to enable/disable the default music handling code for custom games。如果换了默认音乐包就不起作用。
 								</td>
 							</tr>
 							<tr>
@@ -7333,7 +7506,7 @@
 								</td>
 								<td> void SetEnableAlternateHeroGrids( bool )
 								</td>
-								<td> 设置启用备用英雄网格(阿哈利姆2里使用，不知道什么作用)
+								<td> Allow alternate hero grids to be used (DOTA+, etc). True by default.设置启用备用英雄网格(阿哈利姆2里使用，不知道什么作用)
 								</td>
 							</tr>
 							<tr>
@@ -7458,6 +7631,14 @@
 								</td>
 							</tr>
 							<tr>
+								<td> SetHideBlacklistedHeroes
+								</td>
+								<td> void SetHideBlacklistedHeroes(bool)
+								</td>
+								<td> Should blacklisted heroes be hidden, or just dimmed, in hero picking? 在选人阶段是否隐藏黑名单中的英雄。true完全不显示，false显示为灰色
+								</td>
+							</tr>
+							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTAGamerules.SetHideKillMessageHeaders"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTAGamerules.SetHideKillMessageHeaders">
 										SetHideKillMessageHeaders</a>
@@ -7534,6 +7715,7 @@
 								<td> 设置在结束游戏后服务器与玩家断线前的时间
 								</td>
 							</tr>
+							
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTAGamerules.SetPreGameTime"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTAGamerules.SetPreGameTime">
@@ -7542,6 +7724,14 @@
 								<td> void SetPreGameTime(float time)
 								</td>
 								<td> 设置刚进入游戏与游戏正式开始之间的倒计时时间
+								</td>
+							</tr>
+							<tr>
+								<td>SetRiverPaint
+								</td>
+								<td> void SetRiverPaint(int style, float time )
+								</td>
+								<td> Paints the river for a duration
 								</td>
 							</tr>
 							<tr>
@@ -7686,6 +7876,14 @@
 								<td> void SetWhiteListEnabled( bool whiteListEnabled )
 								</td>
 								<td> Item whitelist functionality enable/disable.
+								</td>
+							</tr>
+							<tr>
+								<td> ShouldHideBlacklistedHeroes
+								</td>
+								<td> bool ShouldHideBlacklistedHeroes()
+								</td>
+								<td> Are blacklisted heroes hidden, or just dimmed, in hero picking?
 								</td>
 							</tr>
 							<tr>
@@ -7921,7 +8119,7 @@
 							<tr>
 								<td><a href="file:///C|/Users/Administrator/Desktop/1">GetCastPoint </a></td>
 								<td>float GetCastPoint(  ) </td>
-								<td>Return cast point of this ability.施法点</td>
+								<td>Return cast point of this ability.施法前摇时间</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_Ability_Lua.GetCastRange"
@@ -7936,7 +8134,7 @@
 							<tr>
 								<td> GetCastRangeBonus
 								</td>
-								<td> int GetCastRangeBonus( hTarget，iPseudoCastRange )
+								<td> int GetCastRangeBonus( handle Target，int PseudoCastRange )
 								</td>
 								<td> 
 								</td>
@@ -8046,7 +8244,7 @@
 								</td>
 								<td> string GetIntrinsicModifierName()
 								</td>
-								<td> 返回被该技能被动施加的Mordifier
+								<td> 返回被该技能被动施加的Modifier
 								</td>
 							</tr>
 							<tr>
@@ -8745,7 +8943,7 @@
 							<tr>
 								<td>ForcePlayActivityOnce</td>
 								<td>void ForcePlayActivityOnce(nt nActivity ) </td>
-								<td>Play an activity once, and then go back to idle. 强制执行一个动作，然后回到空闲。</td>
+								<td>Play an activity once, and then go back to idle. 强制执行一个动作，然后回到空闲。可以用来停止一个默认的动作，然后播放IDLE</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.GetAbilityByIndex"
@@ -8792,9 +8990,9 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.GetAggroTarget">
 										GetAggroTarget</a>
 								</td>
-								<td> handle GetAggroTarget()Returns this unit's aggro target.
+								<td> handle GetAggroTarget()
 								</td>
-								<td> 获取该单位的仇恨目标。
+								<td> Returns this unit's aggro target.获取该单位的仇恨目标。
 								</td>
 							</tr>
 							<tr>
@@ -9005,15 +9203,15 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.GetCastPoint">
 										GetCastPoint</a>
 								</td>
-								<td> float GetCastPoint(bool a)
+								<td> float GetCastPoint(bool bAttack)
 								</td>
-								<td> Parameter: bAttack
+								<td> 获取角色的施法前摇时间？  实际上是获取的攻击前摇时间，参数设置成true和false 好像没区别
 								</td>
 							</tr>
 							<tr>
 								<td>GetCastRangeBonus</td>
 								<td>float GetCastRangeBonus(  ) </td>
-								<td>获取修改后的施法距离。</td>
+								<td>获取英雄的施法距离的增加值</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.GetCloneSource"
@@ -9038,7 +9236,7 @@
 							<tr>
 								<td>GetCooldownReduction </td>
 								<td>float GetCooldownReduction(  ) </td>
-								<td>&nbsp;</td>
+								<td>获取英雄的CD的减少值</td>
 							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_BaseNPC.GetConstantBasedManaRegen"
@@ -9057,7 +9255,7 @@
 								</td>
 								<td> float GetCreationTime()
 								</td>
-								<td> No Description Set
+								<td> 获取英雄创建的时间,这个时间是从选人开始到英雄创建时的间隔时间
 								</td>
 							</tr>
 							<tr>
@@ -10247,7 +10445,7 @@
 								</td>
 								<td> bool IsReincarnating()
 								</td>
-								<td> 返回该单位是否为转世？？？
+								<td> 是否正在原地复活中
 								</td>
 							</tr>
 							<tr>
@@ -10646,7 +10844,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA BaseNPC.ReduceMana">
 										ReduceMana</a>
 								</td>
-								<td> void ReduceMana(float Amount )
+								<td> float ReduceMana(float Amount )
 								</td>
 								<td> 移除单位的魔力，不过是用在该单位非自愿失去魔力，而非用在使用技能消耗魔力的情况。
 								</td>
@@ -11383,7 +11581,7 @@
 					<div id='classname'>
 						<p><span>CDOTA_BaseNPC_Creature</span></p>
 						<p>extends:<a href='#CDOTA_BaseNPC'>CDOTA_BaseNPC</a></p>
-						<p>全局变量：未知</p>
+						<p>全局变量：未知。BaseClass为npc_dota_creature才能使用</p>
 					</div>
 					<div id='apicontent'>
 						<table>
@@ -11404,7 +11602,7 @@
 								</td>
 								<td> void AddItemDrop(handle a)
 								</td>
-								<td> 为该生物添加特别的道具掉落
+								<td> 为该生物添加特别的道具掉落，好像已经无效了
 								</td>
 							</tr>
 
@@ -12369,9 +12567,9 @@
 								</td>
 							</tr>
 							<tr>
-								<td> Script_ModifyGoldFiltered
+								<td> ModifyGoldFiltered
 								</td>
-								<td> int Script_ModifyGoldFiltered( int GoldChange, bool Reliabe, int Reason )
+								<td> int ModifyGoldFiltered( int GoldChange, bool Reliabe, int Reason )
 								</td>
 								<td> Gives this hero some gold, using the gold filter if extra filtering is on. 如果设置了金钱过滤器，但又要单独给英雄金钱，使用这个API
 								</td>
@@ -12625,7 +12823,7 @@
 								</td>
 								<td> bool WillReincarnate()
 								</td>
-								<td>会轮回吗？？？</td>
+								<td>可以原地复活吗(骷髅王大)</td>
 							</tr>
 						</table>
 					</div>
@@ -14543,7 +14741,13 @@
 								</td>
 								<td> 清除正补连中数据。</td>
 							</tr>
-
+							<tr>
+								<td> ClearPlayer
+								</td>
+								<td> void ClearPlayer(int PlayerID)
+								</td>
+								<td> 清除玩家。</td>
+							</tr>
 							<tr>
 								<td> <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API/CDOTA_PlayerResource.ClearRawPlayerDamageMatrix"
 										title="Dota 2 Workshop Tools/Scripting/API/CDOTA PlayerResource.ClearRawPlayerDamageMatrix">
@@ -16518,9 +16722,9 @@
 										RegisterCommand</a>
 								</td>
 								<td> void RegisterCommand(string variableName, handle function, string helpText, int
-									flags)
+									FCVARflags)
 								</td>
-								<td> 注册一个控制台指令.
+								<td> 注册一个控制台指令.注意，这里注册的命令要在控制台里输入，不是在游戏里的聊天框里
 								</td>
 							</tr>
 
@@ -16529,7 +16733,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/Convars.RegisterConvar">
 										RegisterConvar</a>
 								</td>
-								<td> void RegisterConvar(string name, string defaultValue, string helpText, int flags)
+								<td> void RegisterConvar(string name, string defaultValue, string helpText, int FCVARflags)
 								</td>
 								<td> 注册一个新的控制台变量.
 								</td>
@@ -16949,7 +17153,7 @@
 				<div id='CBasePlayerController' class='classcontent'>
 					<div id='classname'>
 						<p><span>CBasePlayerController</span></p>
-						<p>extends:<a href='#CBaseCombatCharacter'>CBaseCombatCharacter</a></p>
+						<p>extends:<a href='#CBaseCombatCharacter'>CBaseEntity</a></p>
 						<p>全局变量：未知</p>
 					</div>
 					<div id='apicontent'>
@@ -17222,7 +17426,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.Axis">
 										Axis</a>
 								</td>
-								<td> void Axis(Vector a, Quaternion b, float c, bool d, float e)
+								<td> void Axis(Vector a, unknown b, float c, bool d, float e)
 								</td>
 								<td> 绘制一个轴线。在世界空间中指定出发点和方向
 								</td>
@@ -17244,7 +17448,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.BoxAngles">
 										BoxAngles</a>
 								</td>
-								<td> void BoxAngles(Vector a, Vector b, Vector c, Quaternion d, int e, int f, int g, int
+								<td> void BoxAngles(Vector a, Vector b, Vector c, unknown d, int e, int f, int g, int
 									h, bool i, float j)
 								</td>
 								<td> 在出发点绘制一个定向盒。在世界空间中指定边界
@@ -17256,7 +17460,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.Capsule">
 										Capsule</a>
 								</td>
-								<td> void Capsule(Vector a, Quaternion b, float c, float d, int e, int f, int g, int h,
+								<td> void Capsule(Vector a, unknown b, float c, float d, int e, int f, int g, int h,
 									bool i, float j)
 								</td>
 								<td> 绘制一个胶囊体。在世界空间中指定基部
@@ -17268,7 +17472,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.Circle">
 										Circle</a>
 								</td>
-								<td> void Circle(Vector a, Quaternion b, float c, int d, int e, int f, int g, bool h,
+								<td> void Circle(Vector a, unknown b, float c, int d, int e, int f, int g, bool h,
 									float i)
 								</td>
 								<td> 绘制一个圆。在世界空间中指定中心
@@ -17326,7 +17530,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.Cross3DOriented">
 										Cross3DOriented</a>
 								</td>
-								<td> void Cross3DOriented(Vector a, Quaternion b, float c, int d, int e, int f, int g,
+								<td> void Cross3DOriented(Vector a, unknown b, float c, int d, int e, int f, int g,
 									bool h, float i)
 								</td>
 								<td> 绘制一个指向的十字。在世界空间中指定出发点
@@ -17517,7 +17721,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.SweptBox">
 										SweptBox</a>
 								</td>
-								<td> void SweptBox(Vector a, Vector b, Vector c, Vector d, Quaternion e, int f, int g,
+								<td> void SweptBox(Vector a, Vector b, Vector c, Vector d, unknown e, int f, int g,
 									int h, int i, float j)
 								</td>
 								<td> 绘制一个扫描盒。在世界空间中指定结束点并在本地空间中指定边界
@@ -17575,7 +17779,7 @@
 										title="Dota 2 Workshop Tools/Scripting/API/CDebugOverlayScriptHelper.VectorText3D">
 										VectorText3D</a>
 								</td>
-								<td> void VectorText3D(Vector a, Quaternion b, string c, int d, int e, int f, int g,
+								<td> void VectorText3D(Vector a, unknown b, string c, int d, int e, int f, int g,
 									bool h, float i)
 								</td>
 								<td> 绘制3D文本。在世界空间中指定出发点和方向
@@ -21282,23 +21486,28 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_TOP_BAR</td>
+								<td>DOTA_HUD_VISIBILITY_FIGHT_RECAP</td>
 								<td>27</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_CUSTOMUI_BEHIND_HUD_ELEMENTS </td>
+								<td>DOTA_HUD_VISIBILITY_TOP_BAR</td>
 								<td>28</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_AGHANIMS_STATUS</td>
+								<td>DOTA_HUD_CUSTOMUI_BEHIND_HUD_ELEMENTS </td>
 								<td>29</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_HUD_VISIBILITY_COUNT</td>
+								<td>DOTA_HUD_VISIBILITY_AGHANIMS_STATUS</td>
 								<td>30</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_HUD_VISIBILITY_COUNT</td>
+								<td>31</td>
 								<td></td>
 							</tr>
 						</table>
@@ -22009,315 +22218,365 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_VOICE</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_1 </td>
 								<td>28</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WEAPON_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_2 </td>
 								<td>29</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_PERSONA_1_START</td>
-								<td>29</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_3 </td>
 								<td>30</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_4 </td>
 								<td>31</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_5 </td>
 								<td>32</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_HEAD_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_6 </td>
 								<td>33</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_7 </td>
 								<td>34</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ARMS_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_8</td>
 								<td>35</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_EFFECTS_9 </td>
 								<td>36</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BELT_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_VOICE</td>
 								<td>37</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_NECK_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_WEAPON_PERSONA_1</td>
 								<td>38</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BACK_PERSONA_1</td>
+								<td>DOTA_LOADOUT_PERSONA_1_START</td>
+								<td>38</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON_PERSONA_1</td>
 								<td>39</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_LEGS_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_WEAPON2_PERSONA_1 </td>
 								<td>40</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_OFFHAND_WEAPON2_PERSONA_1</td>
 								<td>41</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TAIL_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_HEAD_PERSONA_1</td>
 								<td>42</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MISC_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_SHOULDER_PERSONA_1</td>
 								<td>43</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_ARMS_PERSONA_1</td>
 								<td>44</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_ARMOR_PERSONA_1</td>
 								<td>45</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_BELT_PERSONA_1</td>
 								<td>46</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1 </td>
+								<td>DOTA_LOADOUT_TYPE_NECK_PERSONA_1</td>
 								<td>47</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_BACK_PERSONA_1</td>
 								<td>48</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_LEGS_PERSONA_1</td>
 								<td>49</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_GLOVES_PERSONA_1 </td>
 								<td>50</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_TAIL_PERSONA_1 </td>
 								<td>51</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_MISC_PERSONA_1</td>
 								<td>52</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_BODY_HEAD_PERSONA_1 </td>
 								<td>53</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_MOUNT_PERSONA_1 </td>
 								<td>54</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1</td>
+								<td>DOTA_LOADOUT_TYPE_SUMMON_PERSONA_1</td>
 								<td>55</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_PERSONA_1_END</td>
+								<td>DOTA_LOADOUT_TYPE_SHAPESHIFT_PERSONA_1 </td>
 								<td>56</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_VOICE_PERSONA_1</td>
-								<td>56</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_PERSONA_SELECTOR</td>
+								<td>DOTA_LOADOUT_TYPE_TAUNT_PERSONA_1</td>
 								<td>57</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_COURIER</td>
+								<td>DOTA_LOADOUT_TYPE_AMBIENT_EFFECTS_PERSONA_1</td>
 								<td>58</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_PLAYER_LOADOUT_START</td>
-								<td>58</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_LOADOUT_TYPE_ANNOUNCER</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_ATTACK_PERSONA_1</td>
 								<td>59</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MEGA_KILLS </td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY1_PERSONA_1</td>
 								<td>60</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MUSIC </td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY2_PERSONA_1</td>
 								<td>61</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WARD</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY3_PERSONA_1</td>
 								<td>62</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_HUD_SKIN</td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY4_PERSONA_1</td>
 								<td>63</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_LOADING_SCREEN </td>
+								<td>DOTA_LOADOUT_TYPE_ABILITY_ULTIMATE_PERSONA_1</td>
 								<td>64</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_WEATHER</td>
+								<td>DOTA_LOADOUT_PERSONA_1_END</td>
 								<td>65</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_HEROIC_STATUE</td>
+								<td>DOTA_LOADOUT_TYPE_VOICE_PERSONA_1</td>
+								<td>65</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_PERSONA_SELECTOR</td>
 								<td>66</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_MULTIKILL_BANNER </td>
+								<td>DOTA_LOADOUT_TYPE_COURIER</td>
 								<td>67</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_CURSOR_PACK</td>
+								<td>DOTA_PLAYER_LOADOUT_START</td>
+								<td>67</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_ANNOUNCER</td>
 								<td>68</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TELEPORT_EFFECT</td>
+								<td>DOTA_LOADOUT_TYPE_MEGA_KILLS </td>
 								<td>69</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_BLINK_EFFECT</td>
+								<td>DOTA_LOADOUT_TYPE_MUSIC </td>
 								<td>70</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_EMBLEM</td>
+								<td>DOTA_LOADOUT_TYPE_WARD</td>
 								<td>71</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_TERRAIN</td>
+								<td>DOTA_LOADOUT_TYPE_HUD_SKIN</td>
 								<td>72</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_RADIANT_CREEPS</td>
+								<td>DOTA_LOADOUT_TYPE_LOADING_SCREEN </td>
 								<td>73</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_DIRE_CREEPS </td>
+								<td>DOTA_LOADOUT_TYPE_WEATHER</td>
 								<td>74</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_RADIANT_TOWER</td>
+								<td>DOTA_LOADOUT_TYPE_HEROIC_STATUE</td>
 								<td>75</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_LOADOUT_TYPE_DIRE_TOWER</td>
+								<td>DOTA_LOADOUT_TYPE_MULTIKILL_BANNER </td>
 								<td>76</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_CURSOR_PACK</td>
+								<td>77</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_TELEPORT_EFFECT</td>
+								<td>78</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_BLINK_EFFECT</td>
+								<td>79</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_EMBLEM</td>
+								<td>80</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_TERRAIN</td>
+								<td>81</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_RADIANT_CREEPS</td>
+								<td>82</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_DIRE_CREEPS </td>
+								<td>83</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_RADIANT_TOWER</td>
+								<td>84</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_DIRE_TOWER</td>
+								<td>85</td>
 								<td></td>
 							</tr>
 
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_VERSUS_SCREEN</td>
-								<td>77</td>
+								<td>86</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_STREAK_EFFECT</td>
-								<td>78</td>
+								<td>87</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_KILL_EFFECT</td>
-								<td>79</td>
+								<td>88</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_DEATH_EFFECT</td>
-								<td>80</td>
+								<td>89</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_HEAD_EFFECT</td>
-								<td>81</td>
+								<td>90</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_MAP_EFFECT</td>
-								<td>82</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>DOTA_PLAYER_LOADOUT_END</td>
-								<td>83</td>
+								<td>91</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_COURIER_EFFECT</td>
-								<td>83</td>
+								<td>92</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_LOADOUT_TYPE_RADIANT_SIEGE_CREEPS</td>
+								<td>93</td>
 								<td></td>
 							</tr>
 							
 							<tr>
+								<td>DOTA_PLAYER_LOADOUT_END</td>
+								<td>94</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td>DOTA_LOADOUT_TYPE_NONE</td>
-								<td>84</td>
+								<td>95</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>DOTA_LOADOUT_TYPE_COUNT</td>
-								<td>85</td>
+								<td>96</td>
 								<td></td>
 							</tr>
 						</table>
@@ -24755,23 +25014,28 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_TOP_BAR</td>
+								<td>DOTA_DEFAULT_UI_FIGHT_RECAP</td>
 								<td>27</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS</td>
+								<td>DOTA_DEFAULT_UI_TOP_BAR</td>
 								<td>28</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_AGHANIMS_STATUS</td>
+								<td>DOTA_DEFAULT_UI_CUSTOMUI_BEHIND_HUD_ELEMENTS</td>
 								<td>29</td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>DOTA_DEFAULT_UI_ELEMENT_COUNT</td>
+								<td>DOTA_DEFAULT_UI_AGHANIMS_STATUS</td>
 								<td>30</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>DOTA_DEFAULT_UI_ELEMENT_COUNT</td>
+								<td>31</td>
 								<td></td>
 							</tr>
 						</table>
@@ -27182,6 +27446,15 @@
 								<td>
 								</td>
 							</tr>
+							<tr>
+								<td>ACT_DOTA_RUN_RARE
+								</td>
+								<td> 1761
+								</td>
+								<td>
+								</td>
+							</tr>
+		
 						</table>
 					</div>
 				</div>
@@ -27776,7 +28049,7 @@
 								<td> 6</td>
 								<td> GetModifierProcAttack_ConvertPhysicalToMagical
 								</td>
-								<td>7.31加入，不知道怎么用
+								<td>7.31加入，不知道怎么用,这个应该是亡魂胸针所用的
 								</td>
 							</tr>
 							<tr>
@@ -28047,7 +28320,7 @@
 								<td> MODIFIER_PROPERTY_ATTACK_POINT_CONSTANT </td>
 								<td> 38</td>
 								<td> GetModifierAttackPointConstant </td>
-								<td>可以理解为普通攻击前摇。返回负数无效，自身不能叠加，相同BUFF以生效最早为准。
+								<td>设置普通攻击前摇，数值大概是2:1的关系(比如设置为2，实际为1)。返回0和负数无效，自身不能叠加，相同BUFF以生效最早为准。
 									。不需要使用SetHasCustomTransmitterData。
 								</td>
 							</tr>
@@ -28480,8 +28753,14 @@
 									不需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
+								<td> MODIFIER_PROPERTY_EXTRA_MANA_BONUS_PERCENTAGE </td>
+								<td> 94</td>
+								<td> GetModifierExtraManaBonusPercentage </td>
+								<td>  </td>
+							</tr>
+							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE </td>
-								<td>94</td>
+								<td>95</td>
 								<td> GetModifierExtraHealthPercentage </td>
 								<td> Increases the maximum health of the parent by a percentage returned to it. Can
 									return negative values. Ignores current health.	百分比增加或减少总血量。减少血量过多时,也会出死亡BUG。
@@ -28489,7 +28768,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE </td>
-								<td>95</td>
+								<td>96</td>
 								<td> GetModifierExtraManaPercentage </td>
 								<td> 百分比增加或减少总蓝量。减少过多时，蓝条会消失。增加总蓝量时，不影响当前蓝量。可以返回负数，自身可叠加。
 									不需要使用SetHasCustomTransmitterData。</td>
@@ -28497,7 +28776,7 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS </td>
-								<td> 96</td>
+								<td> 97</td>
 								<td> GetModifierBonusStats_Strength </td>
 								<td> Increases the strength stat of the parent by a constant returned to it. Can return
 									negative values.以绿字形式增加或者减少力量。当增加力量时，总血量变化的同时也影响当前血量。可以返回负数，自身可叠加，但是最多减到0力量。
@@ -28506,14 +28785,14 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS </td>
-								<td> 97</td>
+								<td> 98</td>
 								<td> GetModifierBonusStats_Agility </td>
 								<td> Increases the agility stat of the parent by a constant returned to it. Can return
 									negative values. 以绿字形式增加或者减少敏捷。可以返回负数，自身可叠加，但是最多减到0敏捷。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS </td>
-								<td> 98</td>
+								<td> 99</td>
 								<td> GetModifierBonusStats_Intellect </td>
 								<td> Increases the intelligence stat of the parent by a constant returned to it. Can
 									return negative values.以绿字形式增加或者减少智力。当增加智力时，总蓝量变化的同时也会影响当前血量。可以返回负数，自身可叠加，但是最多减到0智力。
@@ -28521,26 +28800,26 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE</td>
-								<td> 99</td>
+								<td> 100</td>
 								<td> GetModifierBonusStats_Strength_Percentage </td>
 								<td>好像已经无效了 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_AGILITY_BONUS_PERCENTAGE</td>
-								<td> 100</td>
+								<td> 101</td>
 								<td> GetModifierBonusStats_Agility_Percentage </td>
 								<td> 好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_STATS_INTELLECT_BONUS_PERCENTAGE</td>
-								<td> 101</td>
+								<td> 102</td>
 								<td> GetModifierBonusStats_Intellect_Percentage </td>
 								<td> 好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_CAST_RANGE_BONUS </td>
-								<td> 102</td>
+								<td> 103</td>
 								<td> GetModifierCastRangeBonus </td>
 								<td> Increases the cast range of the parent by a constant returned to it. Can return
 									negative values.只能增加所有技能和物品的施法距离,不能返回负数，无法减小，自身不叠加,相同BUFF以数值大的为准。
@@ -28549,34 +28828,34 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_CAST_RANGE_BONUS_PERCENTAGE</td>
-								<td> 103</td>
+								<td> 104</td>
 								<td> GetModifierCastRangeBonusPercentage </td>
 								<td> 7.31加入，暂时不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_TARGET</td>
-								<td> 104</td>
+								<td> 105</td>
 								<td>GetModifierCastRangeBonusTarget</td>
 								<td>增加 施法者 对 拥有此BUFF单位的  施法距离。但是不会改变施法者技能的施法范围圈。不能返回负数，自身不叠加，
 									相同BUFF以数值大的为准。不需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING</td>
-								<td> 105</td>
+								<td> 106</td>
 								<td>GetModifierCastRangeBonusStacking</td>
 								<td>增加或者减少所有技能和物品的施法距离,可返回负数，自身可叠加，无论负数多小，都只能减少到一个最小施法距离。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData（影响 显示施法范围的圈）。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BASE_OVERRIDE</td>
-								<td> 106</td>
+								<td> 107</td>
 								<td>GetModifierAttackRangeOverride</td>
 								<td>直接设置基础攻击距离，必须大于0。不能返回负数，自身不叠加，相同BUFF以数值小的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS </td>
-								<td> 107</td>
+								<td> 108</td>
 								<td> GetModifierAttackRangeBonus </td>
 								<td> Increases the attack range of the parent by a constant returned to it. Can return
 									negative values.以绿字形式增加或者减少攻击距离，可以返回负数，自身可叠加,最少减到0,但是已经无法攻击了。
@@ -28584,14 +28863,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_UNIQUE </td>
-								<td> 108</td>
+								<td> 109</td>
 								<td> GetModifierAttackRangeBonusUnique </td>
 								<td>以绿字形式增加攻击距离，不能返回负数，自身不叠加，相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_RANGE_BONUS_PERCENTAGE</td>
-								<td> 109</td>
+								<td> 110</td>
 								<td>GetModifierAttackRangeBonusPercentage</td>
 								<td>以绿字形式百分比增加或减少攻击距离,可以返回负数,自身可叠加，最少减到0，但是已经无法攻击了。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。
@@ -28600,7 +28879,7 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_MAX_ATTACK_RANGE</td>
-								<td> 110 </td>
+								<td> 111 </td>
 								<td> GetModifierMaxAttackRange </td>
 								<td>设置攻击距离最小值,当前攻击距离比最小值低时,系统会加 绿字 补偿到最小值，绿字补偿会 根据装备和BUFF变化。
 									比如最小值设置为700,当前攻击距离为600,没装备和BUFF时，面板数据是600+100，这个100就是系统的补偿。这时装备一个魔龙枪,
@@ -28611,27 +28890,27 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS </td>
-								<td> 111</td>
+								<td> 112</td>
 								<td> GetModifierProjectileSpeedBonus </td>
 								<td> Increases the projectile speed of attacks sourced by the parent by a constant
 									returned to it. Can return negative values.增加或者减少普通攻击弹道速度。可以返回负数值,自身可叠加，但是为0时就已经攻击不到人了。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS_PERCENTAGE </td>
-								<td> 112</td>
+								<td> 113</td>
 								<td> GetModifierProjectileSpeedBonusPercentage </td>
 								<td> 好像已经失效了</td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_PROJECTILE_NAME</td>
-								<td> 113/td>
+								<td> 114/td>
 								<td>GetModifierProjectileName</td>
 								<td>设置普攻攻击弹道特效,比如冰眼攻击特效"particles/items2_fx/skadi_projectile.vpcf"</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REINCARNATION </td>
-								<td>114</td>
+								<td>115</td>
 								<td> ReincarnateTime </td>
 								<td>设置原地复活时间,返回大于0的值就能和盾，骷髅王大一样原地复活。不能返回小于等于0的值，否则不能原地复活，就是正常死亡复活流程了。
 									自身不能叠加，相同BUFF以先 生效的为准。
@@ -28640,7 +28919,7 @@
 
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME </td>
-								<td> 115</td>
+								<td> 116</td>
 								<td> GetModifierConstantRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
 									negative values.增加或者减少复活时间，可返回负数值，负数是减少复活时间，自身不能叠加，相同BUFF以先 生效的为准。
@@ -28648,7 +28927,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE </td>
-								<td> 116</td>
+								<td> 117</td>
 								<td> GetModifierPercentageRespawnTime </td>
 								<td> Increases the respawn time of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少复活时间，可以返回负数，注意这里负数是增加复活时间，比如-1，是增加100%的复活时间，0.5是减少50%的复活时间。
@@ -28656,14 +28935,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_RESPAWNTIME_STACKING </td>
-								<td> 117</td>
+								<td> 118</td>
 								<td> GetModifierStackingRespawnTime </td>
 								<td> Increases the respawn time of the parent by a constant returned to it. Can return
 									negative values. Stacks with other modifiers.增加或减少复活时间,可以返回负数，负数是减少复活时间，自身可以叠加。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE </td>
-								<td> 118</td>
+								<td> 119</td>
 								<td> GetModifierPercentageCooldown </td>
 								<td> Increases the cooldown of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少所有技能和物品的冷却时间。注意返回正数是减少冷却,
@@ -28674,26 +28953,26 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_ONGOING</td>
-								<td> 119</td>
+								<td> 120</td>
 								<td>GetModifierPercentageCooldownOngoing</td>
 								<td>好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_CASTTIME_PERCENTAGE </td>
-								<td> 120</td>
+								<td> 121</td>
 								<td> GetModifierPercentageCasttime </td>
 								<td> Increases the cast time of the parent's abilities by a percentage returned to it.
-									Can return negative values.百分比增加或减少施法时间,返回正数是减少。可以返回负数，返回0不生效，自身不叠加,相同BUFF以数值小的为准（0不考虑）。 </td>
+									Can return negative values.百分比增加或减少施法时间,返回0-100(100就是施法时间就是0了，所以返回值超过100效果也是100)是减少施法时间,负数(可以很大)是增加，返回0不生效，自身不叠加,相同BUFF以数值小的为准（0不考虑）。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ATTACK_ANIM_TIME_PERCENTAGE </td>
-								<td> 121</td>
+								<td> 122</td>
 								<td> GetModifierPercentageAttackAnimTime </td>
 								<td> 好像无效了 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MANACOST_PERCENTAGE </td>
-								<td>122</td>
+								<td>123</td>
 								<td> GetModifierPercentageManacost </td>
 								<td> Increases the mana cost of the parent's abilities by a percentage returned to it.
 									Can return negative values.百分比减少技能和物品耗蓝，不能返回负数(是的,英语说明是错的，正数是减少)，自身不能叠加，相同Buff以数值大的为准。
@@ -28701,27 +28980,27 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING</td>
-								<td>123</td>
+								<td>124</td>
 								<td>GetModifierPercentageManacostStacking</td>
 								<td>百分比增加和减少技能和物品耗蓝,可以返回负数(增加蓝耗，正数是减少耗蓝),自身可以叠加。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 
 							<tr>
 								<td> MODIFIER_PROPERTY_DEATHGOLDCOST </td>
-								<td> 124</td>
+								<td> 125</td>
 								<td> GetModifierConstantDeathGoldCost </td>
 								<td>好像已经失效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_EXP_RATE_BOOST </td>
-								<td> 125</td>
+								<td> 126</td>
 								<td> GetModifierPercentageExpRateBoost </td>
 								<td>获得经验时，百分比给与额外的经验加成。可以返回负数,就是减少经验获取，最多扣到0,比如少一个怪获得20的经验,-100就是获得0经验,
 									-200就是获得扣20经验。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_GOLD_RATE_BOOST </td>
-								<td> 126</td>
+								<td> 127</td>
 								<td> GetModifierPercentageGoldRateBoost </td>
 								<td>获得金钱时，百分比给与额外的金钱加成。比如击杀一个英雄80 块钱，返回200,
 									总共就可以获得240.可以返回负数,就是减少金钱获取，并且可以扣钱，最多扣到0。</td>
@@ -28729,7 +29008,7 @@
 							
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE </td>
-								<td> 127</td>
+								<td> 128</td>
 								<td> GetModifierPreAttack_CriticalStrike </td>
 								<td> Procs a critical strike dealing the extra damage returned to it.设置暴击伤害,这个伤害是没计算护甲的。
 									返回100就是没有暴击，200是2倍英雄本身总攻击(白字+绿字)。不能返回小于100的值，自身不能叠加,相同BUFF以数值大为准。
@@ -28737,27 +29016,27 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE </td>
-								<td> 128</td>
+								<td> 129</td>
 								<td> GetModifierPreAttack_Target_CriticalStrike </td>
 								<td>设置 做为被攻击目标时，攻击单位的暴击值(血棘效果)。不能返回小于100的值，自身不能叠加,相同BUFF以数值大的为准。
 									如果不做概率设计，就是百分百暴击。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK </td>
-								<td> 129</td>
+								<td> 130</td>
 								<td> GetModifierMagical_ConstantBlock </td>
 								<td>增加一个固定的 魔法伤害 格挡，计算方式是原始伤害先减去这个抵抗值，然后再计算魔抗。不能返回负数,自身不能叠加,相同BUFF以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK </td>
-								<td> 130</td>
+								<td> 131</td>
 								<td> GetModifierPhysical_ConstantBlock </td>
 								<td> Blocks damage the parent takes by a constant returned to it. Can return negative
 									values.增加一个固定的 物理伤害 格挡。计算方式是原始伤害先减去这个抵抗值，然后再计算护甲。不能返回负数,自身不能叠加,相同BUFF以数值大的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK_SPECIAL </td>
-								<td> 131</td>
+								<td> 132</td>
 								<td> GetModifierPhysical_ConstantBlockSpecial </td>
 								<td>增加一个固定的 物理伤害 格挡。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。但可以和MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,
 									MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。计算方式是先
@@ -28766,7 +29045,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR </td>
-								<td> 132</td>
+								<td> 133</td>
 								<td> GetModifierPhysical_ConstantBlockUnavoidablePreArmor </td>
 								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算格挡,再计算护甲和魔抗。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									可以和MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_MAGICAL_CONSTANT_BLOCK,MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK叠加。
@@ -28776,7 +29055,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK </td>
-								<td> 133</td>
+								<td> 134</td>
 								<td> GetModifierTotal_ConstantBlock </td>
 								<td>增加一个固定的对 所有类型(包括纯粹)伤害的 格挡,先计算护甲和魔抗,再计算格挡。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 									可以和 MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK_UNAVOIDABLE_PRE_ARMOR,MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK 、
@@ -28786,45 +29065,45 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION </td>
-								<td> 134</td>
+								<td> 135</td>
 								<td> GetOverrideAnimation </td>
 								<td> Forces the parent to play a specific animation.强制单位执行一个动画动作。自身不能叠加，以最先 生效的的为准。
 									返回值在GameActivity_t里找。相当于StartGesture。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT </td>
-								<td> 135</td>
+								<td> 136</td>
 								<td> GetOverrideAnimationWeight </td>
 								<td>不知道怎么用，好像无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE </td>
-								<td> 136</td>
+								<td> 137</td>
 								<td> GetOverrideAnimationRate </td>
 								<td>设置动画播放频率,几秒播放一次。如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSORB_SPELL </td>
-								<td> 137</td>
+								<td> 138</td>
 								<td> GetAbsorbSpell </td>
 								<td> Allows the parent to ignore targeted abilities. (Similar to linken's sphere) 抵挡指向性技能,只能返回1才生效。
 									自身不能叠加，相同BUFF以返回1的为准。起作用顺序在4之后，5之前，GetReflectSpell之后。林肯</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_REFLECT_SPELL </td>
-								<td> 138</td>
+								<td> 139</td>
 								<td> GetReflectSpell </td>
 								<td> Allows the parent to reflect targeted abilities. (Similar to Lotus Orb) 。要自己编写程序才能实现反弹效果。顺序在4之后，5之前，GetAbsorbSpell之前。青莲宝珠</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_AUTOATTACK </td>
-								<td> 139</td>
+								<td> 140</td>
 								<td> GetDisableAutoAttack </td>
 								<td>是否自动攻击附近单位。即使设置了 自动攻击:始终,就算使用A键A空地,也不会主动攻击身边单位。返回1才生效。自身不叠加，相同BUFF以返回1的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_DAY_VISION </td>
-								<td> 140</td>
+								<td> 141</td>
 								<td> GetBonusDayVision </td>
 								<td> Increases the vision of the parent during the day by a constant returned to it. Can
 									return negative values. 增加或者减少白天视野,视野总上限值大概4000左右。可以返回负数，自身可以叠加。
@@ -28832,7 +29111,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION </td>
-								<td> 141</td>
+								<td> 142</td>
 								<td> GetBonusNightVision </td>
 								<td> Increases the vision of the parent during the night by a constant returned to it.
 									Can return negative values. 增加或者减少夜间视野,视野总上限值大概4000左右。可以返回负数，自身可以叠加。
@@ -28840,14 +29119,14 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_NIGHT_VISION_UNIQUE </td>
-								<td> 142</td>
+								<td> 143</td>
 								<td> GetBonusNightVisionUnique </td>
 								<td>增加夜间视野,视野总上限值大概4000左右。不能返回负数，自身不能叠加,相同BUFF以数值大的为准。
 									如果返回的是变量，需要使用SetHasCustomTransmitterData。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE </td>
-								<td> 143</td>
+								<td> 144</td>
 								<td> GetBonusVisionPercentage </td>
 								<td> Increases the vision of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少视野,包括白天和黑夜。可以返回负数，自身可以叠加。
@@ -28855,7 +29134,7 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_DAY_VISION </td>
-								<td> 144</td>
+								<td> 145</td>
 								<td> GetFixedDayVision </td>
 								<td> Sets the vision of the parent during the day to a fixed value returned to it.
 									Cannot be changed by any means. 设置白天视野最大值(不是英雄实际拥有的视野，但是设置比KV视野值(一般是1800)小时,会直接减少视野)，
@@ -28868,145 +29147,145 @@
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_FIXED_NIGHT_VISION </td>
-								<td> 145</td>
+								<td> 146</td>
 								<td> GetFixedNightVision </td>
 								<td> Sets the vision of the parent during the night to a fixed value returned to it.
 									Cannot be changed by any means.直接设置夜间视野最大值,不能返回负数，原理同上。如果返回的是变量，需要使用SetHasCustomTransmitterData。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_MIN_HEALTH </td>
-								<td> 146</td>
+								<td> 147</td>
 								<td> GetMinHealth </td>
 								<td>设置单位最小的当前血量(不是总血量),受到任何攻击不会低于这个血量。自身不能叠加，相同BUFF以数值小的为准。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL </td>
-								<td> 147</td>
+								<td> 148</td>
 								<td> GetAbsoluteNoDamagePhysical </td>
 								<td>绝对不受物理类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL </td>
-								<td> 148</td>
+								<td> 149</td>
 								<td> GetAbsoluteNoDamageMagical </td>
 								<td>绝对不受魔法类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE </td>
-								<td> 149</td>
+								<td> 150</td>
 								<td> GetAbsoluteNoDamagePure </td>
 								<td>绝对不受纯粹类型的伤害,返回1生效。</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_ILLUSION </td>
-								<td> 150</td>
+								<td> 151</td>
 								<td> GetIsIllusion </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ILLUSION_LABEL </td>
-								<td> 151</td>
+								<td> 152</td>
 								<td> GetModifierIllusionLabel </td>
 								<td>不知道怎么用，好像已经无效了</td>
 							</tr>
 
 							<tr>
 								<td>MODIFIER_PROPERTY_STRONG_ILLUSION </td>
-								<td> 152</td>
+								<td> 153</td>
 								<td> GetModifierStrongIllusion </td>
 								<td>不知道怎么用，好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION </td>
-								<td> 153</td>
+								<td> 154</td>
 								<td> GetModifierSuperIllusion </td>
 								<td>不知道怎么用，好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_SUPER_ILLUSION_WITH_ULTIMATE </td>
-								<td> 154</td>
+								<td> 155</td>
 								<td> GetModifierSuperIllusionWithUltimate </td>
 								<td>不知道怎么用，好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_XP_DURING_DEATH </td>
-								<td> 155</td>
+								<td> 156</td>
 								<td> GetModifierXPDuringDeath </td>
 								<td>不知道怎么用，好像已经无效了</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE </td>
-								<td> 156</td>
+								<td> 157</td>
 								<td> GetModifierTurnRate_Percentage </td>
 								<td> Increases the turn rate of the parent by a percentage returned to it. Can return
 									negative values. 百分比增加或者减少转身速率。正数是加快转身速率。可以返回负数，自身可以叠加。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TURN_RATE_OVERRIDE</td>
-								<td> 157</td>
+								<td> 158</td>
 								<td>GetModifierTurnRate_Override</td>
 								<td>转身速率覆盖,0-1，数值越大，速率越快。不能返回负数，自身不能叠加，相同BUFF以数值大的为准。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_HEALING </td>
-								<td> 158</td>
+								<td> 159</td>
 								<td> GetDisableHealing </td>
 								<td> Negates healing applied to the parent.是否禁止治疗、生命恢复和吸血效果。返回1为禁止。自身不能叠加，相同BUFF以返回1的为准。 </td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ALLOW_ATTACK </td>
-								<td> 159</td>
+								<td> 160</td>
 								<td> GetAlwaysAllowAttack </td>
-								<td>不知道怎么用</td>
+								<td>返回1生效，远程可以不限远距离攻击，近战在也可以无限远攻击，但只有在大概300码距离内才会命中，大于300都是MISS不会命中</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_ALWAYS_ETHEREAL_ATTACK </td>
-								<td> 160</td>
+								<td> 161</td>
 								<td> GetAllowEtherealAttack </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ATTACK_MAGICAL </td>
-								<td> 161 </td>
+								<td> 162 </td>
 								<td> GetOverrideAttackMagical </td>
 								<td>使普通攻击对其他单位无效，只有魔法攻击有效。返回1生效，相同BUFF以先 生效的为准。
 								</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_UNIT_STATS_NEEDS_REFRESH </td>
-								<td> 162</td>
+								<td> 163</td>
 								<td> GetModifierUnitStatsNeedsRefresh </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_CREEP_MULTIPLIER </td>
-								<td> 163</td>
+								<td> 164</td>
 								<td> GetModifierBountyCreepMultiplier </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td> MODIFIER_PROPERTY_BOUNTY_OTHER_MULTIPLIER </td>
-								<td> 164</td>
+								<td> 165</td>
 								<td> GetModifierBountyOtherMultiplier </td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_UNIT_DISALLOW_UPGRADING</td>
-								<td> 165</td>
+								<td> 166</td>
 								<td>GetModifierUnitDisllowUpgrading</td>
 								<td>不知道怎么用</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DODGE_PROJECTILE </td>
-								<td> 166</td>
+								<td> 167</td>
 								<td>GetModifierDodgeProjectile</td>
 								<td>躲避弹道，包括有些技能、远程的普攻弹道，以及虚灵刀，否决等的弹道。返回1生效。就是跳 躲 弹道的效果。
 								</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TRIGGER_COSMETIC_AND_END_ATTACK</td>
-								<td> 167
+								<td> 168
 								</td>
 								<td>GetTriggerCosmeticAndEndAttack</td>
 								<td>不知道怎么用
@@ -29014,7 +29293,7 @@
 							</tr>	
 							<tr>
 								<td>MODIFIER_PROPERTY_MAX_DEBUFF_DURATION</td>
-								<td> 168
+								<td> 169
 								</td>
 								<td>GetModifierMaxDebuffDuration</td>
 								<td>好像已经无效了
@@ -29022,7 +29301,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PRIMARY_STAT_DAMAGE_MULTIPLIER</td>
-								<td> 169
+								<td> 170
 								</td>
 								<td>GetPrimaryStatDamageMultiplier</td>
 								<td>效果是 以主属性的百分比增加基础攻击。比如原始攻击50，主属性20.返回100，结果就是基础攻击变成70。可返回负数，自身可叠加。
@@ -29031,14 +29310,15 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_PREATTACK_DEADLY_BLOW</td>
-								<td> 170
+								<td> 171
 								</td>
 								<td>GetModifierPreAttack_DeadlyBlow</td>
 								<td>好像已经无效了。DeadlyBlow致命一击。
 								</td>
-							</tr>							<tr>
+							</tr>							
+							<tr>
 								<td>MODIFIER_PROPERTY_ALWAYS_AUTOATTACK_WHILE_HOLD_POSITION</td>
-								<td> 171
+								<td> 172
 								</td>
 								<td>GetAlwaysAutoAttackWhileHoldPosition</td>
 								<td>好像已经无效了
@@ -29047,7 +29327,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SPELL_TARGET_READY
 								</td>
-								<td> 172
+								<td> 173
 								</td>
 								<td> OnSpellTargetReady
 								</td>
@@ -29058,7 +29338,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_RECORD
 								</td>
-								<td> 173
+								<td> 174
 								</td>
 								<td> OnAttackRecord
 								</td>
@@ -29068,7 +29348,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_START
 								</td>
-								<td> 174
+								<td> 175
 								</td>
 								<td> OnAttackStart
 								</td>
@@ -29078,7 +29358,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK
 								</td>
-								<td> 175</td>
+								<td> 176</td>
 								<td> OnAttack
 								</td>
 								<td> Event that fires when an attack was completed, regardless of the result of it.产生攻击弹道,假动作不触发,普通攻击动作序列3。
@@ -29087,7 +29367,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_LANDED
 								</td>
-								<td> 176</td>
+								<td> 177</td>
 								<td> OnAttackLanded
 								</td>
 								<td> Event that fires when an attack landed on its target successfully.当攻击弹道到达目标,普通攻击动作序列4。
@@ -29096,7 +29376,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_FAIL
 								</td>
-								<td> 177</td>
+								<td> 178</td>
 								<td> OnAttackFail
 								</td>
 								<td> Event that fires when an attack failed to land on its target.当攻击失败时，MISS或者跳躲了等。
@@ -29105,7 +29385,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_ALLIED
 								</td>
-								<td> 178
+								<td> 179
 								</td>
 								<td> OnAttackAllied
 								</td>
@@ -29115,7 +29395,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PROJECTILE_DODGE
 								</td>
-								<td> 179</td>
+								<td> 180</td>
 								<td> OnProjectileDodge
 								</td>
 								<td> Event that fires when dodging a projectile. (Disjointing it)当躲避了 普攻、技能、道具等的弹道。
@@ -29124,7 +29404,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ORDER
 								</td>
-								<td> 180</td>
+								<td> 181</td>
 								<td> OnOrder
 								</td>
 								<td> Event that fires when an order is given to the parent.当执行一个命令时，比如移动，施法等,好像只跑服务器。
@@ -29133,7 +29413,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_UNIT_MOVED
 								</td>
-								<td> 181</td>
+								<td> 182</td>
 								<td> OnUnitMoved
 								</td>
 								<td> Event that fires when a unit moved.当单位移动时。
@@ -29142,7 +29422,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_START
 								</td>
-								<td> 182</td>
+								<td> 183</td>
 								<td> OnAbilityStart
 								</td>
 								<td> Event that fires when starting to use an ability.当施放技能开始的标志，施放技能序列1。
@@ -29151,7 +29431,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_EXECUTED
 								</td>
-								<td> 183
+								<td> 184
 								</td>
 								<td> OnAbilityExecuted
 								</td>
@@ -29161,7 +29441,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 								</td>
-								<td> 184</td>
+								<td> 185</td>
 								<td> OnAbilityFullyCast
 								</td>
 								<td> Event that fires when the ability has completely activated.施法动作完毕，施放技能序列5。
@@ -29170,7 +29450,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_BREAK_INVISIBILITY
 								</td>
-								<td> 185</td>
+								<td> 186</td>
 								<td> OnBreakInvisibility
 								</td>
 								<td> Event that fires when breaking invisibility.好像已经无效了
@@ -29179,7 +29459,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ABILITY_END_CHANNEL
 								</td>
-								<td> 186
+								<td> 187
 								</td>
 								<td> OnAbilityEndChannel
 								</td>
@@ -29189,7 +29469,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PROCESS_UPGRADE
 								</td>
-								<td> 187</td>
+								<td> 188</td>
 								<td>
 								</td>
 								<td>Unused
@@ -29198,7 +29478,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_REFRESH
 								</td>
-								<td> 188</td>
+								<td> 189</td>
 								<td>
 								</td>
 								<td>Unused
@@ -29207,7 +29487,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TAKEDAMAGE
 								</td>
-								<td> 189
+								<td> 190
 								</td>
 								<td> OnTakeDamage
 								</td>
@@ -29217,7 +29497,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DEATH_PREVENTED
 								</td>
-								<td> 190
+								<td> 191
 								</td>
 								<td> OnDeathPrevented
 								</td>
@@ -29227,7 +29507,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_STATE_CHANGED
 								</td>
-								<td> 191
+								<td> 192
 								</td>
 								<td> OnStateChanged
 								</td>
@@ -29237,7 +29517,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ORB_EFFECT
 								</td>
-								<td> 192</td>
+								<td> 193</td>
 								<td>
 								</td>
 								<td>Unused
@@ -29245,13 +29525,13 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_PROCESS_CLEAVE</td>
-								<td>193</td>
+								<td>194</td>
 								<td>OnProcessCleave</td>
 								<td>当使用分裂攻击时。拿狂战斧攻击总是生效，包括远程拿狂战斧。</td>
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_DAMAGE_CALCULATED</td>
-								<td>194</td>
+								<td>195</td>
 								<td>OnDamageCalculated</td>
 								<td>在OnAttackLanded之后,开始计算经过各种BUFF后的伤害,普通攻击动作序列5.</td>
 							</tr>
@@ -29259,7 +29539,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MAGIC_DAMAGE_CALCULATED
 								</td>
-								<td> 195
+								<td> 196
 								</td>
 								<td> OnMagicDamageCalculated
 								</td>
@@ -29269,7 +29549,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACKED
 								</td>
-								<td> 196
+								<td> 197
 								</td>
 								<td> OnAttacked
 								</td>
@@ -29279,7 +29559,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DEATH
 								</td>
-								<td> 197</td>
+								<td> 198</td>
 								<td> OnDeath
 								</td>
 								<td> Event that fires when dying.当单位死亡时。
@@ -29288,7 +29568,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_RESPAWN
 								</td>
-								<td> 198
+								<td> 199
 								</td>
 								<td> OnRespawn
 								</td>
@@ -29298,7 +29578,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SPENT_MANA
 								</td>
-								<td> 199
+								<td> 200
 								</td>
 								<td> OnSpentMana
 								</td>
@@ -29308,7 +29588,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TELEPORTING
 								</td>
-								<td> 200
+								<td> 201
 								</td>
 								<td> OnTeleporting
 								</td>
@@ -29318,7 +29598,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TELEPORTED
 								</td>
-								<td> 201</td>
+								<td> 202</td>
 								<td> OnTeleported
 								</td>
 								<td> Event that fires when completing a teleport.当TP结束后。
@@ -29327,7 +29607,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_SET_LOCATION
 								</td>
-								<td> 202
+								<td> 203
 								</td>
 								<td> OnSetLocation
 								</td>
@@ -29337,7 +29617,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HEALTH_GAINED
 								</td>
-								<td> 203</td>
+								<td> 204</td>
 								<td> OnHealthGained
 								</td>
 								<td>当获得加血时，比如本身的生命回复，其他单位的加血等。要判断是否自身加血，
@@ -29348,7 +29628,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MANA_GAINED
 								</td>
-								<td> 204</td>
+								<td> 205</td>
 								<td> OnManaGained
 								</td>
 								<td>获得加蓝时，满蓝时获得任何蓝量任然生效。其他同上。
@@ -29357,7 +29637,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
 								</td>
-								<td> 205
+								<td> 206
 								</td>
 								<td> OnTakeDamageKillCredit
 								</td>
@@ -29367,7 +29647,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HERO_KILLED
 								</td>
-								<td> 206</td>
+								<td> 207</td>
 								<td> OnHeroKilled
 								</td>
 								<td> Event that fires when a hero is killed.当英雄被击杀时，被害者是params.target,攻击者是 params.attacker。 
@@ -29376,7 +29656,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_HEAL_RECEIVED
 								</td>
-								<td> 207</td>
+								<td> 208</td>
 								<td> OnHealReceived
 								</td>
 								<td> Event that fires when being healed.当获得治疗时,要判断是否自身加血，
@@ -29386,7 +29666,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_BUILDING_KILLED
 								</td>
-								<td> 208</td>
+								<td> 209</td>
 								<td> OnBuildingKilled
 								</td>
 								<td> Event that fires when a building is destroyed.当建筑物被摧毁时。
@@ -29395,7 +29675,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MODEL_CHANGED
 								</td>
-								<td> 209
+								<td> 210
 								</td>
 								<td> OnModelChanged
 								</td>
@@ -29405,7 +29685,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_MODIFIER_ADDED
 								</td>
-								<td> 210
+								<td> 211
 								</td>
 								<td> OnModifierAdded
 								</td>
@@ -29415,7 +29695,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TOOLTIP
 								</td>
-								<td> 211</td>
+								<td> 212</td>
 								<td> OnTooltip
 								</td>
 								<td>设置提示里MODIFIER_PROPERTY_TOOLTIP的数值。这个在本地化文本里,比如
@@ -29426,7 +29706,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_MODEL_CHANGE
 								</td>
-								<td> 212</td>
+								<td> 213</td>
 								<td> GetModifierModelChange
 								</td>
 								<td> Changes the parent's model.更换模型,返回模型目录地址。比如"models/heroes/lycan/lycan_wolf.vmdl"
@@ -29435,7 +29715,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_MODEL_SCALE
 								</td>
-								<td> 213</td>
+								<td> 214</td>
 								<td> GetModifierModelScale
 								</td>
 								<td> Changes the parent's model scale.改变模型大小,可返回负数,负数是缩小,自身可叠加。
@@ -29444,7 +29724,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_SCEPTER
 								</td>
-								<td> 214
+								<td> 215
 								</td>
 								<td> GetModifierScepter
 								</td>
@@ -29454,7 +29734,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IS_SHARD
 								</td>
-								<td> 215
+								<td> 216
 								</td>
 								<td> GetModifierShard
 								</td>
@@ -29464,7 +29744,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_RADAR_COOLDOWN_REDUCTION
 								</td>
-								<td> 216
+								<td> 217
 								</td>
 								<td> GetModifierRadarCooldownReduction
 								</td>
@@ -29475,7 +29755,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 								</td>
-								<td> 217</td>
+								<td> 218</td>
 								<td> GetActivityTranslationModifiers
 								</td>
 								<td>相当于AddActivityModifier。如果有多个值要添加，要做多个MODIFIER。
@@ -29484,7 +29764,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
 								</td>
-								<td> 218
+								<td> 219
 								</td>
 								<td> GetAttackSound
 								</td>
@@ -29494,7 +29774,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_LIFETIME_FRACTION
 								</td>
-								<td> 219</td>
+								<td> 220</td>
 								<td> GetUnitLifetimeFraction
 								</td>
 								<td>return ( ( self:GetDieTime() - GameRules:GetGameTime() ) / self:GetDuration() )
@@ -29503,7 +29783,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
 								</td>
-								<td> 220</td>
+								<td> 221</td>
 								<td> GetModifierProvidesFOWVision
 								</td>
 								<td> Return 1 if parent's model would show to his enemies.是否提供给敌方视野。这个视野只包含英雄本身,没有周围的视野。
@@ -29512,7 +29792,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_SPELLS_REQUIRE_HP
 								</td>
-								<td> 221
+								<td> 222
 								</td>
 								<td> GetModifierSpellsRequireHP
 								</td>
@@ -29523,7 +29803,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
 								</td>
-								<td> 222</td>
+								<td> 223</td>
 								<td> GetForceDrawOnMinimap
 								</td>
 								<td>好像已经无效了。
@@ -29532,7 +29812,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_DISABLE_TURNING
 								</td>
-								<td> 223</td>
+								<td> 224</td>
 								<td> GetModifierDisableTurning
 								</td>
 								<td>禁止转身,效果跟马尔斯举盾后的移动效果一样。返回1生效。
@@ -29541,7 +29821,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
 								</td>
-								<td> 224</td>
+								<td> 225</td>
 								<td> GetModifierIgnoreCastAngle
 								</td>
 								<td>忽略施法角度,就是背对人也能立刻放技能。返回1生效。
@@ -29550,7 +29830,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_CHANGE_ABILITY_VALUE
 								</td>
-								<td> 225</td>
+								<td> 226</td>
 								<td> GetModifierChangeAbilityValue
 								</td>
 								<td>不知道怎么用
@@ -29559,7 +29839,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL
 								</td>
-								<td> 226</td>
+								<td> 227</td>
 								<td> GetModifierOverrideAbilitySpecial
 								</td>
 								<td>指定要修改的特殊值。技能名称是params.ability:GetAbilityName(),
@@ -29570,7 +29850,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_OVERRIDE_ABILITY_SPECIAL_VALUE
 								</td>
-								<td> 227</td>
+								<td> 228</td>
 								<td> GetModifierOverrideAbilitySpecialValue
 								</td>
 								<td>修改特殊值，特殊值等级params.ability_special_level,就是技能等级，但是 是从0开始。
@@ -29580,7 +29860,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_ABILITY_LAYOUT
 								</td>
-								<td> 228
+								<td> 229
 								</td>
 								<td> GetModifierAbilityLayout
 								</td>
@@ -29590,7 +29870,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_DOMINATED
 								</td>
-								<td> 229</td>
+								<td> 230</td>
 								<td> OnDominated
 								</td>
 								<td> An event that fires when a unit is being dominated.当一个单位被支配时触发的事件。
@@ -29599,7 +29879,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_KILL
 								</td>
-								<td> 230</td>
+								<td> 231</td>
 								<td> OnKill
 								</td>
 								<td> 
@@ -29608,7 +29888,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ASSIST
 								</td>
-								<td> 231</td>
+								<td> 232</td>
 								<td> OnAssist
 								</td>
 								<td> 
@@ -29617,7 +29897,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_TEMPEST_DOUBLE
 								</td>
-								<td> 232
+								<td> 233
 								</td>
 								<td> GetModifierTempestDouble
 								</td>
@@ -29627,7 +29907,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_PRESERVE_PARTICLES_ON_MODEL_CHANGE
 								</td>
-								<td> 233
+								<td> 234
 								</td>
 								<td> PreserveParticlesOnModelChanged
 								</td>
@@ -29637,7 +29917,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTACK_FINISHED
 								</td>
-								<td> 234</td>
+								<td> 235</td>
 								<td> OnAttackFinished
 								</td>
 								<td>攻击动作完成(不是伤害完成，比如弹道很远，还没命中目标但是攻击动作已经完成了，就已经调用了此API)。普通攻击动作序列10(不一定是10)。
@@ -29646,7 +29926,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_IGNORE_COOLDOWN
 								</td>
-								<td> 235</td>
+								<td> 236</td>
 								<td> GetModifierIgnoreCooldown
 								</td>
 								<td>好像已经失效了
@@ -29655,7 +29935,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_CAN_ATTACK_TREES
 								</td>
-								<td> 236
+								<td> 237
 								</td>
 								<td> GetModifierCanAttackTrees
 								</td>
@@ -29665,7 +29945,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_VISUAL_Z_DELTA
 								</td>
-								<td> 237
+								<td> 238
 								</td>
 								<td> GetVisualZDelta
 								</td>
@@ -29675,7 +29955,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_INCOMING_DAMAGE_ILLUSION
 								</td>
-								<td> 238</td>
+								<td> 239</td>
 								<td>GetModifierIncomingDamage_Illusion
 								</td>
 								<td>增加或者减少 幻象 将要 承受的伤害。
@@ -29683,7 +29963,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_DONT_GIVE_VISION_OF_ATTACKER</td>
-								<td> 239</td>
+								<td> 240</td>
 								<td>GetModifierNoVisionOfAttacker
 								</td>
 								<td>没有攻击者的视野，返回1生效。
@@ -29691,7 +29971,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_TOOLTIP2</td>
-								<td> 240</td>
+								<td> 241</td>
 								<td>OnTooltip2
 								</td>
 								<td>设置提示里MODIFIER_PROPERTY_TOOLTIP2的数值。这个在本地化文本里, 比如100
@@ -29701,7 +29981,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY</td>
-								<td> 241</td>
+								<td> 242</td>
 								<td>OnAttackRecordDestroy
 								</td>
 								<td>攻击记录被清除，普通攻击动作序列9。施放技能序列8(有时会在5前面，施放技能,命中目标后,会消除伤害记录，但是没有创建记录)。
@@ -29709,7 +29989,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_PROJECTILE_OBSTRUCTION_HIT </td>
-								<td> 242
+								<td> 243
 								</td>
 								<td>OnProjectileObstructionHit
 								</td>
@@ -29718,7 +29998,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SUPPRESS_TELEPORT</td>
-								<td> 243</td>
+								<td> 244</td>
 								<td>GetSuppressTeleport
 								</td>
 								<td>好像已经失效了。
@@ -29726,7 +30006,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_EVENT_ON_ATTACK_CANCELLED</td>
-								<td> 244</td>
+								<td> 245</td>
 								<td>OnAttackCancelled
 								</td>
 								<td>当攻击取消时。
@@ -29734,7 +30014,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_SUPPRESS_CLEAVE </td>
-								<td> 245
+								<td> 246
 								</td>
 								<td>GetSuppressCleave
 								</td>
@@ -29743,7 +30023,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_BOT_ATTACK_SCORE_BONUS</td>
-								<td> 246
+								<td> 247
 								</td>
 								<td>BotAttackScoreBonus
 								</td>
@@ -29752,7 +30032,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACKSPEED_REDUCTION_PERCENTAGE</td>
-								<td> 247
+								<td> 248
 								</td>
 								<td>GetModifierAttackSpeedReductionPercentage
 								</td>
@@ -29766,7 +30046,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_MOVESPEED_REDUCTION_PERCENTAGE</td>
-								<td> 248
+								<td> 249
 								</td>
 								<td>GetModifierMoveSpeedReductionPercentage
 								</td>
@@ -29779,7 +30059,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACK_WHILE_MOVING_TARGET</td>
-								<td> 249
+								<td> 250
 								</td>
 								<td>
 								</td>
@@ -29788,7 +30068,7 @@
 							</tr>
 							<tr>
 								<td>MODIFIER_PROPERTY_ATTACKSPEED_PERCENTAGE</td>
-								<td> 250
+								<td> 251
 								</td>
 								<td>GetModifierAttackSpeedPercentage
 								</td>
@@ -29800,7 +30080,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_ATTEMPT_PROJECTILE_DODGE
 								</td>
-								<td> 251
+								<td> 252
 								</td>
 								<td>OnAttemptProjectileDodge
 								</td>
@@ -29810,7 +30090,7 @@
 							<tr>
 								<td> MODIFIER_EVENT_ON_PREDEBUFF_APPLIED
 								</td>
-								<td> 252
+								<td> 253
 								</td>
 								<td>OnPreDebuffApplied
 								</td>
@@ -29820,7 +30100,7 @@
 							<tr>
 								<td> MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING
 								</td>
-								<td> 253
+								<td> 254
 								</td>
 								<td>GetModifierPercentageCooldownStacking
 								</td>
@@ -29828,9 +30108,20 @@
 								</td>
 							</tr>
 							<tr>
+								<td> MODIFIER_EVENT_ON_DEAGGRO(7.31d加入，然后又被删除)
+								</td>
+								<td> 255
+								</td>
+								<td>OnDeaggro
+								</td>
+								<td>应该是当取消仇恨目标时
+								</td>
+							</tr>
+							
+							<tr>
 								<td> MODIFIER_FUNCTION_LAST
 								</td>
-								<td> 254
+								<td> 256
 								</td>
 								<td>Last
 								</td>
@@ -29840,7 +30131,7 @@
 							<tr>
 								<td> MODIFIER_FUNCTION_INVALID
 								</td>
-								<td> 255
+								<td> 65535
 								</td>
 								<td>
 								</td>
@@ -30831,6 +31122,335 @@
 								<td>
 								</td>
 							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAPostGameColumn_t'>
+					<div id='constantname'>
+						<p><span>DOTAPostGameColumn_t</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_COLUMN_LEVEL
+								</td>
+								<td> 0
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_COLUMN_ITEMS
+								</td>
+								<td> 1
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_COLUMN_KILLS
+								</td>
+								<td> 2
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_COLUMN_DEATHS
+								</td>
+								<td> 3
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_COLUMN_ASSISTS
+								</td>
+								<td> 4
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_COLUMN_NET_WORTH
+								</td>
+								<td> 5
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>DOTA_POST_GAME_COLUMN_LAST_HITS
+								</td>
+								<td> 6
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>DOTA_POST_GAME_COLUMN_DENIES
+								</td>
+								<td> 7
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>DOTA_POST_GAME_COLUMN_DAMAGE
+								</td>
+								<td> 8
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>DOTA_POST_GAME_COLUMN_HEALING
+								</td>
+								<td> 9
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>DOTA_POST_GAME_COLUMN_MAX
+								</td>
+								<td> 10
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='DOTAPostGameLayout_t'>
+					<div id='constantname'>
+						<p><span>DOTAPostGameLayout_t</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_LAYOUT_DOUBLE_COLUMN
+								</td>
+								<td> 0
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_LAYOUT_SINGLE_COLUMN
+								</td>
+								<td> 1
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> DOTA_POST_GAME_LAYOUT_MAX
+								</td>
+								<td> 2
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id='FCVARflags'>
+					<div id='constantname'>
+						<p><span>FCVARflags 控制台变量标签</span></p>
+					</div>
+					<div id='constantcontent'>
+						<table>
+							<tr>
+								<th> Name
+								</th>
+								<th> Value
+								</th>
+								<th> Description
+								</th>
+							</tr>
+							<tr>
+								<td> FCVAR_NONE
+								</td>
+								<td> 0
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_ARCHIVE
+								</td>
+								<td> 128
+								</td>
+								<td>Some console variables contain user specific settings we want to restore each time the game is started (like name or network_rate). If a console variable is labeled as FCVAR_ARCHIVE, it is saved in the file config.cfg when the game shuts down and is reloaded with the next start. (Also the command host_writeconfig stores all FCVAR_ARCHIVE variables to a file).
+									一些控制台变量包含我们希望在每次游戏启动时恢复的用户特定设置（如 name 或 network_rate）。 如果控制台变量被标记为 FCVAR_ARCHIVE，它会在游戏关闭时保存在文件 config.cfg 中，并在下次启动时重新加载。 （命令 host_writeconfig 也将所有 FCVAR_ARCHIVE 变量存储到文件中）。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_CHEAT
+								</td>
+								<td> 16384
+								</td>
+								<td>Most commands and variables are for debugging proposes and not removed in release builds since they are useful 3rd party developers and map makers too. Unfortunately we cannot allow normal players to use these debugging tools since it's an unfair advantage over other players (cheating). A good rule is to add FCVAR_CHEAT basically to every new console command you add unless it's an explicit and legitimate options setting for players. Experience shows that even the most harmless looking debugging command can be misused as a cheat somehow.
+									The game server's setting of sv_cheats decides if cheats are enabled or not. If a client connects to a server where cheats are disabled (should be the default case), all client side console variables labeled as FCVAR_CHEAT are reverted to their default values and can't be changed as long as the client stays connected. Console commands marked as FCVAR_CHEAT can't be executed either.
+									大多数命令和变量用于调试建议，而不是在发布版本中删除，因为它们也是有用的 3rd 方开发人员和地图制作者。 不幸的是，我们不能允许普通玩家使用这些调试工具，因为这是对其他玩家的不公平优势（作弊）。 一个好的规则是基本上将 FCVAR_CHEAT 添加到您添加的每个新控制台命令中，除非它是玩家的明确且合法的选项设置。 经验表明，即使是看起来最无害的调试命令也可能以某种方式被误用作作弊命令。
+									游戏服务器的 sv_cheats 设置决定是否启用作弊功能。 如果客户端连接到禁用作弊的服务器（应该是默认情况），则所有标记为 FCVAR_CHEAT 的客户端控制台变量都将恢复为其默认值，并且只要客户端保持连接就无法更改。 标记为 FCVAR_CHEAT 的控制台命令也无法执行。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_DEMO
+								</td>
+								<td> 65536 
+								</td>
+								<td>When starting to record a demo file, some console variables must explicitly be added to the recording to ensure a correct playback.
+									开始录制演示文件时，必须将一些控制台变量显式添加到录制中以确保正确播放。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_DEVELOPMENTONLY
+								</td>
+								<td> 2
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_DONTRECORD
+								</td>
+								<td> 131072
+								</td>
+								<td>This is the opposite of FCVAR_DEMO, some console commands shouldn't be recorded in demo files.
+									这与 FCVAR_DEMO 相反，一些控制台命令不应该记录在演示文件中。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_HIDDEN
+								</td>
+								<td> 16
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_NEVER_AS_STRING
+								</td>
+								<td> 4096
+								</td>
+								<td>The FCVAR_NEVER_AS_STRING flag tells the engine never to print this variable as a string since it contains control sequences.
+									FCVAR_NEVER_AS_STRING 标志告诉引擎永远不要将此变量打印为字符串，因为它包含控制序列。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_NOT_CONNECTED
+								</td>
+								<td> 4194304
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_NOTIFY
+								</td>
+								<td> 256
+								</td>
+								<td>If a console variable is flagged as FCVAR_NOTIFY, a server sends a notification message to all clients whenever this variable is changed. This should be used for variables that change game play rules, which are important for all players (mp_friendlyfire etc).
+									如果控制台变量被标记为 FCVAR_NOTIFY，则只要该变量发生更改，服务器就会向所有客户端发送通知消息。 这应该用于改变游戏规则的变量，这对所有玩家都很重要（mp_friendlyfire 等）。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_PRINTABLEONLY
+								</td>
+								<td> 1024
+								</td>
+								<td>Some important variables are logged or broadcasted (gamerules etc) and it is important that they contain only printable characters (no control chars etc).
+									一些重要的变量被记录或广播（游戏规则等），重要的是它们只包含可打印的字符（没有控制字符等）。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_PROTECTED
+								</td>
+								<td> 32
+								</td>
+								<td>If console variables contain private information (passwords etc), we don't want them to be visible to other players. Then the FCVAR_PROTECTED flag should be set to label this information as confidential.
+									如果控制台变量包含私人信息（密码等），我们不希望它们对其他玩家可见。 然后应该设置 FCVAR_PROTECTED 标志以将此信息标记为机密。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_REPLICATED
+								</td>
+								<td> 8192
+								</td>
+								<td>Game server and client are using shared code where it's important that both sides run the exact same path using the same data (e.g. predicted movement/weapons, game rules). If this code uses console variables, they must match the same values on both sides. The flag FCVAR_REPLICATED ensures that by broadcasting these values to all clients. While connected, clients can't change these values and are forced to use the server-side values.
+									游戏服务器和客户端使用共享代码，重要的是双方使用相同的数据（例如预测的移动/武器、游戏规则）运行完全相同的路径。 如果此代码使用控制台变量，它们必须在两边匹配相同的值。 标志 FCVAR_REPLICATED 通过向所有客户端广播这些值来确保这一点。 连接后，客户端无法更改这些值，并被迫使用服务器端值。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_SPONLY
+								</td>
+								<td> 64
+								</td>
+								<td>Sometimes executing commands or changing variables may be valid only in single player mode. If this is the case then label these commands as FCVAR_SPONLY.
+									有时执行命令或更改变量可能仅在单人模式下有效。 如果是这种情况，则将这些命令标记为 FCVAR_SPONLY。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_SS
+								</td>
+								<td> 32768
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_UNLOGGED
+								</td>
+								<td> 2048
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_UNREGISTERED
+								</td>
+								<td> 1
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_USERINFO
+								</td>
+								<td> 512
+								</td>
+								<td>Some console variables contain client information the server needs to know about, like the player's name or his network settings. These variables must be flagged as FCVAR_USERINFO, so they get transmitted to the server and updated every time the user changes them. When the player changes one of these variables the engine notifies the server code via ClientSettingsChanged(). Then the game server can query the engine for specific client settings with GetClientConVarValue().
+									一些控制台变量包含服务器需要知道的客户端信息，比如玩家的名字或他的网络设置。 这些变量必须标记为 FCVAR_USERINFO，因此它们会被传输到服务器并在每次用户更改它们时更新。 当播放器更改这些变量之一时，引擎会通过 ClientSettingsChanged() 通知服务器代码。 然后游戏服务器可以使用 GetClientConVarValue() 查询引擎以获取特定的客户端设置。
+								</td>
+							</tr>
+							<tr>
+								<td> FCVAR_VCONSOLE_SET_FOCUS
+								</td>
+								<td> 1073741824
+								</td>
+								<td>
+								</td>
+							</tr>
+
 						</table>
 					</div>
 				</div>
@@ -31886,7 +32506,7 @@
 								</td>
 								<td>"assassin_id"		"short"<br>
 									"target_id"			"short"<br>
-									"message"		"short"
+									"message"		"short"<br>
 								</td>
 								<td>
 								</td>
@@ -31895,7 +32515,8 @@
 								<td> dota_hud_error_message
 								</td>
 								<td>	"reason"	"byte"<br>
-									"message"	"string"
+										"message"	"string"<br>
+										"sequenceNumber" "int"<br>
 								</td>
 								<td>显示错误信息事件
 								</td>
@@ -32615,7 +33236,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> show_center_message
+								<td> show_center_message(失效)
 								</td>
 								<td>"message"				"string"<br>
 									"duration"				"float"<br>
@@ -32649,7 +33270,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> custom_game_difficulty
+								<td> custom_game_difficulty(7.31d失效)
 								</td>
 								<td>"difficulty"	"byte"
 								</td>
@@ -32914,7 +33535,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td> modifier_event
+								<td> modifier_event(7.31B失效)
 								</td>
 								<td>"eventname"	"string"<br>
 									"caster"	"short"	<br>
@@ -32924,13 +33545,14 @@
 								</td>
 							</tr>
 							<tr>
-								<td> dota_team_kill_credit(可能失效)
+								<td> dota_team_kill_credit
 								</td>
-								<td> victim_userid (number):受害者玩家ID，非玩家为-1，这里等于PlayerID	<br>
-									splitscreenplayer(number):	<br>
-									herokills (number):本次死亡英雄被杀总次数	<br>
-									killer_userid (number):击杀者服务器ID，非玩家为-1	<br>
-									teamnumber (number):击杀者所属队伍ID	<br>
+								<td> killer_userid "short":击杀者服务器ID，非玩家为-1	<br>
+									victim_userid "short":受害者玩家ID，非玩家为-1，这里等于PlayerID	<br>
+									teamnumber "short":击杀者所属队伍ID	<br>
+									herokills "short":本次死亡英雄被杀总次数	<br>
+									
+									
 								</td>
 								<td>
 								</td>
@@ -33108,7 +33730,7 @@
 								</td>
 								<td> 42,props_gameplay/observer_ward_bundle.vmdl
 								</td>
-								<td>侦查守卫,假眼
+								<td>侦察守卫,假眼
 								</td>
 							</tr>
 							<tr>
@@ -33124,7 +33746,7 @@
 								</td>
 								<td> 218
 								</td>
-								<td>侦查·岗哨守卫,真假眼同时在一个格子里时
+								<td>侦察·岗哨守卫,真假眼同时在一个格子里时
 								</td>
 							</tr>
 							<tr>
@@ -36099,7 +36721,7 @@
 								<td> abaddon_death_coil 迷雾缠绕<br>
 									abaddon_aphotic_shield 无光之盾<br>
 									abaddon_frostmourne 魔霭诅咒<br>
-									abaddon_borrowed_time 回光返照
+									abaddon_borrowed_time 回光返照<br>
 								</td>
 								<td>亚巴顿
 								</td>
@@ -36111,7 +36733,7 @@
 									abyssal_underlord_pit_of_malice 怨念深渊<br>
 									abyssal_underlord_atrophy_aura 衰退光环<br>
 									abyssal_underlord_dark_rift 黑暗之门<br>
-									abyssal_underlord_cancel_dark_rift 取消黑暗之门
+									abyssal_underlord_cancel_dark_rift 取消黑暗之门<br>
 								</td>
 								<td>孽主,大屁股
 								</td>
@@ -36136,7 +36758,7 @@
 									ancient_apparition_ice_vortex 冰霜漩涡<br>
 									ancient_apparition_chilling_touch 极寒之触<br>
 									ancient_apparition_ice_blast 冰晶爆轰<br>
-									ancient_apparition_ice_blast_release 释放
+									ancient_apparition_ice_blast_release 释放<br>
 								</td>
 								<td>远古冰魄,冰魂
 								</td>
@@ -36148,7 +36770,7 @@
 									antimage_blink 闪烁<br>
 									antimage_counterspell 法术反制<br>
 									antimage_mana_overload 闪烁碎片<br>
-									antimage_mana_void 法力虚空
+									antimage_mana_void 法力虚空<br>
 								</td>
 								<td>敌法师
 								</td>
@@ -36171,7 +36793,7 @@
 								<td> axe_berserkers_call 狂战士之吼<br>
 									axe_battle_hunger 战斗饥渴<br>
 									axe_counter_helix 反击螺旋<br>
-									axe_culling_blade 淘汰之刃
+									axe_culling_blade 淘汰之刃<br>
 								</td>
 								<td>斧王
 								</td>
@@ -36179,11 +36801,11 @@
 							<tr>
 								<td> npc_dota_hero_bane
 								</td>
-								<td> bane_nightmare 噩梦<br>
+								<td>bane_enfeeble 虚弱<br>
 									bane_brain_sap 蚀脑<br>
-									bane_enfeeble 虚弱<br>
+									bane_nightmare 噩梦<br>
 									bane_fiends_grip 魔爪<br>
-									bane_nightmare_end 噩梦终止
+									bane_nightmare_end 噩梦终止<br>
 								</td>
 								<td>祸乱之源
 								</td>
@@ -36194,7 +36816,7 @@
 								<td> batrider_sticky_napalm 粘性燃油<br>
 									batrider_flamebreak 烈焰破击<br>
 									batrider_firefly 火焰飞行<br>
-									batrider_flaming_lasso 燃烧枷锁
+									batrider_flaming_lasso 燃烧枷锁<br>
 								</td>
 								<td>蝙蝠骑士
 								</td>
@@ -36207,7 +36829,8 @@
 									beastmaster_call_of_the_wild_hawk 野性呼唤战鹰<br>
 									beastmaster_inner_beast 野性之心<br>
 									beastmaster_primal_roar 原始咆哮<br>
-									beastmaster_mark_of_the_beast(A杖技能)<br>
+									beastmaster_mark_of_the_beast(A杖技能，说明里没有但实际有，并且没有翻译汉化)<br>
+									beastmaster_hawk_dive 俯冲炸弹(拥有魔晶后,战鹰新增技能)<br>
 								</td>
 								<td>兽王
 								</td>
@@ -36218,7 +36841,8 @@
 								<td> bloodseeker_bloodrage 血怒<br>
 									bloodseeker_blood_bath 血祭<br>
 									bloodseeker_thirst 焦渴<br>
-									bloodseeker_rupture 割裂
+									bloodseeker_rupture 割裂<br>
+									bloodseeker_blood_mist 血雾(A杖技能)<br>
 								</td>
 								<td>血魔
 								</td>
@@ -36229,7 +36853,7 @@
 								<td> bounty_hunter_shuriken_toss 投掷飞镖<br>
 									bounty_hunter_jinada 忍术<br>
 									bounty_hunter_wind_walk 暗影步<br>
-									bounty_hunter_track 追踪术
+									bounty_hunter_track 追踪术<br>
 								</td>
 								<td>赏金猎人
 								</td>
@@ -36241,7 +36865,7 @@
 									brewmaster_cinder_brew 余烬佳酿<br>
 									brewmaster_drunken_brawler 醉拳<br>
 									brewmaster_primal_split 元素分离<br>
-									brewmaster_drunken_haze 醉酒云雾(之前版本技能)
+									brewmaster_drunken_haze 醉酒云雾(旧版本技能)<br>
 								</td>
 								<td>酒仙
 								</td>
@@ -36253,7 +36877,7 @@
 									bristleback_quill_spray 刺针扫射<br>
 									bristleback_bristleback 钢毛后背<br>
 									bristleback_warpath 战意<br>
-									bristleback_hairball 毛团(魔晶技能)
+									bristleback_hairball 毛团(魔晶技能)<br>
 								</td>
 								<td>钢背兽
 								</td>
@@ -36261,11 +36885,12 @@
 							<tr>
 								<td> npc_dota_hero_broodmother
 								</td>
-								<td> broodmother_spawn_spiderlings 孵化蜘蛛<br>
+								<td>broodmother_insatiable_hunger 极度饥渴<br>
 									broodmother_spin_web 织网<br>
-									broodmother_incapacitating_bite 麻痹之咬<br>
-									broodmother_insatiable_hunger 极度饥渴<br>
-									broodmother_silken_bola 丝制重器(魔晶技能)
+									broodmother_silken_bola 丝制重器<br>
+									broodmother_spawn_spiderlings 孵化蜘蛛<br>
+									broodmother_sticky_snare 蛛纱陷阱(A杖技能)<br>
+									broodmother_incapacitating_bite 麻痹之咬(旧版本技能)<br>
 								</td>
 								<td>育母蜘蛛
 								</td>
@@ -36287,7 +36912,7 @@
 								<td> chaos_knight_chaos_bolt 混乱之箭<br>
 									chaos_knight_reality_rift 实相裂隙<br>
 									chaos_knight_chaos_strike 混沌一击<br>
-									chaos_knight_phantasm 混沌之军
+									chaos_knight_phantasm 混沌之军<br>
 								</td>
 								<td>混沌骑士
 								</td>
@@ -36299,7 +36924,7 @@
 									chen_divine_favor 神力恩泽<br>
 									chen_hand_of_god 上帝之手<br>
 									chen_test_of_faith 忠诚考验(老版本技能)<br>
-									chen_test_of_faith_teleport 听命于陈(老版本技能)
+									chen_test_of_faith_teleport 听命于陈(老版本技能)<br>
 								</td>
 								<td>陈
 								</td>
@@ -36311,7 +36936,7 @@
 									clinkz_searing_arrows灼热之箭<br>
 									clinkz_wind_walk 骨隐步<br>
 									clinkz_burning_army 燃烧之军(A杖技能)<br>
-									clinkz_death_pact 死亡契约
+									clinkz_death_pact 死亡契约<br>
 								</td>
 								<td>克林克兹,小骷髅,骨弓
 								</td>
@@ -36322,7 +36947,8 @@
 								<td> crystal_maiden_crystal_nova 冰霜新星<br>
 									crystal_maiden_frostbite 冰封禁制<br>
 									crystal_maiden_brilliance_aura 奥术光环<br>
-									crystal_maiden_freezing_field 极寒领域
+									crystal_maiden_freezing_field 极寒领域<br>
+									crystal_maiden_freezing_field_stop 停止极寒领域<br>
 								</td>
 								<td>水晶室女,冰女
 								</td>
@@ -36345,8 +36971,9 @@
 								<td> dazzle_poison_touch 剧毒之触<br>
 									dazzle_shallow_grave 薄葬<br>
 									dazzle_shadow_wave 暗影波<br>
+									dazzle_good_juju 善咒<br>
 									dazzle_bad_juju 邪能<br>
-									dazzle_weave 编织(老版本技能)
+									dazzle_weave 编织(老版本技能)<br>
 								</td>
 								<td>戴泽,暗牧
 								</td>
@@ -36357,7 +36984,7 @@
 								<td> death_prophet_carrion_swarm 地穴虫群<br>
 									death_prophet_silence 沉默魔法<br>
 									death_prophet_spirit_siphon 吸魂巫术<br>
-									death_prophet_exorcism 驱使恶灵
+									death_prophet_exorcism 驱使恶灵<br>
 								</td>
 								<td>死亡先知,DP
 								</td>
@@ -36368,7 +36995,7 @@
 								<td> disruptor_thunder_strike 风雷之击<br>
 									disruptor_glimpse 恶念瞥视<br>
 									disruptor_kinetic_field 动能力场<br>
-									disruptor_static_storm 静态风暴
+									disruptor_static_storm 静态风暴<br>
 								</td>
 								<td>干扰者,萨尔
 								</td>
@@ -36378,7 +37005,7 @@
 								<td> doom_bringer_devour 吞噬<br>
 									doom_bringer_scorched_earth 焦土<br>
 									doom_bringer_infernal_blade 阎刃<br>
-									doom_bringer_doom 末日
+									doom_bringer_doom 末日<br>
 								</td>
 								<td>末日使者
 								</td>
@@ -36390,7 +37017,7 @@
 									dragon_knight_dragon_tail 神龙摆尾<br>
 									dragon_knight_dragon_blood 龙族血统<br>
 									dragon_knight_elder_dragon_form 古龙形态<br>
-									dragon_knight_fireball 火球(魔晶技能)
+									dragon_knight_fireball 龙炎火球(魔晶技能)<br>
 								</td>
 								<td>龙骑士
 								</td>
@@ -36402,7 +37029,7 @@
 									drow_ranger_wave_of_silence 狂风<br>
 									drow_ranger_multishot 数箭齐发<br>
 									drow_ranger_marksmanship 射手天赋<br>
-									drow_ranger_trueshot 精准光环(老版本技能)
+									drow_ranger_trueshot 精准光环(老版本技能)<br>
 								</td>
 								<td>卓尔游侠,小黑
 								</td>
@@ -36415,7 +37042,7 @@
 									earth_spirit_geomagnetic_grip 地磁之握<br>
 									earth_spirit_stone_caller 残岩<br>
 									earth_spirit_petrify 残岩魔咒(A杖技能)<br>
-									earth_spirit_magnetize 磁化
+									earth_spirit_magnetize 磁化<br>
 								</td>
 								<td>亚大地之灵,土猫
 								</td>
@@ -36426,7 +37053,7 @@
 								<td> earthshaker_fissure 沟壑<br>
 									earthshaker_enchant_totem 强化图腾<br>
 									earthshaker_aftershock 余震<br>
-									earthshaker_echo_slam 回音击
+									earthshaker_echo_slam 回音击<br>
 								</td>
 								<td>撼地者,牛头,小牛
 								</td>
@@ -36436,9 +37063,11 @@
 								</td>
 								<td> elder_titan_echo_stomp 回音重踏<br>
 									elder_titan_ancestral_spirit 灵体游魂<br>
+									elder_titan_move_spirit 移动灵体游魂<br>
+									elder_titan_return_spirit 灵体游魂回归<br>
 									elder_titan_natural_order 自然秩序<br>
 									elder_titan_earth_splitter 裂地沟壑<br>
-									elder_titan_return_spirit 灵体游魂回
+									
 								</td>
 								<td>上古巨神,大牛
 								</td>
@@ -36450,7 +37079,7 @@
 									ember_spirit_sleight_of_fist 无影拳<br>
 									ember_spirit_flame_guard 烈火罩<br>
 									ember_spirit_activate_fire_remnant 激活残焰<br>
-									ember_spirit_fire_remnant 残焰
+									ember_spirit_fire_remnant 残焰<br>
 								</td>
 								<td>灰烬之灵,火猫
 								</td>
@@ -36463,7 +37092,7 @@
 									enchantress_enchant 魅惑<br>
 									enchantress_natures_attendants 自然之助<br>
 									enchantress_bunny_hop 跃动(A杖技能)<br>
-									enchantress_untouchable 不可侵犯
+									enchantress_untouchable 不可侵犯<br>
 								</td>
 								<td>魅惑魔女,小鹿
 								</td>
@@ -36474,7 +37103,7 @@
 								<td> enigma_malefice 憎恶<br>
 									enigma_demonic_conversion 恶魔转化<br>
 									enigma_midnight_pulse 午夜凋零<br>
-									enigma_black_hole 黑洞
+									enigma_black_hole 黑洞<br>
 								</td>
 								<td>谜团
 								</td>
@@ -36486,7 +37115,7 @@
 									faceless_void_time_dilation 时间膨胀<br>
 									faceless_void_time_lock 时间锁定<br>
 									faceless_void_chronosphere 时间结界<br>
-									faceless_void_time_walk_reverse 反时间漫游(魔晶技能)
+									faceless_void_time_walk_reverse 反时间漫游(魔晶技能)<br>
 								</td>
 								<td>虚空假面
 								</td>
@@ -36497,7 +37126,7 @@
 								<td> furion_sprout 发芽<br>
 									furion_teleportation 传送<br>
 									furion_force_of_nature 自然的呼唤<br>
-									furion_wrath_of_nature 自然之怒
+									furion_wrath_of_nature 自然之怒<br>
 								</td>
 								<td>先知
 								</td>
@@ -36508,7 +37137,7 @@
 								<td> gyrocopter_rocket_barrage 火箭弹幕<br>
 									gyrocopter_homing_missile 追踪导弹<br>
 									gyrocopter_flak_cannon 高射火炮<br>
-									gyrocopter_call_down 召唤飞弹
+									gyrocopter_call_down 召唤飞弹<br>
 								</td>
 								<td>矮人直升机,飞机,gyro搜索模型
 								</td>
@@ -36520,7 +37149,7 @@
 									huskar_burning_spear 沸血之矛<br>
 									huskar_berserkers_blood 狂战士之血<br>
 									huskar_life_break 牺牲<br>
-									huskar_inner_vitality 活血术(老版本的技能)
+									huskar_inner_vitality 活血术(老版本的技能)<br>
 								</td>
 								<td>哈斯卡
 								</td>
@@ -36541,7 +37170,7 @@
 									invoker_sun_strike 阳炎冲击<br>
 									invoker_forge_spirit 熔炉精灵<br>
 									invoker_ice_wall 寒冰之墙<br>
-									invoker_deafening_blast 超震声波
+									invoker_deafening_blast 超震声波<br>
 								</td>
 								<td>祈求者，卡尔
 								</td>
@@ -36553,7 +37182,7 @@
 									jakiro_ice_path 冰封路径<br>
 									jakiro_liquid_fire 液态火<br>
 									jakiro_macropyre 烈焰焚身<br>
-									jakiro_liquid_ice 液态冰(魔晶技能)
+									jakiro_liquid_ice 液态冰(魔晶技能)<br>
 								</td>
 								<td>杰奇洛,双头龙
 								</td>
@@ -36565,7 +37194,7 @@
 									juggernaut_healing_ward 治疗守卫<br>
 									juggernaut_blade_dance 剑舞<br>
 									juggernaut_swift_slash 迅风斩(A杖技能)<br>
-									juggernaut_omni_slash 无敌斩
+									juggernaut_omni_slash 无敌斩<br>
 									
 								</td>
 								<td>主宰,剑圣
@@ -36599,7 +37228,7 @@
 									kunkka_return 送回<br>
 									kunkka_torrent_storm 洪流浪潮(A杖)<br>
 									kunkka_ghostship 幽灵船<br>
-									kunkka_tidal_wave 潮汐波(魔晶技能)
+									kunkka_tidal_wave 潮汐波(魔晶技能)<br>
 									
 								</td>
 								<td>昆卡,船长
@@ -36611,7 +37240,7 @@
 								<td> legion_commander_overwhelming_odds 压倒性优势<br>
 									legion_commander_press_the_attack 强攻<br>
 									legion_commander_moment_of_courage 勇气之霎<br>
-									legion_commander_duel 决斗
+									legion_commander_duel 决斗<br>
 								</td>
 								<td>军团指挥官
 								</td>
@@ -36623,7 +37252,7 @@
 									leshrac_diabolic_edict 恶魔敕令<br>
 									leshrac_lightning_storm 闪电风暴<br>
 									leshrac_pulse_nova 脉冲新星<br>
-									leshrac_greater_lightning_storm 虚无主义(A杖技能)
+									leshrac_greater_lightning_storm 虚无主义(A杖技能)<br>
 								</td>
 								<td>拉席克,老鹿
 								</td>
@@ -36636,7 +37265,7 @@
 									lich_sinister_gaze 阴邪凝视<br>
 									lich_chain_frost 连环霜冻<br>
 									lich_ice_spire 寒冰尖柱(魔晶技能)<br>
-									lich_frost_armor 霜冻护甲(老版本的技能)
+									lich_frost_armor 霜冻护甲(老版本的技能)<br>
 								</td>
 								<td>巫妖
 								</td>
@@ -36652,7 +37281,7 @@
 									life_stealer_open_wounds 撕裂伤口(新版变成魔晶技能)<br>
 									life_stealer_control 控制(老版本的技能)<br>
 									life_stealer_assimilate 吸收(老版本的技能)<br>
-									life_stealer_assimilate_eject 喷吐(老版本的技能)
+									life_stealer_assimilate_eject 喷吐(老版本的技能)<br>
 								</td>
 								<td>噬魂鬼,小狗
 								</td>
@@ -36663,7 +37292,7 @@
 								<td> lina_dragon_slave 龙破斩<br>
 									lina_light_strike_array 光击阵<br>
 									lina_fiery_soul 炽魂<br>
-									lina_laguna_blade 神灭斩
+									lina_laguna_blade 神灭斩<br>
 								</td>
 								<td>莉娜,火女
 								</td>
@@ -36674,7 +37303,7 @@
 								<td> lion_impale 裂地尖刺<br>
 									lion_voodoo 妖术<br>
 									lion_mana_drain 法力吸取<br>
-									lion_finger_of_death 死亡之指
+									lion_finger_of_death 死亡之指<br>
 								</td>
 								<td>莱恩,恶魔巫师
 								</td>
@@ -36702,7 +37331,7 @@
 								<td> luna_lucent_beam 月光<br>
 									luna_moon_glaive 月刃<br>
 									luna_lunar_blessing 月之祝福<br>
-									luna_eclipse 月蚀
+									luna_eclipse 月蚀<br>
 								</td>
 								<td>露娜,月骑
 								</td>
@@ -36714,7 +37343,7 @@
 									lycan_howl 嗥叫<br>
 									lycan_feral_impulse 野性驱使<br>
 									lycan_wolf_bite 饿狼撕咬(A杖技能)<br>
-									lycan_shapeshift 变身
+									lycan_shapeshift 变身<br>
 								</td>
 								<td>狼人
 								</td>
@@ -36726,7 +37355,7 @@
 									magnataur_empower 授予力量<br>
 									magnataur_skewer 巨角冲撞<br>
 									magnataur_reverse_polarity 两极反转<br>
-									magnataur_horn_toss 长角抛物(魔晶技能)
+									magnataur_horn_toss 长角抛物(魔晶技能)<br>
 								</td>
 								<td>马格纳斯
 								</td>
@@ -36738,7 +37367,7 @@
 									medusa_mystic_snake 秘术异蛇<br>
 									medusa_mana_shield 魔法护盾<br>
 									medusa_stone_gaze 石化凝视<br>
-									medusa_cold_blooded 冷血动物(魔晶技能)
+									medusa_cold_blooded 冷血动物(魔晶技能)<br>
 								</td>
 								<td>美杜莎,大娜迦
 								</td>
@@ -36751,7 +37380,7 @@
 									meepo_ransack 洗劫<br>
 									meepo_divided_we_stand 分则能成<br>
 									meepo_petrify 掘地(A杖技能)<br>
-									meepo_geostrike 地之突袭(老版本的技能)
+									meepo_geostrike 地之突袭(老版本的技能)<br>
 								</td>
 								<td>米波
 								</td>
@@ -36762,7 +37391,7 @@
 								<td> mirana_starfall 群星风暴<br>
 									mirana_arrow 月神之箭<br>
 									mirana_leap 跳跃<br>
-									mirana_invis 月之暗面
+									mirana_invis 月之暗面<br>
 								</td>
 								<td>米拉娜,POM
 								</td>
@@ -36778,7 +37407,7 @@
 									morphling_replicate 变形<br>
 									morphling_morph_replicate 替换复制体<br>
 									morphling_morph 属性变换<br>
-									morphling_hybrid 混源(老版本的技能)
+									morphling_hybrid 混源(老版本的技能)<br>
 								</td>
 								<td>变体精灵,水人
 								</td>
@@ -36790,7 +37419,7 @@
 									naga_siren_ensnare 诱捕<br>
 									naga_siren_rip_tide 激流<br>
 									naga_siren_song_of_the_siren 海妖之歌<br>
-									naga_siren_song_of_the_siren_cancel 终止海妖之歌
+									naga_siren_song_of_the_siren_cancel 终止海妖之歌<br>
 								</td>
 								<td>娜迦海妖,小娜迦
 								</td>
@@ -36802,7 +37431,7 @@
 									necrolyte_sadist 幽魂护罩<br>
 									necrolyte_heartstopper_aura 竭心光环<br>
 									necrolyte_reapers_scythe 死神镰刀<br>
-									necrolyte_death_seeker 死亡搜寻(魔晶技能)
+									necrolyte_death_seeker 死亡搜寻(魔晶技能)<br>
 								</td>
 								<td>瘟疫法师,NEC
 								</td>
@@ -36815,7 +37444,7 @@
 									nevermore_shadowraze3 毁灭阴影C<br>
 									nevermore_necromastery 支配死灵<br>
 									nevermore_dark_lord 魔王降临<br>
-									nevermore_requiem 魂之挽歌
+									nevermore_requiem 魂之挽歌<br>
 								</td>
 								<td>影魔
 								</td>
@@ -36826,7 +37455,7 @@
 								<td> night_stalker_void 虚空<br>
 									night_stalker_crippling_fear 伤残恐惧<br>
 									night_stalker_hunter_in_the_night 暗夜猎影<br>
-									night_stalker_darkness 黑暗飞升
+									night_stalker_darkness 黑暗飞升<br>
 								</td>
 								<td>暗夜魔王,夜魔
 								</td>
@@ -36839,7 +37468,7 @@
 									nyx_assassin_spiked_carapace 尖刺外壳<br>
 									nyx_assassin_burrow 钻地(A杖技能)<br>
 									nyx_assassin_unburrow 现身(A杖技能钻地后,从地里出来)<br>
-									nyx_assassin_vendetta 复仇
+									nyx_assassin_vendetta 复仇<br>
 								</td>
 								<td>司夜刺客,小强
 								</td>
@@ -36851,7 +37480,7 @@
 									obsidian_destroyer_astral_imprisonment 星体禁锢<br>
 									obsidian_destroyer_equilibrium 精华变迁<br>
 									obsidian_destroyer_sanity_eclipse 神智之蚀<br>
-									obsidian_destroyer_essence_aura 精气光环(老版本的技能)
+									obsidian_destroyer_essence_aura 精气光环(老版本的技能)<br>
 								</td>
 								<td>殁境神蚀者,黑鸟
 								</td>
@@ -36864,7 +37493,7 @@
 									ogre_magi_bloodlust 嗜血术<br>
 									ogre_magi_unrefined_fireblast 未精通的火焰爆轰(A杖技能)<br>
 									ogre_magi_multicast 多重施法<br>
-									ogre_magi_smash 烈火护盾(魔晶技能)
+									ogre_magi_smash 烈火护盾(魔晶技能)<br>
 								</td>
 								<td>食人魔魔法师,蓝胖
 								</td>
@@ -36873,10 +37502,11 @@
 								<td> npc_dota_hero_omniknight
 								</td>
 								<td> omniknight_purification 洗礼<br>
-									omniknight_repel 天国恩赐<br>
-									omniknight_degen_aura 退化光环<br>
+									omniknight_martyr 天国恩赐<br>
+									omniknight_hammer_of_purity 纯洁之锤<br>
 									omniknight_guardian_angel 守护天使<br>
-									omniknight_hammer_of_purity 纯洁之锤(魔晶技能)
+									omniknight_degen_aura 退化光环(魔晶技能)<br>
+									omniknight_repel 天国恩赐(旧版本的英文技能名称)<br>
 								</td>
 								<td>全能骑士
 								</td>
@@ -36887,7 +37517,8 @@
 								<td> oracle_fortunes_end 气运之末<br>
 									oracle_fates_edict 命运敕令<br>
 									oracle_purifying_flames 涤罪之焰<br>
-									oracle_false_promise 虚妄之诺
+									oracle_false_promise 虚妄之诺<br>
+									oracle_rain_of_destiny 天命之雨(A杖技能)<br>
 								</td>
 								<td>神谕者
 								</td>
@@ -36899,7 +37530,7 @@
 									phantom_assassin_phantom_strike 幻影突袭<br>
 									phantom_assassin_blur 魅影无形<br>
 									phantom_assassin_coup_de_grace 恩赐解脱<br>
-									phantom_assassin_fan_of_knives 刀阵旋风(魔晶技能)
+									phantom_assassin_fan_of_knives 刀阵旋风(魔晶技能)<br>
 								</td>
 								<td>幻影刺客,PA
 								</td>
@@ -36910,7 +37541,7 @@
 								<td> phantom_lancer_spirit_lance 灵魂之矛<br>
 									phantom_lancer_doppelwalk 神行百变<br>
 									phantom_lancer_phantom_edge 幻影冲锋<br>
-									phantom_lancer_juxtapose 并列
+									phantom_lancer_juxtapose 并列<br>
 								</td>
 								<td>幻影长矛手,猴子
 								</td>
@@ -36925,7 +37556,7 @@
 									phoenix_supernova 超新星<br>
 									phoenix_launch_fire_spirit 发动烈火精灵<br>
 									phoenix_icarus_dive_stop 终止凤凰冲击<br>
-									phoenix_sun_ray_stop 终止烈日炙烤
+									phoenix_sun_ray_stop 终止烈日炙烤<br>
 									
 								</td>
 								<td>凤凰
@@ -36938,7 +37569,7 @@
 									puck_waning_rift 新月之痕<br>
 									puck_phase_shift 相位转移<br>
 									puck_ethereal_jaunt 灵动之翼<br>
-									puck_dream_coil 梦境缠绕
+									puck_dream_coil 梦境缠绕<br>
 								</td>
 								<td>帕克,精灵龙,用PrecacheUnitByNameAsync	缓存有BUG，会崩溃
 								</td>
@@ -36950,7 +37581,7 @@
 									pudge_rot 腐烂<br>
 									pudge_flesh_heap 腐肉堆积<br>
 									pudge_eject 喷吐(A杖技能)<br>
-									pudge_dismember 肢解
+									pudge_dismember 肢解<br>
 								</td>
 								<td>帕吉,屠夫
 								</td>
@@ -36985,7 +37616,7 @@
 									rattletrap_rocket_flare 照明火箭<br>
 									rattletrap_hookshot 发射钩爪<br>
 									rattletrap_overclocking 超速运转(A杖技能)<br>
-									rattletrap_jetpack 喷气背包(魔晶技能)
+									rattletrap_jetpack 喷气背包(魔晶技能)<br>
 								</td>
 								<td>发条技师
 								</td>
@@ -36996,7 +37627,7 @@
 								<td> razor_plasma_field 等离子场<br>
 									razor_static_link 静电连接<br>
 									razor_unstable_current 风暴涌动<br>
-									razor_eye_of_the_storm 风暴之眼
+									razor_eye_of_the_storm 风暴之眼<br>
 								</td>
 								<td>剃刀,电魂,电棍
 								</td>
@@ -37009,7 +37640,7 @@
 									riki_tricks_of_the_trade 绝杀秘技<br>
 									riki_backstab 刀光谍影<br>
 									riki_poison_dart 昏睡飞镖(魔晶技能)<br>
-									riki_permanent_invisibility 永久隐身(老版本的技能)
+									riki_permanent_invisibility 永久隐身(老版本的技能)<br>
 								</td>
 								<td>力丸,隐刺
 								</td>
@@ -37023,7 +37654,7 @@
 									rubick_spell_steal 技能窃取<br>
 									rubick_telekinesis_land 隔空取物着陆<br>
 									rubick_telekinesis_land_self(魔晶升级隔空取物可以对友军和自己使用)<br>
-									rubick_null_field 失效力场(老版本的技能)	
+									rubick_null_field 失效力场(老版本的技能)<br>
 								</td>
 								<td>拉比克
 								</td>
@@ -37034,7 +37665,7 @@
 								<td> sandking_burrowstrike 掘地穿刺<br>
 									sandking_sand_storm 沙尘暴<br>
 									sandking_caustic_finale 腐尸毒<br>
-									sandking_epicenter 地震
+									sandking_epicenter 地震<br>
 								</td>
 								<td>沙王
 								</td>
@@ -37046,7 +37677,8 @@
 									shadow_demon_soul_catcher 灵魂猎手<br>
 									shadow_demon_shadow_poison 暗影剧毒<br>
 									shadow_demon_shadow_poison_release 释放暗影毒<br>
-									shadow_demon_demonic_purge 邪恶净化
+									shadow_demon_demonic_purge 邪恶净化<br>
+									shadow_demon_demonic_cleanse 邪恶净愈(魔晶技能,显示的是升级) <br>
 								</td>
 								<td>暗影恶魔,艾瑞达
 								</td>
@@ -37057,7 +37689,7 @@
 								<td> shadow_shaman_ether_shock 苍穹震击<br>
 									shadow_shaman_voodoo 妖术<br>
 									shadow_shaman_shackles 枷锁<br>
-									shadow_shaman_mass_serpent_ward 群蛇守卫
+									shadow_shaman_mass_serpent_ward 群蛇守卫<br>
 								</td>
 								<td>暗影萨满,小Y
 								</td>
@@ -37072,7 +37704,7 @@
 									shredder_return_chakram 收回锯齿飞轮<br>
 									shredder_chakram_2 锯齿飞轮（二）(A杖技能)<br>
 									shredder_return_chakram_2 收回锯齿飞轮(A杖技能的回收)<br>
-									shredder_flamethrower 喷火装置(魔晶技能)
+									shredder_flamethrower 喷火装置(魔晶技能)<br>
 								</td>
 								<td>伐木机
 								</td>
@@ -37083,7 +37715,7 @@
 								<td> silencer_curse_of_the_silent 奥术诅咒<br>
 									silencer_glaives_of_wisdom 智慧之刃<br>
 									silencer_last_word 遗言<br>
-									silencer_global_silence 全领域静默
+									silencer_global_silence 全领域静默<br>
 								</td>
 								<td>沉默术士
 								</td>
@@ -37094,7 +37726,7 @@
 								<td> skeleton_king_hellfire_blast 冥火爆击<br>
 									skeleton_king_vampiric_aura 吸血光环<br>
 									skeleton_king_mortal_strike 本命一击<br>
-									skeleton_king_reincarnation 绝冥再生
+									skeleton_king_reincarnation 绝冥再生<br>
 								</td>
 								<td>冥魂大帝,骷髅王
 								</td>
@@ -37105,7 +37737,8 @@
 								<td> skywrath_mage_arcane_bolt 奥法鹰隼<br>
 									skywrath_mage_concussive_shot 震荡光弹<br>
 									skywrath_mage_ancient_seal 上古封印<br>
-									skywrath_mage_mystic_flare 神秘之耀
+									skywrath_mage_mystic_flare 神秘之耀<br>
+									skywrath_mage_shield_of_the_scion 天裔之盾(魔晶技能)<br>
 								</td> 
 								<td>天怒法师
 								</td>
@@ -37116,7 +37749,7 @@
 								<td> slardar_sprint 守卫冲刺<br>
 									slardar_slithereen_crush 鱼人碎击<br>
 									slardar_bash 深海重击<br>
-									slardar_amplify_damage 侵蚀雾霭
+									slardar_amplify_damage 侵蚀雾霭<br>
 								</td>
 								<td>斯拉达,大鱼
 								</td>
@@ -37128,7 +37761,8 @@
 									slark_pounce 突袭<br>
 									slark_essence_shift 能量转移<br>
 									slark_shadow_dance 暗影之舞<br>
-									slark_fish_bait 鱼饵(魔晶技能)
+									slark_depth_shroud 深海护罩(魔晶技能)<br>
+									slark_fish_bait 鱼饵(旧版本魔晶技能)<br>
 								</td>
 								<td>斯拉克,小鱼
 								</td>
@@ -37140,7 +37774,7 @@
 									sniper_headshot 爆头<br>
 									sniper_take_aim 瞄准<br>
 									sniper_assassinate 暗杀<br>
-									sniper_concussive_grenade 震荡手雷(魔晶技能)
+									sniper_concussive_grenade 震荡手雷(魔晶技能)<br>
 								</td>
 								<td>狙击手,火枪
 								</td>
@@ -37165,7 +37799,7 @@
 									spirit_breaker_bulldoze 威吓<br>
 									spirit_breaker_greater_bash 巨力重击<br>
 									spirit_breaker_nether_strike 幽冥一击<br>
-									spirit_breaker_empowering_haste 神行太保(老版本技能)
+									spirit_breaker_empowering_haste 神行太保(老版本技能)<br>
 								</td>
 								<td>裂魂人,白牛
 								</td>
@@ -37177,7 +37811,7 @@
 									storm_spirit_electric_vortex 电子涡流<br>
 									storm_spirit_overload 超负荷<br>
 									storm_spirit_ball_lightning 球状闪电<br>
-									storm_spirit_electric_rave 电子狂欢(魔晶技能)
+									storm_spirit_electric_rave 电子狂欢(旧版本魔晶技能)<br>
 								</td> 
 								<td>风暴之灵,蓝猫
 								</td>
@@ -37188,7 +37822,7 @@
 								<td> sven_storm_bolt 风暴之拳<br>
 									sven_great_cleave 巨力挥舞<br>
 									sven_warcry 战吼<br>
-									sven_gods_strength 神之力量
+									sven_gods_strength 神之力量<br>
 								</td>
 								<td>斯温,流浪剑客
 								</td>
@@ -37196,12 +37830,16 @@
 							<tr>
 								<td> npc_dota_hero_techies
 								</td>
-								<td> techies_land_mines 感应地雷<br>
-									techies_stasis_trap 静滞陷阱<br>
+								<td> 
+									techies_sticky_bomb 粘性炸弹<br>
+									techies_reactive_tazer 活性电击<br>
 									techies_suicide 爆破起飞<br>
-									techies_focused_detonate 集中引爆<br>
-									techies_minefield_sign 雷区标识(A杖技能)<br>
-									techies_remote_mines 遥控炸弹
+									techies_minefield_sign 雷区标识<br>
+									techies_land_mines 感应地雷<br>
+									
+									techies_stasis_trap 静滞陷阱(旧版本技能)<br>
+									techies_focused_detonate 集中引爆(旧版本技能)<br>
+									techies_remote_mines 遥控炸弹(旧版本技能)<br>
 								</td>
 								<td>工程师,炸弹人
 								</td>
@@ -37214,7 +37852,7 @@
 									templar_assassin_psi_blades 灵能之刃<br>
 									templar_assassin_trap 触发陷阱<br>
 									templar_assassin_psionic_trap 灵能陷阱<br>
-									templar_assassin_trap_teleport 灵能投射(A杖技能)
+									templar_assassin_trap_teleport 灵能投射(A杖技能)<br>
 								</td>
 								<td>圣堂刺客,TA
 								</td>
@@ -37227,7 +37865,7 @@
 									terrorblade_metamorphosis 魔化<br>
 									terrorblade_terror_wave 恐怖心潮(A杖技能)<br>
 									terrorblade_sunder 魂断<br>
-									terrorblade_demon_zeal 恶魔狂热(魔晶技能)
+									terrorblade_demon_zeal 恶魔狂热(魔晶技能)<br>
 								</td>
 								<td>恐怖利刃，TB
 								</td>
@@ -37238,7 +37876,7 @@
 								<td> tidehunter_gush 巨浪<br>
 									tidehunter_kraken_shell 海妖外壳<br>
 									tidehunter_anchor_smash 锚击<br>
-									tidehunter_ravage 毁灭
+									tidehunter_ravage 毁灭<br>
 								</td>
 								<td>潮汐猎人
 								</td>
@@ -37248,9 +37886,11 @@
 								</td>
 								<td> tinker_laser 激光<br>
 									tinker_heat_seeking_missile 热导飞弹<br>
-									tinker_march_of_the_machines 机械行军<br>
+									tinker_defense_matrix 防御矩阵<br>
+									tinker_keen_teleport 基恩载具<br>
 									tinker_rearm 再装填<br>
-									tinker_defense_matrix 防御矩阵(魔晶技能)
+									tinker_warp_grenade 折跃耀光(魔晶技能)<br>
+									tinker_march_of_the_machines 机械行军(旧版本技能)<br>
 								</td>
 								<td>修补匠,TK
 								</td>
@@ -37264,7 +37904,7 @@
 									tiny_toss_tree 扔树<br>
 									tiny_grow 长大<br>
 									tiny_tree_channel 树木连掷(A杖技能)<br>
-									tiny_craggy_exterior 崎岖外表(魔晶技能)<br>
+									tiny_craggy_exterior 崎岖外表(旧版本技能))<br>
 								</td>
 								<td>小小
 								</td>
@@ -37275,9 +37915,9 @@
 								<td> treant_natures_grasp 自然卷握<br>
 									treant_leech_seed 寄生种子<br>
 									treant_living_armor 活体护甲<br>
-									treant_eyes_in_the_forest 丛林之眼(A杖技能)<br>
 									treant_natures_guise 自然蔽护<br>
-									treant_overgrowth 疯狂生长
+									treant_overgrowth 疯狂生长<br>
+									treant_eyes_in_the_forest 丛林之眼(A杖技能)<br>
 								</td>
 								<td>树精卫士,大树
 								</td>
@@ -37289,7 +37929,8 @@
 									troll_warlord_whirling_axes_ranged 旋风飞斧（远程）<br>
 									troll_warlord_whirling_axes_melee 旋风飞斧（近战）<br>
 									troll_warlord_fervor 热血战魂<br>
-									troll_warlord_battle_trance 战斗专注
+									troll_warlord_battle_trance 战斗专注<br>
+									troll_warlord_rampage 横行无忌(魔晶技能)<br>
 								</td>
 								<td>巨魔战将
 								</td>
@@ -37303,7 +37944,7 @@
 									tusk_tag_team 摔角行家<br>
 									tusk_walrus_punch 海象神拳<br>
 									tusk_walrus_kick 海象飞踢(A杖技能)<br>
-									tusk_frozen_sigil 冰封魔印(魔晶技能)
+									tusk_frozen_sigil 冰封魔印(旧版技能)<br>
 								</td>
 								<td>巨牙海民
 								</td>
@@ -37314,7 +37955,7 @@
 								<td> undying_decay 腐朽<br>
 									undying_soul_rip 噬魂<br>
 									undying_tombstone 墓碑<br>
-									undying_flesh_golem 血肉傀儡
+									undying_flesh_golem 血肉傀儡<br>
 								</td>
 								<td>不朽尸王
 								</td>
@@ -37325,7 +37966,7 @@
 								<td> ursa_earthshock 震撼大地<br>
 									ursa_overpower 超强力量<br>
 									ursa_fury_swipes 怒意狂击<br>
-									ursa_enrage 激怒
+									ursa_enrage 激怒<br>
 								</td>
 								<td>熊战士,拍拍熊
 								</td>
@@ -37336,7 +37977,7 @@
 								<td> vengefulspirit_magic_missile 魔法箭<br>
 									vengefulspirit_wave_of_terror 恐怖波动<br>
 									vengefulspirit_command_aura 复仇光环<br>
-									vengefulspirit_nether_swap 移形换位
+									vengefulspirit_nether_swap 移形换位<br>
 								</td>
 								<td>复仇之魂,VS
 								</td>
@@ -37347,7 +37988,7 @@
 								<td> venomancer_venomous_gale 瘴气<br>
 									venomancer_poison_sting 毒刺<br>
 									venomancer_plague_ward 瘟疫守卫<br>
-									venomancer_poison_nova 剧毒新星
+									venomancer_poison_nova 剧毒新星<br>
 								</td>
 								<td>剧毒术士
 								</td>
@@ -37358,7 +37999,7 @@
 								<td> viper_poison_attack 毒性攻击<br>
 									viper_nethertoxin 幽冥剧毒<br>
 									viper_corrosive_skin 腐蚀皮肤<br>
-									viper_viper_strike 蝮蛇突袭
+									viper_viper_strike 蝮蛇突袭<br>
 								</td>
 								<td>冥界亚龙,毒龙
 								</td>
@@ -37369,8 +38010,8 @@
 								<td> visage_grave_chill 黄泉颤抖<br>
 									visage_soul_assumption 灵魂超度<br>
 									visage_gravekeepers_cloak 陵卫斗篷<br>
-									visage_summon_familiars 召唤佣兽<br>
 									visage_stone_form_self_cast 石像形态<br>
+									visage_summon_familiars 召唤佣兽<br>
 									visage_summon_familiars_stone_form 佣兽自身的石像形态<br>
 									visage_silent_as_the_grave 静如古墓(A杖技能)<br>
 									
@@ -37384,7 +38025,7 @@
 								<td> warlock_fatal_bonds 致命连接<br>
 									warlock_shadow_word 暗言术<br>
 									warlock_upheaval 剧变<br>
-									warlock_rain_of_chaos 混乱之祭
+									warlock_rain_of_chaos 混乱之祭<br>
 								</td>
 								<td>术士,窝咯科
 								</td>
@@ -37395,7 +38036,7 @@
 								<td> weaver_the_swarm 虫群<br>
 									weaver_shukuchi 缩地<br>
 									weaver_geminate_attack 连击<br>
-									weaver_time_lapse 时光倒流
+									weaver_time_lapse 时光倒流<br>
 								</td>
 								<td>编织者,蚂蚁
 								</td>
@@ -37406,7 +38047,8 @@
 								<td> windrunner_shackleshot 束缚击<br>
 									windrunner_powershot 强力击<br>
 									windrunner_windrun 风行<br>
-									windrunner_focusfire 集中火力
+									windrunner_focusfire 集中火力<br>
+									windrunner_gale_force 狂风之力(魔晶技能)<br>
 								</td>
 								<td>风行者
 								</td>
@@ -37430,8 +38072,8 @@
 									wisp_overcharge 过载<br>
 									wisp_relocate 降临<br>
 									wisp_tether_break  断开连接<br>
-									wisp_spirits_in 移动幽魂(A杖技能,覆盖幽魂)<br>
-									wisp_spirits_out 拉远幽魂(以前版本的技能)
+									wisp_spirits_in 移动幽魂(A杖技能)<br>
+									wisp_spirits_out 拉远幽魂(A杖技能)<br>
 								</td>
 								<td>艾欧,小精灵
 								</td>
@@ -37443,7 +38085,7 @@
 									witch_doctor_voodoo_restoration 巫毒疗法<br>
 									witch_doctor_maledict 巫蛊咒术<br>
 									witch_doctor_death_ward 死亡守卫<br>
-									witch_doctor_voodoo_switcheroo 巫毒变身术(A杖技能)
+									witch_doctor_voodoo_switcheroo 巫毒变身术(魔晶技能)<br>
 								</td>
 								<td>巫医
 								</td>
@@ -37453,10 +38095,11 @@
 								</td>
 								<td> zuus_arc_lightning 弧形闪电<br>
 									zuus_lightning_bolt 雷击<br>
-									zuus_static_field 静电场<br>
-									zuus_cloud 雷云(A杖技能)<br>
+									zuus_heavenly_jump 神圣一跳<br>
 									zuus_thundergods_wrath 雷神之怒<br>
-									zuus_heavenly_jump 神圣一跳(魔晶技能升级静电场的效果)
+									zuus_cloud 雷云(A杖技能)<br>
+									zuus_static_field 静电场(魔晶技能)<br>
+									
 								</td>
 								<td>宙斯
 								</td>
@@ -37469,7 +38112,7 @@
 									grimstroke_spirit_walk 墨涌<br>
 									grimstroke_soul_chain 缚魂<br>
 									grimstroke_dark_portrait 暗绘(A杖技能)<br>
-									grimstroke_ink_over 浓墨重彩(魔晶技能)
+									grimstroke_ink_over 浓墨重彩(旧版本魔晶技能)<br>
 								</td>
 								<td>天涯墨客
 								</td>
@@ -37494,7 +38137,7 @@
 									pangolier_gyroshell 地雷滚滚<br>
 									pangolier_gyroshell_stop 停止滚动<br>
 									pangolier_rollup 卷土重来(魔晶技能)<br>
-									pangolier_rollup_stop 中止卷土重来
+									pangolier_rollup_stop 中止卷土重来(魔晶技能)<br>
 								</td>
 								<td>石鳞剑士,滚滚
 								</td>
@@ -37506,7 +38149,7 @@
 									dark_willow_shadow_realm 暗影之境<br>
 									dark_willow_cursed_crown 诅咒王冠<br>
 									dark_willow_bedlam 作祟<br>
-									dark_willow_terrorize 恐吓
+									dark_willow_terrorize 恐吓<br>
 								</td>
 								<td>邪影芳灵,小仙女
 								</td>
@@ -37521,7 +38164,7 @@
 									monkey_king_mischief 七十二变<br>
 									monkey_king_primal_spring_early 马上跃出<br>
 									monkey_king_untransform 变回原状<br>
-									monkey_king_wukongs_command 猴子猴孙
+									monkey_king_wukongs_command 猴子猴孙<br>
 								</td>
 								<td>齐天大圣、猴子
 								</td>
@@ -37532,9 +38175,9 @@
 								<td> snapfire_scatterblast 电光石火<br>
 									snapfire_firesnap_cookie 龙炎饼干<br>
 									snapfire_lil_shredder 霹雳铁手<br>
+									snapfire_mortimer_kisses 蜥蜴绝吻<br>
 									snapfire_gobble_up 血盆大口(A杖技能)<br>
 									snapfire_spit_creep 喷吐(A杖技能)<br>
-									snapfire_mortimer_kisses 蜥蜴绝吻
 								</td>
 								<td>电炎绝手、老奶奶、突突突
 								</td>
@@ -37547,6 +38190,8 @@
 									hoodwink_scurry 密林奔走<br>
 									hoodwink_sharpshooter 一箭穿心<br>
 									hoodwink_sharpshooter_release 中止一箭穿心<br>
+									hoodwink_decoy 诱敌奇术(魔晶技能)<br>
+									hoodwink_hunters_boomerang 猎手旋镖(A杖技能)<br>
 								</td>
 								<td>森海飞霞、小松鼠
 								</td>
@@ -37569,8 +38214,8 @@
 									dawnbreaker_celestial_hammer 上界重锤<br>
 									dawnbreaker_luminosity 熠熠生辉<br>
 									dawnbreaker_converge 会合<br>
-									dawnbreaker_solar_guardian天光现世<br>
-									dawnbreaker_land着地<br>
+									dawnbreaker_solar_guardian 天光现世<br>
+									dawnbreaker_land 着地<br>
 								</td>
 								<td>破晓辰星,女武神
 								</td>
@@ -37593,7 +38238,7 @@
 								<td> primal_beast_onslaught 突 <br>
 									primal_beast_trample 踏 <br>
 									primal_beast_uproar 咤 <br>
-									primal_beast_rock_throw 砸 <br>
+									primal_beast_rock_throw 砸(魔晶技能) <br>
 									primal_beast_onslaught_release 正在突进 <br>
 									primal_beast_pulverize  捶 <br>
 								</td>
@@ -40236,6 +40881,8 @@
 									modifier_juggernaut_blade_dance<br>
 									modifier_juggernaut_omnislash<br>
 									modifier_juggernaut_omnislash_invulnerability<br>
+									modifier_holdout_blade_fury<br>
+									modifier_holdout_omnislash<br>
 									modifier_kunkka_torrent_thinker<br>
 									modifier_kunkka_torrent<br>
 									modifier_kunkka_torrent_slow<br>
@@ -40455,10 +41102,11 @@
 									modifier_beastmaster_axe_stack_counter<br>
 									modifier_beastmaster_axe_invulnerable<br>
 									modifier_beastmaster_call_of_the_wild_hawk<br>
-									modifier_beastmaster_hawk_invisibility_activator<br>
-									modifier_beastmaster_hawk_invisibility<br>
+									modifier_beastmaster_hawk_invisibility_activator(7.31d失效)<br>
+									modifier_beastmaster_hawk_invisibility(7.31d失效)<br>
+									modifier_beastmaster_boar_bonus_damage<br>
 									modifier_beastmaster_boar_poison<br>
-									modifier_beastmaster_boar_poison_greater<br>
+									modifier_beastmaster_boar_poison_greater(7.31d失效)<br>
 									modifier_beastmaster_boar_poison_effect<br>
 									modifier_beastmaster_inner_beast_aura<br>
 									modifier_beastmaster_inner_beast<br>
@@ -42136,7 +42784,7 @@
 									modifier_filler_heal_aura<br>
 									modifier_filler_heal<br>
 									modifier_fountain_invulnerability(基地的无敌状态)2 8 31<br>
-									modifier_illusion<br>
+									modifier_illusion(官方幻象BUFF,duration = duration, DestroyOnExpire = false，duration = duration, DestroyOnExpire = false)<br>
 									modifier_rune_doubledamage<br>
 									modifier_rune_extradamage<br>
 									modifier_rune_illusion<br>
@@ -42170,6 +42818,7 @@
 									modifier_cyclone<br>
 									modifier_pet<br>
 									modifier_tutorial_sleep<br>
+									modifier_ardm_newhero<br>
 									modifier_ice_slide<br>
 									modifier_hero_statue<br>
 									modifier_hero_statue_pedestal<br>
@@ -42201,6 +42850,7 @@
 									modifier_npx_buff<br>
 									modifier_generic_hidden<br>
 									modifier_disable_healing不能治疗<br>
+									modifier_playtest_handicap<br>
 									modifier_mutation_vampire_aura<br>
 									modifier_mutation_vampire<br>
 									modifier_mutation_spellcast<br>
